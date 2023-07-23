@@ -9,9 +9,9 @@ import SwiftUI
 
 @main
 struct EveryMeal_iOSApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
+  var body: some Scene {
+    WindowGroup {
+      SplashView()
     }
+  }
 }
