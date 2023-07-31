@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0F43F6812A6EA86B00239AA4 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43F6802A6EA86B00239AA4 /* MapView.swift */; };
 		0F43F6832A6EA8AC00239AA4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43F6822A6EA8AC00239AA4 /* HomeView.swift */; };
+		0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4C83562A7727BE0006A8EA /* ChooseUnivView.swift */; };
 		0F78AFF92A6CCA6B006B8C80 /* EveryMeal_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F78AFF82A6CCA6B006B8C80 /* EveryMeal_iOSApp.swift */; };
 		0F78AFFB2A6CCA6B006B8C80 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F78AFFA2A6CCA6B006B8C80 /* SplashView.swift */; };
 		0F78AFFD2A6CCA6C006B8C80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F78AFFC2A6CCA6C006B8C80 /* Assets.xcassets */; };
@@ -21,6 +22,7 @@
 /* Begin PBXFileReference section */
 		0F43F6802A6EA86B00239AA4 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		0F43F6822A6EA8AC00239AA4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		0F4C83562A7727BE0006A8EA /* ChooseUnivView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseUnivView.swift; sourceTree = "<group>"; };
 		0F78AFF52A6CCA6B006B8C80 /* EveryMeal_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EveryMeal_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F78AFF82A6CCA6B006B8C80 /* EveryMeal_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveryMeal_iOSApp.swift; sourceTree = "<group>"; };
 		0F78AFFA2A6CCA6B006B8C80 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
@@ -57,6 +59,14 @@
 				0F43F6802A6EA86B00239AA4 /* MapView.swift */,
 			);
 			path = Map;
+			sourceTree = "<group>";
+		};
+		0F4C83552A7727A00006A8EA /* Univ */ = {
+			isa = PBXGroup;
+			children = (
+				0F4C83562A7727BE0006A8EA /* ChooseUnivView.swift */,
+			);
+			path = Univ;
 			sourceTree = "<group>";
 		};
 		0F78AFEC2A6CCA6B006B8C80 = {
@@ -131,6 +141,7 @@
 		0F78B00D2A6D3942006B8C80 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				0F4C83552A7727A00006A8EA /* Univ */,
 				0F78B0112A6D39BC006B8C80 /* Splash */,
 				0F78B0122A6D39C6006B8C80 /* MainTab */,
 				0F43F67E2A6EA82C00239AA4 /* Home */,
@@ -237,6 +248,7 @@
 				0F78B0142A6D39DC006B8C80 /* MainTabBarView.swift in Sources */,
 				0F43F6832A6EA8AC00239AA4 /* HomeView.swift in Sources */,
 				0F78AFF92A6CCA6B006B8C80 /* EveryMeal_iOSApp.swift in Sources */,
+				0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
