@@ -10,34 +10,40 @@ import SwiftUI
 struct MainTabBarView: View {
   @State private var selectedTab = 0
   @State private var favoritesCount = 5
+  
+  let unselectedTabColor = Color.gray
 
   var body: some View {
     NavigationView {
       TabView(selection: $selectedTab) {
         HomeView()
           .tabItem {
-            Image(systemName: "mappin.and.ellipse")
+            Image("icon-store-mono")
             Text("맛집")
           }
           .tag(0)
+          .foregroundColor(selectedTab == 0 ? .accentColor : unselectedTabColor)
         MapView()
           .tabItem {
-            Image(systemName: "map")
-            Text("지도")
+            Image("icon-folk-knife-mono")
+            Text("학식")
           }
           .tag(1)
-        Text("Third Tab")
+          .foregroundColor(selectedTab == 0 ? .init(red: 255, green: 72, blue: 72) : unselectedTabColor)
+        Text("뭐먹지")
           .tabItem {
-            Image(systemName: "fork.knife")
-            Text("오늘 학식")
+            Image("icon-chat-bubble-question-mono")
+            Text("뭐먹지")
           }
           .tag(2)
-        Text("Fourth Tab")
+          .foregroundColor(selectedTab == 0 ? .init(red: 255, green: 72, blue: 72) : unselectedTabColor)
+        Text("마이")
           .tabItem {
-            Image(systemName: "heart")
-            Text("찜 리스트")
+            Image("icon-user-mono")
+            Text("마이")
           }
           .tag(3)
+          .foregroundColor(selectedTab == 0 ? .init(red: 255, green: 72, blue: 72) : unselectedTabColor)
           .badge(favoritesCount)
       }
       .navigationBarTitle(getNavigationTitle(), displayMode: .inline)

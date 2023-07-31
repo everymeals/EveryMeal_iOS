@@ -39,7 +39,7 @@ struct StoreCell: View {
   var body: some View {
     VStack(alignment: .leading) {
       Text("아방궁")
-        .font(.title2)
+        .font(.title3)
       HStack {
         Text("강남구 역삼로1길 18, 평익빌딩 옆에")
           .lineLimit(1)
