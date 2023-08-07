@@ -9,20 +9,23 @@ import SwiftUI
 
 struct HomeView: View {
   var body: some View {
-    VStack() {
-      Image("Rectangle 2")
-      List() {
-        StoreCell()
-        StoreCell()
-        StoreCell()
-        StoreCell()
-        StoreCell()
-        StoreCell()
-        StoreCell()
-        StoreCell()
-      }.listStyle(.inset)
+    ScrollView(showsIndicators: true) {
+      HomeHeaderView()
+      HomeTopMenuView()
+      HomeViewSeparator()
+      HomeTopThreeMealsView()
+      HomeViewSeparator()
+      HomeTopThreeReviewsView()
     }
-    .padding()
+  }
+}
+
+struct HomeViewSeparator: View {
+  var body: some View {
+    Rectangle()
+      .foregroundColor(.clear)
+      .frame(height: 12)
+      .background(Color.grey1)
   }
 }
 
@@ -31,57 +34,3 @@ struct HomeView_Previews: PreviewProvider {
     HomeView()
   }
 }
-
-struct StoreCell: View {
-  let phoneNumber = "02-123-4567"
-  @State private var showingSheet = false
-
-  var body: some View {
-    VStack(alignment: .leading) {
-      Text("아방궁")
-        .font(.title3)
-      HStack {
-        Text("강남구 역삼로1길 18, 평익빌딩 옆에")
-          .lineLimit(1)
-          .foregroundColor(.gray)
-          .padding(5)
-        Spacer()
-        HStack {
-          Image(systemName: "phone")
-          Text(phoneNumber)
-            .lineLimit(1)
-        }
-        .foregroundColor(.blue)
-        .padding(5)
-        .onTapGesture {
-          showingSheet = true
-        }
-      }
-      .actionSheet(isPresented: $showingSheet) {
-          ActionSheet(
-            title: Text("전화를 거시겠습니까?"),
-            buttons: [
-              .default(Text("\(phoneNumber)"), action: {
-                if let url = URL(string: "https://www.naver.com") {
-                  UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                }
-              }),
-              .cancel(Text("취소"))
-            ]
-          )
-      }
-    }
-  }
-}
-
-struct ToastView: View {
-  var body: some View {
-    Text("Hello, Toast!")
-      .font(.headline)
-      .padding()
-      .background(Color.black)
-      .foregroundColor(.white)
-      .cornerRadius(10)
-  }
-}
-
