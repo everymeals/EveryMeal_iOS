@@ -9,37 +9,44 @@ import SwiftUI
 
 struct MainTabBarView: View {
   @State private var selectedTab = 0
-  @State private var favoritesCount = 5
-
+  @State private var favoritesCount = 10
+  
   var body: some View {
     NavigationView {
       TabView(selection: $selectedTab) {
         HomeView()
           .tabItem {
-            Image(systemName: "mappin.and.ellipse")
+            Image("icon-store-mono")
+              .renderingMode(.template)
             Text("맛집")
           }
           .tag(0)
         MapView()
           .tabItem {
-            Image(systemName: "map")
-            Text("지도")
+            Image("icon-folk-knife-mono")
+              .renderingMode(.template)
+            Text("학식")
           }
           .tag(1)
-        Text("Third Tab")
+          ChooseUnivView()
           .tabItem {
-            Image(systemName: "fork.knife")
-            Text("오늘 학식")
+            Image("icon-chat-bubble-question-mono")
+              .renderingMode(.template)
+            Text("뭐먹지")
           }
           .tag(2)
-        Text("Fourth Tab")
+        Text("마이")
           .tabItem {
-            Image(systemName: "heart")
-            Text("찜 리스트")
+            Image("icon-user-mono")
+              .renderingMode(.template)
+            Text("마이")
           }
           .tag(3)
           .badge(favoritesCount)
       }
+      .onAppear(perform: {
+        UITabBar.appearance().unselectedItemTintColor = UIColor(red: 0.69, green: 0.72, blue: 0.76, alpha: 1)
+      })
       .navigationBarTitle(getNavigationTitle(), displayMode: .inline)
       .navigationBarItems(
         trailing: selectedTab == 0 ? NavigationLink(destination: SearchView()) {
