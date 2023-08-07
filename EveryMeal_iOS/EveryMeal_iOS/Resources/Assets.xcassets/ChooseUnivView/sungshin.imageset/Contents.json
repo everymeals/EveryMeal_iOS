@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icon-chat-bubble-question-mono.png",
+      "filename" : "sungshin.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icon-chat-bubble-question-mono@2x.png",
+      "filename" : "sungshin@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icon-chat-bubble-question-mono@3x.png",
+      "filename" : "sungshin@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

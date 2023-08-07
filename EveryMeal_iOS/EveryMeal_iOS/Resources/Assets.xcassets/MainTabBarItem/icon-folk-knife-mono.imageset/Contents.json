@@ -6,10 +6,12 @@
       "scale" : "1x"
     },
     {
+      "filename" : "icon-folk-knife-mono@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "icon-folk-knife-mono@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
