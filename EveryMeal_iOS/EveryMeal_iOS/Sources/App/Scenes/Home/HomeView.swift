@@ -12,20 +12,11 @@ struct HomeView: View {
     ScrollView(showsIndicators: true) {
       HomeHeaderView()
       HomeTopMenuView()
-      HomeViewSeparator()
+      Separator()
       HomeTopThreeMealsView()
-      HomeViewSeparator()
+      Separator()
       HomeTopThreeReviewsView()
     }
-  }
-}
-
-struct HomeViewSeparator: View {
-  var body: some View {
-    Rectangle()
-      .foregroundColor(.clear)
-      .frame(height: 12)
-      .background(Color.grey1)
   }
 }
 
