@@ -15,8 +15,7 @@ struct HomeHeaderView: View {
       Image("icon-search-mono")
       Image("icon-heart-mono")
     }
-    .padding(.leading, 20)
-    .padding(.trailing, 20)
+    .padding(.horizontal, 20)
     .frame(height: 48)
   }
 }

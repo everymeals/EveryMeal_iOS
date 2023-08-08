@@ -13,7 +13,7 @@ struct HomeTopMenuView: View {
       GoToReviewBannerView()
         .padding(.top, 12)
         .padding(.horizontal, 20)
-      TopMenuButtonView()
+      TopMenuButtonsView()
     }
   }
 }
@@ -46,7 +46,7 @@ struct GoToReviewBannerView: View {
   }
 }
 
-struct TopMenuButtonView: View {
+struct TopMenuButtonsView: View {
   @State var isSelected: [Bool] = Array.init(repeating: false, count: 4)
   
   let titles = [
@@ -74,7 +74,8 @@ struct TopMenuButtonView: View {
     ScrollView {
       LazyVGrid(columns: columns, spacing: 8) {
         ForEach(titles.indices, id: \.self) { index in
-          TopMenuButton(isSelected: $isSelected[index], title: titles[index], imageName: menuImageName[index])
+          TopMenuButton(title: titles[index],
+                        imageName: menuImageName[index])
         }
       }
     }
@@ -83,9 +84,9 @@ struct TopMenuButtonView: View {
 }
 
 struct TopMenuButton: View {
-  @Binding var isSelected: Bool
   var title: String
   var imageName: String
+  @State var isPressed: Bool = false
   
   var body: some View {
     VStack(spacing: 1) {
@@ -97,15 +98,33 @@ struct TopMenuButton: View {
     }
     .frame(width: 77)
     .padding(.vertical, 4)
-    .background(isSelected ? Color.grey2 : Color.clear)
+    .background(isPressed ? Color.grey2 : Color.clear)
     .cornerRadius(12)
-    .onTapGesture {
-      isSelected = !isSelected
-      print("tapped")
-    }
+    .modifier(PressActions(onPress: {
+      isPressed = true
+    }, onRelease: {
+      isPressed = false
+    }))
   }
 }
 
+struct PressActions: ViewModifier {
+  var onPress: () -> Void
+  var onRelease: () -> Void
+  
+  func body(content: Content) -> some View {
+    content
+      .simultaneousGesture(
+        DragGesture(minimumDistance: 0)
+          .onChanged({ _ in
+            onPress()
+          })
+          .onEnded({ _ in
+            onRelease()
+          })
+      )
+  }
+}
 
 struct HomeTopMenuView_Previews: PreviewProvider {
   static var previews: some View {
