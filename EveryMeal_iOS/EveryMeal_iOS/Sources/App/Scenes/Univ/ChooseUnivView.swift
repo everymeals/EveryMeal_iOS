@@ -176,6 +176,9 @@ struct AddUnivView: View {
 
 struct SelectUnivButton: View {
   @Binding var isSelected: Bool
+  var bottomPadding: CGFloat {
+    DeviceManager.shared.hasPhysicalHomeButton ? 24 : 0
+  }
   
   var body: some View {
     Text("선택하기")
@@ -186,7 +189,7 @@ struct SelectUnivButton: View {
       .foregroundColor(Color.white)
       .cornerRadius(12)
       .padding(.horizontal, 20)
-      .padding(.bottom, 10)
+      .padding(.bottom, bottomPadding)
   }
 }
 
