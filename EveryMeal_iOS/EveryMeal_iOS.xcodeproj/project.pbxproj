@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		087A09382A81481100F4D34F /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087A09372A81481100F4D34F /* HomeHeaderView.swift */; };
+		087A093A2A81486400F4D34F /* HomeTopMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087A09392A81486400F4D34F /* HomeTopMenuView.swift */; };
+		087A093C2A8153BD00F4D34F /* HomeTopThreeMealsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087A093B2A8153BD00F4D34F /* HomeTopThreeMealsView.swift */; };
+		087A093E2A81545000F4D34F /* HomeTopThreeReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087A093D2A81545000F4D34F /* HomeTopThreeReviewsView.swift */; };
 		0F43F6812A6EA86B00239AA4 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43F6802A6EA86B00239AA4 /* MapView.swift */; };
 		0F43F6832A6EA8AC00239AA4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43F6822A6EA8AC00239AA4 /* HomeView.swift */; };
 		0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4C83562A7727BE0006A8EA /* ChooseUnivView.swift */; };
@@ -18,10 +22,15 @@
 		0F78B00B2A6D3901006B8C80 /* everymeal_splash.json in Resources */ = {isa = PBXBuildFile; fileRef = 0F78B00A2A6D3901006B8C80 /* everymeal_splash.json */; };
 		0F78B0102A6D39AD006B8C80 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 0F78B00F2A6D39AD006B8C80 /* Lottie */; };
 		0F78B0142A6D39DC006B8C80 /* MainTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F78B0132A6D39DC006B8C80 /* MainTabBarView.swift */; };
-		0F7F5FDB2A81B9AF0079C0A3 /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7F5FDA2A81B9AF0079C0A3 /* DeviceManager.swift */; };
+		663BFBA22A81EACC00A540A2 /* ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663BFBA12A81EACC00A540A2 /* ViewModifier.swift */; };
+		663BFBA42A81EB2800A540A2 /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663BFBA32A81EB2800A540A2 /* Separator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		087A09372A81481100F4D34F /* HomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
+		087A09392A81486400F4D34F /* HomeTopMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopMenuView.swift; sourceTree = "<group>"; };
+		087A093B2A8153BD00F4D34F /* HomeTopThreeMealsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopThreeMealsView.swift; sourceTree = "<group>"; };
+		087A093D2A81545000F4D34F /* HomeTopThreeReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopThreeReviewsView.swift; sourceTree = "<group>"; };
 		0F43F6802A6EA86B00239AA4 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		0F43F6822A6EA8AC00239AA4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		0F4C83562A7727BE0006A8EA /* ChooseUnivView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseUnivView.swift; sourceTree = "<group>"; };
@@ -34,7 +43,8 @@
 		0F78B0062A6D1D8F006B8C80 /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = SOURCE_ROOT; };
 		0F78B00A2A6D3901006B8C80 /* everymeal_splash.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = everymeal_splash.json; sourceTree = "<group>"; };
 		0F78B0132A6D39DC006B8C80 /* MainTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarView.swift; sourceTree = "<group>"; };
-		0F7F5FDA2A81B9AF0079C0A3 /* DeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
+		663BFBA12A81EACC00A540A2 /* ViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifier.swift; sourceTree = "<group>"; };
+		663BFBA32A81EB2800A540A2 /* Separator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +63,10 @@
 			isa = PBXGroup;
 			children = (
 				0F43F6822A6EA8AC00239AA4 /* HomeView.swift */,
+				087A09372A81481100F4D34F /* HomeHeaderView.swift */,
+				087A09392A81486400F4D34F /* HomeTopMenuView.swift */,
+				087A093B2A8153BD00F4D34F /* HomeTopThreeMealsView.swift */,
+				087A093D2A81545000F4D34F /* HomeTopThreeReviewsView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -77,7 +91,6 @@
 			isa = PBXGroup;
 			children = (
 				0F5B15732A7F8C9C00E698F4 /* Color+Extensions.swift */,
-				0F7F5FDA2A81B9AF0079C0A3 /* DeviceManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -147,6 +160,7 @@
 		0F78B00C2A6D393E006B8C80 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				663BFBA02A81EAA900A540A2 /* Components */,
 				0F78B00D2A6D3942006B8C80 /* Scenes */,
 			);
 			path = App;
@@ -155,8 +169,8 @@
 		0F78B00D2A6D3942006B8C80 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				0F78B0112A6D39BC006B8C80 /* Splash */,
 				0F4C83552A7727A00006A8EA /* Univ */,
+				0F78B0112A6D39BC006B8C80 /* Splash */,
 				0F78B0122A6D39C6006B8C80 /* MainTab */,
 				0F43F67E2A6EA82C00239AA4 /* Home */,
 				0F43F67F2A6EA83400239AA4 /* Map */,
@@ -178,6 +192,15 @@
 				0F78B0132A6D39DC006B8C80 /* MainTabBarView.swift */,
 			);
 			path = MainTab;
+			sourceTree = "<group>";
+		};
+		663BFBA02A81EAA900A540A2 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				663BFBA12A81EACC00A540A2 /* ViewModifier.swift */,
+				663BFBA32A81EB2800A540A2 /* Separator.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,10 +281,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F78AFFB2A6CCA6B006B8C80 /* SplashView.swift in Sources */,
-				0F7F5FDB2A81B9AF0079C0A3 /* DeviceManager.swift in Sources */,
 				0F43F6812A6EA86B00239AA4 /* MapView.swift in Sources */,
 				0F78B0142A6D39DC006B8C80 /* MainTabBarView.swift in Sources */,
+				087A093E2A81545000F4D34F /* HomeTopThreeReviewsView.swift in Sources */,
+				087A093A2A81486400F4D34F /* HomeTopMenuView.swift in Sources */,
 				0F43F6832A6EA8AC00239AA4 /* HomeView.swift in Sources */,
+				087A093C2A8153BD00F4D34F /* HomeTopThreeMealsView.swift in Sources */,
+				663BFBA22A81EACC00A540A2 /* ViewModifier.swift in Sources */,
+				087A09382A81481100F4D34F /* HomeHeaderView.swift in Sources */,
+				663BFBA42A81EB2800A540A2 /* Separator.swift in Sources */,
 				0F5B15742A7F8C9C00E698F4 /* Color+Extensions.swift in Sources */,
 				0F78AFF92A6CCA6B006B8C80 /* EveryMeal_iOSApp.swift in Sources */,
 				0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */,
