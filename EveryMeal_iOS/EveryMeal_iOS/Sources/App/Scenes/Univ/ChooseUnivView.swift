@@ -11,7 +11,7 @@ struct ChooseUnivView: View {
   @State var isSelected: Bool = false
   
   var body: some View {
-    VStack(spacing: 20) {
+    VStack(spacing: 0) {
       VStack(alignment: .leading, spacing: 30.0) {
         Text("반가워요!\n대학을 선택해주세요")
           .font(Font.system(size: 24, weight: .bold))
@@ -55,9 +55,15 @@ struct UnivGridView: View {
     "명지대",
     "서울여대",
     "성신여대",
+    "명지대",
+    "서울여대",
+    "성신여대",
   ]
   
   let univsImageName = [
+    "myongji",
+    "swu",
+    "sungshin",
     "myongji",
     "swu",
     "sungshin",
@@ -132,12 +138,8 @@ struct ChooseButtonView: View {
         .onTapGesture {
           print("학교 추가하기 버튼 👆")
         }
+        .shadow(color: .grey5, radius: 5, y: -3)
       SelectUnivButton(isSelected: $isSelected)
-        .onTapGesture {
-          if isSelected {
-            print("선택하기 버튼 👆")
-          }
-        }
     }
   }
 }
@@ -181,15 +183,22 @@ struct SelectUnivButton: View {
   }
   
   var body: some View {
-    Text("선택하기")
-      .frame(maxWidth: .infinity)
-      .padding()
-      .background(isSelected ? Color.accentColor : Color(red: 0.9, green: 0.91, blue: 0.92))
-      .font(.system(size: 16, weight: .medium))
-      .foregroundColor(Color.white)
-      .cornerRadius(12)
-      .padding(.horizontal, 20)
-      .padding(.bottom, bottomPadding)
+    Button {
+      if isSelected {
+        print("선택하기 버튼 클릭")
+      }
+    } label: {
+      Text("선택하기")
+        .frame(maxWidth: .infinity)
+        .padding()
+        .background(isSelected ? Color.accentColor : Color.grey3)
+        .font(.system(size: 16, weight: .medium))
+        .foregroundColor(Color.white)
+        .cornerRadius(12)
+        .padding(.horizontal, 20)
+        .padding(.bottom, bottomPadding)
+    }
+    .disabled(!isSelected)
   }
 }
 
