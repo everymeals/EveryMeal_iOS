@@ -9,8 +9,12 @@ import SwiftUI
 
 struct HomeTopThreeReviewsView: View {
   var body: some View {
-    VStack {
+    VStack(alignment: .leading, spacing: 8) {
       Text("리뷰 모아보기")
+        .font(.system(size: 20, weight: .bold))
+        .foregroundColor(Color.everyMealBlack)
+      
+      
     }
   }
 }
