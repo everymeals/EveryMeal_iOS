@@ -28,7 +28,7 @@ struct MainTabBarView: View {
             Text("학식")
           }
           .tag(1)
-          ChooseUnivView()
+        ChooseUnivView()
           .tabItem {
             Image("icon-chat-bubble-question-mono")
               .renderingMode(.template)
