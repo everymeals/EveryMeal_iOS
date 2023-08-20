@@ -23,6 +23,7 @@
 		0F78B00B2A6D3901006B8C80 /* everymeal_splash.json in Resources */ = {isa = PBXBuildFile; fileRef = 0F78B00A2A6D3901006B8C80 /* everymeal_splash.json */; };
 		0F78B0102A6D39AD006B8C80 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 0F78B00F2A6D39AD006B8C80 /* Lottie */; };
 		0F78B0142A6D39DC006B8C80 /* MainTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F78B0132A6D39DC006B8C80 /* MainTabBarView.swift */; };
+		0FF7C7192A91ECEF00BFC33D /* GradationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF7C7182A91ECEF00BFC33D /* GradationView.swift */; };
 		663BFBA22A81EACC00A540A2 /* ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663BFBA12A81EACC00A540A2 /* ViewModifier.swift */; };
 		663BFBA42A81EB2800A540A2 /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663BFBA32A81EB2800A540A2 /* Separator.swift */; };
 /* End PBXBuildFile section */
@@ -45,6 +46,7 @@
 		0F78B0062A6D1D8F006B8C80 /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = SOURCE_ROOT; };
 		0F78B00A2A6D3901006B8C80 /* everymeal_splash.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = everymeal_splash.json; sourceTree = "<group>"; };
 		0F78B0132A6D39DC006B8C80 /* MainTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarView.swift; sourceTree = "<group>"; };
+		0FF7C7182A91ECEF00BFC33D /* GradationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradationView.swift; sourceTree = "<group>"; };
 		663BFBA12A81EACC00A540A2 /* ViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifier.swift; sourceTree = "<group>"; };
 		663BFBA32A81EB2800A540A2 /* Separator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -218,6 +220,7 @@
 			children = (
 				663BFBA12A81EACC00A540A2 /* ViewModifier.swift */,
 				663BFBA32A81EB2800A540A2 /* Separator.swift */,
+				0FF7C7182A91ECEF00BFC33D /* GradationView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				663BFBA22A81EACC00A540A2 /* ViewModifier.swift in Sources */,
 				087A09382A81481100F4D34F /* HomeHeaderView.swift in Sources */,
 				663BFBA42A81EB2800A540A2 /* Separator.swift in Sources */,
+				0FF7C7192A91ECEF00BFC33D /* GradationView.swift in Sources */,
 				0F5B15742A7F8C9C00E698F4 /* Color+Extensions.swift in Sources */,
 				0F78AFF92A6CCA6B006B8C80 /* EveryMeal_iOSApp.swift in Sources */,
 				0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */,
