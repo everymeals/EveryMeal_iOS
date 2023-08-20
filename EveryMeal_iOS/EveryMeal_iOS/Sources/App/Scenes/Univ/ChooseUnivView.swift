@@ -12,104 +12,89 @@ struct ChooseUnivView: View {
   
   var body: some View {
     VStack(spacing: 0) {
-      VStack(alignment: .leading, spacing: 30.0) {
-        Text("반가워요!\n대학을 선택해주세요")
-          .font(Font.system(size: 24, weight: .bold))
-          .foregroundColor(Color(red: 0.2, green: 0.24, blue: 0.29))
-          .padding(.top, 76)
-          .padding(.leading, 24)
-          .padding(.trailing, 158)
+      HStack {
+        VStack(alignment: .leading, spacing: 12) {
+          Image("school")
+            .frame(width: 64, height: 64)
+          
+          Text("반가워요!\n대학을 선택해주세요")
+            .font(Font.system(size: 24, weight: .bold))
+            .foregroundColor(.grey9)
+        }
+        .padding(.top, 32)
+        .padding(.leading, 24)
         
-        UnivGridView(isSelected: $isSelected)
+        Spacer()
       }
-      
+      UnivGridView(isSelected: $isSelected)
+        .padding(.top, 28)
+        .padding(.bottom, 15)
       ChooseButtonView(isSelected: $isSelected)
     }
   }
 }
 
 struct UnivGridView: View {
-  
+
   @Binding var isSelected: Bool
   @State var selectedIndex: Int?
 
-  let univs = [
+  let univsTitle = [
     "명지대",
+    "명지대",
+    "성신여대",
+    "성신여대",
     "서울여대",
     "성신여대",
+    "성신여대",
+    "서울여대",
     "명지대",
+    "명지대",
+    "성신여대",
+    "성신여대",
     "서울여대",
     "성신여대",
-    "명지대",
-    "서울여대",
     "성신여대",
-    "명지대",
-    "서울여대",
-    "성신여대",
-    "명지대",
-    "서울여대",
-    "성신여대",
-    "명지대",
-    "서울여대",
-    "성신여대",
-    "명지대",
-    "서울여대",
-    "성신여대",
-    "명지대",
-    "서울여대",
-    "성신여대",
+    "서울여대"
   ]
   
-  let univsImageName = [
-    "myongji",
-    "swu",
-    "sungshin",
-    "myongji",
-    "swu",
-    "sungshin",
-    "myongji",
-    "swu",
-    "sungshin",
-    "myongji",
-    "swu",
-    "sungshin",
-    "myongji",
-    "swu",
-    "sungshin",
-    "myongji",
-    "swu",
-    "sungshin",
-    "myongji",
-    "swu",
-    "sungshin",
-    "myongji",
-    "swu",
-    "sungshin",
-    "myongji",
-    "swu",
-    "sungshin",
+  let univsSubtitle = [
+    "자연캠퍼스",
+    "인문캠퍼스",
+    "수정캠퍼스",
+    "운정캠퍼스",
+    "",
+    "수정캠퍼스",
+    "운정캠퍼스",
+    "",
+    "자연캠퍼스",
+    "인문캠퍼스",
+    "수정캠퍼스",
+    "운정캠퍼스",
+    "",
+    "수정캠퍼스",
+    "운정캠퍼스",
+    ""
   ]
-  
-  let columns = [
-    GridItem(.flexible()),
-    GridItem(.flexible()),
-    GridItem(.flexible())
-  ]
-  
+
   var body: some View {
+    let columns = [GridItem(.flexible(), spacing: 10), GridItem(.flexible(), spacing: 10)]
+    
     ScrollView {
       LazyVGrid(columns: columns, spacing: 10) {
-        ForEach(univs.indices, id: \.self) { index in
-          VStack(spacing: 10) {
-            Image(univsImageName[index])
-              .resizable()
-              .frame(width: 36, height: 36)
-            Text(univs[index])
-              .font(.system(size: 14))
-              .foregroundColor(Color(red: 0.31, green: 0.35, blue: 0.41))
+        ForEach(univsTitle.indices, id: \.self) { index in
+          VStack(spacing: 8) {
+            Text(univsTitle[index])
+              .font(.system(size: 14, weight: .semibold))
+              .foregroundColor(.grey8)
+            if !univsSubtitle[index].isEmpty {
+              Text(univsSubtitle[index])
+                .font(.system(size: 13, weight: .regular))
+                .foregroundColor(.grey6)
+            }
           }
-          .padding(10)
-          .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+          .frame(maxWidth: .infinity)
+          .frame(height: 90)
           .background(index == selectedIndex ? Color.grey3 : Color.grey1)
           .cornerRadius(10)
           .onTapGesture {
@@ -119,7 +104,7 @@ struct UnivGridView: View {
               selectedIndex = index
             }
             isSelected = selectedIndex != nil
-            print("👆 tapped university cell: \(index)th \(univs[index])")
+            print("👆 tapped university cell: \(index)th \(univsTitle[index])")
           }
         }
       }
@@ -170,7 +155,7 @@ struct AddUnivView: View {
     }
     .frame(maxWidth: .infinity)
     .padding()
-    .background(Color(red: 0.95, green: 0.96, blue: 0.96))
+    .background(Color.grey2)
     .cornerRadius(100)
     .padding(.horizontal, 22)
   }
