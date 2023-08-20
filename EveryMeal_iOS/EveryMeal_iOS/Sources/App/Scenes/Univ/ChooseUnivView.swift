@@ -28,7 +28,9 @@ struct ChooseUnivView: View {
       }
       UnivGridView(isSelected: $isSelected)
         .padding(.top, 28)
-        .padding(.bottom, 15)
+        .overlay(alignment: .bottom, content: {
+          GradationView()
+        })
       ChooseButtonView(isSelected: $isSelected)
     }
   }
@@ -123,7 +125,6 @@ struct ChooseButtonView: View {
         .onTapGesture {
           print("학교 추가하기 버튼 👆")
         }
-        .shadow(color: .grey5, radius: 5, y: -3)
       SelectUnivButton(isSelected: $isSelected)
     }
   }
@@ -139,11 +140,11 @@ struct AddUnivView: View {
         VStack(alignment: .leading, spacing: 2) {
           Text("여기에 없어요")
             .font(.system(size: 15, weight: .semibold))
-            .foregroundColor(Color(red: 0.31, green: 0.35, blue: 0.41))
+            .foregroundColor(.grey8)
           
           Text("학교 신청하러 가기")
             .font(.system(size: 14, weight: .medium))
-            .foregroundColor(Color(red: 0.69, green: 0.72, blue: 0.76))
+            .foregroundColor(.grey5)
         }
       }
       .padding(.horizontal, 10)
