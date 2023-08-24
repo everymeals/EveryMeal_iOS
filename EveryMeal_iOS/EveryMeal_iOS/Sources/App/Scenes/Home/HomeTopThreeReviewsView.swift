@@ -67,11 +67,15 @@ struct ReviewCellView: View {
             Spacer()
             VStack {
               Image("icon-dots-mono")
+                .onTapGesture {
+                  print("오른쪽 점 세개 버튼")
+                }
               Spacer()
             }
           }
           
           HStack(spacing: 12) {
+            // TODO: 오른쪽에 사진 없는 경우와 글이 3줄 미만인 경우 UI 잡기
             Text("매장 안쪽으로 들어가면 꽤 넓은 공간이 나와서 공부하기 좋아요 근데 전에 저녁에 왔을 때 있던 알바생 분은 친절하셨는데, 오전에 낮에 왔을 때 계신")
               .font(.system(size: 14))
               .foregroundColor(.grey8)
@@ -91,6 +95,10 @@ struct ReviewCellView: View {
           Text("2")
             .font(.system(size: 14, weight: .medium))
             .foregroundColor(.grey6)
+        }
+        .onTapGesture {
+          // TODO: 로티 애니메이션 적용
+          print("좋아요 버튼")
         }
       }
       
