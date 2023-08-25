@@ -19,6 +19,18 @@ struct HomeTopThreeMealsView: View {
         Spacer()
       }
       MeaslTopThreeView()
+        Button {
+          print("맛집 더 보러 가기")
+        } label: {
+          Text("맛집 더 보러 가기")
+            .padding(.vertical, 13)
+            .frame(maxWidth: .infinity)
+            .overlay(
+              RoundedRectangle(cornerRadius: 12)
+                .inset(by: 0.5)
+                .stroke(Color.everyMealRed, lineWidth: 1)
+            )
+        }
     }
   }
 }
@@ -60,16 +72,7 @@ struct MeaslTopThreeView: View {
           Spacer()
         }
       }
-      Button("맛집 더 보러 가기") {
-        
       }
-      .font(.system(size: 16, weight: .medium))
-      .foregroundColor(Color.everyMealRed)
-      .frame(width: UIScreen.main.bounds.width - 40, height: 48)
-      .cornerRadius(12)
-      .overlay(RoundedRectangle(cornerRadius: 8)
-        .stroke(Color.everyMealRed, lineWidth: 2)
-      )
     }
     .padding(20)
   }
