@@ -26,21 +26,21 @@ struct HomeTopThreeMealsView: View {
 struct MeaslTopThreeView: View {
   
   let dummtModels: [MealModel] = [MealModel(title: "수아당",
-                                            type: .snack,
+                                            type: .분식,
                                             description: "ss",
                                             score: 3.0,
                                             doUserLike: true,
                                             imageURLs: ["fdsafdas", "fdsafdas", "fdsafdas"],
                                             likesCount: 24),
                                   MealModel(title: "동경산책 성신여대점",
-                                            type: .japanese,
+                                            type: .일식,
                                             description: "ss",
                                             score: 4.0,
                                             doUserLike: false,
                                             imageURLs: ["fdsfads", "fdsafdas"],
                                             likesCount: 32),
                                   MealModel(title: "언앨리셰프",
-                                            type: .western,
+                                            type: .양식,
                                             description: "ss",
                                             score: 2.5,
                                             doUserLike: false,
@@ -184,11 +184,11 @@ struct MealModel {
 }
 
 enum MealType: String {
-  case snack = "분식"
-  case japanese = "일식"
-  case korean = "한식"
-  case western = "양식"
-  case chinese = "중식"
+  case 분식
+  case 일식
+  case 한식
+  case 양식
+  case 중식
 }
 
 
