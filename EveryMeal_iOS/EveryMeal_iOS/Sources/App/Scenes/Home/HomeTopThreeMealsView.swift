@@ -18,7 +18,8 @@ struct HomeTopThreeMealsView: View {
           .padding(.top, 24)
         Spacer()
       }
-      MeaslTopThreeView()
+      VStack {
+        MealGridView()
         Button {
           print("맛집 더 보러 가기")
         } label: {
@@ -31,12 +32,12 @@ struct HomeTopThreeMealsView: View {
                 .stroke(Color.everyMealRed, lineWidth: 1)
             )
         }
+      }.padding(20)
     }
   }
 }
 
-struct MeaslTopThreeView: View {
-  
+struct MealGridView: View {
   let dummtModels: [MealModel] = [MealModel(title: "수아당",
                                             type: .분식,
                                             description: "ss",
@@ -60,25 +61,19 @@ struct MeaslTopThreeView: View {
                                             likesCount: 0)
   ]
   
-  let columns = [
-    GridItem(.flexible())
-  ]
+  let columns = [GridItem(.flexible())]
   
   var body: some View {
-    ScrollView {
-      LazyVGrid(columns: columns, spacing: 8) {
-        ForEach(dummtModels.indices, id: \.self) { index in
-          TopMealsView(mealModel: dummtModels[index])
-          Spacer()
-        }
-      }
+    LazyVGrid(columns: columns, spacing: 8) {
+      ForEach(dummtModels.indices, id: \.self) { index in
+        MealImagesItemView(mealModel: dummtModels[index])
+        Spacer()
       }
     }
-    .padding(20)
   }
 }
 
-struct TopMealsView: View {
+struct MealImagesItemView: View {
   var mealModel: MealModel
   
   var body: some View {
@@ -114,7 +109,7 @@ struct TopMealsView: View {
           }
         }
         Spacer()
-        LikeButton(likesCount: mealModel.likesCount, isPressed: mealModel.doUserLike)
+        MealImagesItemLikeButton(likesCount: mealModel.likesCount, isPressed: mealModel.doUserLike)
       }
       .padding(.bottom, 14)
       
@@ -154,7 +149,7 @@ struct TopMealsView: View {
   }
 }
 
-struct LikeButton: View {
+struct MealImagesItemLikeButton: View {
   var likesCount: Int
   @State var isPressed: Bool = false
   
