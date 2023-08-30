@@ -9,13 +9,15 @@ import SwiftUI
 
 struct HomeView: View {
   var body: some View {
-    ScrollView(showsIndicators: true) {
-      HomeHeaderView()
-      HomeTopMenuView()
-      Separator()
-      HomeTopThreeMealsView()
-      Separator()
-      HomeTopThreeReviewsView()
+    NavigationView {
+      ScrollView(showsIndicators: true) {
+        HomeHeaderView()
+        HomeTopMenuView()
+        Separator()
+        HomeTopThreeMealsView()
+        Separator()
+        HomeTopThreeReviewsView()
+      }
     }
   }
 }
