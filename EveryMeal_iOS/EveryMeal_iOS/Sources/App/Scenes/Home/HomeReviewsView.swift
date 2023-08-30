@@ -1,13 +1,14 @@
 //
-//  HomeTopThreeReviewsView.swift
+//  HomeReviewsView.swift
 //  EveryMeal_iOS
 //
 //  Created by 김하늘 on 2023/08/08.
 //
 
 import SwiftUI
+import Lottie
 
-struct HomeTopThreeReviewsView: View {
+struct HomeReviewsView: View {
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
       HStack {
@@ -47,21 +48,23 @@ struct ReviewCellView: View {
         VStack(alignment: .leading, spacing: 14) {
           HStack(spacing: 12) {
             Circle().frame(width: 40, height: 40).foregroundColor(.grey5)
-            VStack(alignment: .leading, spacing: 3.5) {
-              Text("햄식이")
-              HStack(spacing: 2) {
-                Image("icon-star-mono")
-                Image("icon-star-mono")
-                Image("icon-star-mono")
-                Image("icon-star-mono")
-                Image("icon-star-mono")
-                Text("·")
-                  .font(.system(size: 12, weight: .semibold))
-                  .multilineTextAlignment(.center)
-                  .foregroundColor(.grey5)
-                Text("3일전")
-                  .font(.system(size: 12))
-                  .foregroundColor(.grey5)
+            VStack {
+              VStack(alignment: .leading, spacing: 3.5) {
+                Text("햄식이")
+                HStack(spacing: 2) {
+                  Image("icon-star-mono")
+                  Image("icon-star-mono")
+                  Image("icon-star-mono")
+                  Image("icon-star-mono")
+                  Image("icon-star-mono")
+                  Text("·")
+                    .font(.system(size: 12, weight: .semibold))
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.grey5)
+                  Text("3일전")
+                    .font(.system(size: 12))
+                    .foregroundColor(.grey5)
+                }
               }
             }
             Spacer()
@@ -152,7 +155,7 @@ struct MoreReviewButton: View {
   }
 }
 
-struct HomeTopThreeReviewsView_Previews: PreviewProvider {
+struct HomeReviewsView_Previews: PreviewProvider {
   static var previews: some View {
     MainTabBarView()
   }

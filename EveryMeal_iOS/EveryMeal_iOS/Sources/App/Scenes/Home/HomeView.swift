@@ -16,7 +16,7 @@ struct HomeView: View {
         Separator()
         HomeTopThreeMealsView()
         Separator()
-        HomeTopThreeReviewsView()
+        HomeReviewsView()
       }
     }
   }
