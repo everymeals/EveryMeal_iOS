@@ -8,11 +8,22 @@
 import SwiftUI
 
 struct HomeTopMenuView: View {
+  @State var isPresented = false
+  
   var body: some View {
     VStack {
       GoToReviewBannerView()
         .padding(.top, 12)
         .padding(.horizontal, 20)
+        .onTapGesture {
+          self.isPresented.toggle()
+        }
+        .fullScreenCover(isPresented: $isPresented) {
+          WriteReviewStoreSearchView {
+            isPresented.toggle()
+          }
+        }
+
       TopMenuButtonsView()
     }
   }

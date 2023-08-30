@@ -24,6 +24,7 @@
 		0F78B0142A6D39DC006B8C80 /* MainTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F78B0132A6D39DC006B8C80 /* MainTabBarView.swift */; };
 		663BFBA22A81EACC00A540A2 /* ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663BFBA12A81EACC00A540A2 /* ViewModifier.swift */; };
 		663BFBA42A81EB2800A540A2 /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663BFBA32A81EB2800A540A2 /* Separator.swift */; };
+		669734672A9F33B4009DEF06 /* WriteReviewStoreSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669734662A9F33B4009DEF06 /* WriteReviewStoreSearchView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		0F78B0132A6D39DC006B8C80 /* MainTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarView.swift; sourceTree = "<group>"; };
 		663BFBA12A81EACC00A540A2 /* ViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifier.swift; sourceTree = "<group>"; };
 		663BFBA32A81EB2800A540A2 /* Separator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
+		669734662A9F33B4009DEF06 /* WriteReviewStoreSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteReviewStoreSearchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +171,7 @@
 		0F78B00D2A6D3942006B8C80 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				669734652A9F3361009DEF06 /* Review */,
 				0F4C83552A7727A00006A8EA /* Univ */,
 				0F78B0112A6D39BC006B8C80 /* Splash */,
 				0F78B0122A6D39C6006B8C80 /* MainTab */,
@@ -201,6 +204,14 @@
 				663BFBA32A81EB2800A540A2 /* Separator.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		669734652A9F3361009DEF06 /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				669734662A9F33B4009DEF06 /* WriteReviewStoreSearchView.swift */,
+			);
+			path = Review;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -290,6 +301,7 @@
 				663BFBA22A81EACC00A540A2 /* ViewModifier.swift in Sources */,
 				087A09382A81481100F4D34F /* HomeHeaderView.swift in Sources */,
 				663BFBA42A81EB2800A540A2 /* Separator.swift in Sources */,
+				669734672A9F33B4009DEF06 /* WriteReviewStoreSearchView.swift in Sources */,
 				0F5B15742A7F8C9C00E698F4 /* Color+Extensions.swift in Sources */,
 				0F78AFF92A6CCA6B006B8C80 /* EveryMeal_iOSApp.swift in Sources */,
 				0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */,
