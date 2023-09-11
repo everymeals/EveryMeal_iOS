@@ -14,9 +14,11 @@ struct WriteReviewStoreSearchView: View {
   var body: some View {
     NavigationView {
       VStack(alignment: .center, spacing: 28) {
-        CustomNavigationView {
+        CustomNavigationView(
+          rightItem: Image(systemName: "xmark"),
+          rightItemTapped: {
           closeButtonTapped()
-        }
+        })
         HStack(spacing: 0) {
           Text("다녀온 맛집은\n어디인가요?")
             .font(.system(size: 24, weight: .bold))
@@ -33,21 +35,40 @@ struct WriteReviewStoreSearchView: View {
 
 struct CustomNavigationView: View {
   var title: String = "리뷰 작성"
-  var rightItem: Image = Image(systemName: "xmark")
-  var closeButtonTapped: () -> Void
+  var rightItem: Image?
+  var leftItem: Image?
+  var rightItemTapped: (() -> Void)?
+  var leftItemTapped: (() -> Void)?
   
   var body: some View {
-    HStack(alignment: .center, spacing: 10) {
+    HStack(alignment: .center) {
+      if let leftItem = leftItem {
+        leftItem
+          .renderingMode(.template)
+          .foregroundColor(Color.grey5)
+          .onTapGesture {
+            guard let leftItemTapped = leftItemTapped else {
+              return
+            }
+            leftItemTapped()
+          }
+      }
       Spacer()
+      
       Text(title)
         .font(.system(size: 16, weight: .medium))
-        .padding(.leading, 20)
       Spacer()
-      rightItem
-        .foregroundColor(Color.grey5)
-        .onTapGesture {
-          closeButtonTapped()
-        }
+      
+      if let rightItem = rightItem {
+        rightItem
+          .foregroundColor(Color.grey5)
+          .onTapGesture {
+            guard let rightItemTapped = rightItemTapped else {
+              return
+            }
+            rightItemTapped()
+          }        
+      }
     }
     .padding(.horizontal, 20)
     .padding(.vertical, 12)
