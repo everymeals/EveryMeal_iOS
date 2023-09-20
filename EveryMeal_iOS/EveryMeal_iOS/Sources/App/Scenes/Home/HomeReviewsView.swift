@@ -131,32 +131,36 @@ struct ReviewCellView: View {
 }
 
 struct MoreReviewButton: View {
+  @State var isLinkActive = false
+  
   var body: some View {
-    HStack(alignment: .center, spacing: 10) {
-      Text("리뷰 더 보러 가기")
-        .font(.system(size: 16, weight: .medium))
-        .multilineTextAlignment(.center)
-        .foregroundColor(.everyMealRed)
+    NavigationView {
+      HStack(alignment: .center, spacing: 10) {
+        NavigationLink(destination: MoreBestRestaurantView(), isActive: $isLinkActive) {
+          Button {
+            print("맛집 더 보러 가기")
+            self.isLinkActive = true
+          } label: {
+            Text("맛집 더 보러 가기")
+              .foregroundColor(Color.everyMealRed)
+              .padding(.vertical, 13)
+              .frame(maxWidth: .infinity)
+              .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                  .inset(by: 0.5)
+                  .stroke(Color.everyMealRed, lineWidth: 1)
+              )
+          }
+        }
+      }
+      .padding(.bottom, 30)
     }
-    .padding(.horizontal, 10)
-    .padding(.vertical, 13)
-    .frame(maxWidth: .infinity, alignment: .center)
-    .background(.white)
-    .cornerRadius(12)
-    .overlay(
-      RoundedRectangle(cornerRadius: 12)
-        .inset(by: 0.5)
-        .stroke(Color.everyMealRed, lineWidth: 1)
-    )
-    .onTapGesture {
-      print("리뷰 더 보러 가기")
-    }
-    .padding(.vertical, 14)
   }
+  
 }
 
 struct HomeReviewsView_Previews: PreviewProvider {
   static var previews: some View {
-    MainTabBarView()
+    HomeReviewsView()
   }
 }
