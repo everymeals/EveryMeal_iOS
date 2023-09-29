@@ -38,7 +38,7 @@ struct HomeTopThreeMealsView: View {
 }
 
 struct MealGridView: View {
-  let dummtModels: [MealModel] = [MealModel(title: "수아당",
+  @State var mealModels: [MealModel] = [MealModel(title: "수아당",
                                             type: .분식,
                                             description: "ss",
                                             score: 3.0,
@@ -65,8 +65,8 @@ struct MealGridView: View {
   
   var body: some View {
     LazyVGrid(columns: columns, spacing: 8) {
-      ForEach(dummtModels.indices, id: \.self) { index in
-        MealImagesItemView(mealModel: dummtModels[index])
+      ForEach(mealModels.indices, id: \.self) { index in
+        MealImagesItemView(mealModel: mealModels[index])
         Spacer()
       }
     }

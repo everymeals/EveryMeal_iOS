@@ -11,6 +11,9 @@
 		087A093A2A81486400F4D34F /* HomeTopMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087A09392A81486400F4D34F /* HomeTopMenuView.swift */; };
 		087A093C2A8153BD00F4D34F /* HomeTopThreeMealsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087A093B2A8153BD00F4D34F /* HomeTopThreeMealsView.swift */; };
 		087A093E2A81545000F4D34F /* HomeTopThreeReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087A093D2A81545000F4D34F /* HomeTopThreeReviewsView.swift */; };
+		0887DB662ABE98A600A47FC4 /* ReviewStoreSearchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0887DB652ABE98A600A47FC4 /* ReviewStoreSearchListView.swift */; };
+		0887DB682ABE9B9100A47FC4 /* ReviewStoreSearchListRecentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0887DB672ABE9B9100A47FC4 /* ReviewStoreSearchListRecentCell.swift */; };
+		088EB1EA2AC6BA5B000A6A38 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088EB1E92AC6BA5B000A6A38 /* ImagePicker.swift */; };
 		0F43F6812A6EA86B00239AA4 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43F6802A6EA86B00239AA4 /* MapView.swift */; };
 		0F43F6832A6EA8AC00239AA4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43F6822A6EA8AC00239AA4 /* HomeView.swift */; };
 		0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4C83562A7727BE0006A8EA /* ChooseUnivView.swift */; };
@@ -34,6 +37,9 @@
 		087A09392A81486400F4D34F /* HomeTopMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopMenuView.swift; sourceTree = "<group>"; };
 		087A093B2A8153BD00F4D34F /* HomeTopThreeMealsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopThreeMealsView.swift; sourceTree = "<group>"; };
 		087A093D2A81545000F4D34F /* HomeTopThreeReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopThreeReviewsView.swift; sourceTree = "<group>"; };
+		0887DB652ABE98A600A47FC4 /* ReviewStoreSearchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewStoreSearchListView.swift; sourceTree = "<group>"; };
+		0887DB672ABE9B9100A47FC4 /* ReviewStoreSearchListRecentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewStoreSearchListRecentCell.swift; sourceTree = "<group>"; };
+		088EB1E92AC6BA5B000A6A38 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		0F43F6802A6EA86B00239AA4 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		0F43F6822A6EA8AC00239AA4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		0F4C83562A7727BE0006A8EA /* ChooseUnivView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseUnivView.swift; sourceTree = "<group>"; };
@@ -214,8 +220,11 @@
 			isa = PBXGroup;
 			children = (
 				669734662A9F33B4009DEF06 /* WriteReviewStoreSearchView.swift */,
+				0887DB652ABE98A600A47FC4 /* ReviewStoreSearchListView.swift */,
+				0887DB672ABE9B9100A47FC4 /* ReviewStoreSearchListRecentCell.swift */,
 				662C16592AAED5A900DCA844 /* ReviewStarPointView.swift */,
 				662C165B2AAEEC4D00DCA844 /* ReviewWriteImageTextView.swift */,
+				088EB1E92AC6BA5B000A6A38 /* ImagePicker.swift */,
 			);
 			path = Review;
 			sourceTree = "<group>";
@@ -303,6 +312,8 @@
 				0F78B0142A6D39DC006B8C80 /* MainTabBarView.swift in Sources */,
 				087A093E2A81545000F4D34F /* HomeTopThreeReviewsView.swift in Sources */,
 				087A093A2A81486400F4D34F /* HomeTopMenuView.swift in Sources */,
+				0887DB662ABE98A600A47FC4 /* ReviewStoreSearchListView.swift in Sources */,
+				088EB1EA2AC6BA5B000A6A38 /* ImagePicker.swift in Sources */,
 				0F43F6832A6EA8AC00239AA4 /* HomeView.swift in Sources */,
 				087A093C2A8153BD00F4D34F /* HomeTopThreeMealsView.swift in Sources */,
 				663BFBA22A81EACC00A540A2 /* ViewModifier.swift in Sources */,
@@ -313,6 +324,7 @@
 				0F5B15742A7F8C9C00E698F4 /* Color+Extensions.swift in Sources */,
 				0F78AFF92A6CCA6B006B8C80 /* EveryMeal_iOSApp.swift in Sources */,
 				0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */,
+				0887DB682ABE9B9100A47FC4 /* ReviewStoreSearchListRecentCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,11 +453,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EveryMeal_iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = XK53VMU7S3;
+				DEVELOPMENT_TEAM = 3WXYTFH2K7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "에브리밀";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"사진 권한 허용?\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -472,11 +485,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EveryMeal_iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = XK53VMU7S3;
+				DEVELOPMENT_TEAM = 3WXYTFH2K7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "에브리밀";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"사진 권한 허용?\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

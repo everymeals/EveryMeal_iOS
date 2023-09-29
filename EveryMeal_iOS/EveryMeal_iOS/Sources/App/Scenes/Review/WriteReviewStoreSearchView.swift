@@ -10,6 +10,7 @@ import SwiftUI
 struct WriteReviewStoreSearchView: View {
   @State var text: String = ""
   var closeButtonTapped: () -> Void
+  @Environment(\.presentationMode) var presentationMode
   
   var body: some View {
     NavigationView {
@@ -19,6 +20,7 @@ struct WriteReviewStoreSearchView: View {
           rightItemTapped: {
           closeButtonTapped()
         })
+        
         HStack(spacing: 0) {
           Text("다녀온 맛집은\n어디인가요?")
             .font(.system(size: 24, weight: .bold))
@@ -26,7 +28,27 @@ struct WriteReviewStoreSearchView: View {
             .padding(.leading, 20)
           Spacer()
         }
-        BestStoreSearchView(placeholder: "검색")
+        
+        let searchView = BestStoreSearchView(placeholder: "검색", backButtonDidTapped: {
+          presentationMode.wrappedValue.dismiss()
+        })
+        
+        NavigationLink(destination: searchView) {
+          HStack(spacing: 10) {
+            Image("icon-search-mono")
+              .frame(width: 24, height: 24)
+              .padding(.leading, 16)
+            Text("검색")
+              .font(.system(size: 16, weight: .regular))
+              .foregroundColor(Color.grey5)
+            Spacer()
+          }
+          .frame(height: 48)
+          .background(Color.grey1)
+          .border(Color.grey2)
+          .cornerRadius(12)
+          .padding(.horizontal, 16)
+        }
         Spacer()
       }
     }
@@ -41,33 +63,38 @@ struct CustomNavigationView: View {
   var leftItemTapped: (() -> Void)?
   
   var body: some View {
-    HStack(alignment: .center) {
-      if let leftItem = leftItem {
-        leftItem
-          .renderingMode(.template)
-          .foregroundColor(Color.grey5)
-          .onTapGesture {
-            guard let leftItemTapped = leftItemTapped else {
-              return
+    ZStack {
+      
+      HStack(alignment: .center) {
+        if let leftItem = leftItem {
+          leftItem
+            .renderingMode(.template)
+            .foregroundColor(Color.grey5)
+            .onTapGesture {
+              guard let leftItemTapped = leftItemTapped else {
+                return
+              }
+              leftItemTapped()
             }
-            leftItemTapped()
-          }
+        }
+        Spacer()
+        
+        if let rightItem = rightItem {
+          rightItem
+            .foregroundColor(Color.grey5)
+            .onTapGesture {
+              guard let rightItemTapped = rightItemTapped else {
+                return
+              }
+              rightItemTapped()
+            }
+        }
       }
-      Spacer()
-      
-      Text(title)
-        .font(.system(size: 16, weight: .medium))
-      Spacer()
-      
-      if let rightItem = rightItem {
-        rightItem
-          .foregroundColor(Color.grey5)
-          .onTapGesture {
-            guard let rightItemTapped = rightItemTapped else {
-              return
-            }
-            rightItemTapped()
-          }        
+      HStack {
+        Spacer()
+        Text(title)
+          .font(.system(size: 16, weight: .medium))
+        Spacer()
       }
     }
     .padding(.horizontal, 20)
@@ -82,47 +109,5 @@ struct WriteReviewStoreSearchView_Previews: PreviewProvider {
     WriteReviewStoreSearchView {
       print("close")
     }
-  }
-}
-
-struct BestStoreSearchView: View {
-  @State private var searchText: String = ""
-  @State private var searchResults: [String] = []
-  var placeholder: String
-  
-  var body: some View {
-    VStack {
-      BestStoreSearchBar(placeholder: placeholder,
-                text: $searchText,
-                onSearchButtonClicked: performSearch)
-        .padding(.horizontal, 20)
-      
-      List(searchResults, id: \.self) { result in
-        Text(result)
-      }
-    }
-  }
-  
-  func performSearch() {
-    searchResults = ["Apple", "Apple Pie", "Apple Juice"].filter { $0.lowercased().contains(searchText.lowercased()) }
-  }
-}
-
-struct BestStoreSearchBar: View {
-  var placeholder: String
-  @Binding var text: String
-  var onSearchButtonClicked: () -> Void
-  
-  var body: some View {
-    HStack(spacing: 10) {
-      Image("icon-search-mono")
-        .frame(width: 24, height: 24)
-      TextField(placeholder, text: $text, onCommit: onSearchButtonClicked)
-    }
-    .padding(.horizontal, 16)
-    .frame(height: 48)
-    .background(Color.grey1)
-    .cornerRadius(12)
-    .border(Color.grey2)
   }
 }

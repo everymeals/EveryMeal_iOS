@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct ReviewWriteImageTextView: View {
   
@@ -21,6 +22,7 @@ struct ReviewWriteImageTextView: View {
   
   @State var content: String = "ㄹㅇㄴㄹㅇㄴㅁㄹㅁ"
   @State private var textHeight = CGFloat.zero
+  @FocusState private var isTextFieldFocused: Bool
   
   var backButtonTapped: () -> Void
   var mealModel: MealModel
@@ -84,6 +86,8 @@ struct ReviewWriteImageTextView: View {
                 // TextEditor의 height를 동적으로 조절하기 위한 Text
                 ReviewTextEditor(content: $content)
                   .frame(height: max(120, textHeight + 20))
+                  .focused($isTextFieldFocused)
+                
               }.onPreferenceChange(ViewHeightKey.self) { textHeight = $0 }
                 .padding(.bottom, 16)
             }
@@ -104,6 +108,7 @@ struct ReviewWriteImageTextView: View {
         
       }
     }
+    .navigationBarHidden(true)
   }
 }
 
@@ -125,7 +130,7 @@ struct ReviewSaveButton: View {
 
 struct ReviewTextEditor: View {
   @Binding var content: String
-  @State var placeholder: String = "맛집에 대한 의견을 자세히 적어주시면 다른 사용자에게\n도움이 돼요!"
+  @State var placeholder: String = "맛집에 대한 의견을 자세히 적어주시면 다른 사용자에게 도움이 돼요!"
   
   var body: some View {
     if #available(iOS 16.0, *) {
@@ -166,6 +171,8 @@ struct ReviewTextEditor: View {
 
 struct ReviewSelectedImageView: View {
   @State var images: [Image]
+  @State var showImagePicker: Bool = false
+  @State var authorizationStatus: PHAuthorizationStatus = .denied
   
   var body: some View {
     HStack {
@@ -180,6 +187,16 @@ struct ReviewSelectedImageView: View {
           .foregroundColor(Color.grey7)
           .font(.system(size: 12, weight: .medium))
       }
+      .onTapGesture {
+        Task {
+          let status = await requestAuthorization()
+          if status == .authorized {
+            showImagePicker = true
+          } else {
+            // TODO: 권한 허용 요청 팝업 노출
+          }
+        }
+      }
       .padding(.horizontal, 33)
       .padding(.vertical, 24)
       .background(.white)
@@ -190,36 +207,48 @@ struct ReviewSelectedImageView: View {
           .stroke(Color(red: 0.9, green: 0.91, blue: 0.92), lineWidth: 1)
       )
       .padding(.trailing, 8)
+      .sheet(isPresented: $showImagePicker) {
+        let configuration = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
+        ImagePicker(configuration: configuration, isPresented: $showImagePicker)
+          .ignoresSafeArea(.keyboard)
+      }
       
       ForEach(images.indices, id: \.self) { index in
-        VStack {
-          ZStack {
-            images[index]
-              .resizable()
-              .aspectRatio(contentMode: .fill)
-            VStack(spacing: 0) {
-              HStack(spacing: 0) {
-//                Spacer()
+        ZStack(alignment: .center) {
+          images[index]
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(width: 91, height: 91)
+            .cornerRadius(8)
+          VStack {
+            HStack(alignment: .top) {
+              Spacer()
+              ZStack {
                 Circle()
                   .frame(width: 26, height: 26)
                   .foregroundColor(.black.opacity(0.6))
-                  .padding(.trailing, 10)
-                
-//                Image("icon-x-mono")
-//                ZStack {
-//                }
+                Image("icon-x-mono")
+                  .resizable()
+                  .frame(width: 16, height: 16)
               }
-              
-              Spacer()
             }
+            Spacer()
           }
+          .padding(.trailing, 5)
+          .padding(.top, 5)
+          .frame(width: 91, height: 91)
+          .cornerRadius(8)
         }
-        .frame(width: 91, height: 91)
-        .cornerRadius(8)
         .padding(.trailing, 8)
       }
       Spacer()
     }
+  }
+  
+  private func requestAuthorization() async -> PHAuthorizationStatus {
+    let requiredAccessLevel: PHAccessLevel = .readWrite
+    print(await PHPhotoLibrary.requestAuthorization(for: requiredAccessLevel))
+    return await PHPhotoLibrary.requestAuthorization(for: requiredAccessLevel)
   }
 }
 

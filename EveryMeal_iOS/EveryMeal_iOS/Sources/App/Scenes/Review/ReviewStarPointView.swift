@@ -11,9 +11,10 @@ struct ReviewStarPointView: View {
   @State var text: String = ""
   @State var starChecked = Array(repeating: false, count: 5)
   @State var isBubbleShown: Bool = true
+  @State var goNextView: Bool = false
   
-  var backButtonTapped: () -> Void
-  var mealModel: MealModel
+//  var backButtonTapped: () -> Void
+  @State var mealModel: MealModel
   private let navigationHeight: CGFloat = 48
   
   var body: some View {
@@ -25,7 +26,7 @@ struct ReviewStarPointView: View {
           CustomNavigationView(
             leftItem: Image("icon-arrow-left-small-mono"),
             leftItemTapped: {
-              backButtonTapped()
+//              backButtonTapped()
             }
           )
           HStack(spacing: 0) {
@@ -57,18 +58,29 @@ struct ReviewStarPointView: View {
             .frame(width: 210)
           
           HStack(spacing: 2) {
+            let reviewWriteImageTextView = ReviewWriteImageTextView(backButtonTapped: {
+//              self.backButtonTapped()
+            }, mealModel: self.mealModel)
+            
             ForEach(starChecked.indices, id: \.self) { index in
-              Image("icon-star-mono")
-                .resizable()
-                .renderingMode(.template)
-                .foregroundColor(starChecked[index] ? Color.everyMealYellow : Color.grey3)
-                .frame(width: 40, height: 40)
-                .onTapGesture {
-                  starChecked.enumerated().forEach { startIndex, value in
-                    print("index  \(index), starIndex \(startIndex)")
-                    starChecked[startIndex] = startIndex <= index
+              NavigationLink(destination: reviewWriteImageTextView,
+                             isActive: $goNextView) {
+                Image("icon-star-mono")
+                  .resizable()
+                  .renderingMode(.template)
+                  .foregroundColor(starChecked[index] ? Color.everyMealYellow : Color.grey3)
+                  .frame(width: 40, height: 40)
+                  .onTapGesture {
+                    starChecked.enumerated().forEach { startIndex, value in
+                      print("index  \(index), starIndex \(startIndex)")
+                      starChecked[startIndex] = startIndex <= index
+                      mealModel.likesCount = startIndex
+                      DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        goNextView = true
+                      }
+                    }
                   }
-                }
+              }
             }
           }
           .padding(.bottom, 14)
@@ -78,6 +90,7 @@ struct ReviewStarPointView: View {
         .frame(height: UIScreen.main.bounds.height - navigationHeight)
       }
     }
+    .navigationBarHidden(true)
   }
 }
 
@@ -118,8 +131,6 @@ struct ReviewStarPointView_Previews: PreviewProvider {
                                    doUserLike: false,
                                    imageURLs: ["fdsfads", "fdsafdas"],
                                    likesCount: 3)
-    ReviewStarPointView(backButtonTapped: {
-      print("backButton tapped")
-    }, mealModel: dummyMealModel)
+    ReviewStarPointView(mealModel: dummyMealModel)
   }
 }
