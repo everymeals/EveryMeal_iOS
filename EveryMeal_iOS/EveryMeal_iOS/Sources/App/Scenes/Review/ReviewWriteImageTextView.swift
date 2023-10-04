@@ -10,10 +10,11 @@ import PhotosUI
 
 struct ReviewWriteImageTextView: View {
   
-  init(backButtonTapped: @escaping () -> Void, mealModel: MealModel) {
+  init(mealModel: MealModel, nextButtonTapped: @escaping () -> Void, backButtonTapped: @escaping () -> Void) {
     UITextView.appearance().backgroundColor = .clear
-    self.backButtonTapped = backButtonTapped
     self.mealModel = mealModel
+    self.nextButtonTapped = nextButtonTapped
+    self.backButtonTapped = backButtonTapped
   }
   
   @State var starChecked = Array(repeating: false, count: 5)
@@ -24,8 +25,10 @@ struct ReviewWriteImageTextView: View {
   @State private var textHeight = CGFloat.zero
   @FocusState private var isTextFieldFocused: Bool
   
-  var backButtonTapped: () -> Void
   var mealModel: MealModel
+  var nextButtonTapped: () -> Void
+  var backButtonTapped: () -> Void
+  
   private let navigationHeight: CGFloat = 48
   
   var body: some View {
@@ -261,9 +264,12 @@ struct ReviewWriteImageTextView_Previews: PreviewProvider {
                                    doUserLike: false,
                                    imageURLs: ["fdsfads", "fdsafdas"],
                                    likesCount: 3)
-    ReviewWriteImageTextView(backButtonTapped: {
-      print("fdsa")
-    }, mealModel: dummyMealModel)
+    ReviewWriteImageTextView(mealModel: dummyMealModel,
+                             nextButtonTapped: {
+      print("next")
+    }, backButtonTapped: {
+      print("back")
+    })
   }
 }
 

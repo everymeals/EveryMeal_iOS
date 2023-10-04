@@ -7,19 +7,28 @@
 
 import SwiftUI
 
+enum ReviewStackViewType {
+  case searchView
+  case starPointView
+  case imageTextView
+  case reviewDetail
+}
+
 struct WriteReviewStoreSearchView: View {
-  @State var text: String = ""
+  @State private var text: String = ""
+  @State private var reviewNavigationStack: [ReviewStackViewType] = []
+  
   var closeButtonTapped: () -> Void
   @Environment(\.presentationMode) var presentationMode
   
   var body: some View {
-    NavigationView {
+    NavigationStack(path: $reviewNavigationStack) {
       VStack(alignment: .center, spacing: 28) {
         CustomNavigationView(
           rightItem: Image(systemName: "xmark"),
           rightItemTapped: {
-          closeButtonTapped()
-        })
+            closeButtonTapped()
+          })
         
         HStack(spacing: 0) {
           Text("다녀온 맛집은\n어디인가요?")
@@ -29,28 +38,65 @@ struct WriteReviewStoreSearchView: View {
           Spacer()
         }
         
-        let searchView = BestStoreSearchView(placeholder: "검색", backButtonDidTapped: {
-          presentationMode.wrappedValue.dismiss()
-        })
-        
-        NavigationLink(destination: searchView) {
-          HStack(spacing: 10) {
-            Image("icon-search-mono")
-              .frame(width: 24, height: 24)
-              .padding(.leading, 16)
-            Text("검색")
-              .font(.system(size: 16, weight: .regular))
-              .foregroundColor(Color.grey5)
-            Spacer()
-          }
-          .frame(height: 48)
-          .background(Color.grey1)
-          .border(Color.grey2)
-          .cornerRadius(12)
-          .padding(.horizontal, 16)
+        HStack(spacing: 10) {
+          Image("icon-search-mono")
+            .frame(width: 24, height: 24)
+            .padding(.leading, 16)
+          Text("검색")
+            .font(.system(size: 16, weight: .regular))
+            .foregroundColor(Color.grey5)
+          Spacer()
+        }
+        .frame(height: 48)
+        .background(Color.grey1)
+        .border(Color.grey2)
+        .cornerRadius(12)
+        .padding(.horizontal, 16)
+        .onTapGesture {
+          reviewNavigationStack.append(.searchView)
         }
         Spacer()
       }
+      .navigationDestination(for: ReviewStackViewType.self) { stackViewType in
+        let dummyMealModel = MealModel(title: "동경산책 성신여대점",
+                                       type: .일식,
+                                       description: "ss",
+                                       score: 4.0,
+                                       doUserLike: false,
+                                       imageURLs: ["fdsfads", "fdsafdas"],
+                                       likesCount: 3)
+        switch stackViewType {
+        case .searchView:
+          let searchView = BestStoreSearchView(nextButtonTapped: {
+            reviewNavigationStack.append(.starPointView)
+          }, placeholder: "검색", backButtonDidTapped: {
+            reviewNavigationStack.removeLast()
+          })
+          searchView
+        case .starPointView:
+          let startPointView = ReviewStarPointView(
+            mealModel: dummyMealModel,
+            nextButtonTapped: {
+              reviewNavigationStack.append(.imageTextView)
+            },
+            backButtonTapped: {
+              reviewNavigationStack.removeLast()
+            })
+          startPointView
+        case .imageTextView, .reviewDetail:
+          let reviewWriteImageTextView = ReviewWriteImageTextView(mealModel: dummyMealModel,
+                                                                  nextButtonTapped: {
+            print("next")
+          },
+          backButtonTapped: {
+            reviewNavigationStack.removeLast()
+          })
+          reviewWriteImageTextView
+        }
+      }
+      .padding(.bottom)
+      .navigationBarTitleDisplayMode(.inline)
+      .navigationBarHidden(true)
     }
   }
 }

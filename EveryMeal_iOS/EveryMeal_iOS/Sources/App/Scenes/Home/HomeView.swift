@@ -7,25 +7,49 @@
 
 import SwiftUI
 
+enum HomeStackViewType {
+  case writeReview
+  case restaurantList
+  case reviewList
+}
+
 struct HomeView: View {
+  @State private var navigationPath: [HomeStackViewType] = []
   var body: some View {
     VStack {
-      NavigationStack {
-        HomeHeaderView()
-        ScrollView(showsIndicators: true) {
-          HomeTopMenuView()
-          Separator()
-          HomeTopThreeMealsView()
-          Separator()
-          HomeReviewsView()
-          
-          NavigationLink {
-            MoreBestRestaurantView()
-          } label: {
+      NavigationStack(path: $navigationPath) {
+        VStack {
+          HomeHeaderView()
+          ScrollView(showsIndicators: true) {
+            HomeTopMenuView()
+            Separator()
+            HomeTopThreeMealsView()
+            MoreRestuarantButton()
+              .onTapGesture {
+                navigationPath.append(.restaurantList)
+              }
+            Separator()
+            HomeReviewsView()
             MoreReviewButton()
               .padding(.horizontal, 20)
+              .onTapGesture {
+                navigationPath.append(.reviewList)
+              }
           }
         }
+        .navigationDestination(for: HomeStackViewType.self) { stackViewType in
+          switch stackViewType {
+          case .restaurantList:
+            MoreBestRestaurantView()
+          case .reviewList:
+            MoreBestRestaurantView()
+          default:
+            MoreBestRestaurantView()
+          }
+        }
+        .padding(.bottom)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarHidden(true)
       }
     }
   }

@@ -18,21 +18,9 @@ struct HomeTopThreeMealsView: View {
           .padding(.top, 24)
         Spacer()
       }
-      VStack {
-        MealGridView()
-        Button {
-          print("맛집 더 보러 가기")
-        } label: {
-          Text("맛집 더 보러 가기")
-            .padding(.vertical, 13)
-            .frame(maxWidth: .infinity)
-            .overlay(
-              RoundedRectangle(cornerRadius: 12)
-                .inset(by: 0.5)
-                .stroke(Color.everyMealRed, lineWidth: 1)
-            )
-        }
-      }.padding(20)
+      MealGridView()
+        .padding(.horizontal, 20)
+        .padding(.top, 20)
     }
   }
 }
@@ -168,6 +156,24 @@ struct MealImagesItemLikeButton: View {
           .font(.system(size: 12, weight: .medium))
       }
     })
+  }
+}
+
+struct MoreRestuarantButton: View {
+  var body: some View {
+    HStack(alignment: .center, spacing: 10) {
+      Text("맛집 더 보러 가기")
+        .foregroundColor(Color.everyMealRed)
+        .padding(.vertical, 13)
+        .frame(maxWidth: .infinity)
+        .overlay(
+          RoundedRectangle(cornerRadius: 12)
+            .inset(by: 0.5)
+            .stroke(Color.everyMealRed, lineWidth: 1)
+        )
+    }
+    .padding(.bottom, 30)
+    .padding(.horizontal, 20)
   }
 }
 
