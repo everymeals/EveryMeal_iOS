@@ -33,8 +33,6 @@ struct HomeReviewsView: View {
       
       ReviewCellView()
       
-      MoreReviewButton()
-      
     }
     .padding(.horizontal, 20)
     
@@ -131,36 +129,24 @@ struct ReviewCellView: View {
 }
 
 struct MoreReviewButton: View {
-  @State var isLinkActive = false
-  
   var body: some View {
-    NavigationView {
-      HStack(alignment: .center, spacing: 10) {
-        NavigationLink(destination: MoreBestRestaurantView(), isActive: $isLinkActive) {
-          Button {
-            print("맛집 더 보러 가기")
-            self.isLinkActive = true
-          } label: {
-            Text("맛집 더 보러 가기")
-              .foregroundColor(Color.everyMealRed)
-              .padding(.vertical, 13)
-              .frame(maxWidth: .infinity)
-              .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                  .inset(by: 0.5)
-                  .stroke(Color.everyMealRed, lineWidth: 1)
-              )
-          }
-        }
-      }
-      .padding(.bottom, 30)
+    HStack(alignment: .center, spacing: 10) {
+      Text("리뷰 더 보러 가기")
+        .foregroundColor(Color.everyMealRed)
+        .padding(.vertical, 13)
+        .frame(maxWidth: .infinity)
+        .overlay(
+          RoundedRectangle(cornerRadius: 12)
+            .inset(by: 0.5)
+            .stroke(Color.everyMealRed, lineWidth: 1)
+        )
     }
+    .padding(.bottom, 30)
   }
-  
 }
 
 struct HomeReviewsView_Previews: PreviewProvider {
   static var previews: some View {
-    HomeReviewsView()
+    HomeView()
   }
 }

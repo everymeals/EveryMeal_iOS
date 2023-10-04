@@ -10,13 +10,23 @@ import SwiftUI
 struct HomeView: View {
   var body: some View {
     VStack {
-      HomeHeaderView()
-      ScrollView(showsIndicators: true) {
-        HomeTopMenuView()
-        Separator()
-        HomeTopThreeMealsView()
-        Separator()
-        HomeReviewsView()
+      NavigationStack {
+        HomeHeaderView()
+        ScrollView(showsIndicators: true) {
+          HomeTopMenuView()
+          Separator()
+          HomeTopThreeMealsView()
+          Separator()
+          HomeReviewsView()
+          
+          NavigationLink {
+            MoreBestRestaurantView()
+          } label: {
+            MoreReviewButton()
+              .padding(.horizontal, 20)
+          }
+          
+        }
       }
     }
   }

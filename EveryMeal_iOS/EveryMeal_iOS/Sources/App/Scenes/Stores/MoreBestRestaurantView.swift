@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MoreBestRestaurantView: View {
+  @Environment(\.dismiss) private var dismiss
+
   let columns = [
     GridItem(.flexible())
   ]
@@ -57,12 +59,27 @@ struct MoreBestRestaurantView: View {
       Spacer()
     }
     .padding(.bottom)
+    .navigationTitle("맛집")
+    .navigationBarTitleDisplayMode(.inline)
+    .navigationBarBackButtonHidden()
+    .toolbar {
+      ToolbarItem(placement: .navigationBarLeading) {
+        Button {
+          dismiss()
+        } label: {
+          Image("icon-arrow-left-small-mono")
+            .resizable()
+            .frame(width: 24, height: 24)
+        }
+      }
+    }
+    
   }
 }
 
 struct MoreBestRestaurantView_Previews: PreviewProvider {
   static var previews: some View {
-    MoreBestRestaurantView()
+    HomeView()
   }
 }
 
@@ -115,6 +132,8 @@ struct FilterBarView: View {
 }
 
 struct BestRestaurantCell: View {
+  @State var isPressed: Bool = false
+
   var body: some View {
     VStack(spacing: 10) {
       //            Rectangle()
@@ -169,15 +188,20 @@ struct BestRestaurantCell: View {
         
         // 좋아요 + 좋아요 cnt
         VStack(alignment: .center, spacing: 2) {
-          Image("icon-heart-mono")
+          let heartImage = isPressed ? "icon-heart-mono-bestRestaurant-fill" : "icon-heart-mono-bestRestaurant"
+          Image(heartImage)
+            .resizable()
             .frame(width: 24, height: 24)
+            .onTapGesture {
+              isPressed.toggle()
+            }
           
           Text("0")
             .font(
               Font.custom("Pretendard", size: 12)
                 .weight(.medium)
             )
-            .foregroundColor(Color(red: 0.69, green: 0.72, blue: 0.76))
+            .foregroundColor(isPressed ? Color.everyMealRed : Color.grey4)
         }
         .padding(10)
       }
