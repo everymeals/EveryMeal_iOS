@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Rectangle 2.png",
+      "filename" : "icon-heart-mono-fill.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Rectangle 2@2x.png",
+      "filename" : "icon-heart-mono-fill@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Rectangle 2@3x.png",
+      "filename" : "icon-heart-mono-fill@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

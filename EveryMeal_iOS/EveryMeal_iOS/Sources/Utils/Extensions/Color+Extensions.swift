@@ -14,6 +14,7 @@ extension Color {
   static let greenLight = Color(red: 0.94, green: 0.98, blue: 0.96)
   static let everyMealGreen = Color(red: 0.08, green: 0.77, blue: 0.49)
   static let everyMealYellow = Color(red: 1, green: 0.82, blue: 0.35)
+  static let everyMealBlack = Color(red: 0.1, green: 0.12, blue: 0.16)
   
   // grey
   static let grey1 = Color(red: 0.98, green: 0.98, blue: 0.98)

@@ -28,7 +28,9 @@ struct ChooseUnivView: View {
       }
       UnivGridView(isSelected: $isSelected)
         .padding(.top, 28)
-        .padding(.bottom, 15)
+        .overlay(alignment: .bottom, content: {
+          GradationView()
+        })
       ChooseButtonView(isSelected: $isSelected)
     }
   }
@@ -124,11 +126,6 @@ struct ChooseButtonView: View {
           print("학교 추가하기 버튼 👆")
         }
       SelectUnivButton(isSelected: $isSelected)
-        .onTapGesture {
-          if isSelected {
-            print("선택하기 버튼 👆")
-          }
-        }
     }
   }
 }
@@ -143,11 +140,11 @@ struct AddUnivView: View {
         VStack(alignment: .leading, spacing: 2) {
           Text("여기에 없어요")
             .font(.system(size: 15, weight: .semibold))
-            .foregroundColor(Color(red: 0.31, green: 0.35, blue: 0.41))
+            .foregroundColor(.grey8)
           
           Text("학교 신청하러 가기")
             .font(.system(size: 14, weight: .medium))
-            .foregroundColor(Color(red: 0.69, green: 0.72, blue: 0.76))
+            .foregroundColor(.grey5)
         }
       }
       .padding(.horizontal, 10)
@@ -167,17 +164,27 @@ struct AddUnivView: View {
 
 struct SelectUnivButton: View {
   @Binding var isSelected: Bool
+  var bottomPadding: CGFloat {
+    DeviceManager.shared.hasPhysicalHomeButton ? 24 : 0
+  }
   
   var body: some View {
-    Text("선택하기")
-      .frame(maxWidth: .infinity)
-      .padding()
-      .background(isSelected ? Color.accentColor : Color(red: 0.9, green: 0.91, blue: 0.92))
-      .font(.system(size: 16, weight: .medium))
-      .foregroundColor(Color.white)
-      .cornerRadius(12)
-      .padding(.horizontal, 20)
-      .padding(.bottom, 10)
+    Button {
+      if isSelected {
+        print("선택하기 버튼 클릭")
+      }
+    } label: {
+      Text("선택하기")
+        .frame(maxWidth: .infinity)
+        .padding()
+        .background(isSelected ? Color.accentColor : Color.grey3)
+        .font(.system(size: 16, weight: .medium))
+        .foregroundColor(Color.white)
+        .cornerRadius(12)
+        .padding(.horizontal, 20)
+        .padding(.bottom, bottomPadding)
+    }
+    .disabled(!isSelected)
   }
 }
 
