@@ -17,6 +17,7 @@ enum ReviewStackViewType {
 struct WriteReviewStoreSearchView: View {
   @State private var text: String = ""
   @State private var reviewNavigationStack: [ReviewStackViewType] = []
+  @State var exitAlertPresent = false
   
   var closeButtonTapped: () -> Void
   @Environment(\.presentationMode) var presentationMode
@@ -88,10 +89,26 @@ struct WriteReviewStoreSearchView: View {
                                                                   nextButtonTapped: {
             print("next")
           },
-          backButtonTapped: {
-            reviewNavigationStack.removeLast()
+          closeButtonTapped: {
+            exitAlertPresent.toggle()
+//            reviewNavigationStack.append(.exitAlert)
+//            reviewNavigationStack.removeLast()
           })
           reviewWriteImageTextView
+            .fullScreenCover(isPresented: $exitAlertPresent) {
+              let alert = EverymealAlertView(
+                title: "다음에 리뷰를 남길까요?",
+                description: "지금까지 작성한 내용은 저장되지 않아요.",
+                okButtonTitle: "계속 쓰기",
+                cancelButtonTitle: "나가기",
+                okButtonTapped: {
+                  
+                },
+                cancelButtonTapped: {
+                  exitAlertPresent.toggle()
+                })
+              alert
+            }
         }
       }
       .padding(.bottom)

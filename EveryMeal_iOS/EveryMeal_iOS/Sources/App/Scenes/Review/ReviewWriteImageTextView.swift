@@ -10,11 +10,11 @@ import PhotosUI
 
 struct ReviewWriteImageTextView: View {
   
-  init(mealModel: MealModel, nextButtonTapped: @escaping () -> Void, backButtonTapped: @escaping () -> Void) {
+  init(mealModel: MealModel, nextButtonTapped: @escaping () -> Void, closeButtonTapped: @escaping () -> Void) {
     UITextView.appearance().backgroundColor = .clear
     self.mealModel = mealModel
     self.nextButtonTapped = nextButtonTapped
-    self.backButtonTapped = backButtonTapped
+    self.closeButtonTapped = closeButtonTapped
   }
   
   @State var starChecked = Array(repeating: false, count: 5)
@@ -27,7 +27,7 @@ struct ReviewWriteImageTextView: View {
   
   var mealModel: MealModel
   var nextButtonTapped: () -> Void
-  var backButtonTapped: () -> Void
+  var closeButtonTapped: () -> Void
   
   private let navigationHeight: CGFloat = 48
   
@@ -37,9 +37,9 @@ struct ReviewWriteImageTextView: View {
         
         VStack {
           CustomNavigationView(
-            leftItem: Image("icon-arrow-left-small-mono"),
-            leftItemTapped: {
-              backButtonTapped()
+            rightItem: Image(systemName: "xmark"),
+            rightItemTapped: {
+              closeButtonTapped()
             }
           )
           .padding(.bottom, 30)
@@ -106,7 +106,9 @@ struct ReviewWriteImageTextView: View {
         
         VStack {
           Spacer()
-          ReviewSaveButton(selectEnable: $saveButtonEnabled)
+          ReviewSaveButton(selectEnable: $saveButtonEnabled) {
+            closeButtonTapped()
+          }
         }
         
       }
@@ -117,6 +119,7 @@ struct ReviewWriteImageTextView: View {
 
 struct ReviewSaveButton: View {
   @Binding var selectEnable: Bool
+  var closeButtonTapped: () -> Void
   
   var body: some View {
     Text("선택하기")
@@ -128,6 +131,9 @@ struct ReviewSaveButton: View {
       .cornerRadius(12)
       .padding(.horizontal, 20)
       .padding(.bottom, 10)
+      .onTapGesture {
+        closeButtonTapped()
+      }
   }
 }
 
@@ -266,8 +272,8 @@ struct ReviewWriteImageTextView_Previews: PreviewProvider {
                                    likesCount: 3)
     ReviewWriteImageTextView(mealModel: dummyMealModel,
                              nextButtonTapped: {
-      print("next")
-    }, backButtonTapped: {
+      print("close")
+    }, closeButtonTapped: {
       print("back")
     })
   }
