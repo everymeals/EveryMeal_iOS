@@ -182,6 +182,7 @@ struct ReviewSelectedImageView: View {
   @State var images: [Image]
   @State var showImagePicker: Bool = false
   @State var authorizationStatus: PHAuthorizationStatus = .denied
+  @State private var showingAccessAlert = false
   
   var body: some View {
     HStack {
@@ -197,14 +198,25 @@ struct ReviewSelectedImageView: View {
           .font(.system(size: 12, weight: .medium))
       }
       .onTapGesture {
-        Task {
-          let status = await requestAuthorization()
-          if status == .authorized {
-            showImagePicker = true
-          } else {
-            // TODO: 권한 허용 요청 팝업 노출
+        let requiredAccessLevel: PHAccessLevel = .readWrite
+        PHPhotoLibrary.requestAuthorization(for: requiredAccessLevel) { status in
+          switch status {
+          case .authorized:
+            var configuration = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
+            configuration.filter = .any(of: [.images, .livePhotos])
+            let picker = ImagePicker(configuration: configuration, isPresented: $showImagePicker)
+          default:
+            showingAccessAlert = true
           }
         }
+      }
+      .alert(isPresented: $showingAccessAlert) {
+        Alert(
+          title: Text("사진 권한을 허용해야 사진 추가가 가능해요!"), message: nil,
+          dismissButton: .default(Text("OK"), action: {
+            showingAccessAlert = false
+          })
+        )
       }
       .padding(.horizontal, 33)
       .padding(.vertical, 24)
