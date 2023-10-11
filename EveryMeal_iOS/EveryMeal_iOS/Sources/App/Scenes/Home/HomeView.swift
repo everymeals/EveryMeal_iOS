@@ -16,41 +16,39 @@ enum HomeStackViewType {
 struct HomeView: View {
   @State private var navigationPath: [HomeStackViewType] = []
   var body: some View {
-    VStack {
-      NavigationStack(path: $navigationPath) {
-        VStack {
-          HomeHeaderView()
-          ScrollView(showsIndicators: true) {
-            HomeTopMenuView()
-            Separator()
-            HomeTopThreeMealsView()
-            MoreRestuarantButton()
-              .onTapGesture {
-                navigationPath.append(.restaurantList)
-              }
-            Separator()
-            HomeReviewsView()
-            MoreReviewButton()
-              .padding(.horizontal, 20)
-              .onTapGesture {
-                navigationPath.append(.reviewList)
-              }
-          }
+    NavigationStack(path: $navigationPath) {
+      VStack {
+        HomeHeaderView()
+        ScrollView(showsIndicators: true) {
+          HomeTopMenuView()
+          Separator()
+          HomeTopThreeMealsView()
+          MoreRestuarantButton()
+            .onTapGesture {
+              navigationPath.append(.restaurantList)
+            }
+          Separator()
+          HomeReviewsView()
+          MoreReviewButton()
+            .padding(.horizontal, 20)
+            .onTapGesture {
+              navigationPath.append(.reviewList)
+            }
         }
-        .navigationDestination(for: HomeStackViewType.self) { stackViewType in
-          switch stackViewType {
-          case .restaurantList:
-            MoreBestRestaurantView()
-          case .reviewList:
-            MoreBestRestaurantView()
-          default:
-            MoreBestRestaurantView()
-          }
-        }
-        .padding(.bottom)
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarHidden(true)
       }
+      .navigationDestination(for: HomeStackViewType.self) { stackViewType in
+        switch stackViewType {
+        case .restaurantList:
+          MoreBestRestaurantView()
+        case .reviewList:
+          MoreBestRestaurantView()
+        default:
+          MoreBestRestaurantView()
+        }
+      }
+      .padding(.bottom)
+      .navigationBarTitleDisplayMode(.inline)
+      .navigationBarHidden(true)
     }
   }
 }
