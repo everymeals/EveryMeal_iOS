@@ -46,7 +46,7 @@ struct MainTabBarView: View {
     .tabViewStyle(.automatic)
     .onAppear(perform: {
       UITabBar.appearance().unselectedItemTintColor = UIColor(red: 0.69, green: 0.72, blue: 0.76, alpha: 1)
-      UITabBar.appearance().isTranslucent = false
+//      UITabBar.appearance().isTranslucent = false
     })
   }
   
