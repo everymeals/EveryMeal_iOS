@@ -34,7 +34,6 @@ struct ReviewWriteImageTextView: View {
   var body: some View {
     NavigationView {
       ZStack {
-        
         VStack {
           CustomNavigationView(
             rightItem: Image(systemName: "xmark"),
@@ -94,10 +93,9 @@ struct ReviewWriteImageTextView: View {
               }.onPreferenceChange(ViewHeightKey.self) { textHeight = $0 }
                 .padding(.bottom, 16)
             }
-            VStack(alignment: .leading) {
-              ReviewSelectedImageView(images: [Image("Rectangle 2"), Image("Rectangle 2")])
-                .padding(.leading, 20)
-            }
+            ReviewSelectedImageView(images: [])
+              .padding(.leading, 20)
+
             
             Spacer()
           }
@@ -184,92 +182,104 @@ struct ReviewSelectedImageView: View {
   @State var authorizationStatus: PHAuthorizationStatus = .denied
   @State private var showingAccessAlert = false
   
+  
   var body: some View {
-    HStack {
-      VStack(alignment: .center, spacing: 2) {
-        Image("icon-picture-mono")
-          .resizable()
-          .renderingMode(.template)
-          .foregroundColor(.grey5)
-          .frame(width: 24, height: 24)
-        
-        Text("\(images.count)/10")
-          .foregroundColor(Color.grey7)
-          .font(.system(size: 12, weight: .medium))
-      }
-      .onTapGesture {
-        let requiredAccessLevel: PHAccessLevel = .readWrite
-        PHPhotoLibrary.requestAuthorization(for: requiredAccessLevel) { status in
-          switch status {
-          case .authorized:
-            var configuration = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
-            configuration.filter = .any(of: [.images, .livePhotos])
-            let picker = ImagePicker(configuration: configuration, isPresented: $showImagePicker)
-          default:
-            showingAccessAlert = true
-          }
-        }
-      }
-      .alert(isPresented: $showingAccessAlert) {
-        Alert(
-          title: Text("사진 권한을 허용해야 사진 추가가 가능해요!"), message: nil,
-          dismissButton: .default(Text("OK"), action: {
-            showingAccessAlert = false
-          })
-        )
-      }
-      .padding(.horizontal, 33)
-      .padding(.vertical, 24)
-      .background(.white)
-      .frame(width: 91, height: 91)
-      .cornerRadius(10)
-      .overlay(
-        RoundedRectangle(cornerRadius: 10)
-          .stroke(Color(red: 0.9, green: 0.91, blue: 0.92), lineWidth: 1)
-      )
-      .padding(.trailing, 8)
-      .sheet(isPresented: $showImagePicker) {
-        let configuration = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
-        ImagePicker(configuration: configuration, isPresented: $showImagePicker)
-          .ignoresSafeArea(.keyboard)
-      }
-      
-      ForEach(images.indices, id: \.self) { index in
-        ZStack(alignment: .center) {
-          images[index]
+    ScrollView(.horizontal, showsIndicators: false) {
+      LazyHGrid(rows: [GridItem(.fixed(20))]) {
+        VStack(alignment: .center, spacing: 2) {
+          Image("icon-picture-mono")
             .resizable()
-            .aspectRatio(contentMode: .fill)
-            .frame(width: 91, height: 91)
-            .cornerRadius(8)
-          VStack {
-            HStack(alignment: .top) {
-              Spacer()
-              ZStack {
-                Circle()
-                  .frame(width: 26, height: 26)
-                  .foregroundColor(.black.opacity(0.6))
-                Image("icon-x-mono")
-                  .resizable()
-                  .frame(width: 16, height: 16)
-              }
-            }
-            Spacer()
-          }
-          .padding(.trailing, 5)
-          .padding(.top, 5)
-          .frame(width: 91, height: 91)
-          .cornerRadius(8)
+            .renderingMode(.template)
+            .foregroundColor(.grey5)
+            .frame(width: 24, height: 24)
+          
+          Text("\(images.count)/10")
+            .foregroundColor(Color.grey7)
+            .font(.system(size: 12, weight: .medium))
+            .fixedSize()
         }
+        .onTapGesture {
+          requestAuthorization()
+        }
+        .alert(isPresented: $showingAccessAlert) {
+          Alert(
+            title: Text("사진 권한을 허용해야 사진 추가가 가능해요!"), message: nil,
+            dismissButton: .default(Text("OK"), action: {
+              Functions.openAppSettings()
+            })
+          )
+        }
+        .padding(.horizontal, 33)
+        .padding(.vertical, 24)
+        .background(.white)
+        .frame(width: 91, height: 91)
+        .cornerRadius(10)
+        .overlay(
+          RoundedRectangle(cornerRadius: 10)
+            .stroke(Color(red: 0.9, green: 0.91, blue: 0.92), lineWidth: 1)
+        )
         .padding(.trailing, 8)
+        .sheet(isPresented: $showImagePicker) {
+          makePHPicker()
+        }
+        
+        ForEach(images.indices, id: \.self) { index in
+          ZStack(alignment: .center) {
+            images[index]
+              .resizable()
+              .aspectRatio(contentMode: .fill)
+              .frame(width: 91, height: 91)
+              .cornerRadius(8)
+            VStack {
+              HStack(alignment: .top) {
+                Spacer()
+                ZStack {
+                  Circle()
+                    .frame(width: 26, height: 26)
+                    .foregroundColor(.black.opacity(0.6))
+                  Image("icon-x-mono")
+                    .resizable()
+                    .frame(width: 16, height: 16)
+                }
+              }
+              Spacer()
+            }
+            .padding(.trailing, 5)
+            .padding(.top, 5)
+            .frame(width: 91, height: 91)
+            .cornerRadius(10)
+            .onTapGesture {
+              images.remove(at: index)
+            }
+            
+            RoundedRectangle(cornerRadius: 10)
+              .stroke(Color(red: 0.9, green: 0.91, blue: 0.92), lineWidth: 1)
+          }
+          .padding(.trailing, 8)
+        }
+        Spacer()
       }
-      Spacer()
     }
   }
   
-  private func requestAuthorization() async -> PHAuthorizationStatus {
+  private func requestAuthorization() {
     let requiredAccessLevel: PHAccessLevel = .readWrite
-    print(await PHPhotoLibrary.requestAuthorization(for: requiredAccessLevel))
-    return await PHPhotoLibrary.requestAuthorization(for: requiredAccessLevel)
+    PHPhotoLibrary.requestAuthorization(for: requiredAccessLevel) { status in
+      switch status {
+      case .authorized:
+        _ = makePHPicker()
+        showImagePicker = true
+      default:
+        showingAccessAlert = true
+      }
+    }
+  }
+  
+  private func makePHPicker() -> some View {
+    var configuration = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
+    configuration.filter = .any(of: [.images, .livePhotos])
+    configuration.selectionLimit = 10 // FIXME: 기획 확인 후 변경
+    return ImagePicker(configuration: configuration, isPresented: $showImagePicker, selectedImages: $images)
   }
 }
 
