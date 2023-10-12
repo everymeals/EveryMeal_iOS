@@ -15,6 +15,9 @@ enum HomeStackViewType {
 
 struct HomeView: View {
   @State private var navigationPath: [HomeStackViewType] = []
+  private let viewBottomargin: CGFloat = 24
+  private let moreReviewBtnBottomMargin: CGFloat = 13
+  
   var body: some View {
     NavigationStack(path: $navigationPath) {
       VStack {
@@ -31,6 +34,7 @@ struct HomeView: View {
           HomeReviewsView()
           MoreReviewButton()
             .padding(.horizontal, 20)
+            .padding(.bottom, Constants.tabBarHeight + viewBottomargin - moreReviewBtnBottomMargin)
             .onTapGesture {
               navigationPath.append(.reviewList)
             }
@@ -46,7 +50,7 @@ struct HomeView: View {
           MoreBestRestaurantView()
         }
       }
-      .padding(.bottom)
+      .edgesIgnoringSafeArea(.bottom)
       .navigationBarTitleDisplayMode(.inline)
       .navigationBarHidden(true)
     }
