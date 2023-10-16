@@ -11,6 +11,7 @@
 		087A093A2A81486400F4D34F /* HomeTopMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087A09392A81486400F4D34F /* HomeTopMenuView.swift */; };
 		087A093C2A8153BD00F4D34F /* HomeTopThreeMealsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087A093B2A8153BD00F4D34F /* HomeTopThreeMealsView.swift */; };
 		087A093E2A81545000F4D34F /* HomeReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087A093D2A81545000F4D34F /* HomeReviewsView.swift */; };
+		087F9F522ADD63C6001DB3F2 /* ReviewDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087F9F512ADD63C6001DB3F2 /* ReviewDetailView.swift */; };
 		0887DB662ABE98A600A47FC4 /* ReviewStoreSearchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0887DB652ABE98A600A47FC4 /* ReviewStoreSearchListView.swift */; };
 		0887DB682ABE9B9100A47FC4 /* ReviewStoreSearchListRecentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0887DB672ABE9B9100A47FC4 /* ReviewStoreSearchListRecentCell.swift */; };
 		088EB1EA2AC6BA5B000A6A38 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088EB1E92AC6BA5B000A6A38 /* ImagePicker.swift */; };
@@ -43,6 +44,7 @@
 		087A09392A81486400F4D34F /* HomeTopMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopMenuView.swift; sourceTree = "<group>"; };
 		087A093B2A8153BD00F4D34F /* HomeTopThreeMealsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopThreeMealsView.swift; sourceTree = "<group>"; };
 		087A093D2A81545000F4D34F /* HomeReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReviewsView.swift; sourceTree = "<group>"; };
+		087F9F512ADD63C6001DB3F2 /* ReviewDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailView.swift; sourceTree = "<group>"; };
 		0887DB652ABE98A600A47FC4 /* ReviewStoreSearchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewStoreSearchListView.swift; sourceTree = "<group>"; };
 		0887DB672ABE9B9100A47FC4 /* ReviewStoreSearchListRecentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewStoreSearchListRecentCell.swift; sourceTree = "<group>"; };
 		088EB1E92AC6BA5B000A6A38 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -83,6 +85,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		087F9F532ADD63D1001DB3F2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				669734662A9F33B4009DEF06 /* WriteReviewStoreSearchView.swift */,
+				0887DB652ABE98A600A47FC4 /* ReviewStoreSearchListView.swift */,
+				0887DB672ABE9B9100A47FC4 /* ReviewStoreSearchListRecentCell.swift */,
+				662C16592AAED5A900DCA844 /* ReviewStarPointView.swift */,
+				087F9F512ADD63C6001DB3F2 /* ReviewDetailView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		087F9F542ADD63D8001DB3F2 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				662C165B2AAEEC4D00DCA844 /* ReviewWriteImageTextView.swift */,
+				088EB1E92AC6BA5B000A6A38 /* ImagePicker.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		0F43F67E2A6EA82C00239AA4 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -261,12 +284,8 @@
 		669734652A9F3361009DEF06 /* Review */ = {
 			isa = PBXGroup;
 			children = (
-				669734662A9F33B4009DEF06 /* WriteReviewStoreSearchView.swift */,
-				0887DB652ABE98A600A47FC4 /* ReviewStoreSearchListView.swift */,
-				0887DB672ABE9B9100A47FC4 /* ReviewStoreSearchListRecentCell.swift */,
-				662C16592AAED5A900DCA844 /* ReviewStarPointView.swift */,
-				662C165B2AAEEC4D00DCA844 /* ReviewWriteImageTextView.swift */,
-				088EB1E92AC6BA5B000A6A38 /* ImagePicker.swift */,
+				087F9F542ADD63D8001DB3F2 /* Components */,
+				087F9F532ADD63D1001DB3F2 /* Views */,
 			);
 			path = Review;
 			sourceTree = "<group>";
@@ -375,6 +394,7 @@
 				663BFBA42A81EB2800A540A2 /* Separator.swift in Sources */,
 				669734672A9F33B4009DEF06 /* WriteReviewStoreSearchView.swift in Sources */,
 				0FF7C7192A91ECEF00BFC33D /* GradationView.swift in Sources */,
+				087F9F522ADD63C6001DB3F2 /* ReviewDetailView.swift in Sources */,
 				0F5B15742A7F8C9C00E698F4 /* Color+Extensions.swift in Sources */,
 				0F80B4032ABAFABF00167AB6 /* MoreBestRestaurantView.swift in Sources */,
 				0F78AFF92A6CCA6B006B8C80 /* EveryMeal_iOSApp.swift in Sources */,
