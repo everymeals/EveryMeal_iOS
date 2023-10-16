@@ -10,11 +10,36 @@ import SwiftUI
 struct MoreReviewsView: View {
   @Environment(\.dismiss) private var dismiss
 
+  let columns = [
+    GridItem(.flexible())
+  ]
+  
   var body: some View {
     VStack {
       FilterBarView()
-
-      Text("Hello, World!")
+      
+      ScrollView (showsIndicators: false) {
+        LazyVGrid(columns: columns) {
+          ReviewCellView()
+          
+          Rectangle()
+            .frame(height: 1)
+            .foregroundColor(.grey2)
+          
+          ReviewCellView()
+          
+          Rectangle()
+            .frame(height: 1)
+            .foregroundColor(.grey2)
+          
+          ReviewCellView()
+          
+          Rectangle()
+            .frame(height: 1)
+            .foregroundColor(.grey2)
+        }
+      }
+      .padding(.horizontal, 20)
       
       Spacer()
     }
@@ -37,6 +62,6 @@ struct MoreReviewsView: View {
 
 struct MoreReviewsView_Previews: PreviewProvider {
   static var previews: some View {
-    HomeView()
+    MoreReviewsView()
   }
 }
