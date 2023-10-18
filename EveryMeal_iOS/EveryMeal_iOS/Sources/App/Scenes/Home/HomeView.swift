@@ -42,7 +42,7 @@ struct HomeView: View {
           case .restaurantList:
             MoreBestRestaurantView()
           case .reviewList:
-            MoreBestRestaurantView()
+            MoreReviewsView()
           default:
             MoreBestRestaurantView()
           }
