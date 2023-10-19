@@ -17,9 +17,13 @@ struct ReviewDetailView: View {
   
   var nextButtonTapped: () -> Void
   var backButtonDidTapped: () -> Void
+  var fontSize: CGFloat = 18
+    var paddingSize: CGFloat {
+        -(fontSize * 0.325)
+    }
   
   var body: some View {
-    VStack {
+    VStack(alignment: .center, spacing: 0) {
       CustomNavigationView(
         title: "리뷰",
         leftItem: Image("icon-arrow-left-small-mono"),
@@ -29,7 +33,32 @@ struct ReviewDetailView: View {
       )
       ReviewUserProfileView(reviewModel: reviewModel)
       ReviewImagesView(urls: reviewModel.mealModel.imageURLs)
+        .aspectRatio(contentMode: .fit)
+        .frame(width: UIScreen.main.bounds.width)
       
+      VStack(spacing: 40) {
+        Text(reviewModel.mealModel.description)
+          .font(.system(size: 15, weight: .regular))
+          .foregroundColor(.grey8)
+          .frame(width: UIScreen.main.bounds.width)
+        HStack(spacing: 6) {
+          Image("icon-thumb-up-mono")
+            .renderingMode(.template)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 22)
+            .foregroundColor(.red)
+          Text(String(describing: reviewModel.mealModel.likesCount))
+            .font(.system(size: 16, weight: .semibold))
+            .foregroundColor(.red)
+        }
+        .padding(.vertical, 10)
+        .padding(.horizontal, 21.5)
+        .background(Color.redLight)
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+      }
+        .padding(20)
+        
       Spacer()
     }
     .navigationBarHidden(true)
@@ -91,8 +120,6 @@ struct ReviewUserProfileView: View {
     .frame(height: 84)
     .padding(.horizontal, 20)
     .onAppear {
-      UIScrollView.appearance().isPagingEnabled = true
-      UIScrollView.appearance().showsHorizontalScrollIndicator = false
       starChecked.enumerated().forEach { startIndex, value in
           starChecked[startIndex] = startIndex < reviewModel.mealModel.likesCount
       }
@@ -103,80 +130,99 @@ struct ReviewUserProfileView: View {
 struct ReviewImagesView: View {
   var urls: [String]?
   let defaultImageURL = "https://media.tarkett-image.com/large/TH_25094221_25187221_001.jpg"
+  @State private var currentPage: Int = 0
   
   var body: some View {
-    VStack(spacing: 0) {
-      ZStack(alignment: .top) {
-        ScrollView(.horizontal) {
-          LazyHStack(spacing: 0) {
-            ForEach(urls ?? [defaultImageURL], id: \.self) { url in
-              AsyncImage(url: URL(string: url)!) { image in
-                image.resizable()
-                  .scaledToFit()
-                  .frame(width: UIScreen.main.bounds.width,
-                         height: UIScreen.main.bounds.width,
-                         alignment: .center)
-              } placeholder: {
-                Rectangle()
-                  .foregroundColor(.gray)
-                  .frame(width: UIScreen.main.bounds.width,
-                         height: UIScreen.main.bounds.width,
-                         alignment: .center)
-              }
-              
+    ZStack {
+      ScrollView(.horizontal) {
+        LazyHStack(spacing: 0) {
+          ForEach(urls ?? [defaultImageURL], id: \.self) { url in
+            AsyncImage(url: URL(string: url)!) { image in
+              image.resizable()
+                .scaledToFit()
+                .frame(width: UIScreen.main.bounds.width,
+                       height: UIScreen.main.bounds.width,
+                       alignment: .center)
+            } placeholder: {
+              Rectangle()
+                .foregroundColor(.gray)
+                .frame(width: UIScreen.main.bounds.width,
+                       height: UIScreen.main.bounds.width,
+                       alignment: .center)
             }
+            
           }
         }
-        .frame(width: UIScreen.main.bounds.width,
-               height: UIScreen.main.bounds.width,
-               alignment: .center)
-        VStack {
-          HStack(spacing: 0) {
-            HStack {
-              Image("icon-pin-location-mono")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .foregroundColor(.white)
-                .frame(width: 16)
-                .padding(.trailing, 4)
-              
-              Text("만약 태그 이름이 길어지면 이렇게 보이게해주세요")
-                .font(.system(size: 14, weight: .medium))
-                .lineLimit(1)
-                .foregroundColor(.white)
-              
-              Spacer()
-              
-              Image("icon-arrow-right-small-mono")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .foregroundColor(.white)
-                .frame(width: 14)
-            }
-            .padding(6)
-            .background(.ultraThinMaterial) // TODO: 시스템 블러로 대응해도 될지 논의 필요
-            .clipShape(RoundedRectangle(cornerRadius: 6))
+        .background(GeometryReader { geometry in
+          Color.clear
+            .preference(key: ScrollOffsetPreferenceKey.self, value: geometry.frame(in: .named("scroll")).origin)
+        })
+        .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
+          let offset = value.x == 0 ? 0 : -value.x
+          let screenWidth = UIScreen.main.bounds.width
+          let centerX = offset + (screenWidth / 2)
+          currentPage = Int(floor(centerX/screenWidth) + 1)
+        }
+        
+      }
+      .coordinateSpace(name: "scroll")
+      
+      .frame(width: UIScreen.main.bounds.width,
+             height: UIScreen.main.bounds.width,
+             alignment: .center)
+      
+      VStack {
+        Spacer()
+        HStack(spacing: 0) {
+          HStack {
+            Image("icon-pin-location-mono")
+              .resizable()
+              .aspectRatio(contentMode: .fit)
+              .foregroundColor(.white)
+              .frame(width: 16)
+              .padding(.trailing, 4)
             
-            Rectangle()
-              .frame(width: 18)
-              .foregroundColor(.clear)
+            Text("만약 태그 이름이 길어지면 이렇게 보이게해주세요")
+              .font(.system(size: 14, weight: .medium))
+              .lineLimit(1)
+              .foregroundColor(.white)
+            
             Spacer()
             
-            Text("1/\(urls?.count ?? 1)")
-              .font(.system(size: 14, weight: .regular))
+            Image("icon-arrow-right-small-mono")
+              .resizable()
+              .aspectRatio(contentMode: .fit)
               .foregroundColor(.white)
-              .padding(6)
-              .frame(height: 25)
-              .background(.ultraThinMaterial) // TODO: 시스템 블러로 대응해도 될지 논의 필요
-              .clipShape(RoundedRectangle(cornerRadius: 20))
+              .frame(width: 14)
           }
-          .padding(.horizontal, 14)
+          .padding(6)
+          .background(.ultraThinMaterial) // TODO: 시스템 블러로 대응해도 될지 논의 필요
+          .clipShape(RoundedRectangle(cornerRadius: 6))
           
+          Spacer()
+          
+          Text("\(currentPage)/\(urls?.count ?? 1)")
+            .font(.system(size: 14, weight: .regular))
+            .foregroundColor(.white)
+            .padding(6)
+            .frame(height: 25)
+            .background(.ultraThinMaterial) // TODO: 시스템 블러로 대응해도 될지 논의 필요
+            .clipShape(RoundedRectangle(cornerRadius: 20))
         }
+        .padding(.horizontal, 14)
       }
-      Spacer()
+      .padding(.bottom, 10)
+    }
+    .onAppear {
+      UIScrollView.appearance().isPagingEnabled = true
+      UIScrollView.appearance().showsHorizontalScrollIndicator = false
     }
   }
+}
+
+struct ScrollOffsetPreferenceKey: PreferenceKey {
+    static var defaultValue: CGPoint = .zero
+    static func reduce(value: inout CGPoint, nextValue: () -> CGPoint) { }
 }
 
 struct ReviewDetailModel {
@@ -192,11 +238,10 @@ struct ReviewDetailView_Previews: PreviewProvider {
   static var previews: some View {
     let dummyMealModel = MealModel(title: "동경산책 성신여대점",
                                    type: .일식,
-                                   description: "ss",
+                                   description: "사장님이 친절하시고 안주가 다 너무 맛있었습니다~! 분위기가 좋아서 다음에 또 갈 것 같아요!! 동기들이랑 여럿이서 가도 자리 넉넉하고 좋았어요!! ^_^",
                                    score: 4.0,
                                    doUserLike: false,
                                    imageURLs: [
-                                    "https://www.eatingwell.com/thmb/m5xUzIOmhWSoXZnY-oZcO9SdArQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/article_291139_the-top-10-healthiest-foods-for-kids_-02-4b745e57928c4786a61b47d8ba920058.jpg",
                                     "https://crcf.cookatmarket.com/product/images/2019/11/tudi_1574662390_2739_720.jpg",
                                     "https://img.khan.co.kr/news/2023/04/20/news-p.v1.20230420.527bc9f1e42f4edfa5dec034ee3b91bd_P1.jpg"
                                    ],
