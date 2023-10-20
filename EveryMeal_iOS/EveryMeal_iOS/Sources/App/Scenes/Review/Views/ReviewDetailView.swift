@@ -12,6 +12,7 @@ struct ReviewDetailView: View {
   // MARK: - States
   
   @State var reviewModel: ReviewDetailModel
+  @State var didClickedLikeButton: Bool = false
   
   // MARK: - Property
   
@@ -47,14 +48,23 @@ struct ReviewDetailView: View {
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: 22)
-            .foregroundColor(.red)
+            .foregroundColor(reviewModel.mealModel.doUserLike ? .red : .grey5)
           Text(String(describing: reviewModel.mealModel.likesCount))
             .font(.system(size: 16, weight: .semibold))
-            .foregroundColor(.red)
+            .foregroundColor(reviewModel.mealModel.doUserLike ? .red : .grey5)
+        }
+        .onTapGesture {
+          // FIXME: 임시 UI 처리. 추후 수정 필요
+          reviewModel.mealModel.doUserLike.toggle()
+          if reviewModel.mealModel.doUserLike {
+            reviewModel.mealModel.likesCount += 1
+          } else {
+            reviewModel.mealModel.likesCount -= 1
+          }
         }
         .padding(.vertical, 10)
         .padding(.horizontal, 21.5)
-        .background(Color.redLight)
+        .background(reviewModel.mealModel.doUserLike ? Color.redLight : Color.grey2)
         .clipShape(RoundedRectangle(cornerRadius: 8))
       }
         .padding(20)
@@ -176,6 +186,7 @@ struct ReviewImagesView: View {
         HStack(spacing: 0) {
           HStack {
             Image("icon-pin-location-mono")
+              .renderingMode(.template)
               .resizable()
               .aspectRatio(contentMode: .fit)
               .foregroundColor(.white)
@@ -190,6 +201,7 @@ struct ReviewImagesView: View {
             Spacer()
             
             Image("icon-arrow-right-small-mono")
+              .renderingMode(.template)
               .resizable()
               .aspectRatio(contentMode: .fit)
               .foregroundColor(.white)
@@ -229,8 +241,7 @@ struct ReviewDetailModel {
   let nickname: String
   let userID: String
   let profileImageURL: String
-  let mealModel: MealModel
-  
+  var mealModel: MealModel
   let dateBefore: Int
 }
 
