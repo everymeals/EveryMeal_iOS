@@ -23,11 +23,12 @@ struct ReviewWriteImageTextView: View {
   
   @State var content: String = "ㄹㅇㄴㄹㅇㄴㅁㄹㅁ"
   @State private var textHeight = CGFloat.zero
-  @FocusState private var isTextFieldFocused: Bool
   
+  private let writeReviewScrollViewID = "writeReviewScrollViewID"
   var mealModel: MealModel
   var saveButtonTapped: (ReviewDetailModel) -> Void
   var closeButtonTapped: () -> Void
+  
   
   private let navigationHeight: CGFloat = 48
   
@@ -46,61 +47,66 @@ struct ReviewWriteImageTextView: View {
           Spacer()
         }
         
-        ScrollView {
-          VStack {
-            VStack(alignment: .center, spacing: 0) {
-              Text(mealModel.type.rawValue)
-                .foregroundColor(Color.grey6)
-                .font(.system(size: 12, weight: .medium))
-                .padding(.horizontal, 6)
-                .padding(.vertical, 3)
-                .background(Color.grey2)
-                .cornerRadius(4)
-                .padding(.bottom, 12)
-                .padding(.top, 30)
-              
-              Text(mealModel.title)
-                .foregroundColor(Color.grey9)
-                .font(Font.system(size: 18, weight: .bold))
-                .lineLimit(1)
-                .padding(.bottom, 16)
-                .frame(width: 210)
-              
-              HStack(spacing: 2) {
-                ForEach(starChecked.indices, id: \.self) { index in
-                  Image("icon-star-mono")
-                    .resizable()
-                    .renderingMode(.template)
-                    .foregroundColor(starChecked[index] ? Color.everyMealYellow : Color.grey3)
-                    .frame(width: 20, height: 20)
-                }
-              }
-              .padding(.bottom, 60)
-              
-              ZStack {
-                Text(content)
-                  .font(Font.system(size: 16, weight: .regular))
-                  .lineSpacing(4)
-                  .padding(.vertical, 12)
-                  .padding(.horizontal, 16)
-                  .modifier(ViewHeightModifier(key: ViewHeightKey.self))
-                  .frame(width: UIScreen.main.bounds.width - 40)
-                // TextEditor의 height를 동적으로 조절하기 위한 Text
-                ReviewTextEditor(content: $content)
-                  .frame(height: max(120, textHeight + 20))
-                  .focused($isTextFieldFocused)
+        ScrollViewReader { reader in
+          ScrollView {
+            VStack {
+              VStack(alignment: .center, spacing: 0) {
+                Text(mealModel.type.rawValue)
+                  .foregroundColor(Color.grey6)
+                  .font(.system(size: 12, weight: .medium))
+                  .padding(.horizontal, 6)
+                  .padding(.vertical, 3)
+                  .background(Color.grey2)
+                  .cornerRadius(4)
+                  .padding(.bottom, 12)
+                  .padding(.top, 30)
                 
-              }.onPreferenceChange(ViewHeightKey.self) { textHeight = $0 }
+                Text(mealModel.title)
+                  .foregroundColor(Color.grey9)
+                  .font(Font.system(size: 18, weight: .bold))
+                  .lineLimit(1)
+                  .padding(.bottom, 16)
+                  .frame(width: 210)
+                
+                HStack(spacing: 2) {
+                  ForEach(starChecked.indices, id: \.self) { index in
+                    Image("icon-star-mono")
+                      .resizable()
+                      .renderingMode(.template)
+                      .foregroundColor(starChecked[index] ? Color.everyMealYellow : Color.grey3)
+                      .frame(width: 20, height: 20)
+                  }
+                }
+                .padding(.bottom, 60)
+                
+                ZStack {
+                  Text(content)
+                    .font(Font.system(size: 16, weight: .regular))
+                    .lineSpacing(4)
+                    .padding(.vertical, 12)
+                    .padding(.horizontal, 16)
+                    .modifier(ViewHeightModifier(key: ViewHeightKey.self))
+                    .frame(width: UIScreen.main.bounds.width - 40)
+                  
+                  // TextEditor의 height를 동적으로 조절하기 위한 Text
+                  ReviewTextEditor(content: $content)
+                    .frame(height: max(120, textHeight + 20))
+                  
+                }.onPreferenceChange(ViewHeightKey.self) {
+                  reader.scrollTo(writeReviewScrollViewID, anchor: .bottom)
+                  textHeight = $0
+                }
                 .padding(.bottom, 16)
+              }
+              ReviewSelectedImageView(images: [])
+                .padding(.leading, 20)
+              
+              Spacer()
             }
-            ReviewSelectedImageView(images: [])
-              .padding(.leading, 20)
-
-            
-            Spacer()
           }
+          .padding(.top, navigationHeight)
+          
         }
-        .padding(.top, navigationHeight)
         
         VStack {
           Spacer()
@@ -117,6 +123,12 @@ struct ReviewWriteImageTextView: View {
             }
         }
         
+      }
+      .onAppear {
+        print("score \(mealModel.score)")
+        for index in 0..<Int(mealModel.score) {
+          starChecked[index] = true
+        }
       }
     }
     .navigationBarHidden(true)
@@ -141,17 +153,19 @@ struct ReviewSaveButton: View {
 
 struct ReviewTextEditor: View {
   @Binding var content: String
-  @State var placeholder: String = "맛집에 대한 의견을 자세히 적어주시면 다른 사용자에게 도움이 돼요!"
+  @FocusState private var didTextFieldFocused: Bool
+  
+  var placeholder: String = "맛집에 대한 의견을 자세히 적어주시면 다른 사용자에게 도움이 돼요!"
   
   var body: some View {
     if #available(iOS 16.0, *) {
-      TextEditor(text: content.isEmpty ? $placeholder : $content)
+      TextEditor(text: $content)
         .scrollContentBackground(.hidden)
         .font(Font.system(size: 16, weight: .regular))
         .lineSpacing(4)
         .padding(.vertical, 12)
         .padding(.horizontal, 16)
-        .foregroundColor(content.isEmpty ? .grey5 : .grey8 )
+        .foregroundColor(content == placeholder ? .grey5 : .grey8 )
         .background(Color.grey1)
         .overlay(
           RoundedRectangle(cornerRadius: 12)
@@ -160,9 +174,24 @@ struct ReviewTextEditor: View {
         )
         .cornerRadius(12)
         .padding(.horizontal, 20)
+        .focused($didTextFieldFocused)
+        .onChange(of: didTextFieldFocused, perform: { value in
+          if value {
+            if content == placeholder {
+              content = ""
+            }
+          } else {
+            if content.isEmpty {
+              content = placeholder
+            }
+          }
+        })
+        .onAppear(perform: {
+          UIApplication.shared.hideKeyboard()
+        })
       
     } else { // 확인 필요
-      TextEditor(text: content.isEmpty ? $placeholder : $content)
+      TextEditor(text: $content)
         .font(Font.system(size: 16, weight: .regular))
         .lineSpacing(4)
         .padding(.vertical, 12)
@@ -297,10 +326,10 @@ struct ReviewWriteImageTextView_Previews: PreviewProvider {
                                    imageURLs: ["fdsfads", "fdsafdas"],
                                    likesCount: 3)
     ReviewWriteImageTextView(mealModel: dummyMealModel,
-                             nextButtonTapped: {
-      print("close")
+                             saveButtonTapped: {_ in 
+      print("save")
     }, closeButtonTapped: {
-      print("back")
+      print("close")
     })
   }
 }
@@ -323,4 +352,22 @@ struct ViewHeightModifier: ViewModifier {
             }
         )
     }
+}
+
+extension UIApplication {
+  func hideKeyboard() {
+    let scenes = UIApplication.shared.connectedScenes
+    let windowScene = scenes.first as? UIWindowScene
+    let window = windowScene?.windows.first
+    let tapRecognizer = UITapGestureRecognizer(target: window, action: #selector(UIView.endEditing))
+    tapRecognizer.cancelsTouchesInView = false
+    tapRecognizer.delegate = self
+    window?.addGestureRecognizer(tapRecognizer)
+  }
+}
+
+extension UIApplication: UIGestureRecognizerDelegate {
+  public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    return false
+  }
 }
