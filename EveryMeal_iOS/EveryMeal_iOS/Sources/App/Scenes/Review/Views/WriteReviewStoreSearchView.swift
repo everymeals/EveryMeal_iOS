@@ -59,41 +59,34 @@ struct WriteReviewStoreSearchView: View {
         Spacer()
       }
       .navigationDestination(for: ReviewStackViewType.self) { stackViewType in
-        let dummyMealModel = MealModel(title: "동경산책 성신여대점",
-                                       type: .일식,
-                                       description: "ss",
-                                       score: 4.0,
-                                       doUserLike: false,
-                                       imageURLs: ["fdsfads", "fdsafdas"],
-                                       likesCount: 3)
         switch stackViewType {
         case .searchView:
-          let searchView = BestStoreSearchView(nextButtonTapped: {
-            reviewNavigationStack.append(.starPointView)
+          let searchView = BestStoreSearchView(nextButtonTapped: { selectedMealModel in
+            reviewNavigationStack.append(.starPointView(selectedMealModel))
           }, placeholder: "검색", backButtonDidTapped: {
             reviewNavigationStack.removeLast()
           })
           searchView
-        case .starPointView:
+        case let .starPointView(mealModel):
           let startPointView = ReviewStarPointView(
-            mealModel: dummyMealModel,
-            nextButtonTapped: {
-              reviewNavigationStack.append(.imageTextView)
+            mealModel: mealModel,
+            nextButtonTapped: { mealModel in
+              reviewNavigationStack.append(.imageTextView(mealModel))
             },
             backButtonTapped: {
               reviewNavigationStack.removeLast()
             })
           startPointView
-        case .imageTextView, .reviewDetail:
-          let reviewWriteImageTextView = ReviewWriteImageTextView(mealModel: dummyMealModel,
-                                                                  nextButtonTapped: {
-            print("next")
-          },
-          closeButtonTapped: {
-            exitAlertPresent.toggle()
-//            reviewNavigationStack.append(.exitAlert)
-//            reviewNavigationStack.removeLast()
-          })
+        case let .imageTextView(mealModel):
+          let reviewWriteImageTextView = ReviewWriteImageTextView(
+            mealModel: mealModel,
+            saveButtonTapped: { reviewModel in
+              // TODO: 토스트 노출
+              reviewNavigationStack.append(.reviewDetail(reviewModel))
+            },
+            closeButtonTapped: {
+              exitAlertPresent.toggle()
+            })
           reviewWriteImageTextView
             .fullScreenCover(isPresented: $exitAlertPresent) {
               let alert = EverymealAlertView(
@@ -102,13 +95,20 @@ struct WriteReviewStoreSearchView: View {
                 okButtonTitle: "계속 쓰기",
                 cancelButtonTitle: "나가기",
                 okButtonTapped: {
-                  
+                  exitAlertPresent.toggle()
                 },
                 cancelButtonTapped: {
                   exitAlertPresent.toggle()
                 })
               alert
             }
+        case let .reviewDetail(reviewModel):
+          let reviewDetailView = ReviewDetailView(
+            reviewModel: reviewModel,
+            backButtonDidTapped: {
+              reviewNavigationStack.removeLast()
+            })
+          reviewDetailView
         }
       }
       .padding(.bottom)

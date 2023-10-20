@@ -18,14 +18,15 @@ struct HomeTopThreeMealsView: View {
           .padding(.top, 24)
         Spacer()
       }
-      MealGridView()
-        .padding(.horizontal, 20)
-        .padding(.top, 20)
+      MealGridView(didMealTapped: { _ in })
+      .padding(.horizontal, 20)
+      .padding(.top, 20)
     }
   }
 }
 
 struct MealGridView: View {
+  @State var didMealTapped: (MealModel) -> Void
   @State var mealModels: [MealModel] = [MealModel(title: "수아당",
                                             type: .분식,
                                             description: "ss",
@@ -55,6 +56,9 @@ struct MealGridView: View {
     LazyVGrid(columns: columns, spacing: 8) {
       ForEach(mealModels.indices, id: \.self) { index in
         MealImagesItemView(mealModel: mealModels[index])
+          .onTapGesture {
+            didMealTapped(mealModels[index])
+          }
         Spacer()
       }
     }
@@ -110,7 +114,7 @@ struct MealImagesItemView: View {
               .frame(maxWidth: .infinity, minHeight: 104, maxHeight: 104)
               .background(
                 ZStack {
-                  Image("Rectangle 2")
+                  Image("dummyImage")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 105, height: 104) // 추후 해상도로 대응
@@ -177,7 +181,7 @@ struct MoreRestuarantButton: View {
   }
 }
 
-struct MealModel {
+struct MealModel: Hashable {
   var title: String
   var type: MealType
   var description: String

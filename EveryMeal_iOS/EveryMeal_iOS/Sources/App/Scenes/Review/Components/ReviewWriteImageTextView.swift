@@ -10,10 +10,10 @@ import PhotosUI
 
 struct ReviewWriteImageTextView: View {
   
-  init(mealModel: MealModel, nextButtonTapped: @escaping () -> Void, closeButtonTapped: @escaping () -> Void) {
+  init(mealModel: MealModel, saveButtonTapped: @escaping (ReviewDetailModel) -> Void, closeButtonTapped: @escaping () -> Void) {
     UITextView.appearance().backgroundColor = .clear
     self.mealModel = mealModel
-    self.nextButtonTapped = nextButtonTapped
+    self.saveButtonTapped = saveButtonTapped
     self.closeButtonTapped = closeButtonTapped
   }
   
@@ -26,7 +26,7 @@ struct ReviewWriteImageTextView: View {
   @FocusState private var isTextFieldFocused: Bool
   
   var mealModel: MealModel
-  var nextButtonTapped: () -> Void
+  var saveButtonTapped: (ReviewDetailModel) -> Void
   var closeButtonTapped: () -> Void
   
   private let navigationHeight: CGFloat = 48
@@ -104,9 +104,17 @@ struct ReviewWriteImageTextView: View {
         
         VStack {
           Spacer()
-          ReviewSaveButton(selectEnable: $saveButtonEnabled) {
-            closeButtonTapped()
-          }
+          ReviewSaveButton(selectEnable: $saveButtonEnabled)
+            .onTapGesture {
+              let dummyReviewModel = ReviewDetailModel(
+                nickname: "햄식이",
+                userID: "4324324",
+                profileImageURL: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1752&q=80",
+                mealModel: mealModel,
+                dateBefore: 3
+              )
+              saveButtonTapped(dummyReviewModel)
+            }
         }
         
       }
@@ -117,7 +125,6 @@ struct ReviewWriteImageTextView: View {
 
 struct ReviewSaveButton: View {
   @Binding var selectEnable: Bool
-  var closeButtonTapped: () -> Void
   
   var body: some View {
     Text("선택하기")
@@ -129,9 +136,6 @@ struct ReviewSaveButton: View {
       .cornerRadius(12)
       .padding(.horizontal, 20)
       .padding(.bottom, 10)
-      .onTapGesture {
-        closeButtonTapped()
-      }
   }
 }
 

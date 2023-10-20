@@ -19,7 +19,7 @@ struct BestStoreSearchView: View {
   @State private var searchResults: [String] = []
   @State private var scrollToTop: Bool = false
   @State private var goToWriteReview: Bool = false // 삭제 필요
-  var nextButtonTapped: () -> Void
+  var nextButtonTapped: (MealModel) -> Void
   
   @FocusState var isSearchBarFocused: Bool
   
@@ -49,11 +49,6 @@ struct BestStoreSearchView: View {
           .padding(.vertical, 12)
           .id(searchViewID)
           
-          resultMealView
-            .padding(.horizontal, 20)
-            .onTapGesture {
-              nextButtonTapped()
-            }
           Spacer()
           // FIXME: focus 문제 해결 필요
           //            if isSearchBarFocused { // TODO: scrollToTop toggle
@@ -117,10 +112,11 @@ struct BestStoreSearchBar: View {
 
 struct BestStoreSearchView_Previews: PreviewProvider {
   static var previews: some View {
-    BestStoreSearchView(nextButtonTapped: {
-      print("nextButtonTapped")
-    }, placeholder: "검색", backButtonDidTapped: {
-      print("backButton did tapped")
-    })
+    HomeView()
+//    BestStoreSearchView(nextButtonTapped: {
+//      print("nextButtonTapped")
+//    }, placeholder: "검색", backButtonDidTapped: {
+//      print("backButton did tapped")
+//    })
   }
 }

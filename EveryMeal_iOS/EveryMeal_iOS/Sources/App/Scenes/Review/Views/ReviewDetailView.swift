@@ -16,7 +16,6 @@ struct ReviewDetailView: View {
   
   // MARK: - Property
   
-  var nextButtonTapped: () -> Void
   var backButtonDidTapped: () -> Void
   var fontSize: CGFloat = 18
     var paddingSize: CGFloat {
@@ -29,7 +28,7 @@ struct ReviewDetailView: View {
         title: "리뷰",
         leftItem: Image("icon-arrow-left-small-mono"),
         leftItemTapped: {
-          
+          backButtonDidTapped()
         }
       )
       ReviewUserProfileView(reviewModel: reviewModel)
@@ -263,9 +262,6 @@ struct ReviewDetailView_Previews: PreviewProvider {
                                         dateBefore: 3)
     ReviewDetailView(
       reviewModel: reviewModel,
-      nextButtonTapped: {
-        print("nextButtonTapped")
-      },
       backButtonDidTapped: {
         print("backButtonDidTapped")
       }
