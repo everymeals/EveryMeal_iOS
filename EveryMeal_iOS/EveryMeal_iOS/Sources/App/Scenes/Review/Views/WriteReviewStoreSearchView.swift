@@ -7,11 +7,27 @@
 
 import SwiftUI
 
-enum ReviewStackViewType {
+enum ReviewStackViewType: Hashable {
   case searchView
-  case starPointView
-  case imageTextView
-  case reviewDetail
+  case starPointView(MealModel)
+  case imageTextView(MealModel)
+  case reviewDetail(ReviewDetailModel)
+  
+  func hash(into hasher: inout Hasher) {
+    switch self {
+    case .searchView:
+      hasher.combine(0)
+    case .starPointView(let mealModel):
+      hasher.combine(1)
+      hasher.combine(mealModel)
+    case .imageTextView(let mealModel):
+      hasher.combine(2)
+      hasher.combine(mealModel)
+    case .reviewDetail(let reviewDetailModel):
+      hasher.combine(3)
+      hasher.combine(reviewDetailModel)
+    }
+  }
 }
 
 struct WriteReviewStoreSearchView: View {
@@ -99,6 +115,7 @@ struct WriteReviewStoreSearchView: View {
                 },
                 cancelButtonTapped: {
                   exitAlertPresent.toggle()
+                  reviewNavigationStack.removeAll()
                 })
               alert
             }

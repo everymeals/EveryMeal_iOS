@@ -18,9 +18,7 @@ struct ReviewDetailView: View {
   
   var backButtonDidTapped: () -> Void
   var fontSize: CGFloat = 18
-    var paddingSize: CGFloat {
-        -(fontSize * 0.325)
-    }
+  var paddingSize: CGFloat { -(fontSize * 0.325) }
   
   var body: some View {
     VStack(alignment: .center, spacing: 0) {
@@ -236,12 +234,16 @@ struct ScrollOffsetPreferenceKey: PreferenceKey {
     static func reduce(value: inout CGPoint, nextValue: () -> CGPoint) { }
 }
 
-struct ReviewDetailModel {
+struct ReviewDetailModel: Hashable, Equatable {
   let nickname: String
   let userID: String
   let profileImageURL: String
   var mealModel: MealModel
   let dateBefore: Int
+  
+  static func == (lhs: ReviewDetailModel, rhs: ReviewDetailModel) -> Bool {
+    return lhs.userID == rhs.userID && lhs.mealModel.title == rhs.mealModel.title
+   }
 }
 
 struct ReviewDetailView_Previews: PreviewProvider {

@@ -9,10 +9,6 @@ import SwiftUI
 
 struct BestStoreSearchView: View {
   
-  // MARK: - UI Components
-  
-  let resultMealView = MealGridView()
-  
   // MARK: - States
   
   @State private var searchText: String = ""
@@ -43,6 +39,9 @@ struct BestStoreSearchView: View {
                                text: $searchText,
                                onSearchButtonClicked: performSearch)
             .focused($isSearchBarFocused)
+            .onSubmit {
+              print("commit")
+            }
           }
           .padding(.leading, 12)
           .padding(.trailing, 20)
@@ -51,36 +50,42 @@ struct BestStoreSearchView: View {
           
           Spacer()
           // FIXME: focus 문제 해결 필요
-          //            if isSearchBarFocused { // TODO: scrollToTop toggle
-          //            } else {
-          //              HStack {
-          //                Text("최근 검색어")
-          //                  .font(.system(size: 14, weight: .medium))
-          //                  .foregroundColor(Color.grey5)
-          //                Spacer()
-          //              }
-          //              .padding(.leading, 20)
-          //              .padding(.top, 18)
-          //
-          //              ScrollView {
-          //                LazyVGrid(columns: [GridItem(.flexible())], spacing: 0) {
-          //                  ForEach(searchResults.indices, id: \.self) { index in
-          //                    ReviewStoreSearchListRecentCell(
-          //                      text: searchResults[index],
-          //                      deleteButtonTapped: {
-          //                        searchResults.remove(at: index)
-          //                      })
-          //                  }
-          //                }
-          //              }
-          //              .padding(.horizontal, 20)
-          //            }
-        }
-        .onChange(of: scrollToTop) { _ in
-          withAnimation {
-            reader.scrollTo(searchViewID, anchor: .top)
+          
+          if isSearchBarFocused { // TODO: scrollToTop toggle
+            let resultMealView = MealGridView(didMealTapped: { mealModel in
+              nextButtonTapped(mealModel)
+            })
+            resultMealView
+              .padding(.horizontal, 20)
+          } else {
+            HStack {
+              Text("최근 검색어")
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(Color.grey5)
+              Spacer()
+            }
+            .padding(.leading, 20)
+            .padding(.top, 18)
+
+            ScrollView {
+              LazyVGrid(columns: [GridItem(.flexible())], spacing: 0) {
+                ForEach(searchResults.indices, id: \.self) { index in
+                  ReviewStoreSearchListRecentCell(
+                    text: searchResults[index],
+                    deleteButtonTapped: {
+                      searchResults.remove(at: index)
+                    })
+                }
+              }
+            }
+            .padding(.horizontal, 20)
           }
         }
+//        .onChange(of: scrollToTop) { _ in
+//          withAnimation {
+//            reader.scrollTo(searchViewID, anchor: .top)
+//          }
+//        }
       }
     }
     .navigationBarHidden(true)
