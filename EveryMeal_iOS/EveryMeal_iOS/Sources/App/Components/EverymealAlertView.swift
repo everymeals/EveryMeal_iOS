@@ -19,16 +19,6 @@ struct EverymealAlertView: View {
   
   var body: some View {
     ZStack {
-//      Rectangle()
-//        .foregroundColor(.yellow)
-//        .opacity(0.2)
-//        .ignoresSafeArea()
-//        .onTapGesture {
-//          if backgroundTouchEnabled {
-//            cancelButtonTapped()
-//          }
-//        }
-      
       VStack(alignment: .leading, spacing: 24) {
         VStack(alignment: .leading, spacing: 8) {
           if let title = title {

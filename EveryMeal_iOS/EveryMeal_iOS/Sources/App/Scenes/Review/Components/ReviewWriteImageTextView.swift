@@ -21,7 +21,7 @@ struct ReviewWriteImageTextView: View {
   @State var isBubbleShown: Bool = true
   @State var saveButtonEnabled: Bool = true
   
-  @State var content: String = "ㄹㅇㄴㄹㅇㄴㅁㄹㅁ"
+  @State var content: String = ""
   @State private var textHeight = CGFloat.zero
   
   private let writeReviewScrollViewID = "writeReviewScrollViewID"
@@ -37,6 +37,7 @@ struct ReviewWriteImageTextView: View {
       ZStack {
         VStack {
           CustomNavigationView(
+            title: "리뷰 작성",
             rightItem: Image(systemName: "xmark"),
             rightItemTapped: {
               closeButtonTapped()
@@ -80,6 +81,8 @@ struct ReviewWriteImageTextView: View {
                 .padding(.bottom, 60)
                 
                 ZStack {
+                  // TextEditor의 height를 동적으로 조절하기 위한 Text
+                  
                   Text(content)
                     .font(Font.system(size: 16, weight: .regular))
                     .lineSpacing(4)
@@ -88,12 +91,11 @@ struct ReviewWriteImageTextView: View {
                     .modifier(ViewHeightModifier(key: ViewHeightKey.self))
                     .frame(width: UIScreen.main.bounds.width - 40)
                   
-                  // TextEditor의 height를 동적으로 조절하기 위한 Text
                   ReviewTextEditor(content: $content)
                     .frame(height: max(120, textHeight + 20))
                   
                 }.onPreferenceChange(ViewHeightKey.self) {
-                  reader.scrollTo(writeReviewScrollViewID, anchor: .bottom)
+                  reader.scrollTo(writeReviewScrollViewID, anchor: .top)
                   textHeight = $0
                 }
                 .padding(.bottom, 16)
@@ -104,6 +106,7 @@ struct ReviewWriteImageTextView: View {
               Spacer()
             }
           }
+          .id(writeReviewScrollViewID)
           .padding(.top, navigationHeight)
           
         }
@@ -139,15 +142,19 @@ struct ReviewSaveButton: View {
   @Binding var selectEnable: Bool
   
   var body: some View {
-    Text("선택하기")
-      .frame(maxWidth: .infinity)
-      .padding()
-      .background(selectEnable ? Color.accentColor : Color(red: 0.9, green: 0.91, blue: 0.92))
-      .font(.system(size: 16, weight: .medium))
-      .foregroundColor(Color.white)
-      .cornerRadius(12)
-      .padding(.horizontal, 20)
-      .padding(.bottom, 10)
+    HStack {
+      Text("선택하기")
+        .frame(maxWidth: .infinity)
+        .padding()
+        .background(selectEnable ? Color.accentColor : Color(red: 0.9, green: 0.91, blue: 0.92))
+        .font(.system(size: 16, weight: .medium))
+        .foregroundColor(Color.white)
+        .cornerRadius(12)
+        .padding(.horizontal, 20)
+        .padding(.bottom, 10)
+    }
+    .padding(.top, 20)
+    .background(.white)
   }
 }
 
@@ -187,9 +194,9 @@ struct ReviewTextEditor: View {
           }
         })
         .onAppear(perform: {
+          content = placeholder
           UIApplication.shared.hideKeyboard()
         })
-      
     } else { // 확인 필요
       TextEditor(text: $content)
         .font(Font.system(size: 16, weight: .regular))
@@ -214,7 +221,6 @@ struct ReviewSelectedImageView: View {
   @State var showImagePicker: Bool = false
   @State var authorizationStatus: PHAuthorizationStatus = .denied
   @State private var showingAccessAlert = false
-  
   
   var body: some View {
     ScrollView(.horizontal, showsIndicators: false) {
@@ -249,11 +255,13 @@ struct ReviewSelectedImageView: View {
         .cornerRadius(10)
         .overlay(
           RoundedRectangle(cornerRadius: 10)
+            .inset(by: 0.5)
             .stroke(Color(red: 0.9, green: 0.91, blue: 0.92), lineWidth: 1)
         )
         .padding(.trailing, 8)
         .sheet(isPresented: $showImagePicker) {
           makePHPicker()
+            .ignoresSafeArea()
         }
         
         ForEach(images.indices, id: \.self) { index in
@@ -331,43 +339,5 @@ struct ReviewWriteImageTextView_Previews: PreviewProvider {
     }, closeButtonTapped: {
       print("close")
     })
-  }
-}
-
-struct ViewHeightKey: PreferenceKey {
-    static var defaultValue: CGFloat = 0
-
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = max(value, nextValue())
-    }
-}
-
-struct ViewHeightModifier: ViewModifier {
-    var key: ViewHeightKey.Type
-    
-    func body(content: Content) -> some View {
-        content.background(
-            GeometryReader { geometry in
-                Color.clear.preference(key: key.self, value: geometry.size.height)
-            }
-        )
-    }
-}
-
-extension UIApplication {
-  func hideKeyboard() {
-    let scenes = UIApplication.shared.connectedScenes
-    let windowScene = scenes.first as? UIWindowScene
-    let window = windowScene?.windows.first
-    let tapRecognizer = UITapGestureRecognizer(target: window, action: #selector(UIView.endEditing))
-    tapRecognizer.cancelsTouchesInView = false
-    tapRecognizer.delegate = self
-    window?.addGestureRecognizer(tapRecognizer)
-  }
-}
-
-extension UIApplication: UIGestureRecognizerDelegate {
-  public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-    return false
   }
 }

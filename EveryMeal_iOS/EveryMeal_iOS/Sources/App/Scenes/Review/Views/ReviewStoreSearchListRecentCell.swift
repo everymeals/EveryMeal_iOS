@@ -32,4 +32,3 @@ struct ReviewStoreSearchListRecentCell_Previews: PreviewProvider {
     })
   }
 }
-

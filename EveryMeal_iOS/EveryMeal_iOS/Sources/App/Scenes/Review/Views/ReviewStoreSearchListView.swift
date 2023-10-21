@@ -11,13 +11,13 @@ struct BestStoreSearchView: View {
   
   // MARK: - States
   
+  @FocusState var isSearchBarFocused: Bool
   @State private var searchText: String = ""
   @State private var searchResults: [String] = []
   @State private var scrollToTop: Bool = false
   @State private var goToWriteReview: Bool = false // 삭제 필요
-  var nextButtonTapped: (MealModel) -> Void
   
-  @FocusState var isSearchBarFocused: Bool
+  var nextButtonTapped: (MealModel) -> Void
   
   // MARK: - Property
   
@@ -35,8 +35,7 @@ struct BestStoreSearchView: View {
               .onTapGesture {
                 backButtonDidTapped()
               }
-            BestStoreSearchBar(placeholder: placeholder,
-                               text: $searchText,
+            BestStoreSearchBar(text: $searchText, placeholder: placeholder,
                                onSearchButtonClicked: performSearch)
             .focused($isSearchBarFocused)
             .onSubmit {
@@ -97,8 +96,9 @@ struct BestStoreSearchView: View {
 }
 
 struct BestStoreSearchBar: View {
-  var placeholder: String
   @Binding var text: String
+  
+  var placeholder: String
   var onSearchButtonClicked: () -> Void
   
   var body: some View {
