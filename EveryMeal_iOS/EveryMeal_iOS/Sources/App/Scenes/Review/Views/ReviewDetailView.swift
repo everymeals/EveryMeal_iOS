@@ -73,8 +73,8 @@ struct ReviewDetailView: View {
 }
 
 struct ReviewUserProfileView: View {
-  var reviewModel: ReviewDetailModel
   @State var starChecked: [Bool] = Array(repeating: false, count: 5)
+  var reviewModel: ReviewDetailModel
   
   var body: some View {
     ZStack {
@@ -135,9 +135,10 @@ struct ReviewUserProfileView: View {
 }
 
 struct ReviewImagesView: View {
+  @State private var currentPage: Int = 0
+  
   var urls: [String]?
   let defaultImageURL = "https://media.tarkett-image.com/large/TH_25094221_25187221_001.jpg"
-  @State private var currentPage: Int = 0
   
   var body: some View {
     ZStack {
