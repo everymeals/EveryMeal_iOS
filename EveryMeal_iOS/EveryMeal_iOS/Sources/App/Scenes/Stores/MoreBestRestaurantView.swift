@@ -20,7 +20,7 @@ struct MoreBestRestaurantView: View {
     VStack(spacing: 0) {
       FilterBarView()
       
-      ScrollView(showsIndicators: false) {
+      ScrollView {
         LazyVGrid(columns: columns) {
           BestRestaurantCell()
             .padding(.vertical, 16)

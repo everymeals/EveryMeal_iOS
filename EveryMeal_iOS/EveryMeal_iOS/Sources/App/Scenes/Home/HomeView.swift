@@ -39,15 +39,15 @@ struct HomeView: View {
               navigationPath.append(.reviewList)
             }
         }
-        .navigationDestination(for: HomeStackViewType.self) { stackViewType in
-          switch stackViewType {
-          case .restaurantList:
-            MoreBestRestaurantView()
-          case .reviewList:
-            MoreReviewsView()
-          default:
-            MoreBestRestaurantView()
-          }
+      }
+      .navigationDestination(for: HomeStackViewType.self) { stackViewType in
+        switch stackViewType {
+        case .restaurantList:
+          MoreBestRestaurantView()
+        case .reviewList:
+          MoreBestRestaurantView()
+        default:
+          MoreBestRestaurantView()
         }
       }
       .edgesIgnoringSafeArea(.bottom)
