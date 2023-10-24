@@ -292,10 +292,12 @@ struct ReviewSelectedImageView: View {
             .onTapGesture {
               images.remove(at: index)
             }
-            
-            RoundedRectangle(cornerRadius: 10)
-              .stroke(Color(red: 0.9, green: 0.91, blue: 0.92), lineWidth: 1)
           }
+          .overlay(
+            RoundedRectangle(cornerRadius: 10)
+              .inset(by: 0.5)
+              .stroke(Color(red: 0.9, green: 0.91, blue: 0.92), lineWidth: 1)
+          )
           .padding(.trailing, 8)
         }
         Spacer()
