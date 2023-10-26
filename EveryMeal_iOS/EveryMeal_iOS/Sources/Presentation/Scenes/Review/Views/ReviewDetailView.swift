@@ -239,7 +239,7 @@ struct ReviewDetailModel: Hashable, Equatable {
   let nickname: String
   let userID: String
   let profileImageURL: String
-  var mealModel: MealModel
+  var mealModel: MealEntity
   let dateBefore: Int
   
   static func == (lhs: ReviewDetailModel, rhs: ReviewDetailModel) -> Bool {
@@ -249,7 +249,7 @@ struct ReviewDetailModel: Hashable, Equatable {
 
 struct ReviewDetailView_Previews: PreviewProvider {
   static var previews: some View {
-    let dummyMealModel = MealModel(title: "동경산책 성신여대점",
+    let dummyMealEntity = MealEntity(title: "동경산책 성신여대점",
                                    type: .일식,
                                    description: "사장님이 친절하시고 안주가 다 너무 맛있었습니다~! 분위기가 좋아서 다음에 또 갈 것 같아요!! 동기들이랑 여럿이서 가도 자리 넉넉하고 좋았어요!! ^_^",
                                    score: 4.0,
@@ -261,7 +261,7 @@ struct ReviewDetailView_Previews: PreviewProvider {
                                    likesCount: 3)
     let reviewModel = ReviewDetailModel(nickname: "햄식이", userID: "4324324",
                                         profileImageURL: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1752&q=80",
-                                        mealModel: dummyMealModel,
+                                        mealModel: dummyMealEntity,
                                         dateBefore: 3)
     ReviewDetailView(
       reviewModel: reviewModel,

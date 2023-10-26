@@ -17,7 +17,7 @@ struct BestStoreSearchView: View {
   @State private var scrollToTop: Bool = false
   @State private var goToWriteReview: Bool = false // 삭제 필요
   
-  var nextButtonTapped: (MealModel) -> Void
+  var nextButtonTapped: (MealEntity) -> Void
   
   // MARK: - Property
   

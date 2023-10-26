@@ -47,7 +47,6 @@ struct ImagePicker: UIViewControllerRepresentable {
               fetchedImages.append(Image(uiImage: image))
               if result.offset == results.count - 1 {
                 self?.parent.selectedImages = fetchedImages
-//                self?.parent.selectedImagesCompletion()
                 self?.parent.isPresented = false
               }
             }
