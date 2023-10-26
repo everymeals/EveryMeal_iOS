@@ -14,13 +14,15 @@ struct MoreStoreView: View {
   var body: some View {
     NavigationView {
       VStack {
+        
         CustomNavigationView(
-          title: "리뷰 작성",
+          title: "추천",
           leftItem: Image("icon-arrow-left-small-mono"),
           leftItemTapped: {
             backButtonTapped()
           }
         )
+        MealHorizontalItemView(mealModel: mealModels)
         
         MealGridView(didMealTapped: { _ in })
           .padding(.top, 20)

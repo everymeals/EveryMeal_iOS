@@ -44,7 +44,7 @@ struct MealVerticalItemView: View {
           }
         }
         Spacer()
-        MealItemLikeButton(likesCount: mealModel.likesCount, isPressed: mealModel.doUserLike)
+        MealItemLikeButton(isPressed: mealModel.doUserLike, likesCount: mealModel.likesCount)
       }
       .padding(.bottom, 14)
       

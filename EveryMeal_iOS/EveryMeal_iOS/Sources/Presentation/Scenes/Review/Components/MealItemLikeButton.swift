@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct MealItemLikeButton: View {
-  var likesCount: Int
   @State var isPressed: Bool = false
+  
+  var likesCount: Int
+  var likeCountHidden: Bool = false
+  var selectedColor: Color = .everyMealRed
+  var deselectedColor: Color = .grey4
+  var borderHidden: Bool = true
   
   var body: some View {
     Button(action: {
@@ -18,12 +23,14 @@ struct MealItemLikeButton: View {
       VStack(spacing: 2) {
         Image("icon-heart-mono")
           .renderingMode(.template)
-          .foregroundColor(isPressed ? Color.everyMealRed : Color.grey4)
+          .foregroundColor(isPressed ? selectedColor : deselectedColor)
           .frame(width: 24)
           
-        Text(String(likesCount))
-          .foregroundColor(isPressed ? Color.everyMealRed : Color.grey4)
-          .font(.system(size: 12, weight: .medium))
+        if !likeCountHidden {
+          Text(String(likesCount))
+            .foregroundColor(isPressed ? selectedColor : deselectedColor)
+            .font(.system(size: 12, weight: .medium))
+        }
       }
     })
   }
@@ -31,6 +38,6 @@ struct MealItemLikeButton: View {
 
 struct MealImagesItemLikeButton_Previews: PreviewProvider {
   static var previews: some View {
-    MealItemLikeButton(likesCount: 20, isPressed: true)
+    MealItemLikeButton(isPressed: true, likesCount: 20)
   }
 }
