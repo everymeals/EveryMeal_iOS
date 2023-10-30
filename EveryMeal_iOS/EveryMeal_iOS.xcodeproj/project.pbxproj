@@ -15,6 +15,10 @@
 		0887DB682ABE9B9100A47FC4 /* ReviewStoreSearchListRecentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0887DB672ABE9B9100A47FC4 /* ReviewStoreSearchListRecentCell.swift */; };
 		088EB1EA2AC6BA5B000A6A38 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088EB1E92AC6BA5B000A6A38 /* ImagePicker.swift */; };
 		0F1424242ADD3F3E00A79AA2 /* MoreReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1424232ADD3F3E00A79AA2 /* MoreReviewsView.swift */; };
+		0F1AD46F2AE0046D003E29B0 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1AD46E2AE0046D003E29B0 /* View+Extensions.swift */; };
+		0F1AD4712AE004CC003E29B0 /* CustomAlertModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1AD4702AE004CC003E29B0 /* CustomAlertModifier.swift */; };
+		0F1AD4742AE00500003E29B0 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1AD4732AE00500003E29B0 /* CustomAlert.swift */; };
+		0F1AD4762AE00516003E29B0 /* CustomAlertButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1AD4752AE00516003E29B0 /* CustomAlertButton.swift */; };
 		0F43F6812A6EA86B00239AA4 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43F6802A6EA86B00239AA4 /* MapView.swift */; };
 		0F43F6832A6EA8AC00239AA4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43F6822A6EA8AC00239AA4 /* HomeView.swift */; };
 		0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4C83562A7727BE0006A8EA /* ChooseUnivView.swift */; };
@@ -27,6 +31,7 @@
 		0F78B00B2A6D3901006B8C80 /* everymeal_splash.json in Resources */ = {isa = PBXBuildFile; fileRef = 0F78B00A2A6D3901006B8C80 /* everymeal_splash.json */; };
 		0F78B0102A6D39AD006B8C80 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 0F78B00F2A6D39AD006B8C80 /* Lottie */; };
 		0F78B0142A6D39DC006B8C80 /* MainTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F78B0132A6D39DC006B8C80 /* MainTabBarView.swift */; };
+		0F7EEC482AEF20DB001DE884 /* FilterBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7EEC472AEF20DB001DE884 /* FilterBarView.swift */; };
 		0F80B4032ABAFABF00167AB6 /* MoreBestRestaurantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F80B4022ABAFABF00167AB6 /* MoreBestRestaurantView.swift */; };
 		0FF7C7192A91ECEF00BFC33D /* GradationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF7C7182A91ECEF00BFC33D /* GradationView.swift */; };
 		662C165A2AAED5A900DCA844 /* ReviewStarPointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662C16592AAED5A900DCA844 /* ReviewStarPointView.swift */; };
@@ -45,6 +50,10 @@
 		0887DB672ABE9B9100A47FC4 /* ReviewStoreSearchListRecentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewStoreSearchListRecentCell.swift; sourceTree = "<group>"; };
 		088EB1E92AC6BA5B000A6A38 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		0F1424232ADD3F3E00A79AA2 /* MoreReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreReviewsView.swift; sourceTree = "<group>"; };
+		0F1AD46E2AE0046D003E29B0 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
+		0F1AD4702AE004CC003E29B0 /* CustomAlertModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertModifier.swift; sourceTree = "<group>"; };
+		0F1AD4732AE00500003E29B0 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
+		0F1AD4752AE00516003E29B0 /* CustomAlertButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertButton.swift; sourceTree = "<group>"; };
 		0F43F6802A6EA86B00239AA4 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		0F43F6822A6EA8AC00239AA4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		0F4C83562A7727BE0006A8EA /* ChooseUnivView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseUnivView.swift; sourceTree = "<group>"; };
@@ -58,6 +67,7 @@
 		0F78B0062A6D1D8F006B8C80 /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = SOURCE_ROOT; };
 		0F78B00A2A6D3901006B8C80 /* everymeal_splash.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = everymeal_splash.json; sourceTree = "<group>"; };
 		0F78B0132A6D39DC006B8C80 /* MainTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarView.swift; sourceTree = "<group>"; };
+		0F7EEC472AEF20DB001DE884 /* FilterBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBarView.swift; sourceTree = "<group>"; };
 		0F80B4022ABAFABF00167AB6 /* MoreBestRestaurantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreBestRestaurantView.swift; sourceTree = "<group>"; };
 		0FF7C7182A91ECEF00BFC33D /* GradationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradationView.swift; sourceTree = "<group>"; };
 		662C16592AAED5A900DCA844 /* ReviewStarPointView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewStarPointView.swift; sourceTree = "<group>"; };
@@ -79,6 +89,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0F1AD4722AE004EA003E29B0 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				0F1AD4702AE004CC003E29B0 /* CustomAlertModifier.swift */,
+				0F1AD4732AE00500003E29B0 /* CustomAlert.swift */,
+				0F1AD4752AE00516003E29B0 /* CustomAlertButton.swift */,
+			);
+			path = Alert;
+			sourceTree = "<group>";
+		};
 		0F43F67E2A6EA82C00239AA4 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				0F5B15732A7F8C9C00E698F4 /* Color+Extensions.swift */,
+				0F1AD46E2AE0046D003E29B0 /* View+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -244,9 +265,11 @@
 		663BFBA02A81EAA900A540A2 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				0F1AD4722AE004EA003E29B0 /* Alert */,
 				663BFBA12A81EACC00A540A2 /* ViewModifier.swift */,
 				663BFBA32A81EB2800A540A2 /* Separator.swift */,
 				0FF7C7182A91ECEF00BFC33D /* GradationView.swift */,
+				0F7EEC472AEF20DB001DE884 /* FilterBarView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -347,22 +370,27 @@
 				0F43F6812A6EA86B00239AA4 /* MapView.swift in Sources */,
 				0F78B0142A6D39DC006B8C80 /* MainTabBarView.swift in Sources */,
 				087A093E2A81545000F4D34F /* HomeReviewsView.swift in Sources */,
+				0F1AD4762AE00516003E29B0 /* CustomAlertButton.swift in Sources */,
 				087A093A2A81486400F4D34F /* HomeTopMenuView.swift in Sources */,
 				0887DB662ABE98A600A47FC4 /* ReviewStoreSearchListView.swift in Sources */,
 				088EB1EA2AC6BA5B000A6A38 /* ImagePicker.swift in Sources */,
 				0F1424242ADD3F3E00A79AA2 /* MoreReviewsView.swift in Sources */,
 				0F43F6832A6EA8AC00239AA4 /* HomeView.swift in Sources */,
+				0F1AD46F2AE0046D003E29B0 /* View+Extensions.swift in Sources */,
 				087A093C2A8153BD00F4D34F /* HomeTopThreeMealsView.swift in Sources */,
 				0F660A912A84551C000074BD /* DeviceManager.swift in Sources */,
 				663BFBA22A81EACC00A540A2 /* ViewModifier.swift in Sources */,
 				662C165C2AAEEC4D00DCA844 /* ReviewWriteImageTextView.swift in Sources */,
+				0F7EEC482AEF20DB001DE884 /* FilterBarView.swift in Sources */,
 				087A09382A81481100F4D34F /* HomeHeaderView.swift in Sources */,
 				663BFBA42A81EB2800A540A2 /* Separator.swift in Sources */,
 				669734672A9F33B4009DEF06 /* WriteReviewStoreSearchView.swift in Sources */,
 				0FF7C7192A91ECEF00BFC33D /* GradationView.swift in Sources */,
 				0F5B15742A7F8C9C00E698F4 /* Color+Extensions.swift in Sources */,
 				0F80B4032ABAFABF00167AB6 /* MoreBestRestaurantView.swift in Sources */,
+				0F1AD4712AE004CC003E29B0 /* CustomAlertModifier.swift in Sources */,
 				0F78AFF92A6CCA6B006B8C80 /* EveryMeal_iOSApp.swift in Sources */,
+				0F1AD4742AE00500003E29B0 /* CustomAlert.swift in Sources */,
 				0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */,
 				0887DB682ABE9B9100A47FC4 /* ReviewStoreSearchListRecentCell.swift in Sources */,
 			);
@@ -494,7 +522,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EveryMeal_iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 3WXYTFH2K7;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
@@ -528,7 +556,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EveryMeal_iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 3WXYTFH2K7;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
