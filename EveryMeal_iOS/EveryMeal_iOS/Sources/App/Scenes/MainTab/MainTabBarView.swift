@@ -46,7 +46,7 @@ struct MainTabBarView: View {
     .tabViewStyle(.automatic)
     .onAppear(perform: {
       UITabBar.appearance().unselectedItemTintColor = UIColor(red: 0.69, green: 0.72, blue: 0.76, alpha: 1)
-      UITabBar.appearance().isTranslucent = false
+      UITabBar.appearance().isTranslucent = true
     })
   }
   
@@ -68,7 +68,43 @@ struct MainTabBarView: View {
       return Text("")
     }
   }
+}
 
+extension UITabBarController {
+  open override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+    
+    tabBar.layer.masksToBounds = true
+    tabBar.layer.cornerRadius = 20
+    tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+    tabBar.backgroundImage = UIImage()
+    tabBar.shadowImage = UIImage()
+    Constants.tabBarHeight = tabBar.frame.height
+    
+    if let shadowView = view.subviews.first(where: { $0.accessibilityIdentifier == "TabBarShadow" }) {
+      shadowView.frame = tabBar.frame
+    } else {
+      let tabBarCornerRadius = tabBar.layer.cornerRadius
+      var tabBarFrame = tabBar.frame
+      tabBarFrame.origin.y += 1
+
+      let shadowView = UIView(frame: tabBarFrame)
+      
+      shadowView.backgroundColor = UIColor.white
+      shadowView.accessibilityIdentifier = "TabBarShadow"
+      shadowView.layer.cornerRadius = tabBarCornerRadius
+      shadowView.layer.maskedCorners = tabBar.layer.maskedCorners
+      shadowView.layer.masksToBounds = false
+      shadowView.layer.shadowColor = Color.grey2.cgColor
+      
+      shadowView.layer.shadowOpacity = 1
+      shadowView.layer.shadowRadius = 1
+      
+      view.addSubview(shadowView)
+      view.bringSubviewToFront(tabBar)
+      view.clipsToBounds = true
+    }
+  }
 }
 
 struct ContentView_Previews: PreviewProvider {

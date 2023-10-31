@@ -24,3 +24,23 @@ struct PressActions: ViewModifier {
       )
   }
 }
+
+struct ViewHeightModifier: ViewModifier {
+  var key: ViewHeightKey.Type
+  
+  func body(content: Content) -> some View {
+    content.background(
+      GeometryReader { geometry in
+        Color.clear.preference(key: key.self, value: geometry.size.height)
+      }
+    )
+  }
+}
+
+struct ViewHeightKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = max(value, nextValue())
+    }
+}

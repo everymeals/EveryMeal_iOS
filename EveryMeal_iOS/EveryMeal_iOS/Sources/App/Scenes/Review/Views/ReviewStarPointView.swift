@@ -13,9 +13,8 @@ struct ReviewStarPointView: View {
   @State var text: String = ""
   @State var starChecked = Array(repeating: false, count: 5)
   @State var isBubbleShown: Bool = true
-  @State var goNextView: Bool = false // 삭제 필요
   @State var mealModel: MealModel
-  var nextButtonTapped: () -> Void
+  var nextButtonTapped: (MealModel) -> Void
   var backButtonTapped: () -> Void
   
   
@@ -26,6 +25,7 @@ struct ReviewStarPointView: View {
           Spacer()
             .frame(height: 1)
           CustomNavigationView(
+            title: "리뷰 작성",
             leftItem: Image("icon-arrow-left-small-mono"),
             leftItemTapped: {
               backButtonTapped()
@@ -70,12 +70,11 @@ struct ReviewStarPointView: View {
                   starChecked.enumerated().forEach { startIndex, value in
                     print("index  \(index), starIndex \(startIndex)")
                     starChecked[startIndex] = startIndex <= index
-                    mealModel.likesCount = startIndex
-                  }
-                  if !goNextView {
-                    goNextView = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                      nextButtonTapped()
+                    if startIndex == starChecked.count - 1 {
+                      mealModel.score = Double(index+1)
+                      DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        nextButtonTapped(mealModel)
+                      }
                     }
                   }
                 }
@@ -131,7 +130,7 @@ struct ReviewStarPointView_Previews: PreviewProvider {
                                    likesCount: 3)
     ReviewStarPointView(
       mealModel: dummyMealModel,
-      nextButtonTapped: {
+      nextButtonTapped: { _ in
         print("go next")
       }, backButtonTapped: {
         print("go back")

@@ -9,19 +9,15 @@ import SwiftUI
 
 struct BestStoreSearchView: View {
   
-  // MARK: - UI Components
-  
-  let resultMealView = MealGridView()
-  
   // MARK: - States
   
+  @FocusState var isSearchBarFocused: Bool
   @State private var searchText: String = ""
   @State private var searchResults: [String] = []
   @State private var scrollToTop: Bool = false
   @State private var goToWriteReview: Bool = false // 삭제 필요
-  var nextButtonTapped: () -> Void
   
-  @FocusState var isSearchBarFocused: Bool
+  var nextButtonTapped: (MealModel) -> Void
   
   // MARK: - Property
   
@@ -39,53 +35,56 @@ struct BestStoreSearchView: View {
               .onTapGesture {
                 backButtonDidTapped()
               }
-            BestStoreSearchBar(placeholder: placeholder,
-                               text: $searchText,
+            BestStoreSearchBar(text: $searchText, placeholder: placeholder,
                                onSearchButtonClicked: performSearch)
             .focused($isSearchBarFocused)
+            .onSubmit {
+              print("commit")
+            }
           }
           .padding(.leading, 12)
           .padding(.trailing, 20)
           .padding(.vertical, 12)
           .id(searchViewID)
           
-          resultMealView
-            .padding(.horizontal, 20)
-            .onTapGesture {
-              nextButtonTapped()
-            }
           Spacer()
           // FIXME: focus 문제 해결 필요
-          //            if isSearchBarFocused { // TODO: scrollToTop toggle
-          //            } else {
-          //              HStack {
-          //                Text("최근 검색어")
-          //                  .font(.system(size: 14, weight: .medium))
-          //                  .foregroundColor(Color.grey5)
-          //                Spacer()
-          //              }
-          //              .padding(.leading, 20)
-          //              .padding(.top, 18)
-          //
-          //              ScrollView {
-          //                LazyVGrid(columns: [GridItem(.flexible())], spacing: 0) {
-          //                  ForEach(searchResults.indices, id: \.self) { index in
-          //                    ReviewStoreSearchListRecentCell(
-          //                      text: searchResults[index],
-          //                      deleteButtonTapped: {
-          //                        searchResults.remove(at: index)
-          //                      })
-          //                  }
-          //                }
-          //              }
-          //              .padding(.horizontal, 20)
-          //            }
-        }
-        .onChange(of: scrollToTop) { _ in
-          withAnimation {
-            reader.scrollTo(searchViewID, anchor: .top)
+          
+          if isSearchBarFocused { // TODO: scrollToTop toggle
+            let resultMealView = MealGridView(didMealTapped: { mealModel in
+              nextButtonTapped(mealModel)
+            })
+            resultMealView
+              .padding(.horizontal, 20)
+          } else {
+            HStack {
+              Text("최근 검색어")
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(Color.grey5)
+              Spacer()
+            }
+            .padding(.leading, 20)
+            .padding(.top, 18)
+
+            ScrollView {
+              LazyVGrid(columns: [GridItem(.flexible())], spacing: 0) {
+                ForEach(searchResults.indices, id: \.self) { index in
+                  ReviewStoreSearchListRecentCell(
+                    text: searchResults[index],
+                    deleteButtonTapped: {
+                      searchResults.remove(at: index)
+                    })
+                }
+              }
+            }
+            .padding(.horizontal, 20)
           }
         }
+//        .onChange(of: scrollToTop) { _ in
+//          withAnimation {
+//            reader.scrollTo(searchViewID, anchor: .top)
+//          }
+//        }
       }
     }
     .navigationBarHidden(true)
@@ -97,8 +96,9 @@ struct BestStoreSearchView: View {
 }
 
 struct BestStoreSearchBar: View {
-  var placeholder: String
   @Binding var text: String
+  
+  var placeholder: String
   var onSearchButtonClicked: () -> Void
   
   var body: some View {
@@ -117,10 +117,11 @@ struct BestStoreSearchBar: View {
 
 struct BestStoreSearchView_Previews: PreviewProvider {
   static var previews: some View {
-    BestStoreSearchView(nextButtonTapped: {
-      print("nextButtonTapped")
-    }, placeholder: "검색", backButtonDidTapped: {
-      print("backButton did tapped")
-    })
+    HomeView()
+//    BestStoreSearchView(nextButtonTapped: {
+//      print("nextButtonTapped")
+//    }, placeholder: "검색", backButtonDidTapped: {
+//      print("backButton did tapped")
+//    })
   }
 }

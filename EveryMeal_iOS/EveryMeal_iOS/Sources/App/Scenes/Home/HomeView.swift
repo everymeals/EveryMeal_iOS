@@ -15,27 +15,29 @@ enum HomeStackViewType {
 
 struct HomeView: View {
   @State private var navigationPath: [HomeStackViewType] = []
+  private let viewBottomargin: CGFloat = 24
+  private let moreReviewBtnBottomMargin: CGFloat = 13
+  
   var body: some View {
-    VStack {
-      NavigationStack(path: $navigationPath) {
-        VStack {
-          HomeHeaderView()
-          ScrollView(showsIndicators: true) {
-            HomeTopMenuView()
-            Separator()
-            HomeTopThreeMealsView()
-            MoreRestuarantButton()
-              .onTapGesture {
-                navigationPath.append(.restaurantList)
-              }
-            Separator()
-            HomeReviewsView()
-            MoreReviewButton()
-              .padding(.horizontal, 20)
-              .onTapGesture {
-                navigationPath.append(.reviewList)
-              }
-          }
+    NavigationStack(path: $navigationPath) {
+      VStack {
+        HomeHeaderView()
+        ScrollView(showsIndicators: true) {
+          HomeTopMenuView()
+          Separator()
+          HomeTopThreeMealsView()
+          MoreRestuarantButton()
+            .onTapGesture {
+              navigationPath.append(.restaurantList)
+            }
+          Separator()
+          HomeReviewsView()
+          MoreReviewButton()
+            .padding(.horizontal, 20)
+            .padding(.bottom, Constants.tabBarHeight + viewBottomargin - moreReviewBtnBottomMargin)
+            .onTapGesture {
+              navigationPath.append(.reviewList)
+            }
         }
         .navigationDestination(for: HomeStackViewType.self) { stackViewType in
           switch stackViewType {
@@ -47,10 +49,10 @@ struct HomeView: View {
             MoreBestRestaurantView()
           }
         }
-        .padding(.bottom)
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarHidden(true)
       }
+      .edgesIgnoringSafeArea(.bottom)
+      .navigationBarTitleDisplayMode(.inline)
+      .navigationBarHidden(true)
     }
   }
 }
