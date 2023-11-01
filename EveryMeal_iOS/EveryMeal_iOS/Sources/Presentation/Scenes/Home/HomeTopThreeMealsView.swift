@@ -24,6 +24,7 @@ struct HomeTopThreeMealsView: View {
   }
 }
 
+// FIXME: 추후 파일로 분리 필요
 struct MealGridView: View {
   @State var didMealTapped: (MealEntity) -> Void
   @State var mealModels: [MealEntity] = [MealEntity(title: "수아당",
@@ -84,6 +85,6 @@ struct MoreRestuarantButton: View {
 
 struct HomeTopThreeMealsView_Previews: PreviewProvider {
   static var previews: some View {
-    HomeView()
+    HomeTopThreeMealsView()
   }
 }

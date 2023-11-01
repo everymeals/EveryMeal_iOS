@@ -55,7 +55,6 @@ struct BestStoreSearchView: View {
               nextButtonTapped(mealModel)
             })
             resultMealView
-              .padding(.horizontal, 20)
           } else {
             HStack {
               Text("최근 검색어")

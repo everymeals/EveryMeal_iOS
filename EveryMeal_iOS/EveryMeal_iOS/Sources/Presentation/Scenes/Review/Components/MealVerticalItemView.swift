@@ -57,7 +57,7 @@ struct MealVerticalItemView: View {
               .frame(maxWidth: .infinity, minHeight: 104, maxHeight: 104)
               .background(
                 ZStack {
-                  Image("dummyImage")
+                  Image("dummyImage") // FIXME: 추후 수정 필요
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 105, height: 104) // 추후 해상도로 대응
