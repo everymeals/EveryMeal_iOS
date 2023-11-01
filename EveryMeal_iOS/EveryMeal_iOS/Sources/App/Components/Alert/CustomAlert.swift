@@ -65,7 +65,7 @@ struct CustomAlert: View {
           .font(.system(size: 18, weight: .bold))
           .lineLimit(1)
           .foregroundColor(Color(red: 0.1, green: 0.12, blue: 0.16))
-          .padding(.bottom, 10)
+          .padding(.bottom, 4)
         Spacer()
       }
     }
