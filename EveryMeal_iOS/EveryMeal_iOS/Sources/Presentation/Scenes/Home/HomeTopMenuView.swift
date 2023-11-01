@@ -26,9 +26,6 @@ struct HomeTopMenuView: View {
         }
       
       TopMenuButtonsView(isSelected: $isSelected)
-        .onChange(of: isSelected) { value in
-          print("isselected \(isSelected)")
-        }
     }
   }
 }
