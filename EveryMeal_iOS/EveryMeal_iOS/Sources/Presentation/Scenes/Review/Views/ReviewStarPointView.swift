@@ -33,7 +33,7 @@ struct ReviewStarPointView: View {
           )
           HStack(spacing: 0) {
             Text("다녀온 맛집은\n어떠셨나요?")
-              .font(.system(size: 24, weight: .bold))
+              .font(.pretendard(size: 24, weight: .bold))
               .foregroundColor(Color.grey9)
               .padding(.leading, 20)
             Spacer()
@@ -45,7 +45,7 @@ struct ReviewStarPointView: View {
           Spacer()
           Text(mealModel.type.rawValue)
             .foregroundColor(Color.grey6)
-            .font(.system(size: 12, weight: .medium))
+            .font(.pretendard(size: 12, weight: .medium))
             .padding(.horizontal, 6)
             .padding(.vertical, 3)
             .background(Color.grey2)
@@ -54,7 +54,7 @@ struct ReviewStarPointView: View {
           
           Text(mealModel.title)
             .foregroundColor(Color.grey9)
-            .font(Font.system(size: 18, weight: .bold))
+            .font(Font.pretendard(size: 18, weight: .bold))
             .lineLimit(1)
             .padding(.bottom, 50)
             .frame(width: 210)
@@ -109,7 +109,7 @@ struct SpeachBubbleView: View {
         
         Text(text)
           .foregroundColor(textColor)
-          .font(.system(size: 12, weight: .medium))
+          .font(.pretendard(size: 12, weight: .medium))
           .padding(.horizontal, 10)
           .padding(.vertical, 7)
           .background(backgroundColor)

@@ -29,7 +29,7 @@ struct MealItemLikeButton: View {
         if !likeCountHidden {
           Text(String(likesCount))
             .foregroundColor(isPressed ? selectedColor : deselectedColor)
-            .font(.system(size: 12, weight: .medium))
+            .font(.pretendard(size: 12, weight: .medium))
         }
       }
     })

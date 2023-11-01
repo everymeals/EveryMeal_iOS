@@ -98,7 +98,7 @@ struct BestRestaurantCell: View {
           HStack(alignment: .center, spacing: 4) {
             // 음식점 타이틀
             Text("짱마있는어쩌고저쩌꼬성신여대맛집")
-              .font(.system(size: 17, weight: .semibold))
+              .font(.pretendard(size: 17, weight: .semibold))
               .lineLimit(1)
               .foregroundColor(Color(red: 0.2, green: 0.24, blue: 0.29))
               .frame(maxWidth: 233, alignment: .topLeading)
@@ -106,7 +106,7 @@ struct BestRestaurantCell: View {
             // 음식점 타입
             HStack(alignment: .center, spacing: 10) {
               Text("베이커리")
-                .font(.system(size: 12, weight: .semibold))
+                .font(.pretendard(size: 12, weight: .semibold))
                 .foregroundColor(Color(red: 0.55, green: 0.58, blue: 0.63))
             }
             .padding(.horizontal, 6)
@@ -122,7 +122,7 @@ struct BestRestaurantCell: View {
               .frame(width: 14, height: 14)
             
             Text("3.0 (5)")
-              .font(.system(size: 12, weight: .semibold))
+              .font(.pretendard(size: 12, weight: .semibold))
               .foregroundColor(Color(red: 0.42, green: 0.46, blue: 0.52))
           }
         }
@@ -140,7 +140,7 @@ struct BestRestaurantCell: View {
             }
           
           Text("0")
-            .font(.system(size: 12, weight: .semibold))
+            .font(.pretendard(size: 12, weight: .semibold))
             .foregroundColor(isPressed ? Color.everyMealRed : Color.grey4)
         }
         .padding(10)

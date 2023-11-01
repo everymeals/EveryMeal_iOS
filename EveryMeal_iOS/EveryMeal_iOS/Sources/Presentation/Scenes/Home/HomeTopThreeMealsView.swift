@@ -12,7 +12,7 @@ struct HomeTopThreeMealsView: View {
     VStack(spacing: 8) {
       HStack(spacing: 0) {
         Text("맛집 모아보기")
-          .font(.system(size: 20, weight: .bold))
+          .font(.pretendard(size: 20, weight: .bold))
           .foregroundColor(Color.black)
           .padding(.leading, 20)
           .padding(.top, 24)

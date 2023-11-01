@@ -20,7 +20,7 @@ struct EveryMealButton: View {
         .frame(maxWidth: .infinity)
         .padding()
         .background(selectEnable ? selectableColor : deselectableColor)
-        .font(.system(size: 16, weight: .medium))
+        .font(.pretendard(size: 16, weight: .medium))
         .foregroundColor(Color.white)
         .cornerRadius(12)
         .padding(.horizontal, 20)

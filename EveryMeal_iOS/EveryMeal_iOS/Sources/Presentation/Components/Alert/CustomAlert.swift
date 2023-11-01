@@ -62,7 +62,7 @@ struct CustomAlert: View {
     if !title.isEmpty {
       HStack {
         Text(title)
-          .font(.system(size: 18, weight: .bold))
+          .font(.pretendard(size: 18, weight: .bold))
           .lineLimit(1)
           .foregroundColor(Color(red: 0.1, green: 0.12, blue: 0.16))
           .padding(.bottom, 10)
@@ -75,7 +75,7 @@ struct CustomAlert: View {
   private var messageView: some View {
     if !message.isEmpty {
       Text(message)
-        .font(.system(size: 15))
+        .font(.pretendard(size: 15, weight: .regular))
         .lineLimit(25)
         .foregroundColor(Color(red: 0.42, green: 0.46, blue: 0.52))
         .frame(maxWidth: .infinity, alignment: .topLeading)

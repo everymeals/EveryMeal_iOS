@@ -36,7 +36,7 @@ struct ReviewDetailView: View {
       
       VStack(spacing: 40) {
         Text(reviewModel.mealModel.description)
-          .font(.system(size: 15, weight: .regular))
+          .font(.pretendard(size: 15, weight: .regular))
           .foregroundColor(.grey8)
           .frame(width: UIScreen.main.bounds.width)
         HStack(spacing: 6) {
@@ -47,7 +47,7 @@ struct ReviewDetailView: View {
             .frame(width: 22)
             .foregroundColor(reviewModel.mealModel.doUserLike ? .red : .grey5)
           Text(String(describing: reviewModel.mealModel.likesCount))
-            .font(.system(size: 16, weight: .semibold))
+            .font(.pretendard(size: 16, weight: .semibold))
             .foregroundColor(reviewModel.mealModel.doUserLike ? .red : .grey5)
         }
         .onTapGesture {
@@ -93,7 +93,7 @@ struct ReviewUserProfileView: View {
         
         VStack(alignment: .leading, spacing: 2) {
           Text(reviewModel.nickname)
-            .font(.system(size: 12, weight: .semibold))
+            .font(.pretendard(size: 12, weight: .semibold))
             .foregroundColor(.grey8)
           HStack(spacing: 2) {
             ForEach(starChecked.indices, id: \.self) { index in
@@ -104,10 +104,10 @@ struct ReviewUserProfileView: View {
                 .frame(width: 14, height: 14)
             }
             Text("·")
-              .font(.system(size: 12, weight: .semibold))
+              .font(.pretendard(size: 12, weight: .semibold))
               .foregroundColor(.grey5)
             Text("\(reviewModel.dateBefore)일전")
-              .font(.system(size: 12, weight: .regular))
+              .font(.pretendard(size: 12, weight: .regular))
               .foregroundColor(.grey6)
           }
         }
@@ -192,7 +192,7 @@ struct ReviewImagesView: View {
               .padding(.trailing, 4)
             
             Text("만약 태그 이름이 길어지면 이렇게 보이게해주세요")
-              .font(.system(size: 14, weight: .medium))
+              .font(.pretendard(size: 14, weight: .medium))
               .lineLimit(1)
               .foregroundColor(.white)
             
@@ -212,7 +212,7 @@ struct ReviewImagesView: View {
           Spacer()
           
           Text("\(currentPage)/\(urls?.count ?? 1)")
-            .font(.system(size: 14, weight: .regular))
+            .font(.pretendard(size: 14, weight: .regular))
             .foregroundColor(.white)
             .padding(6)
             .frame(height: 25)

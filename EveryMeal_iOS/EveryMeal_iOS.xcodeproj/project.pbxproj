@@ -22,7 +22,17 @@
 		08D6BA692AE7F97800C0B516 /* ReviewWriteImageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D6BA672AE7F97800C0B516 /* ReviewWriteImageTextView.swift */; };
 		08D6BA6A2AE7F97800C0B516 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D6BA682AE7F97800C0B516 /* ImagePicker.swift */; };
 		0F1424242ADD3F3E00A79AA2 /* MoreReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1424232ADD3F3E00A79AA2 /* MoreReviewsView.swift */; };
+		0F19FBAA2AF2252900197815 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA12AF2252800197815 /* Pretendard-ExtraLight.otf */; };
+		0F19FBAB2AF2252900197815 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA22AF2252800197815 /* Pretendard-Light.otf */; };
+		0F19FBAC2AF2252900197815 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA32AF2252800197815 /* Pretendard-SemiBold.otf */; };
+		0F19FBAD2AF2252900197815 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA42AF2252800197815 /* Pretendard-Thin.otf */; };
+		0F19FBAE2AF2252900197815 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA52AF2252900197815 /* Pretendard-Bold.otf */; };
+		0F19FBAF2AF2252900197815 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA62AF2252900197815 /* Pretendard-Regular.otf */; };
+		0F19FBB02AF2252900197815 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA72AF2252900197815 /* Pretendard-Medium.otf */; };
+		0F19FBB12AF2252900197815 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA82AF2252900197815 /* Pretendard-Black.otf */; };
+		0F19FBB22AF2252900197815 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA92AF2252900197815 /* Pretendard-ExtraBold.otf */; };
 		0F1AD46F2AE0046D003E29B0 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1AD46E2AE0046D003E29B0 /* View+Extensions.swift */; };
+		0F3BBF2D2AF23244003EBAB7 /* Font+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3BBF2C2AF23244003EBAB7 /* Font+Extensions.swift */; };
 		0F43F6812A6EA86B00239AA4 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43F6802A6EA86B00239AA4 /* MapView.swift */; };
 		0F43F6832A6EA8AC00239AA4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43F6822A6EA8AC00239AA4 /* HomeView.swift */; };
 		0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4C83562A7727BE0006A8EA /* ChooseUnivView.swift */; };
@@ -70,7 +80,18 @@
 		08D6BA672AE7F97800C0B516 /* ReviewWriteImageTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewWriteImageTextView.swift; sourceTree = "<group>"; };
 		08D6BA682AE7F97800C0B516 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		0F1424232ADD3F3E00A79AA2 /* MoreReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreReviewsView.swift; sourceTree = "<group>"; };
+		0F19FB9D2AF21E7E00197815 /* OSLog.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OSLog.framework; path = System/Library/Frameworks/OSLog.framework; sourceTree = SDKROOT; };
+		0F19FBA12AF2252800197815 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		0F19FBA22AF2252800197815 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
+		0F19FBA32AF2252800197815 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		0F19FBA42AF2252800197815 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		0F19FBA52AF2252900197815 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		0F19FBA62AF2252900197815 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		0F19FBA72AF2252900197815 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		0F19FBA82AF2252900197815 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
+		0F19FBA92AF2252900197815 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
 		0F1AD46E2AE0046D003E29B0 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
+		0F3BBF2C2AF23244003EBAB7 /* Font+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extensions.swift"; sourceTree = "<group>"; };
 		0F43F6802A6EA86B00239AA4 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		0F43F6822A6EA8AC00239AA4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		0F4C83562A7727BE0006A8EA /* ChooseUnivView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseUnivView.swift; sourceTree = "<group>"; };
@@ -142,6 +163,38 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		0F19FB862AF21A5F00197815 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				0F19FB872AF21A6500197815 /* Pretendard */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		0F19FB872AF21A6500197815 /* Pretendard */ = {
+			isa = PBXGroup;
+			children = (
+				0F19FBA82AF2252900197815 /* Pretendard-Black.otf */,
+				0F19FBA52AF2252900197815 /* Pretendard-Bold.otf */,
+				0F19FBA92AF2252900197815 /* Pretendard-ExtraBold.otf */,
+				0F19FBA12AF2252800197815 /* Pretendard-ExtraLight.otf */,
+				0F19FBA22AF2252800197815 /* Pretendard-Light.otf */,
+				0F19FBA72AF2252900197815 /* Pretendard-Medium.otf */,
+				0F19FBA62AF2252900197815 /* Pretendard-Regular.otf */,
+				0F19FBA32AF2252800197815 /* Pretendard-SemiBold.otf */,
+				0F19FBA42AF2252800197815 /* Pretendard-Thin.otf */,
+			);
+			path = Pretendard;
+			sourceTree = "<group>";
+		};
+		0F19FB9C2AF21E7E00197815 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0F19FB9D2AF21E7E00197815 /* OSLog.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		0F43F67E2A6EA82C00239AA4 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -186,6 +239,7 @@
 				0F5B15732A7F8C9C00E698F4 /* Color+Extensions.swift */,
 				0F1AD46E2AE0046D003E29B0 /* View+Extensions.swift */,
 				081196B52AE36B100022B41A /* UIApplication+Extensions.swift */,
+				0F3BBF2C2AF23244003EBAB7 /* Font+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -203,6 +257,7 @@
 			children = (
 				0F78AFF72A6CCA6B006B8C80 /* EveryMeal_iOS */,
 				0F78AFF62A6CCA6B006B8C80 /* Products */,
+				0F19FB9C2AF21E7E00197815 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -237,6 +292,7 @@
 		0F78B0072A6D38A2006B8C80 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0F19FB862AF21A5F00197815 /* Fonts */,
 				0F78AFFC2A6CCA6C006B8C80 /* Assets.xcassets */,
 				0F78B0092A6D38E4006B8C80 /* Lotties */,
 			);
@@ -456,7 +512,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F78B0002A6CCA6C006B8C80 /* Preview Assets.xcassets in Resources */,
+				0F19FBB02AF2252900197815 /* Pretendard-Medium.otf in Resources */,
+				0F19FBB22AF2252900197815 /* Pretendard-ExtraBold.otf in Resources */,
+				0F19FBAE2AF2252900197815 /* Pretendard-Bold.otf in Resources */,
 				0F78AFFD2A6CCA6C006B8C80 /* Assets.xcassets in Resources */,
+				0F19FBAD2AF2252900197815 /* Pretendard-Thin.otf in Resources */,
+				0F19FBAF2AF2252900197815 /* Pretendard-Regular.otf in Resources */,
+				0F19FBB12AF2252900197815 /* Pretendard-Black.otf in Resources */,
+				0F19FBAA2AF2252900197815 /* Pretendard-ExtraLight.otf in Resources */,
+				0F19FBAC2AF2252900197815 /* Pretendard-SemiBold.otf in Resources */,
+				0F19FBAB2AF2252900197815 /* Pretendard-Light.otf in Resources */,
 				0F78B00B2A6D3901006B8C80 /* everymeal_splash.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -492,6 +557,7 @@
 				663BFBA42A81EB2800A540A2 /* Separator.swift in Sources */,
 				0FF7C7192A91ECEF00BFC33D /* GradationView.swift in Sources */,
 				087F9F522ADD63C6001DB3F2 /* ReviewDetailView.swift in Sources */,
+				0F3BBF2D2AF23244003EBAB7 /* Font+Extensions.swift in Sources */,
 				6681C7AA2AEA4FA700C3D2C1 /* EveryMealButton.swift in Sources */,
 				081196B62AE36B100022B41A /* UIApplication+Extensions.swift in Sources */,
 				6681C79E2AEA49B900C3D2C1 /* MealVerticalItemView.swift in Sources */,
@@ -638,7 +704,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EveryMeal_iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 3WXYTFH2K7;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
@@ -658,6 +724,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -672,7 +739,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EveryMeal_iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 3WXYTFH2K7;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;

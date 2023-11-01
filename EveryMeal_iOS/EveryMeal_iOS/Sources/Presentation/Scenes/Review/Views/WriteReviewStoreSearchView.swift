@@ -51,7 +51,7 @@ struct WriteReviewStoreSearchView: View {
         
         HStack(spacing: 0) {
           Text("다녀온 맛집은\n어디인가요?")
-            .font(.system(size: 24, weight: .bold))
+            .font(.pretendard(size: 24, weight: .bold))
             .foregroundColor(Color.grey9)
             .padding(.leading, 20)
           Spacer()
@@ -62,7 +62,7 @@ struct WriteReviewStoreSearchView: View {
             .frame(width: 24, height: 24)
             .padding(.leading, 16)
           Text("검색")
-            .font(.system(size: 16, weight: .regular))
+            .font(.pretendard(size: 16, weight: .regular))
             .foregroundColor(Color.grey5)
           Spacer()
         }

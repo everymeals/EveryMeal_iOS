@@ -17,10 +17,10 @@ struct MealVerticalItemView: View {
           HStack(alignment: .center, spacing: 4) {
             Text(mealModel.title)
               .foregroundColor(Color.grey9)
-              .font(Font.system(size: 17, weight: .semibold))
+              .font(.pretendard(size: 17, weight: .semibold))
             Text(mealModel.type.rawValue)
               .foregroundColor(Color.grey6)
-              .font(.system(size: 12, weight: .medium))
+              .font(.pretendard(size: 12, weight: .medium))
               .padding(.horizontal, 6)
               .padding(.vertical, 3)
               .background(Color.grey2)
@@ -36,10 +36,10 @@ struct MealVerticalItemView: View {
               .padding(.trailing, 2)
             Text(String(mealModel.score))
               .foregroundColor(Color.grey7)
-              .font(.system(size: 12, weight: .medium))
+              .font(.pretendard(size: 12, weight: .medium))
             Text("(5)")
               .foregroundColor(Color.grey7)
-              .font(.system(size: 12, weight: .medium))
+              .font(.pretendard(size: 12, weight: .medium))
             Spacer()
           }
         }
@@ -70,7 +70,7 @@ struct MealVerticalItemView: View {
                         .background(.black.opacity(0.4))
                         .cornerRadius(8)
                       Text("+ 18")
-                        .font(.system(size: 16, weight: .medium))
+                        .font(.pretendard(size: 16, weight: .medium))
                         .foregroundColor(Color.white)
                     }
                   }
