@@ -15,6 +15,8 @@ enum HomeStackViewType {
 
 struct HomeView: View {
   @State private var navigationPath: [HomeStackViewType] = []
+  @State private var topMenuSelected: [Bool] = Array.init(repeating: false, count: 4)
+  
   private let viewBottomargin: CGFloat = 24
   private let moreReviewBtnBottomMargin: CGFloat = 13
   
@@ -23,7 +25,11 @@ struct HomeView: View {
       VStack {
         HomeHeaderView()
         ScrollView(showsIndicators: true) {
-          HomeTopMenuView()
+          HomeTopMenuView(isSelected: topMenuSelected)
+            .onChange(of: topMenuSelected) { topMenuValue in
+              
+              
+            }
           Separator()
           HomeTopThreeMealsView()
           MoreRestuarantButton()
