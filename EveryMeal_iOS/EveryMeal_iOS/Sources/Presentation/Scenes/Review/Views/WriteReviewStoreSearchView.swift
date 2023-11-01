@@ -9,8 +9,8 @@ import SwiftUI
 
 enum ReviewStackViewType: Hashable {
   case searchView
-  case starPointView(MealModel)
-  case imageTextView(MealModel)
+  case starPointView(MealEntity)
+  case imageTextView(MealEntity)
   case reviewDetail(ReviewDetailModel)
   
   func hash(into hasher: inout Hasher) {
@@ -79,8 +79,8 @@ struct WriteReviewStoreSearchView: View {
       .navigationDestination(for: ReviewStackViewType.self) { stackViewType in
         switch stackViewType {
         case .searchView:
-          let searchView = BestStoreSearchView(nextButtonTapped: { selectedMealModel in
-            reviewNavigationStack.append(.starPointView(selectedMealModel))
+          let searchView = BestStoreSearchView(nextButtonTapped: { selectedMealEntity in
+            reviewNavigationStack.append(.starPointView(selectedMealEntity))
           }, placeholder: "검색", backButtonDidTapped: {
             reviewNavigationStack.removeLast()
           })

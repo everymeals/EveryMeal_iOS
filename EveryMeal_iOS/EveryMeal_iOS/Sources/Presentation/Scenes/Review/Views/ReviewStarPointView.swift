@@ -13,8 +13,8 @@ struct ReviewStarPointView: View {
   @State var text: String = ""
   @State var starChecked = Array(repeating: false, count: 5)
   @State var isBubbleShown: Bool = true
-  @State var mealModel: MealModel
-  var nextButtonTapped: (MealModel) -> Void
+  @State var mealModel: MealEntity
+  var nextButtonTapped: (MealEntity) -> Void
   var backButtonTapped: () -> Void
   
   
@@ -121,7 +121,7 @@ struct SpeachBubbleView: View {
 
 struct ReviewStarPointView_Previews: PreviewProvider {
   static var previews: some View {
-    let dummyMealModel = MealModel(title: "동경산책 성신여대점",
+    let dummyMealEntity = MealEntity(title: "동경산책 성신여대점",
                                    type: .일식,
                                    description: "ss",
                                    score: 4.0,
@@ -129,7 +129,7 @@ struct ReviewStarPointView_Previews: PreviewProvider {
                                    imageURLs: ["fdsfads", "fdsafdas"],
                                    likesCount: 3)
     ReviewStarPointView(
-      mealModel: dummyMealModel,
+      mealModel: dummyMealEntity,
       nextButtonTapped: { _ in
         print("go next")
       }, backButtonTapped: {

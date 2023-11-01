@@ -10,7 +10,7 @@ import PhotosUI
 
 struct ReviewWriteImageTextView: View {
   
-  init(mealModel: MealModel, saveButtonTapped: @escaping (ReviewDetailModel) -> Void, closeButtonTapped: @escaping () -> Void) {
+  init(mealModel: MealEntity, saveButtonTapped: @escaping (ReviewDetailModel) -> Void, closeButtonTapped: @escaping () -> Void) {
     UITextView.appearance().backgroundColor = .clear
     self.mealModel = mealModel
     self.saveButtonTapped = saveButtonTapped
@@ -25,7 +25,7 @@ struct ReviewWriteImageTextView: View {
   @State private var textHeight = CGFloat.zero
   
   private let writeReviewScrollViewID = "writeReviewScrollViewID"
-  var mealModel: MealModel
+  var mealModel: MealEntity
   var saveButtonTapped: (ReviewDetailModel) -> Void
   var closeButtonTapped: () -> Void
   
@@ -113,7 +113,7 @@ struct ReviewWriteImageTextView: View {
         
         VStack {
           Spacer()
-          ReviewSaveButton(selectEnable: $saveButtonEnabled)
+          EveryMealButton(selectEnable: $saveButtonEnabled, title: "등록하기")
             .onTapGesture {
               let dummyReviewModel = ReviewDetailModel(
                 nickname: "햄식이",
@@ -135,26 +135,6 @@ struct ReviewWriteImageTextView: View {
       }
     }
     .navigationBarHidden(true)
-  }
-}
-
-struct ReviewSaveButton: View {
-  @Binding var selectEnable: Bool
-  
-  var body: some View {
-    HStack {
-      Text("선택하기")
-        .frame(maxWidth: .infinity)
-        .padding()
-        .background(selectEnable ? Color.accentColor : Color(red: 0.9, green: 0.91, blue: 0.92))
-        .font(.system(size: 16, weight: .medium))
-        .foregroundColor(Color.white)
-        .cornerRadius(12)
-        .padding(.horizontal, 20)
-        .padding(.bottom, 10)
-    }
-    .padding(.top, 20)
-    .background(.white)
   }
 }
 
@@ -328,14 +308,14 @@ struct ReviewSelectedImageView: View {
 
 struct ReviewWriteImageTextView_Previews: PreviewProvider {
   static var previews: some View {
-    let dummyMealModel = MealModel(title: "동경산책 성신여대점",
+    let dummyMealEntity = MealEntity(title: "동경산책 성신여대점",
                                    type: .일식,
                                    description: "ss",
                                    score: 4.0,
                                    doUserLike: false,
                                    imageURLs: ["fdsfads", "fdsafdas"],
                                    likesCount: 3)
-    ReviewWriteImageTextView(mealModel: dummyMealModel,
+    ReviewWriteImageTextView(mealModel: dummyMealEntity,
                              saveButtonTapped: {_ in 
       print("save")
     }, closeButtonTapped: {
