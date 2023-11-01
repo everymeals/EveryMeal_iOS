@@ -18,7 +18,7 @@ struct MoreBestRestaurantView: View {
   
   var body: some View {
     VStack(spacing: 0) {
-      FilterBarView()
+      FilterBarView(viewType: .stores)
       
       ScrollView(showsIndicators: false) {
         LazyVGrid(columns: columns) {
@@ -83,54 +83,6 @@ struct MoreBestRestaurantView_Previews: PreviewProvider {
   }
 }
 
-struct FilterBarView: View {
-  var body: some View {
-    HStack {
-      HStack(alignment: .center, spacing: 4) {
-        Text("최신순")
-          .font(
-            Font.custom("Pretendard", size: 14)
-              .weight(.semibold)
-          )
-          .multilineTextAlignment(.center)
-          .foregroundColor(Color(red: 0.42, green: 0.46, blue: 0.52))
-        
-        Image("icon-arrow-right-small-mono")
-          .resizable()
-          .frame(width: 12, height: 12)
-          .rotationEffect(Angle(degrees: 90))
-      }
-      .padding(.horizontal, 12)
-      .padding(.vertical, 6)
-      .background(Color(red: 0.95, green: 0.96, blue: 0.96))
-      .cornerRadius(100)
-      
-      HStack(alignment: .center, spacing: 4) {
-        Text("필터")
-          .font(
-            Font.custom("Pretendard", size: 14)
-              .weight(.semibold)
-          )
-          .multilineTextAlignment(.center)
-          .foregroundColor(Color(red: 0.42, green: 0.46, blue: 0.52))
-        
-        Image("icon-arrow-right-small-mono")
-          .resizable()
-          .frame(width: 12, height: 12)
-          .rotationEffect(Angle(degrees: 90))
-      }
-      .padding(.horizontal, 12)
-      .padding(.vertical, 6)
-      .background(Color(red: 0.95, green: 0.96, blue: 0.96))
-      .cornerRadius(100)
-      
-      Spacer()
-    }
-    .padding(.horizontal, 20)
-    .padding(.vertical, 8)
-  }
-}
-
 struct BestRestaurantCell: View {
   @State var isPressed: Bool = false
 
@@ -146,10 +98,7 @@ struct BestRestaurantCell: View {
           HStack(alignment: .center, spacing: 4) {
             // 음식점 타이틀
             Text("짱마있는어쩌고저쩌꼬성신여대맛집")
-              .font(
-                Font.custom("Pretendard", size: 17)
-                  .weight(.semibold)
-              )
+              .font(.system(size: 17, weight: .semibold))
               .lineLimit(1)
               .foregroundColor(Color(red: 0.2, green: 0.24, blue: 0.29))
               .frame(maxWidth: 233, alignment: .topLeading)
@@ -157,10 +106,7 @@ struct BestRestaurantCell: View {
             // 음식점 타입
             HStack(alignment: .center, spacing: 10) {
               Text("베이커리")
-                .font(
-                  Font.custom("Pretendard", size: 12)
-                    .weight(.medium)
-                )
+                .font(.system(size: 12, weight: .semibold))
                 .foregroundColor(Color(red: 0.55, green: 0.58, blue: 0.63))
             }
             .padding(.horizontal, 6)
@@ -176,10 +122,7 @@ struct BestRestaurantCell: View {
               .frame(width: 14, height: 14)
             
             Text("3.0 (5)")
-              .font(
-                Font.custom("Pretendard", size: 12)
-                  .weight(.medium)
-              )
+              .font(.system(size: 12, weight: .semibold))
               .foregroundColor(Color(red: 0.42, green: 0.46, blue: 0.52))
           }
         }
@@ -197,10 +140,7 @@ struct BestRestaurantCell: View {
             }
           
           Text("0")
-            .font(
-              Font.custom("Pretendard", size: 12)
-                .weight(.medium)
-            )
+            .font(.system(size: 12, weight: .semibold))
             .foregroundColor(isPressed ? Color.everyMealRed : Color.grey4)
         }
         .padding(10)
