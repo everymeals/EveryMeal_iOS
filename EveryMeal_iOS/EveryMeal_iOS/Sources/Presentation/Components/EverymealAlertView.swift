@@ -23,12 +23,12 @@ struct EverymealAlertView: View {
         VStack(alignment: .leading, spacing: 8) {
           if let title = title {
             Text(title)
-              .font(.system(size: 18, weight: .bold))
+              .font(.pretendard(size: 18, weight: .bold))
               .foregroundColor(.black)
           }
           if let description = description {
             Text(description)
-              .font(.system(size: 15, weight: .regular))
+              .font(.pretendard(size: 15, weight: .regular))
               .foregroundColor(.grey7)
           }
         }
@@ -41,7 +41,7 @@ struct EverymealAlertView: View {
           }, label: {
             Spacer()
             Text(okButtonTitle)
-              .font(.system(size: 16, weight: .medium))
+              .font(.pretendard(size: 16, weight: .medium))
               .foregroundColor(.grey7)
             Spacer()
           })
@@ -54,7 +54,7 @@ struct EverymealAlertView: View {
           }, label: {
             Spacer()
             Text(cancelButtonTitle)
-              .font(.system(size: 16, weight: .medium))
+              .font(.pretendard(size: 16, weight: .medium))
               .foregroundColor(.white)
             Spacer()
           })

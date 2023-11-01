@@ -21,7 +21,7 @@ struct FilterBarView: View {
     HStack {
       HStack(alignment: .center, spacing: 4) {
         Text("최신순")
-          .font(.system(size: 14, weight: .semibold))
+          .font(.pretendard(size: 14, weight: .semibold))
           .multilineTextAlignment(.center)
           .foregroundColor(Color(red: 0.42, green: 0.46, blue: 0.52))
         
@@ -47,7 +47,7 @@ struct FilterBarView: View {
       
       HStack(alignment: .center, spacing: 4) {
         Text("필터")
-          .font(.system(size: 14, weight: .semibold))
+          .font(.pretendard(size: 14, weight: .semibold))
           .multilineTextAlignment(.center)
           .foregroundColor(Color(red: 0.42, green: 0.46, blue: 0.52))
         

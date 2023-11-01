@@ -39,11 +39,11 @@ struct GoToReviewBannerView: View {
         
         VStack(alignment: .leading, spacing: 2) {
           Text("슈니 원픽 맛집은 어디?")
-            .font(.system(size: 15, weight: .semibold))
+            .font(.pretendard(size: 15, weight: .semibold))
             .foregroundColor(Color.grey8)
           
           Text("맛집 리뷰를 남겨보세요")
-            .font(.system(size: 14, weight: .medium))
+            .font(.pretendard(size: 14, weight: .medium))
             .foregroundColor(Color.grey5)
         }
       }
@@ -109,7 +109,7 @@ struct TopMenuButton: View {
       Image(imageName)
         .frame(width: 40, height: 40)
       Text(title)
-        .font(.system(size: 14))
+        .font(.pretendard(size: 14, weight: .regular))
         .foregroundColor(Color.grey9)
     }
     .frame(width: 77)

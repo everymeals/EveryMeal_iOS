@@ -54,7 +54,7 @@ struct ReviewWriteImageTextView: View {
               VStack(alignment: .center, spacing: 0) {
                 Text(mealModel.type.rawValue)
                   .foregroundColor(Color.grey6)
-                  .font(.system(size: 12, weight: .medium))
+                  .font(.pretendard(size: 12, weight: .medium))
                   .padding(.horizontal, 6)
                   .padding(.vertical, 3)
                   .background(Color.grey2)
@@ -64,7 +64,7 @@ struct ReviewWriteImageTextView: View {
                 
                 Text(mealModel.title)
                   .foregroundColor(Color.grey9)
-                  .font(Font.system(size: 18, weight: .bold))
+                  .font(Font.pretendard(size: 18, weight: .bold))
                   .lineLimit(1)
                   .padding(.bottom, 16)
                   .frame(width: 210)
@@ -84,7 +84,7 @@ struct ReviewWriteImageTextView: View {
                   // TextEditor의 height를 동적으로 조절하기 위한 Text
                   
                   Text(content)
-                    .font(Font.system(size: 16, weight: .regular))
+                    .font(Font.pretendard(size: 16, weight: .regular))
                     .lineSpacing(4)
                     .padding(.vertical, 12)
                     .padding(.horizontal, 16)
@@ -148,7 +148,7 @@ struct ReviewTextEditor: View {
     if #available(iOS 16.0, *) {
       TextEditor(text: $content)
         .scrollContentBackground(.hidden)
-        .font(Font.system(size: 16, weight: .regular))
+        .font(Font.pretendard(size: 16, weight: .regular))
         .lineSpacing(4)
         .padding(.vertical, 12)
         .padding(.horizontal, 16)
@@ -179,7 +179,7 @@ struct ReviewTextEditor: View {
         })
     } else { // 확인 필요
       TextEditor(text: $content)
-        .font(Font.system(size: 16, weight: .regular))
+        .font(Font.pretendard(size: 16, weight: .regular))
         .lineSpacing(4)
         .padding(.vertical, 12)
         .padding(.horizontal, 16)
@@ -214,7 +214,7 @@ struct ReviewSelectedImageView: View {
           
           Text("\(images.count)/10")
             .foregroundColor(Color.grey7)
-            .font(.system(size: 12, weight: .medium))
+            .font(.pretendard(size: 12, weight: .medium))
             .fixedSize()
         }
         .onTapGesture {

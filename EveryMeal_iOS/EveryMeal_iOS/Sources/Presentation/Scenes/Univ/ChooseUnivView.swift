@@ -18,7 +18,7 @@ struct ChooseUnivView: View {
             .frame(width: 64, height: 64)
           
           Text("반가워요!\n대학을 선택해주세요")
-            .font(Font.system(size: 24, weight: .bold))
+            .font(.pretendard(size: 24, weight: .bold))
             .foregroundColor(.grey9)
         }
         .padding(.top, 32)
@@ -87,11 +87,11 @@ struct UnivGridView: View {
         ForEach(univsTitle.indices, id: \.self) { index in
           VStack(spacing: 8) {
             Text(univsTitle[index])
-              .font(.system(size: 14, weight: .semibold))
+              .font(.pretendard(size: 14, weight: .semibold))
               .foregroundColor(.grey8)
             if !univsSubtitle[index].isEmpty {
               Text(univsSubtitle[index])
-                .font(.system(size: 13, weight: .regular))
+                .font(.pretendard(size: 13, weight: .regular))
                 .foregroundColor(.grey6)
             }
           }
@@ -139,11 +139,11 @@ struct AddUnivView: View {
         
         VStack(alignment: .leading, spacing: 2) {
           Text("여기에 없어요")
-            .font(.system(size: 15, weight: .semibold))
+            .font(.pretendard(size: 15, weight: .semibold))
             .foregroundColor(.grey8)
           
           Text("학교 신청하러 가기")
-            .font(.system(size: 14, weight: .medium))
+            .font(.pretendard(size: 14, weight: .medium))
             .foregroundColor(.grey5)
         }
       }
@@ -178,7 +178,7 @@ struct SelectUnivButton: View {
         .frame(maxWidth: .infinity)
         .padding()
         .background(isSelected ? Color.accentColor : Color.grey3)
-        .font(.system(size: 16, weight: .medium))
+        .font(.pretendard(size: 16, weight: .medium))
         .foregroundColor(Color.white)
         .cornerRadius(12)
         .padding(.horizontal, 20)

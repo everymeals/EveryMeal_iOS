@@ -54,16 +54,16 @@ struct MainTabBarView: View {
     switch selectedTab {
     case 0:
       return Text("에브리밀")
-        .font(.system(size: 20, weight: .bold))
+        .font(.pretendard(size: 20, weight: .bold))
     case 1:
       return Text("지도")
-        .font(.system(size: 20, weight: .bold))
+        .font(.pretendard(size: 20, weight: .bold))
     case 2:
       return Text("오늘 학식")
-        .font(.system(size: 20, weight: .bold))
+        .font(.pretendard(size: 20, weight: .bold))
     case 3:
       return Text("찜 리스트")
-        .font(.system(size: 20, weight: .bold))
+        .font(.pretendard(size: 20, weight: .bold))
     default:
       return Text("")
     }

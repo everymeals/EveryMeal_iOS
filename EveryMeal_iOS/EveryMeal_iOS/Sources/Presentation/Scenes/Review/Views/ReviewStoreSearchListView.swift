@@ -58,7 +58,7 @@ struct BestStoreSearchView: View {
           } else {
             HStack {
               Text("최근 검색어")
-                .font(.system(size: 14, weight: .medium))
+                .font(.pretendard(size: 14, weight: .medium))
                 .foregroundColor(Color.grey5)
               Spacer()
             }

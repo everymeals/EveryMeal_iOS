@@ -41,7 +41,7 @@ struct MealHorizontalItemView: View {
       VStack(alignment: .leading, spacing: 4) {
         Text(mealModel.title)
           .foregroundColor(Color.grey9)
-          .font(Font.system(size: 17, weight: .semibold))
+          .font(Font.pretendard(size: 17, weight: .semibold))
         
         HStack(spacing: 0) {
           Image("icon-star-mono")
@@ -51,10 +51,10 @@ struct MealHorizontalItemView: View {
             .padding(.trailing, 2)
           Text(String(mealModel.score))
             .foregroundColor(Color.grey7)
-            .font(.system(size: 12, weight: .medium))
+            .font(.pretendard(size: 12, weight: .medium))
           Text("(\(String(mealModel.likesCount)))")
             .foregroundColor(Color.grey7)
-            .font(.system(size: 12, weight: .medium))
+            .font(.pretendard(size: 12, weight: .medium))
           Spacer()
         }
       }

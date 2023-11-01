@@ -30,7 +30,7 @@ struct CustomAlertButton: View {
       action?()
     } label: {
       Text(title)
-        .font(.system(size: 16, weight: .medium))
+        .font(.pretendard(size: 16, weight: .medium))
         .lineLimit(1)
         .multilineTextAlignment(.center)
         .foregroundColor(fontColor)

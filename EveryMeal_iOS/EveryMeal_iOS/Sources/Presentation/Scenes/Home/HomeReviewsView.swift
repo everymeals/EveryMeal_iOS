@@ -13,7 +13,7 @@ struct HomeReviewsView: View {
     VStack(alignment: .leading, spacing: 8) {
       HStack {
         Text("리뷰 모아보기")
-          .font(.system(size: 20, weight: .bold))
+          .font(.pretendard(size: 20, weight: .bold))
           .foregroundColor(Color.everyMealBlack)
           .padding(.top, 15)
         Spacer()
@@ -56,11 +56,11 @@ struct ReviewCellView: View {
                   Image("icon-star-mono")
                   Image("icon-star-mono")
                   Text("·")
-                    .font(.system(size: 12, weight: .semibold))
+                    .font(.pretendard(size: 12, weight: .semibold))
                     .multilineTextAlignment(.center)
                     .foregroundColor(.grey5)
                   Text("3일전")
-                    .font(.system(size: 12))
+                    .font(.pretendard(size: 12, weight: .regular))
                     .foregroundColor(.grey5)
                 }
               }
@@ -78,7 +78,7 @@ struct ReviewCellView: View {
           HStack(spacing: 12) {
             // TODO: 오른쪽에 사진 없는 경우와 글이 3줄 미만인 경우 UI 잡기
             Text("매장 안쪽으로 들어가면 꽤 넓은 공간이 나와서 공부하기 좋아요 근데 전에 저녁에 왔을 때 있던 알바생 분은 친절하셨는데, 오전에 낮에 왔을 때 계신")
-              .font(.system(size: 14))
+              .font(.pretendard(size: 14))
               .foregroundColor(.grey8)
               .frame(maxWidth: .infinity, minHeight: 63, maxHeight: 63, alignment: .topLeading)
               .lineLimit(3)
@@ -94,7 +94,7 @@ struct ReviewCellView: View {
         HStack(spacing: 4) {
           Image("icon-thumb-up-mono")
           Text("2")
-            .font(.system(size: 14, weight: .medium))
+            .font(.pretendard(size: 14, weight: .medium))
             .foregroundColor(.grey6)
         }
         .onTapGesture {
@@ -106,7 +106,7 @@ struct ReviewCellView: View {
       HStack {
         Image("icon-pin-location-mono")
         Text("스타벅스 성신여대점")
-          .font(.system(size: 14, weight: .semibold))
+          .font(.pretendard(size: 14, weight: .semibold))
           .foregroundColor(.grey7)
         Spacer()
         Image("icon-arrow-right-small-mono")
