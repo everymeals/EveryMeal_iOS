@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-enum MoreViewType: String {
+enum MoreStoreViewType: String, Hashable {
   case recommend = "추천"
   case meal = "밥집"
   case alcohol = "술집"
-  case coffee = "카페"
+  case cafe = "카페"
   case best = "맛집"
 }
 
 struct MoreStoreView: View {
   var backButtonTapped: () -> Void
-  var moreViewType: MoreViewType
+  var moreViewType: MoreStoreViewType
   
   var body: some View {
     NavigationView {
@@ -65,6 +65,9 @@ struct MoreStoreView: View {
       
     }
     .navigationBarHidden(true)
+    .onAppear {
+      UITabBar.appearance().isHidden = true
+    }
   }
 }
 

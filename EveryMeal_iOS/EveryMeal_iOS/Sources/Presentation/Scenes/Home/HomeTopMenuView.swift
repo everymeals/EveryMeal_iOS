@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeTopMenuView: View {
   @State var isPresented = false
-  @State var isSelected: [Bool] = Array.init(repeating: false, count: 4)
+  @Binding var isSelected: [Bool]
   
   var body: some View {
     VStack {
@@ -25,7 +25,10 @@ struct HomeTopMenuView: View {
           }
         }
       
-      TopMenuButtonsView(isSelected: isSelected)
+      TopMenuButtonsView(isSelected: $isSelected)
+        .onChange(of: isSelected) { value in
+          print("isselected \(isSelected)")
+        }
     }
   }
 }
@@ -59,7 +62,7 @@ struct GoToReviewBannerView: View {
 }
 
 struct TopMenuButtonsView: View {
-  @State var isSelected: [Bool] = Array.init(repeating: false, count: 4)
+  @Binding var isSelected: [Bool]
   
   let titles = [
     "추천",
@@ -88,10 +91,7 @@ struct TopMenuButtonsView: View {
         ForEach(titles.indices, id: \.self) { index in
           TopMenuButton(title: titles[index],
                         imageName: menuImageName[index],
-                        isPressed: isSelected[index])
-          .onTapGesture {
-          
-          }
+                        didButtonClickFinished: $isSelected[index])
         }
       }
     }
@@ -103,6 +103,7 @@ struct TopMenuButton: View {
   var title: String
   var imageName: String
   @State var isPressed: Bool = false
+  @Binding var didButtonClickFinished: Bool
   
   var body: some View {
     VStack(spacing: 1) {
@@ -120,6 +121,10 @@ struct TopMenuButton: View {
       isPressed = true
     }, onRelease: {
       isPressed = false
+      didButtonClickFinished = true
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+        didButtonClickFinished = false
+      }
     }))
   }
 }

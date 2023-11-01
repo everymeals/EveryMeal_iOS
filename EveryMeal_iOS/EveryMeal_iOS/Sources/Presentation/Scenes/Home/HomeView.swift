@@ -7,10 +7,11 @@
 
 import SwiftUI
 
-enum HomeStackViewType {
+enum HomeStackViewType: Hashable {
   case writeReview
   case restaurantList
   case reviewList
+  case moreStoreView(MoreStoreViewType)
 }
 
 struct HomeView: View {
@@ -25,10 +26,20 @@ struct HomeView: View {
       VStack {
         HomeHeaderView()
         ScrollView(showsIndicators: true) {
-          HomeTopMenuView(isSelected: topMenuSelected)
+          HomeTopMenuView(isSelected: $topMenuSelected)
             .onChange(of: topMenuSelected) { topMenuValue in
-              
-              
+              let index = topMenuValue.enumerated().first(where: { $0.1 == true })?.0
+              if let index = index {
+                let viewType: MoreStoreViewType = {
+                  switch index {
+                  case 0: return .recommend
+                  case 1: return .meal
+                  case 2: return .cafe
+                  default: return .alcohol
+                  }
+                }()
+                self.navigationPath.append(.moreStoreView(viewType))
+              }
             }
           Separator()
           HomeTopThreeMealsView()
@@ -51,6 +62,10 @@ struct HomeView: View {
             MoreBestRestaurantView()
           case .reviewList:
             MoreReviewsView()
+          case let .moreStoreView(viewType):
+            MoreStoreView(backButtonTapped: {
+              navigationPath.removeLast()
+            }, moreViewType: viewType)
           default:
             MoreBestRestaurantView()
           }
