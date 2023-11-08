@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeTopMenuView: View {
   @State var isPresented = false
+  @Binding var isSelected: [Bool]
   
   var body: some View {
     VStack {
@@ -23,8 +24,8 @@ struct HomeTopMenuView: View {
             isPresented.toggle()
           }
         }
-
-      TopMenuButtonsView()
+      
+      TopMenuButtonsView(isSelected: $isSelected)
     }
   }
 }
@@ -58,7 +59,7 @@ struct GoToReviewBannerView: View {
 }
 
 struct TopMenuButtonsView: View {
-  @State var isSelected: [Bool] = Array.init(repeating: false, count: 4)
+  @Binding var isSelected: [Bool]
   
   let titles = [
     "추천",
@@ -86,7 +87,8 @@ struct TopMenuButtonsView: View {
       LazyVGrid(columns: columns, spacing: 8) {
         ForEach(titles.indices, id: \.self) { index in
           TopMenuButton(title: titles[index],
-                        imageName: menuImageName[index])
+                        imageName: menuImageName[index],
+                        didButtonClickFinished: $isSelected[index])
         }
       }
     }
@@ -98,6 +100,7 @@ struct TopMenuButton: View {
   var title: String
   var imageName: String
   @State var isPressed: Bool = false
+  @Binding var didButtonClickFinished: Bool
   
   var body: some View {
     VStack(spacing: 1) {
@@ -115,6 +118,10 @@ struct TopMenuButton: View {
       isPressed = true
     }, onRelease: {
       isPressed = false
+      didButtonClickFinished = true
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+        didButtonClickFinished = false
+      }
     }))
   }
 }
