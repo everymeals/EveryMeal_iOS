@@ -45,7 +45,7 @@ struct HomeView: View {
           HomeTopThreeMealsView()
           MoreRestuarantButton()
             .onTapGesture {
-              navigationPath.append(.restaurantList)
+              self.navigationPath.append(.moreStoreView(.best))
             }
           Separator()
           HomeReviewsView()
