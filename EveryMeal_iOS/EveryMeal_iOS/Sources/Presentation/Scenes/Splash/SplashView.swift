@@ -10,79 +10,67 @@ import Lottie
 import UIKit
 
 struct SplashView: View {
-  @State private var animationFinished = false
-  
+  @State private var didFinishedLoading = false
+  @State private var showingAlert = false
+  @State private var alertMessage = ""
+
   var body: some View {
     VStack {
-      if animationFinished {
+      if didFinishedLoading {
         MainTabBarView()
       } else {
-        LottieSplashView(jsonName: "everymeal_splash", loopMode: .playOnce)
+        BaseLottieView(jsonName: "everymeal_splash", loopMode: .playOnce)
+          .frame(width: 250, height: 250)
+          .offset(y: -50)
           .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-              withAnimation {
-                animationFinished = true
-              }
-            }
+            startLottieAnimation()
           }
-          .frame(width: 250, height: 250) // 원하는 크기로 조정 -> 1/3 크기로 조절
+      }
+    }
+    .edgesIgnoringSafeArea(.all)
+    .alert(isPresented: $showingAlert) {
+      Alert(
+        title: Text(""),
+        message: Text(alertMessage),
+        primaryButton: .default(Text("재시도"), action: {
+          startLottieAnimation()  // performAPIFetch를 재시도
+        }),
+        secondaryButton: .cancel(Text("취소"), action: {
+          
+        })
+      )
+    }
+  }
+  
+  private func startLottieAnimation() {
+    // 애니메이션의 completion handler 내에서 API 호출을 수행합니다.
+    // 예를 들어, BaseLottieView가 애니메이션 완료 콜백을 제공하는 경우 다음과 같이 사용할 수 있습니다.
+    performAPIFetch { success, errorMessage in
+      if success {
+        withAnimation {
+          self.didFinishedLoading = true
+        }
+      } else {
+        // 실패 처리를 여기에 작성합니다.
+        // 예를 들어, 사용자에게 오류 메시지를 표시하거나, 재시도할 수 있는 옵션을 제공합니다.
+        showingAlert = true
+        alertMessage = errorMessage
       }
     }
   }
   
-}
-
-struct LottieSplashView: UIViewRepresentable {
-  typealias UIViewType = UIView
-  
-  var name : String
-  var loopMode: LottieLoopMode
-  
-  // 간단하게 View로 JSON 파일 이름으로 애니메이션을 실행합니다.
-  init(jsonName: String = "", loopMode : LottieLoopMode = .loop){
-    self.name = jsonName
-    self.loopMode = loopMode
-  }
-  
-  func makeUIView(context: UIViewRepresentableContext<LottieSplashView>) -> UIView {
-    let view = UIView(frame: .zero)
-    
-    let animationView = LottieAnimationView()
-    let animation = LottieAnimation.named(name)
-    animationView.animation = animation
-    // AspectFit으로 적절한 크기의 에니매이션을 불러옵니다.
-    animationView.contentMode = .scaleAspectFit
-    // 애니메이션은 기본으로 Loop합니다.
-    animationView.loopMode = loopMode
-    // 애니메이션을 재생합니다
-    animationView.play()
-    // 백그라운드에서 재생이 멈추는 오류를 잡습니다
-    animationView.backgroundBehavior = .pauseAndRestore
-    
-    //컨테이너의 너비와 높이를 자동으로 지정할 수 있도록합니다. 로티는 컨테이너 위에 작성됩니다.
-    animationView.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(animationView)
-    
-    //레이아웃의 높이와 넓이의 제약
-    NSLayoutConstraint.activate([
-      animationView.heightAnchor.constraint(equalTo: view.heightAnchor),
-      animationView.widthAnchor.constraint(equalTo: view.widthAnchor)
-    ])
-    
-    DispatchQueue.main.async {
-      animationView.frame = CGRect(
-        x: animationView.frame.origin.x,
-        y: animationView.frame.origin.y - 70,
-        width: animationView.frame.size.width,
-        height: animationView.frame.size.height)
+  private func performAPIFetch(completion: @escaping (Bool, String) -> Void) {
+    // API 호출 로직을 구현합니다.
+    // 여기서는 예시로 2초 후에 완료되었다고 가정하고 있습니다.
+    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+      // API 호출 결과에 따라서 success 값을 true 또는 false로 설정
+      // false인 경우, 에러코드 또는 메시지 전달
+      let apiResult = false
+      let errorMsg = "네트워크 연결 확인 후 다시 시도해주세요."
+      completion(apiResult, errorMsg) // 예시로 true를 반환합니다.
     }
-    
-    return view
   }
-  
-  func updateUIView(_ uiView: UIViewType, context: Context) {
-    
-  }
+
 }
 
 struct SplashView_Previews: PreviewProvider {
