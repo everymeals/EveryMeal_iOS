@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MainTabBarView: View {
+  @AppStorage("isFirstLaunching") var isFirstLaunching: Bool = true
+
   @State private var selectedTab = 0
   @State private var favoritesCount = 10
   
@@ -47,6 +49,9 @@ struct MainTabBarView: View {
     .onAppear(perform: {
       UITabBar.appearance().unselectedItemTintColor = UIColor(red: 0.69, green: 0.72, blue: 0.76, alpha: 1)
       UITabBar.appearance().isTranslucent = true
+    })
+    .fullScreenCover(isPresented: $isFirstLaunching, content: {
+      OnBoardingView(isFirstLaunching: $isFirstLaunching)
     })
   }
   
