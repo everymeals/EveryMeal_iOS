@@ -13,7 +13,7 @@ struct SplashView: View {
   @State private var didFinishedLoading = false
   @State private var showingAlert = false
   @State private var alertMessage = ""
-
+  
   var body: some View {
     VStack {
       if didFinishedLoading {
@@ -65,12 +65,12 @@ struct SplashView: View {
     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
       // API 호출 결과에 따라서 success 값을 true 또는 false로 설정
       // false인 경우, 에러코드 또는 메시지 전달
-      let apiResult = false
+      let apiResult = true
       let errorMsg = "네트워크 연결 확인 후 다시 시도해주세요."
       completion(apiResult, errorMsg) // 예시로 true를 반환합니다.
     }
   }
-
+  
 }
 
 struct SplashView_Previews: PreviewProvider {
