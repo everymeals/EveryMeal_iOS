@@ -14,4 +14,9 @@ class Functions {
     guard let settingURL = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(settingURL) else { return }
     UIApplication.shared.open(settingURL, options: [:])
   }
+  
+  public static func getAppVersion() -> String {
+    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+    return appVersion
+  }
 }
