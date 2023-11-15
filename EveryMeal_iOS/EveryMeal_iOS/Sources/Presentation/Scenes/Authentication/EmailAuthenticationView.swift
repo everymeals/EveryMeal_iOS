@@ -47,14 +47,14 @@ struct EmailAuthenticationView: View {
                 .stroke(Color.grey2, lineWidth: 1)
             )
             .cornerRadius(12)
-            .onChange(of: $emailText, perform: { value in
-              is value.isEmpty
-              
-            })
+//            .onChange(of: $emailText, perform: { value in
+//              is value.isEmpty
+//              
+//            })
           
           
           Spacer()
-          EveryMealButton(selectEnable: <#T##Binding<Bool>#>)
+//          EveryMealButton(selectEnable: <#T##Binding<Bool>#>)
         }
         .padding(.top, 28)
         .padding(.leading, 20)
