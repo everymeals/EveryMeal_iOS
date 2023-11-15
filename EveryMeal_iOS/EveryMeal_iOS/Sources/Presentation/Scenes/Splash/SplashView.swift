@@ -7,7 +7,6 @@
 
 import SwiftUI
 import Lottie
-import UIKit
 
 struct SplashView: View {
   @State private var didFinishedLoading = false
