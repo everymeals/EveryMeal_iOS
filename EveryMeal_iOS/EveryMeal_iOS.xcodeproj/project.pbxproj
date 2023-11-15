@@ -39,6 +39,7 @@
 		0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4C83562A7727BE0006A8EA /* ChooseUnivView.swift */; };
 		0F5B15742A7F8C9C00E698F4 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5B15732A7F8C9C00E698F4 /* Color+Extensions.swift */; };
 		0F660A912A84551C000074BD /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F660A902A84551C000074BD /* DeviceManager.swift */; };
+		0F6685EF2B037C3300EA1281 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6685EE2B037C3300EA1281 /* MyPageView.swift */; };
 		0F78AFF92A6CCA6B006B8C80 /* EveryMeal_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F78AFF82A6CCA6B006B8C80 /* EveryMeal_iOSApp.swift */; };
 		0F78AFFB2A6CCA6B006B8C80 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F78AFFA2A6CCA6B006B8C80 /* SplashView.swift */; };
 		0F78AFFD2A6CCA6C006B8C80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F78AFFC2A6CCA6C006B8C80 /* Assets.xcassets */; };
@@ -100,6 +101,7 @@
 		0F4C83562A7727BE0006A8EA /* ChooseUnivView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseUnivView.swift; sourceTree = "<group>"; };
 		0F5B15732A7F8C9C00E698F4 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
 		0F660A902A84551C000074BD /* DeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
+		0F6685EE2B037C3300EA1281 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		0F78AFF52A6CCA6B006B8C80 /* EveryMeal_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EveryMeal_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F78AFF82A6CCA6B006B8C80 /* EveryMeal_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveryMeal_iOSApp.swift; sourceTree = "<group>"; };
 		0F78AFFA2A6CCA6B006B8C80 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
@@ -265,6 +267,14 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		0F6685ED2B037BD100EA1281 /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				0F6685EE2B037C3300EA1281 /* MyPageView.swift */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
 		0F78AFEC2A6CCA6B006B8C80 = {
 			isa = PBXGroup;
 			children = (
@@ -352,6 +362,7 @@
 				0F43F67E2A6EA82C00239AA4 /* Home */,
 				0F43F67F2A6EA83400239AA4 /* Map */,
 				0F80B4012ABAFAA000167AB6 /* Stores */,
+				0F6685ED2B037BD100EA1281 /* MyPage */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -579,6 +590,7 @@
 				6681C79E2AEA49B900C3D2C1 /* MealVerticalItemView.swift in Sources */,
 				08D6BA652AE7F6DA00C0B516 /* ReviewStoreSearchListView.swift in Sources */,
 				0F5B15742A7F8C9C00E698F4 /* Color+Extensions.swift in Sources */,
+				0F6685EF2B037C3300EA1281 /* MyPageView.swift in Sources */,
 				0F80B4032ABAFABF00167AB6 /* MoreBestRestaurantView.swift in Sources */,
 				6681C79C2AEA44D400C3D2C1 /* MoreStoreView.swift in Sources */,
 				0F78AFF92A6CCA6B006B8C80 /* EveryMeal_iOSApp.swift in Sources */,
