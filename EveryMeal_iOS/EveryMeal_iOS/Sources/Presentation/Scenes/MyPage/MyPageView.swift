@@ -63,7 +63,7 @@ struct ProfileView: View {
         .foregroundColor(Color.grey6)
         .frame(width: 24, height: 24)
     }
-    .padding(.top, 56)
+    .padding(.top, 28)
     .padding(.horizontal, 20)
     .padding(.bottom, 16)
   }
