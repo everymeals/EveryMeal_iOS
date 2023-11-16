@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeTopMenuView: View {
-  @State var isPresented = false
+  @Binding var writeReviewViewShown: Bool
   @Binding var isSelected: [Bool]
   
   var body: some View {
@@ -17,11 +17,21 @@ struct HomeTopMenuView: View {
         .padding(.top, 12)
         .padding(.horizontal, 20)
         .onTapGesture {
-          self.isPresented.toggle()
+          self.writeReviewViewShown.toggle()
         }
-        .fullScreenCover(isPresented: $isPresented) {
-          WriteReviewStoreSearchView {
-            isPresented.toggle()
+        .fullScreenCover(isPresented: $writeReviewViewShown) {
+          
+          // FIXME: 학교 인증한 사용자인지 확인
+          let isEmailAuthenticationTrue: Bool = false
+          if isEmailAuthenticationTrue {
+            WriteReviewStoreSearchView {
+              writeReviewViewShown.toggle()
+            }
+          } else {
+            EmailAuthenticationView(viewType: .enterEmail,
+                                    backButtonTapped: {
+              writeReviewViewShown = false
+            })
           }
         }
       

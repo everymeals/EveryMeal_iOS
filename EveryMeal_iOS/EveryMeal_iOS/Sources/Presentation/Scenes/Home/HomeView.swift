@@ -12,10 +12,12 @@ enum HomeStackViewType: Hashable {
   case restaurantList
   case reviewList
   case moreStoreView(MoreStoreViewType)
+  case emailVertify
 }
 
 struct HomeView: View {
   @State private var navigationPath: [HomeStackViewType] = []
+  @State private var writeReviewViewTapped: Bool = false
   @State private var topMenuSelected: [Bool] = Array.init(repeating: false, count: 4)
   
   private let viewBottomargin: CGFloat = 24
@@ -26,7 +28,8 @@ struct HomeView: View {
       VStack {
         HomeHeaderView()
         ScrollView(showsIndicators: true) {
-          HomeTopMenuView(isSelected: $topMenuSelected)
+          HomeTopMenuView(writeReviewViewShown: $writeReviewViewTapped,
+                          isSelected: $topMenuSelected)
             .onChange(of: topMenuSelected) { topMenuValue in
               let index = topMenuValue.enumerated().first(where: { $0.1 == true })?.0
               if let index = index {
@@ -66,6 +69,11 @@ struct HomeView: View {
             MoreStoreView(backButtonTapped: {
               navigationPath.removeLast()
             }, moreViewType: viewType)
+          case .emailVertify:
+            EmailAuthenticationView(viewType: .enterEmail,
+                                    backButtonTapped: {
+              navigationPath.removeLast()
+            })
           default:
             MoreBestRestaurantView()
           }

@@ -22,6 +22,6 @@ struct HomeHeaderView: View {
 
 struct HomeHeaderView_Previews: PreviewProvider {
   static var previews: some View {
-    HomeView()
+    HomeHeaderView()
   }
 }
