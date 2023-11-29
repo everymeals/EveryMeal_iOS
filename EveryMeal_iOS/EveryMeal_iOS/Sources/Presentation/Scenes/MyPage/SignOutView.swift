@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct SignOutView: View {
+  @Environment(\.dismiss) private var dismiss
+
   @State var isSelected: Bool = false
   @State var selectedReason: String?
+  @Binding var path: [MyPageNavigationViewType]
   
   private let signOutReasons = [
     "앱을 잘 쓰지 않아요",
@@ -25,10 +28,7 @@ struct SignOutView: View {
       
       VStack(alignment: .leading, spacing: 12) {
         ForEach(signOutReasons, id: \.self) { reason in
-          ZStack {
-            SignOutReasonCellView(why: reason, isSelected: self.selectedReason == reason)
-          }
-          .onTapGesture {
+          SignOutReasonCellView(why: reason, isSelected: self.selectedReason == reason) {
             self.selectedReason = reason
             self.isSelected = true
           }
@@ -39,19 +39,47 @@ struct SignOutView: View {
       
       Spacer()
       
-      OkButtonView(isSelected: $isSelected)
+      OkButtonView(isSelected: $isSelected) {
+        print("탈퇴하기 버튼 클릭 - 탈퇴 이유: \(String(describing: self.selectedReason))")
+        path.append(.withdrawalReason)
+      }
     }
-    
+    .navigationTitle("탈퇴하기")
+    .navigationBarTitleDisplayMode(.inline)
+    .navigationBarBackButtonHidden()
+    .onAppear {
+      UINavigationBar.appearance().titleTextAttributes = [
+        .font : UIFont(name: "Pretendard-Medium", size: 16)!,
+        .foregroundColor : UIColor(red: 0.2, green: 0.24, blue: 0.29, alpha: 1)
+      ]
+    }
+    .toolbar {
+      ToolbarItem(placement: .navigationBarLeading) {
+        Button {
+          dismiss()
+        } label: {
+          Image("icon-arrow-left-small-mono")
+            .resizable()
+            .frame(width: 24, height: 24)
+        }
+      }
+    }
+    .navigationDestination(for: MyPageNavigationViewType.self) { view in
+      if view == .withdrawalReason {
+        SignOutDetailView(path: $path)
+      }
+    }
   }
 }
 
 #Preview {
-  SignOutView()
+  SignOutView(path: .constant([.withdrawal]))
 }
 
 struct SignOutReasonCellView: View {
   var why: String = ""
   var isSelected: Bool
+  var action: () -> Void
   
   var body: some View {
     HStack(alignment: .center) {
@@ -73,11 +101,14 @@ struct SignOutReasonCellView: View {
         .inset(by: 0.5)
         .stroke(isSelected ? .everyMealRed : Color.grey3, lineWidth: 1)
     )
+    .contentShape(Rectangle())
+    .onTapGesture { action() }
   }
 }
 
 struct OkButtonView: View {
   @Binding var isSelected: Bool
+  var action: () -> Void
   
   var bottomPadding: CGFloat {
     DeviceManager.shared.hasPhysicalHomeButton ? 24 : 0
@@ -86,7 +117,7 @@ struct OkButtonView: View {
   var body: some View {
     Button {
       if isSelected {
-        print("탈퇴하기 버튼 클릭")
+        action()
       }
     } label: {
       Text("탈퇴하기")
