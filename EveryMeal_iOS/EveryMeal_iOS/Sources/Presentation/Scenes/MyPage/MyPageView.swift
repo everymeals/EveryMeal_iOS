@@ -7,37 +7,91 @@
 
 import SwiftUI
 
+enum MyPageNavigationViewType: Hashable {
+  case certify  // 학교 인증
+  case favorites  // 저장
+  case reviews
+  case photos
+  case inquiry  // 문의하기
+  case terms  // 약관
+  case license
+  case withdrawal  // 탈퇴
+  case withdrawalReason  // 탈퇴 사유
+}
+
 struct MyPageView: View {
+  @State private var navigationPath: [MyPageNavigationViewType] = []
+
   var body: some View {
-    ScrollView {
-      VStack(spacing: 0) {
-        ProfileView()
-        ChooseUniversityView()
-        CustomSeparator()
-        
+    NavigationStack(path: $navigationPath) {
+      ScrollView(showsIndicators: false) {
         VStack(spacing: 0) {
-          SectionView(title: "나의 설정")
-          MyActivitiesRow(title: "저장")
-          MyActivitiesRow(title: "리뷰 내역")
-          MyActivitiesRow(title: "사진 내역")
+          ProfileView()
+          ChooseUniversityView()
+          CustomSeparator()
+          
+          VStack(spacing: 0) {
+            SectionView(title: "나의 설정")
+            MyActivitiesRow(title: "저장")
+              .onTapGesture {
+                navigationPath.append(.favorites)
+              }
+            MyActivitiesRow(title: "리뷰 내역")
+              .onTapGesture {
+                navigationPath.append(.reviews)
+              }
+            MyActivitiesRow(title: "사진 내역")
+              .onTapGesture {
+                navigationPath.append(.photos)
+              }
+          }
+          .padding(.horizontal, 20)
+          
+          CustomDivider()
+          
+          VStack(spacing: 0) {
+            SectionView(title: "설정")
+            MyActivitiesRow(title: "문의하기")
+              .onTapGesture {
+                navigationPath.append(.inquiry)
+              }
+            MyActivitiesRow(title: "서비스 약관")
+              .onTapGesture {
+                navigationPath.append(.terms)
+              }
+            MyActivitiesRow(title: "오픈소스 라이센스")
+              .onTapGesture {
+                navigationPath.append(.license)
+              }
+            MyActivitiesRow(title: "앱 버전", hasRightArrow: false)
+            MyActivitiesRow(title: "탈퇴하기")
+              .onTapGesture {
+                navigationPath.append(.withdrawal)
+              }
+          }
+          .padding(.horizontal, 20)
         }
-        .padding(.horizontal, 20)
-        
-        CustomDivider()
-        
-        VStack(spacing: 0) {
-          SectionView(title: "설정")
-          MyActivitiesRow(title: "문의하기")
-          MyActivitiesRow(title: "서비스 약관")
-          MyActivitiesRow(title: "오픈소스 라이센스")
-          MyActivitiesRow(title: "앱 버전", hasRightArrow: false)
-          MyActivitiesRow(title: "탈퇴하기")
-        }
-        .padding(.horizontal, 20)
+        .padding(.bottom, 50)
       }
-      .padding(.bottom, 50)
+      .mask {
+        Rectangle()
+      }
+      .navigationDestination(for: MyPageNavigationViewType.self) { view in
+        switch view {
+        case .certify: SignOutView(path: $navigationPath)
+        case .favorites: SignOutView(path: $navigationPath)
+        case .reviews: SignOutView(path: $navigationPath)
+        case .photos: SignOutView(path: $navigationPath)
+        case .inquiry: SignOutView(path: $navigationPath)
+        case .terms: SignOutView(path: $navigationPath)
+        case .license: SignOutView(path: $navigationPath)
+        case .withdrawal: SignOutView(path: $navigationPath)
+        case .withdrawalReason: SignOutDetailView(path: $navigationPath)
+        }
+      }
     }
-    .scrollIndicators(.hidden)
+    .navigationBarTitleDisplayMode(.inline)
+    .navigationBarHidden(true)
   }
 }
 
@@ -151,9 +205,7 @@ struct MyActivitiesRow: View {
       }
     }
     .padding(.vertical)
-    .onTapGesture {
-      print("tapped \(title)...")
-    }
+    .contentShape(Rectangle())
   }
 }
 
