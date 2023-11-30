@@ -65,6 +65,9 @@
 		66935D892AF1F22000E80424 /* CustomAlertButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66935D852AF1F22000E80424 /* CustomAlertButton.swift */; };
 		66935D8A2AF1F22000E80424 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66935D862AF1F22000E80424 /* CustomAlert.swift */; };
 		66935D8B2AF1F22000E80424 /* FilterBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66935D872AF1F22000E80424 /* FilterBarView.swift */; };
+		66BEA02B2B0C7C5900F3125B /* EmailAuthPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEA02A2B0C7C5900F3125B /* EmailAuthPopupView.swift */; };
+		66BEA02D2B0C8BFD00F3125B /* EveryMealToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEA02C2B0C8BFD00F3125B /* EveryMealToast.swift */; };
+		66BEA0302B0C9E0000F3125B /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 66BEA02F2B0C9E0000F3125B /* AlertToast */; };
 		66FF637F2AD7CE3D00A10986 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FF637E2AD7CE3D00A10986 /* Constants.swift */; };
 		66FF63812AD7DEB800A10986 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FF63802AD7DEB800A10986 /* Functions.swift */; };
 /* End PBXBuildFile section */
@@ -130,6 +133,8 @@
 		66935D852AF1F22000E80424 /* CustomAlertButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAlertButton.swift; sourceTree = "<group>"; };
 		66935D862AF1F22000E80424 /* CustomAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		66935D872AF1F22000E80424 /* FilterBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterBarView.swift; sourceTree = "<group>"; };
+		66BEA02A2B0C7C5900F3125B /* EmailAuthPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthPopupView.swift; sourceTree = "<group>"; };
+		66BEA02C2B0C8BFD00F3125B /* EveryMealToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveryMealToast.swift; sourceTree = "<group>"; };
 		66FF637E2AD7CE3D00A10986 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		66FF63802AD7DEB800A10986 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -140,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F78B0102A6D39AD006B8C80 /* Lottie in Frameworks */,
+				66BEA0302B0C9E0000F3125B /* AlertToast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				08900BFB2AF27D7E00392BAE /* EmailAuthenticationView.swift */,
+				66BEA02A2B0C7C5900F3125B /* EmailAuthPopupView.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -398,6 +405,7 @@
 				08A877D12ACD97ED007AEDA1 /* EverymealAlertView.swift */,
 				0F58F6EA2AFA1E1600010A70 /* BaseLottieView.swift */,
 				6674FC332B04BC9100CC4CA6 /* BaseWebView.swift */,
+				66BEA02C2B0C8BFD00F3125B /* EveryMealToast.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -488,6 +496,7 @@
 			name = EveryMeal_iOS;
 			packageProductDependencies = (
 				0F78B00F2A6D39AD006B8C80 /* Lottie */,
+				66BEA02F2B0C9E0000F3125B /* AlertToast */,
 			);
 			productName = EveryMeal_iOS;
 			productReference = 0F78AFF52A6CCA6B006B8C80 /* EveryMeal_iOS.app */;
@@ -519,6 +528,7 @@
 			mainGroup = 0F78AFEC2A6CCA6B006B8C80;
 			packageReferences = (
 				0F78B00E2A6D39AD006B8C80 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				66BEA02E2B0C9E0000F3125B /* XCRemoteSwiftPackageReference "AlertToast" */,
 			);
 			productRefGroup = 0F78AFF62A6CCA6B006B8C80 /* Products */;
 			projectDirPath = "";
@@ -587,6 +597,7 @@
 				663260AD2AF1F819006FC22C /* MealHGridView.swift in Sources */,
 				6681C7AA2AEA4FA700C3D2C1 /* EveryMealButton.swift in Sources */,
 				081196B62AE36B100022B41A /* UIApplication+Extensions.swift in Sources */,
+				66BEA02D2B0C8BFD00F3125B /* EveryMealToast.swift in Sources */,
 				6681C79E2AEA49B900C3D2C1 /* MealVerticalItemView.swift in Sources */,
 				6674FC342B04BC9100CC4CA6 /* BaseWebView.swift in Sources */,
 				08D6BA652AE7F6DA00C0B516 /* ReviewStoreSearchListView.swift in Sources */,
@@ -600,6 +611,7 @@
 				0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */,
 				6681C7A42AEA4D5000C3D2C1 /* MealModel.swift in Sources */,
 				08D6BA662AE7F6DA00C0B516 /* ReviewStoreSearchListRecentCell.swift in Sources */,
+				66BEA02B2B0C7C5900F3125B /* EmailAuthPopupView.swift in Sources */,
 				66935D8B2AF1F22000E80424 /* FilterBarView.swift in Sources */,
 				66FF637F2AD7CE3D00A10986 /* Constants.swift in Sources */,
 				66935D8A2AF1F22000E80424 /* CustomAlert.swift in Sources */,
@@ -824,6 +836,14 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		66BEA02E2B0C9E0000F3125B /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.9;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -831,6 +851,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0F78B00E2A6D39AD006B8C80 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		66BEA02F2B0C9E0000F3125B /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66BEA02E2B0C9E0000F3125B /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

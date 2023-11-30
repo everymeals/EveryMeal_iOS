@@ -7,39 +7,6 @@
 
 import SwiftUI
 
-struct HomeTopMenuView: View {
-  @Binding var writeReviewViewShown: Bool
-  @Binding var isSelected: [Bool]
-  
-  var body: some View {
-    VStack {
-      GoToReviewBannerView()
-        .padding(.top, 12)
-        .padding(.horizontal, 20)
-        .onTapGesture {
-          self.writeReviewViewShown.toggle()
-        }
-        .fullScreenCover(isPresented: $writeReviewViewShown) {
-          
-          // FIXME: 학교 인증한 사용자인지 확인
-          let isEmailAuthenticationTrue: Bool = false
-          if isEmailAuthenticationTrue {
-            WriteReviewStoreSearchView {
-              writeReviewViewShown.toggle()
-            }
-          } else {
-            EmailAuthenticationView(viewType: .enterEmail,
-                                    backButtonTapped: {
-              writeReviewViewShown = false
-            })
-          }
-        }
-      
-      TopMenuButtonsView(isSelected: $isSelected)
-    }
-  }
-}
-
 struct GoToReviewBannerView: View {
   var body: some View {
     HStack(alignment: .center) {
