@@ -215,7 +215,7 @@ struct CustomDivider: View {
       .foregroundColor(.clear)
       .frame(maxWidth: .infinity, maxHeight: 12)
       .background(Color.grey1)
-      .padding(.vertical, 24)
+      .padding(.vertical)
   }
 }
 
