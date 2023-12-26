@@ -93,6 +93,9 @@ struct HomeView: View {
               emailDidSent: {
                 navigationPath.append(.emailVertify(.enterAuthNumber))
               },
+              emailVertifySuccess: {
+                
+              },
               backButtonTapped: {
                 navigationPath.removeLast()
               }

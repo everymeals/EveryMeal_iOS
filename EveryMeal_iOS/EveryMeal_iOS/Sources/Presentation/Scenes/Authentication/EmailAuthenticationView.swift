@@ -37,9 +37,10 @@ struct EmailAuthenticationView: View {
   var viewType: EmailViewType
   @State var emailText: String = ""
   @State var isEmailTextNotEmpty: Bool = false
-  @State var isValidEmail: Bool = true
+  @State var isValidEmailORAuthNumber: Bool = true
   @State var showDidSentEmail: Bool = false
   var emailDidSent: () -> Void
+  var emailVertifySuccess: () -> Void
   
   var backButtonTapped: () -> Void
   
@@ -70,8 +71,8 @@ struct EmailAuthenticationView: View {
               .font(.pretendard(size: 16, weight: .regular))
               .frame(width: .infinity, height: 48)
               .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-              .foregroundColor(.grey5)
-              .background(isValidEmail ? Color.grey1 : Color.redLight )
+              .foregroundColor(isEmailTextNotEmpty ? .grey8 : .grey5)
+              .background(isValidEmailORAuthNumber ? Color.grey1 : Color.redLight )
               .overlay(
                 RoundedRectangle(cornerRadius: 12)
                   .inset(by: 0.5)
@@ -84,7 +85,7 @@ struct EmailAuthenticationView: View {
               })
               .padding(.bottom, 6)
             
-            if !isValidEmail { // FIXME: 인증번호 오류도 같이 처리
+            if !isValidEmailORAuthNumber { // FIXME: 인증번호 오류도 같이 처리
               Text(viewType.errorMessage)
                 .font(.pretendard(size: 12, weight: .regular))
                 .foregroundColor(.red)
@@ -97,23 +98,25 @@ struct EmailAuthenticationView: View {
           
           VStack(spacing: 12) {
             Spacer()
-            Text("인증번호 다시 받기")
-              .font(.pretendard(size: 15, weight: .medium))
-              .foregroundColor(.grey6)
-              .background(
-                Color.grey5
-                  .frame(height: 1)
-                  .offset(y: 10)
-              )
-              .onTapGesture {
-                print("showDidSentEmail \(showDidSentEmail)")
-                showDidSentEmail = true
-              }
+            if self.viewType == .enterAuthNumber {
+              Text("인증번호 다시 받기")
+                .font(.pretendard(size: 15, weight: .medium))
+                .foregroundColor(.grey6)
+                .background(
+                  Color.grey5
+                    .frame(height: 1)
+                    .offset(y: 10)
+                )
+                .onTapGesture {
+                  print("showDidSentEmail \(showDidSentEmail)")
+                  showDidSentEmail = true
+                }
+            }
             
             EveryMealButton(selectEnable: $isEmailTextNotEmpty, title: "다음")
               .onTapGesture {
-                isValidEmail = checkIsValidEmail(email: emailText)
-                if isValidEmail == true {
+                isValidEmailORAuthNumber = checkIsValidEmail(email: emailText)
+                if isValidEmailORAuthNumber == true {
                   // TODO: 인증번호 전송 후 인증번호 입력 화면으로 넘김
                   emailDidSent()
                 }
@@ -143,7 +146,7 @@ private func checkIsValidEmail(email: String) -> Bool {
 
 struct EmailAuthenticationViiew_Previews: PreviewProvider {
   static var previews: some View {
-    EmailAuthenticationView(viewType: .enterEmail, emailDidSent: { }, backButtonTapped: { })
+    EmailAuthenticationView(viewType: .enterEmail, emailDidSent: { }, emailVertifySuccess: { }, backButtonTapped: { })
   }
 }
 
