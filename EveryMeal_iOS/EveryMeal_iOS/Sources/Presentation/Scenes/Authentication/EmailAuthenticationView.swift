@@ -10,11 +10,13 @@ import SwiftUI
 enum EmailViewType: String {
   case enterEmail = "이메일"
   case enterAuthNumber = "인증번호"
+  case makeProfile = "닉네임"
   
   var title: String {
     switch self {
     case .enterEmail: return "학교 인증을 위해\n대학 메일을 입력해주세요"
     case .enterAuthNumber: return "메일로 전달받은\n인증번호를 입력해주세요"
+    case .makeProfile: return ""
     }
   }
 
@@ -22,6 +24,7 @@ enum EmailViewType: String {
     switch self {
     case .enterEmail: return "잘못된 이메일 형식이에요"
     case .enterAuthNumber: return "잘못된 인증번호예요"
+    case .makeProfile: return "이미 사용중인 닉네임이에요"
     }
   }
   
@@ -29,63 +32,110 @@ enum EmailViewType: String {
     switch self {
     case .enterEmail: return "everymeal@university@ac.kr"
     case .enterAuthNumber: return "6자리 숫자"
+    case .makeProfile: return "닉네임 규정" // FIXME: 추후 수정
     }
   }
 }
 
 struct EmailAuthenticationView: View {
   var viewType: EmailViewType
-  @State var emailText: String = ""
-  @State var isEmailTextNotEmpty: Bool = false
-  @State var isValidEmailORAuthNumber: Bool = true
-  @State var showDidSentEmail: Bool = false
   var emailDidSent: () -> Void
   var emailVertifySuccess: () -> Void
-  
   var backButtonTapped: () -> Void
+  
+  @State var enteredText: String = ""
+  @State var isEmailTextNotEmpty: Bool = false
+  @State var isValidValue: Bool = true
+  @State var showDidSentEmail: Bool = false
+  @State var showSelectProfileImage: Bool = false
+  @FocusState private var textfieldIsFocused: Bool
+  
   
   var body: some View {
     NavigationView {
       ZStack {
         VStack {
           CustomNavigationView(
-            title: "학교 인증",
+            title: viewType == .makeProfile ? "프로필 생성" : "학교 인증",
             leftItem: Image("icon-arrow-left-small-mono"),
             leftItemTapped: {
               backButtonTapped()
             }
           )
           VStack(alignment: .leading, spacing: 0) {
-            Text(viewType.title)
-              .font(.pretendard(size: 24, weight: .bold))
-              .lineLimit(2)
-              .foregroundColor(.grey9)
-              .padding(.bottom, 40)
+            if viewType != .makeProfile {
+              Text(viewType.title)
+                .font(.pretendard(size: 24, weight: .bold))
+                .lineLimit(2)
+                .foregroundColor(.grey9)
+                .padding(.bottom, 40)
+            } else {
+              HStack {
+                Spacer()
+                ZStack {
+                  HStack {
+                    Image(.apple90)
+                      .resizable()
+                      .aspectRatio(contentMode: .fit)
+                      .frame(width: 90)
+                    Spacer()
+                  }
+                  HStack {
+                    Spacer()
+                    VStack {
+                      Spacer()
+                      ZStack {
+                        Circle()
+                          .strokeBorder(Color.white, lineWidth: 1)
+                          .background(Circle().fill(Color.grey2))
+                          .frame(width: 28, height: 28)
+                        
+                        Image(.iconPlusMono)
+                          .resizable()
+                          .clipShape(Circle())
+                          .aspectRatio(contentMode: .fit)
+                          .frame(width: 16, height: 16)
+                      }
+                    }
+                  }
+                }
+                .frame(width: 96, height: 90)
+                .padding(.bottom, 40)
+                .onTapGesture {
+                  // TODO: 바텀시트 노출
+                  showSelectProfileImage.toggle()
+                  
+                }
+                Spacer()
+              }
+            }
             
             Text(viewType.rawValue)
               .font(.pretendard(size: 12, weight: .regular))
               .foregroundColor(.grey8)
               .padding(.bottom, 6)
             
-            TextField("\(viewType.placeholder)", text: $emailText)
+            TextField("\(viewType.placeholder)", text: $enteredText)
               .font(.pretendard(size: 16, weight: .regular))
               .frame(width: .infinity, height: 48)
               .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
               .foregroundColor(isEmailTextNotEmpty ? .grey8 : .grey5)
-              .background(isValidEmailORAuthNumber ? Color.grey1 : Color.redLight )
+              .background(textfieldIsFocused ? Color.grey2 : (isValidValue ? Color.grey1 : Color.redLight))
               .overlay(
                 RoundedRectangle(cornerRadius: 12)
                   .inset(by: 0.5)
-                  .stroke(Color.grey2, lineWidth: 1)
+                  .stroke(textfieldIsFocused ? Color.grey3 : Color.grey2, lineWidth: 1)
               )
               .cornerRadius(12)
-              .onChange(of: emailText, perform: { value in
+              .onChange(of: enteredText, perform: { value in
                 print("\(value)")
                 isEmailTextNotEmpty = value != "" && value != viewType.placeholder
               })
+              .focused($textfieldIsFocused)
               .padding(.bottom, 6)
             
-            if !isValidEmailORAuthNumber { // FIXME: 인증번호 오류도 같이 처리
+            
+            if !isValidValue {
               Text(viewType.errorMessage)
                 .font(.pretendard(size: 12, weight: .regular))
                 .foregroundColor(.red)
@@ -93,7 +143,6 @@ struct EmailAuthenticationView: View {
             
             Spacer()
           }
-          .padding(.top, 28)
           .padding(.horizontal, 20)
           
           VStack(spacing: 12) {
@@ -113,40 +162,80 @@ struct EmailAuthenticationView: View {
                 }
             }
             
-            EveryMealButton(selectEnable: $isEmailTextNotEmpty, title: "다음")
+            EveryMealButton(selectEnable: $isEmailTextNotEmpty, title: viewType == .makeProfile ? "확인" : "다음")
               .onTapGesture {
-                isValidEmailORAuthNumber = checkIsValidEmail(email: emailText)
-                if isValidEmailORAuthNumber == true {
-                  // TODO: 인증번호 전송 후 인증번호 입력 화면으로 넘김
-                  emailDidSent()
+                switch viewType {
+                case .enterEmail:
+                  isValidValue = checkIsValidEmail(email: enteredText)
+                  if isValidValue {
+                    // TODO: 인증번호 전송 후 인증번호 입력 화면으로 넘김
+                    emailDidSent()
+                  }
+                case .enterAuthNumber:
+                  isValidValue = checkIsValidAuthNumber(enteredText)
+                  if isValidValue {
+                    emailVertifySuccess()
+                  }
+                case .makeProfile:
+                  isValidValue = checkIsValidNickname(enteredText)
+                  if isValidValue {
+                    
+                  }
                 }
               }
           }
         }
-        if showDidSentEmail {
-          EveryMealToast(message: "인증번호를 다시 전송했어요") {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-              showDidSentEmail = false
-            }
+        if showSelectProfileImage {
+          VStack {
+            Spacer()
+            SelectProfileImagePopupView() { }
+          }
+            
+        }
+      }
+      if showDidSentEmail {
+        EveryMealToast(message: "인증번호를 다시 전송했어요") {
+          DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            showDidSentEmail = false
           }
         }
-//        if showDidSentEmail {
-//        }
       }
+//      SelectProfileImagePopupView() { }
+//        .background(.red)
+//
+    }
+    .onAppear {
+      UITextField.appearance().clearButtonMode = .whileEditing
     }
     .navigationBarHidden(true)
   }
 }
 
 private func checkIsValidEmail(email: String) -> Bool {
-    let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
-    let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
-    return emailPredicate.evaluate(with: email)
+  let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+  let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+  return emailPredicate.evaluate(with: email)
+}
+
+private func checkIsValidAuthNumber(_ number: String) -> Bool {
+  do {
+    let emailRegex = "^[0-9]+$"
+    let regex = try NSRegularExpression(pattern: emailRegex, options: .anchorsMatchLines)
+    let range = NSRange(location: 0, length: number.utf16.count)
+    return regex.firstMatch(in: number, options: [], range: range) != nil
+  } catch {
+    return false
+  }
+}
+
+private func checkIsValidNickname(_ nickname: String) -> Bool {
+  // TODO: 닉네임 API 호출
+  return true
 }
 
 struct EmailAuthenticationViiew_Previews: PreviewProvider {
   static var previews: some View {
-    EmailAuthenticationView(viewType: .enterEmail, emailDidSent: { }, emailVertifySuccess: { }, backButtonTapped: { })
+    EmailAuthenticationView(viewType: .makeProfile, emailDidSent: { }, emailVertifySuccess: { }, backButtonTapped: { })
   }
 }
 
