@@ -50,6 +50,8 @@
 		0F7CB2CB2AF9DFA800CBE762 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7CB2CA2AF9DFA800CBE762 /* OnBoardingView.swift */; };
 		0F80B4032ABAFABF00167AB6 /* MoreBestRestaurantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F80B4022ABAFABF00167AB6 /* MoreBestRestaurantView.swift */; };
 		0FF7C7192A91ECEF00BFC33D /* GradationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF7C7182A91ECEF00BFC33D /* GradationView.swift */; };
+		662C68FF2B3BECCE00B47C87 /* SelectProfileImagePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662C68FE2B3BECCE00B47C87 /* SelectProfileImagePopupView.swift */; };
+		662C69012B3C15FC00B47C87 /* CameraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662C69002B3C15FC00B47C87 /* CameraPicker.swift */; };
 		663260AD2AF1F819006FC22C /* MealHGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663260AC2AF1F819006FC22C /* MealHGridView.swift */; };
 		663BFBA22A81EACC00A540A2 /* ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663BFBA12A81EACC00A540A2 /* ViewModifier.swift */; };
 		663BFBA42A81EB2800A540A2 /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663BFBA32A81EB2800A540A2 /* Separator.swift */; };
@@ -118,6 +120,8 @@
 		0F7CB2CA2AF9DFA800CBE762 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		0F80B4022ABAFABF00167AB6 /* MoreBestRestaurantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreBestRestaurantView.swift; sourceTree = "<group>"; };
 		0FF7C7182A91ECEF00BFC33D /* GradationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradationView.swift; sourceTree = "<group>"; };
+		662C68FE2B3BECCE00B47C87 /* SelectProfileImagePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProfileImagePopupView.swift; sourceTree = "<group>"; };
+		662C69002B3C15FC00B47C87 /* CameraPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPicker.swift; sourceTree = "<group>"; };
 		663260AC2AF1F819006FC22C /* MealHGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealHGridView.swift; sourceTree = "<group>"; };
 		663BFBA12A81EACC00A540A2 /* ViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifier.swift; sourceTree = "<group>"; };
 		663BFBA32A81EB2800A540A2 /* Separator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
@@ -170,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				08D6BA682AE7F97800C0B516 /* ImagePicker.swift */,
+				662C69002B3C15FC00B47C87 /* CameraPicker.swift */,
 				08C3B3952AE401720067FB53 /* CustomNavigationView.swift */,
 				6681C79F2AEA4ABD00C3D2C1 /* MealItemLikeButton.swift */,
 				6681C7A92AEA4FA700C3D2C1 /* EveryMealButton.swift */,
@@ -185,6 +190,7 @@
 			children = (
 				08900BFB2AF27D7E00392BAE /* EmailAuthenticationView.swift */,
 				66BEA02A2B0C7C5900F3125B /* EmailAuthPopupView.swift */,
+				662C68FE2B3BECCE00B47C87 /* SelectProfileImagePopupView.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -567,6 +573,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F78AFFB2A6CCA6B006B8C80 /* SplashView.swift in Sources */,
+				662C69012B3C15FC00B47C87 /* CameraPicker.swift in Sources */,
 				08900BFC2AF27D7E00392BAE /* EmailAuthenticationView.swift in Sources */,
 				0F43F6812A6EA86B00239AA4 /* MapView.swift in Sources */,
 				6681C7A02AEA4ABD00C3D2C1 /* MealItemLikeButton.swift in Sources */,
@@ -596,6 +603,7 @@
 				0F58F6EB2AFA1E1600010A70 /* BaseLottieView.swift in Sources */,
 				663260AD2AF1F819006FC22C /* MealHGridView.swift in Sources */,
 				6681C7AA2AEA4FA700C3D2C1 /* EveryMealButton.swift in Sources */,
+				662C68FF2B3BECCE00B47C87 /* SelectProfileImagePopupView.swift in Sources */,
 				081196B62AE36B100022B41A /* UIApplication+Extensions.swift in Sources */,
 				66BEA02D2B0C8BFD00F3125B /* EveryMealToast.swift in Sources */,
 				6681C79E2AEA49B900C3D2C1 /* MealVerticalItemView.swift in Sources */,
@@ -749,7 +757,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "에브리밀";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"사진 권한 허용?\"";
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 권한 허용?";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진 권한 허용?";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -784,7 +793,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "에브리밀";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"사진 권한 허용?\"";
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 권한 허용?";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진 권한 허용?";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
