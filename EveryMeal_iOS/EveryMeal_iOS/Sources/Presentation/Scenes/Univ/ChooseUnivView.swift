@@ -9,12 +9,14 @@ import SwiftUI
 
 struct ChooseUnivView: View {
   @State var isSelected: Bool = false
+  @Binding var isFirstLaunching: Bool
   
   var body: some View {
     VStack(spacing: 0) {
       HStack {
         VStack(alignment: .leading, spacing: 12) {
           Image("school")
+            .resizable()
             .frame(width: 64, height: 64)
           
           Text("반가워요!\n대학을 선택해주세요")
@@ -31,7 +33,7 @@ struct ChooseUnivView: View {
         .overlay(alignment: .bottom, content: {
           GradationView()
         })
-      ChooseButtonView(isSelected: $isSelected)
+      ChooseButtonView(isSelected: $isSelected, isFirstLaunching: $isFirstLaunching)
     }
   }
 }
@@ -46,34 +48,12 @@ struct UnivGridView: View {
     "명지대",
     "성신여대",
     "성신여대",
-    "서울여대",
-    "성신여대",
-    "성신여대",
-    "서울여대",
-    "명지대",
-    "명지대",
-    "성신여대",
-    "성신여대",
-    "서울여대",
-    "성신여대",
-    "성신여대",
     "서울여대"
   ]
   
   let univsSubtitle = [
     "자연캠퍼스",
     "인문캠퍼스",
-    "수정캠퍼스",
-    "운정캠퍼스",
-    "",
-    "수정캠퍼스",
-    "운정캠퍼스",
-    "",
-    "자연캠퍼스",
-    "인문캠퍼스",
-    "수정캠퍼스",
-    "운정캠퍼스",
-    "",
     "수정캠퍼스",
     "운정캠퍼스",
     ""
@@ -118,14 +98,15 @@ struct UnivGridView: View {
 
 struct ChooseButtonView: View {
   @Binding var isSelected: Bool
-  
+  @Binding var isFirstLaunching: Bool
+
   var body: some View {
     VStack(spacing: 20) {
       AddUnivView()
         .onTapGesture {
           print("학교 추가하기 버튼 👆")
         }
-      SelectUnivButton(isSelected: $isSelected)
+      SelectUnivButton(isSelected: $isSelected, isFirstLaunching: $isFirstLaunching)
     }
   }
 }
@@ -164,6 +145,8 @@ struct AddUnivView: View {
 
 struct SelectUnivButton: View {
   @Binding var isSelected: Bool
+  @Binding var isFirstLaunching: Bool
+
   var bottomPadding: CGFloat {
     DeviceManager.shared.hasPhysicalHomeButton ? 24 : 0
   }
@@ -172,12 +155,14 @@ struct SelectUnivButton: View {
     Button {
       if isSelected {
         print("선택하기 버튼 클릭")
+        isFirstLaunching = false
+        UserDefaults.standard.set(false, forKey: "isFirstLaunching")
       }
     } label: {
       Text("선택하기")
         .frame(maxWidth: .infinity)
         .padding()
-        .background(isSelected ? Color.accentColor : Color.grey3)
+        .background(isSelected ? Color.everyMealRed : Color.grey3)
         .font(.pretendard(size: 16, weight: .medium))
         .foregroundColor(Color.white)
         .cornerRadius(12)
@@ -190,6 +175,6 @@ struct SelectUnivButton: View {
 
 struct ChooseUnivView_Previews: PreviewProvider {
   static var previews: some View {
-    ChooseUnivView()
+    ChooseUnivView(isSelected: true, isFirstLaunching: .constant(true))
   }
 }

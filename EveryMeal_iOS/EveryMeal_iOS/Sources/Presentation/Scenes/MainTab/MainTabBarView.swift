@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MainTabBarView: View {
+  @AppStorage("isFirstLaunching") var isFirstLaunching: Bool = true
+
   @State private var selectedTab = 0
   @State private var favoritesCount = 10
   
@@ -34,7 +36,7 @@ struct MainTabBarView: View {
           Text("뭐먹지")
         }
         .tag(2)
-      Text("마이")
+      MyPageView()
         .tabItem {
           Image("icon-user-mono")
             .renderingMode(.template)
@@ -44,12 +46,32 @@ struct MainTabBarView: View {
         .badge(favoritesCount)
     }
     .tabViewStyle(.automatic)
-    .onAppear(perform: {
-      UITabBar.appearance().unselectedItemTintColor = UIColor(red: 0.69, green: 0.72, blue: 0.76, alpha: 1)
-      UITabBar.appearance().isTranslucent = true
+    .onAppear(perform: { setupTabBarAppearance() })
+    .fullScreenCover(isPresented: $isFirstLaunching, content: {
+      OnBoardingView(isFirstLaunching: $isFirstLaunching)
     })
   }
   
+  private func setupTabBarAppearance() {
+    let appearance = UITabBarAppearance()
+    appearance.configureWithOpaqueBackground()
+    appearance.backgroundColor = .white
+    
+    let normalAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor(red: 0.69, green: 0.72, blue: 0.76, alpha: 1)]
+    let selectedAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor(red: 1, green: 0.28, blue: 0.28, alpha: 1)]
+    
+    appearance.stackedLayoutAppearance.normal.titleTextAttributes = normalAttributes
+    appearance.stackedLayoutAppearance.normal.iconColor = normalAttributes[.foregroundColor] as? UIColor
+    
+    appearance.stackedLayoutAppearance.selected.titleTextAttributes = selectedAttributes
+    appearance.stackedLayoutAppearance.selected.iconColor = selectedAttributes[.foregroundColor] as? UIColor
+    
+    UITabBar.appearance().standardAppearance = appearance
+    UITabBar.appearance().scrollEdgeAppearance = appearance
+    
+    UITabBar.appearance().isTranslucent = true
+  }
+
   func getNavigationTitle() -> Text {
     switch selectedTab {
     case 0:
