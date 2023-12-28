@@ -37,13 +37,65 @@ struct FilterBarView: View {
       .onTapGesture {
         isSortOpened.toggle()
       }
-      .alert(
-        title: "다음에 리뷰를 남길까요?",
-        message: "지금까지 작성한 내용은 저장되지 않아요.",
-        primaryButton: CustomAlertButton(title: "나가기", action: { print("나기기") }),
-        secondaryButton: CustomAlertButton(title: "계속 쓰기", action: { print("계속 쓰기") }),
-        isPresented: $isSortOpened
-      )
+      .sheet(isPresented: $isSortOpened, content: {
+        VStack {
+          CustomSheetView(title: "무엇으로 신고하시나요?", buttonTitle: "확인") {
+            VStack {
+              HStack {
+                Text("해당 가게와 무관한 리뷰")
+                  .padding(.vertical, 14)
+                Spacer()
+                Image("icon-check-mono")
+                  .renderingMode(.template)
+                  .foregroundStyle(Color.grey4)
+              }
+              .contentShape(Rectangle())
+              .onTapGesture {
+                print("11")
+              }
+              HStack {
+                Text("비속어 및 혐오 발언")
+                  .padding(.vertical, 14)
+                Spacer()
+                Image("icon-check-mono")
+                  .renderingMode(.template)
+                  .foregroundStyle(Color.grey4)
+              }
+              .contentShape(Rectangle())
+              .onTapGesture {
+                print("22")
+              }
+              HStack {
+                Text("음란성 게시물")
+                  .padding(.vertical, 14)
+                Spacer()
+                Image("icon-check-mono")
+                  .renderingMode(.template)
+                  .foregroundStyle(Color.grey4)
+              }
+              .contentShape(Rectangle())
+              .onTapGesture {
+                print("33")
+              }
+            }
+          }
+        }
+        .presentationDetents([.height(330)])
+        .presentationDragIndicator(.hidden)
+      })
+//      .sheet(isPresented: $isSortOpened, content: {
+//        VStack {
+//          CustomSheetView(isPresented: $isSortOpened) {
+//            HStack {
+//              Image("icon-siren-mono")
+//              Text("신고하기")
+//              Spacer()
+//            }
+//          }
+//        }
+//        .presentationDetents([.height(126)])
+//        .presentationDragIndicator(.hidden)
+//      })
       
       HStack(alignment: .center, spacing: 4) {
         Text("필터")
