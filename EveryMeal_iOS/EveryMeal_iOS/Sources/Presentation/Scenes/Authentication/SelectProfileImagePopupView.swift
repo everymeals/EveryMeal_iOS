@@ -36,11 +36,10 @@ enum SelectImageType: CaseIterable {
 struct SelectProfileImagePopupView: View {
   @State var goToAuthButtonEnabled = true
   @State var selectIconColumns: [SelectImageType] = []
-  @State var selectedImages: [Image] = []
-  @State var capturedCameraImage: Image? = nil
+  @State var selectedImages: [Image] = [Image(.rice90)]
   @State var changeSelectedImage: Bool = false
   
-  var saveButtonTapped: () -> Void
+  var saveButtonTapped: (Image) -> Void
   private let columns = Array(repeating: GridItem(.fixed(50), spacing: 20), count: 4)
   
   var body: some View {
@@ -52,22 +51,15 @@ struct SelectProfileImagePopupView: View {
         .padding(.all, 20)
       
       VStack(spacing: 32) {
-        if let selectedImage = selectedImages.first,
-           changeSelectedImage {
+        if changeSelectedImage,
+           let selectedImage = selectedImages.first {
           selectedImage
             .resizable()
             .clipShape(Circle())
-            .aspectRatio(contentMode: .fit)
-            .frame(width: 90)
-        } else if let capturedCameraImage = capturedCameraImage,
-                  changeSelectedImage {
-          capturedCameraImage
-            .resizable()
-            .clipShape(Circle())
-            .aspectRatio(contentMode: .fit)
-            .frame(width: 90)
-        } else {
-          Image(.rice90)
+            .aspectRatio(contentMode: .fill)
+            .frame(width: 90, height: 90)
+        } else if let selectedImage = selectedImages.first {
+          selectedImage
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: 90)
@@ -75,31 +67,31 @@ struct SelectProfileImagePopupView: View {
         
         LazyVGrid(columns: columns, spacing: 14) {
           ForEach($selectIconColumns.indices, id: \.self) { index in
-            let imageSource = selectIconColumns[index]
             if selectIconColumns[index] != .camera,
                selectIconColumns[index] != .library {
               Image(selectIconColumns[index].imageSource)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 50)
+                .onTapGesture {
+                  selectedImages = [Image(selectIconColumns[index].imageSource)]
+                }
             } else {
               CameraLibraryView(type: selectIconColumns[index],
-                                images: $selectedImages,
-                                capturedCameraImages: $capturedCameraImage)
+                                images: $selectedImages)
             }
           }
         }
       }
       .onChange(of: selectedImages, perform: { value in
-        changeSelectedImage = !value.isEmpty
+        DispatchQueue.main.async {
+          changeSelectedImage = !value.isEmpty
+        }
       })
-      .onChange(of: capturedCameraImage) { value in
-        changeSelectedImage = value != nil
-      }
       
       EveryMealButton(selectEnable: $goToAuthButtonEnabled, title: "확인")
         .onTapGesture {
-          saveButtonTapped()
+          saveButtonTapped(selectedImages.first ?? Image(.rice90))
         }
     }
     .background(Color.white)
@@ -120,7 +112,6 @@ struct CameraLibraryView: View {
   @State private var showingAccessAlert = false
   
   @Binding var images: [Image]
-  @Binding var capturedCameraImages: Image?
   
   var body: some View {
     ZStack {
@@ -143,7 +134,7 @@ struct CameraLibraryView: View {
       case .library:
         requestLibraryAuthorization()
       default:
-        images = [Image(type.imageSource)]
+        return
       }
     }
     .alert(isPresented: $showingAccessAlert) {
@@ -160,7 +151,7 @@ struct CameraLibraryView: View {
         .ignoresSafeArea()
     }
     .fullScreenCover(isPresented: $showCameraPicker) {
-      CameraPicker(image: $capturedCameraImages, isActive: $showCameraPicker)
+      CameraPicker(image: $images, isActive: $showCameraPicker)
         .ignoresSafeArea()
     }
   }
@@ -181,7 +172,7 @@ struct CameraLibraryView: View {
   private func makePHPicker() -> some View {
     var configuration = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
     configuration.filter = .any(of: [.images, .livePhotos])
-    configuration.selectionLimit = 1 // FIXME: 기획 확인 후 변경
+    configuration.selectionLimit = 1
     return ImagePicker(configuration: configuration, isPresented: $showImagePicker, selectedImages: $images)
   }
   
@@ -205,7 +196,7 @@ struct CameraLibraryView: View {
 
 struct SelectProfileImagePopupView_Previews: PreviewProvider {
   static var previews: some View {
-    SelectProfileImagePopupView() { }
+    SelectProfileImagePopupView() { _ in }
   }
 }
 

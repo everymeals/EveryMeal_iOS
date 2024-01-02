@@ -92,12 +92,12 @@ struct HomeView: View {
               viewType: type,
               emailDidSent: {
                 navigationPath.append(.emailVertify(.enterAuthNumber))
-              },
-              emailVertifySuccess: {
+              }, emailVertifySuccess: {
                 navigationPath.append(.emailVertify(.makeProfile))
-              },
-              backButtonTapped: {
+              }, backButtonTapped: {
                 navigationPath.removeLast()
+              }, authSuccess: {
+                navigationPath.removeAll()
               }
             )
           default:
