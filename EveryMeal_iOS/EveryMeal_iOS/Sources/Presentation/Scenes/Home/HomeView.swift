@@ -12,10 +12,13 @@ enum HomeStackViewType: Hashable {
   case restaurantList
   case reviewList
   case moreStoreView(MoreStoreViewType)
+  case emailVertifyPopup
+  case emailVertify(EmailViewType)
 }
 
 struct HomeView: View {
   @State private var navigationPath: [HomeStackViewType] = []
+  @State private var writeReviewViewTapped: Bool = false
   @State private var topMenuSelected: [Bool] = Array.init(repeating: false, count: 4)
   
   private let viewBottomargin: CGFloat = 24
@@ -26,7 +29,20 @@ struct HomeView: View {
       VStack {
         HomeHeaderView()
         ScrollView(showsIndicators: true) {
-          HomeTopMenuView(isSelected: $topMenuSelected)
+          GoToReviewBannerView()
+            .padding(.top, 12)
+            .padding(.horizontal, 20)
+            .onTapGesture {
+              // FIXME: 학교 인증한 사용자인지 확인
+              let isEmailAuthenticationTrue: Bool = false
+              if isEmailAuthenticationTrue {
+                self.navigationPath.append(.writeReview)
+              } else {
+                self.navigationPath.append(.emailVertifyPopup)
+              }
+            }
+          
+          TopMenuButtonsView(isSelected: $topMenuSelected)
             .onChange(of: topMenuSelected) { topMenuValue in
               let index = topMenuValue.enumerated().first(where: { $0.1 == true })?.0
               if let index = index {
@@ -41,6 +57,7 @@ struct HomeView: View {
                 self.navigationPath.append(.moreStoreView(viewType))
               }
             }
+          
           Separator()
           HomeTopThreeMealsView()
           MoreRestuarantButton()
@@ -66,6 +83,23 @@ struct HomeView: View {
             MoreStoreView(backButtonTapped: {
               navigationPath.removeLast()
             }, moreViewType: viewType)
+          case .emailVertifyPopup:
+            EmailAuthPopupView(goToAuth: {
+              navigationPath.append(.emailVertify(.enterEmail) )
+            })
+          case let .emailVertify(type):
+            EmailAuthenticationView(
+              viewType: type,
+              emailDidSent: {
+                navigationPath.append(.emailVertify(.enterAuthNumber))
+              }, emailVertifySuccess: {
+                navigationPath.append(.emailVertify(.makeProfile))
+              }, backButtonTapped: {
+                navigationPath.removeLast()
+              }, authSuccess: {
+                navigationPath.removeAll()
+              }
+            )
           default:
             MoreBestRestaurantView()
           }
@@ -82,4 +116,15 @@ struct HomeView_Previews: PreviewProvider {
   static var previews: some View {
     HomeView()
   }
+}
+
+extension UINavigationController: UIGestureRecognizerDelegate {
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        interactivePopGestureRecognizer?.delegate = self
+    }
+    
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return viewControllers.count > 1
+    }
 }
