@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		081196B62AE36B100022B41A /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081196B52AE36B100022B41A /* UIApplication+Extensions.swift */; };
+		0836A5732B44236C0098A41A /* AuthSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836A5722B44236C0098A41A /* AuthSuccessView.swift */; };
 		087A09382A81481100F4D34F /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087A09372A81481100F4D34F /* HomeHeaderView.swift */; };
 		087A093A2A81486400F4D34F /* HomeTopMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087A09392A81486400F4D34F /* HomeTopMenuView.swift */; };
 		087A093C2A8153BD00F4D34F /* HomeTopThreeMealsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087A093B2A8153BD00F4D34F /* HomeTopThreeMealsView.swift */; };
@@ -76,6 +77,7 @@
 
 /* Begin PBXFileReference section */
 		081196B52AE36B100022B41A /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
+		0836A5722B44236C0098A41A /* AuthSuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSuccessView.swift; sourceTree = "<group>"; };
 		087A09372A81481100F4D34F /* HomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
 		087A09392A81486400F4D34F /* HomeTopMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopMenuView.swift; sourceTree = "<group>"; };
 		087A093B2A8153BD00F4D34F /* HomeTopThreeMealsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopThreeMealsView.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				08900BFB2AF27D7E00392BAE /* EmailAuthenticationView.swift */,
 				66BEA02A2B0C7C5900F3125B /* EmailAuthPopupView.swift */,
 				662C68FE2B3BECCE00B47C87 /* SelectProfileImagePopupView.swift */,
+				0836A5722B44236C0098A41A /* AuthSuccessView.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -602,6 +605,7 @@
 				0F3BBF2D2AF23244003EBAB7 /* Font+Extensions.swift in Sources */,
 				0F58F6EB2AFA1E1600010A70 /* BaseLottieView.swift in Sources */,
 				663260AD2AF1F819006FC22C /* MealHGridView.swift in Sources */,
+				0836A5732B44236C0098A41A /* AuthSuccessView.swift in Sources */,
 				6681C7AA2AEA4FA700C3D2C1 /* EveryMealButton.swift in Sources */,
 				662C68FF2B3BECCE00B47C87 /* SelectProfileImagePopupView.swift in Sources */,
 				081196B62AE36B100022B41A /* UIApplication+Extensions.swift in Sources */,
