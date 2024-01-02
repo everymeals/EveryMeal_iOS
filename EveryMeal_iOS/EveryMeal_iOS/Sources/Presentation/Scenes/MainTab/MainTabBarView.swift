@@ -36,7 +36,7 @@ struct MainTabBarView: View {
           Text("뭐먹지")
         }
         .tag(2)
-      Text("마이")
+      MyPageView()
         .tabItem {
           Image("icon-user-mono")
             .renderingMode(.template)
