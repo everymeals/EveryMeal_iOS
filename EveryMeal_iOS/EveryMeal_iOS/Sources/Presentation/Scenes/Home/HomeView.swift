@@ -20,6 +20,7 @@ struct HomeView: View {
   @State private var navigationPath: [HomeStackViewType] = []
   @State private var writeReviewViewTapped: Bool = false
   @State private var topMenuSelected: [Bool] = Array.init(repeating: false, count: 4)
+  @Binding var otherViewShowing: Bool
   
   private let viewBottomargin: CGFloat = 24
   private let moreReviewBtnBottomMargin: CGFloat = 13
@@ -77,16 +78,20 @@ struct HomeView: View {
           switch stackViewType {
           case .restaurantList:
             MoreBestRestaurantView()
+              .toolbar(.hidden, for: .tabBar)
           case .reviewList:
             MoreReviewsView()
+              .toolbar(.hidden, for: .tabBar)
           case let .moreStoreView(viewType):
             MoreStoreView(backButtonTapped: {
               navigationPath.removeLast()
             }, moreViewType: viewType)
+            .toolbar(.hidden, for: .tabBar)
           case .emailVertifyPopup:
             EmailAuthPopupView(goToAuth: {
               navigationPath.append(.emailVertify(.enterEmail) )
             })
+            .toolbar(.hidden, for: .tabBar)
           case let .emailVertify(type):
             EmailAuthenticationView(
               viewType: type,
@@ -100,10 +105,15 @@ struct HomeView: View {
                 navigationPath.removeAll()
               }
             )
+            .toolbar(.hidden, for: .tabBar)
           default:
             MoreBestRestaurantView()
+              .toolbar(.hidden, for: .tabBar)
           }
         }
+      }
+      .onChange(of: navigationPath) { value in
+        otherViewShowing = value.count != 0
       }
       .edgesIgnoringSafeArea(.bottom)
       .navigationBarTitleDisplayMode(.inline)
@@ -114,7 +124,8 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
   static var previews: some View {
-    HomeView()
+    @State var otherViewShowing = false
+    HomeView(otherViewShowing: $otherViewShowing)
   }
 }
 

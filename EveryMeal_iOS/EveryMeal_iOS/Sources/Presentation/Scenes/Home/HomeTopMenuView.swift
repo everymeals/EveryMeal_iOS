@@ -105,6 +105,7 @@ struct TopMenuButton: View {
 
 struct HomeTopMenuView_Previews: PreviewProvider {
   static var previews: some View {
-    HomeView()
+    @State var otherViewShowing = false
+    HomeView(otherViewShowing: $otherViewShowing)
   }
 }

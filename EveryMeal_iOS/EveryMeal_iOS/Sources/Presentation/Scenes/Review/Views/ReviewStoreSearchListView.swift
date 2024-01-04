@@ -116,7 +116,8 @@ struct BestStoreSearchBar: View {
 
 struct BestStoreSearchView_Previews: PreviewProvider {
   static var previews: some View {
-    HomeView()
+    @State var otherViewShowing = false
+    HomeView(otherViewShowing: $otherViewShowing)
 //    BestStoreSearchView(nextButtonTapped: {
 //      print("nextButtonTapped")
 //    }, placeholder: "검색", backButtonDidTapped: {

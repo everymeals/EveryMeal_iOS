@@ -17,69 +17,74 @@ struct MoreBestRestaurantView: View {
   let data = Array(1...1000).map { "목록 \($0)"}
   
   var body: some View {
-    VStack(spacing: 0) {
-      FilterBarView(viewType: .stores)
-      
-      ScrollView(showsIndicators: false) {
-        LazyVGrid(columns: columns) {
-          BestRestaurantCell()
-            .padding(.vertical, 16)
-            .padding(.horizontal, 20)
-          
-          Rectangle()
-            .frame(height: 1)
-            .padding(.horizontal, 20)
-            .foregroundColor(.grey2)
-          
-          BestRestaurantCell()
-            .padding(.vertical, 16)
-            .padding(.horizontal, 20)
-          
-          Rectangle()
-            .frame(height: 1)
-            .padding(.horizontal, 20)
-            .foregroundColor(.grey2)
-          
-          BestRestaurantCell()
-            .padding(.vertical, 16)
-            .padding(.horizontal, 20)
-          
-          Rectangle()
-            .frame(height: 1)
-            .padding(.horizontal, 20)
-            .foregroundColor(.grey2)
-          
-          BestRestaurantCell()
-            .padding(.vertical, 16)
-            .padding(.horizontal, 20)
-          
+    NavigationView {
+      VStack(spacing: 0) {
+        FilterBarView(viewType: .stores)
+        
+        ScrollView(showsIndicators: false) {
+          LazyVGrid(columns: columns) {
+            BestRestaurantCell()
+              .padding(.vertical, 16)
+              .padding(.horizontal, 20)
+            
+            Rectangle()
+              .frame(height: 1)
+              .padding(.horizontal, 20)
+              .foregroundColor(.grey2)
+            
+            BestRestaurantCell()
+              .padding(.vertical, 16)
+              .padding(.horizontal, 20)
+            
+            Rectangle()
+              .frame(height: 1)
+              .padding(.horizontal, 20)
+              .foregroundColor(.grey2)
+            
+            BestRestaurantCell()
+              .padding(.vertical, 16)
+              .padding(.horizontal, 20)
+            
+            Rectangle()
+              .frame(height: 1)
+              .padding(.horizontal, 20)
+              .foregroundColor(.grey2)
+            
+            BestRestaurantCell()
+              .padding(.vertical, 16)
+              .padding(.horizontal, 20)
+            
+          }
+        }
+        
+        Spacer()
+      }
+      .padding(.bottom)
+      .navigationTitle("맛집")
+      .navigationBarTitleDisplayMode(.inline)
+      .navigationBarBackButtonHidden()
+      .toolbar {
+        ToolbarItem(placement: .navigationBarLeading) {
+          Button {
+            dismiss()
+          } label: {
+            Image("icon-arrow-left-small-mono")
+              .resizable()
+              .frame(width: 24, height: 24)
+          }
         }
       }
       
-      Spacer()
+      
     }
-    .padding(.bottom)
-    .navigationTitle("맛집")
-    .navigationBarTitleDisplayMode(.inline)
-    .navigationBarBackButtonHidden()
-    .toolbar {
-      ToolbarItem(placement: .navigationBarLeading) {
-        Button {
-          dismiss()
-        } label: {
-          Image("icon-arrow-left-small-mono")
-            .resizable()
-            .frame(width: 24, height: 24)
-        }
-      }
-    }
-    
+    .toolbar(.hidden, for: .tabBar)
   }
 }
 
 struct MoreBestRestaurantView_Previews: PreviewProvider {
   static var previews: some View {
-    HomeView()
+    @State var otherViewShowing = false
+    HomeView(otherViewShowing: $otherViewShowing)
   }
 }
 
