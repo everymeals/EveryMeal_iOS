@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 enum HomeStackViewType: Hashable {
   case writeReview
@@ -127,6 +128,9 @@ struct HomeView: View {
               .toolbar(.hidden, for: .tabBar)
           }
         }
+      }
+      .onAppear {
+        
       }
       .onChange(of: navigationPath) { value in
         otherViewShowing = value.count != 0

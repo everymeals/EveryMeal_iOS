@@ -23,7 +23,9 @@ struct MainTabBarView: View {
           Text("맛집")
         }
         .tag(0)
-      MapView()
+      MapView(store: .init(initialState: MapViewReducer.State(), reducer: {
+        MapViewReducer()
+      }))
         .tabItem {
           Image("icon-folk-knife-mono")
             .renderingMode(.template)

@@ -69,6 +69,10 @@
 		66935D8A2AF1F22000E80424 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66935D862AF1F22000E80424 /* CustomAlert.swift */; };
 		66935D8B2AF1F22000E80424 /* FilterBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66935D872AF1F22000E80424 /* FilterBarView.swift */; };
 		66A3FFA22B47C52B002DC665 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 66A3FFA12B47C52B002DC665 /* ComposableArchitecture */; };
+		66A3FFA42B47F5A0002DC665 /* SampleDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A3FFA32B47F5A0002DC665 /* SampleDTO.swift */; };
+		66A3FFA62B47F878002DC665 /* MapReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A3FFA52B47F878002DC665 /* MapReducer.swift */; };
+		66A3FFA82B47FB15002DC665 /* MapClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A3FFA72B47FB15002DC665 /* MapClient.swift */; };
+		66A3FFAA2B480462002DC665 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A3FFA92B480462002DC665 /* Type.swift */; };
 		66BEA02B2B0C7C5900F3125B /* EmailAuthPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEA02A2B0C7C5900F3125B /* EmailAuthPopupView.swift */; };
 		66BEA02D2B0C8BFD00F3125B /* EveryMealToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEA02C2B0C8BFD00F3125B /* EveryMealToast.swift */; };
 		66BEA0302B0C9E0000F3125B /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 66BEA02F2B0C9E0000F3125B /* AlertToast */; };
@@ -140,6 +144,10 @@
 		66935D852AF1F22000E80424 /* CustomAlertButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAlertButton.swift; sourceTree = "<group>"; };
 		66935D862AF1F22000E80424 /* CustomAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		66935D872AF1F22000E80424 /* FilterBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterBarView.swift; sourceTree = "<group>"; };
+		66A3FFA32B47F5A0002DC665 /* SampleDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDTO.swift; sourceTree = "<group>"; };
+		66A3FFA52B47F878002DC665 /* MapReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapReducer.swift; sourceTree = "<group>"; };
+		66A3FFA72B47FB15002DC665 /* MapClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapClient.swift; sourceTree = "<group>"; };
+		66A3FFA92B480462002DC665 /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 		66BEA02A2B0C7C5900F3125B /* EmailAuthPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthPopupView.swift; sourceTree = "<group>"; };
 		66BEA02C2B0C8BFD00F3125B /* EveryMealToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveryMealToast.swift; sourceTree = "<group>"; };
 		66FF637E2AD7CE3D00A10986 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -243,6 +251,8 @@
 			isa = PBXGroup;
 			children = (
 				0F43F6802A6EA86B00239AA4 /* MapView.swift */,
+				66A3FFA52B47F878002DC665 /* MapReducer.swift */,
+				66A3FFA72B47FB15002DC665 /* MapClient.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -263,6 +273,7 @@
 				0F660A8E2A8454FC000074BD /* Extensions */,
 				66FF63802AD7DEB800A10986 /* Functions.swift */,
 				668FB86E2B45734C00F5F00F /* GlobalDefine.swift */,
+				66A3FFA92B480462002DC665 /* Type.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -466,6 +477,7 @@
 			isa = PBXGroup;
 			children = (
 				6681C7A32AEA4D5000C3D2C1 /* MealModel.swift */,
+				66A3FFA32B47F5A0002DC665 /* SampleDTO.swift */,
 			);
 			path = NetworkDTO;
 			sourceTree = "<group>";
@@ -597,6 +609,7 @@
 				6681C7A02AEA4ABD00C3D2C1 /* MealItemLikeButton.swift in Sources */,
 				08C3B3962AE401720067FB53 /* CustomNavigationView.swift in Sources */,
 				0F7CB2CB2AF9DFA800CBE762 /* OnBoardingView.swift in Sources */,
+				66A3FFA42B47F5A0002DC665 /* SampleDTO.swift in Sources */,
 				08A877D22ACD97EE007AEDA1 /* EverymealAlertView.swift in Sources */,
 				0F78B0142A6D39DC006B8C80 /* MainTabBarView.swift in Sources */,
 				087A093E2A81545000F4D34F /* HomeReviewsView.swift in Sources */,
@@ -640,9 +653,12 @@
 				66935D892AF1F22000E80424 /* CustomAlertButton.swift in Sources */,
 				664CC42C2AEA6274000EEBC5 /* MealHorizontalItemView.swift in Sources */,
 				6681C7A82AEA4E3400C3D2C1 /* MealEntity.swift in Sources */,
+				66A3FFA62B47F878002DC665 /* MapReducer.swift in Sources */,
 				0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */,
 				6681C7A42AEA4D5000C3D2C1 /* MealModel.swift in Sources */,
 				08D6BA662AE7F6DA00C0B516 /* ReviewStoreSearchListRecentCell.swift in Sources */,
+				66A3FFAA2B480462002DC665 /* Type.swift in Sources */,
+				66A3FFA82B47FB15002DC665 /* MapClient.swift in Sources */,
 				66BEA02B2B0C7C5900F3125B /* EmailAuthPopupView.swift in Sources */,
 				66935D8B2AF1F22000E80424 /* FilterBarView.swift in Sources */,
 				66FF637F2AD7CE3D00A10986 /* Constants.swift in Sources */,
