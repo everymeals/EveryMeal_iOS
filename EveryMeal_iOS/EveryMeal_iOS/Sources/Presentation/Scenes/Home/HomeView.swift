@@ -12,15 +12,21 @@ enum HomeStackViewType: Hashable {
   case restaurantList
   case reviewList
   case moreStoreView(MoreStoreViewType)
-  case emailVertifyPopup
   case emailVertify(EmailViewType)
 }
 
 struct HomeView: View {
-  @State private var navigationPath: [HomeStackViewType] = []
+  @State var navigationPath: [HomeStackViewType] = [] {
+    didSet {
+      print("aaaaa \(navigationPath)")
+    }
+  }
   @State private var writeReviewViewTapped: Bool = false
   @State private var topMenuSelected: [Bool] = Array.init(repeating: false, count: 4)
   @Binding var otherViewShowing: Bool
+  
+  @State private var goToWriteReviewTapped: Bool = false
+  @State private var isEmailAuthenticationTrue = false
   
   private let viewBottomargin: CGFloat = 24
   private let moreReviewBtnBottomMargin: CGFloat = 13
@@ -35,13 +41,26 @@ struct HomeView: View {
             .padding(.horizontal, 20)
             .onTapGesture {
               // FIXME: 학교 인증한 사용자인지 확인
-              let isEmailAuthenticationTrue: Bool = false
-              if isEmailAuthenticationTrue {
-                self.navigationPath.append(.writeReview)
-              } else {
-                self.navigationPath.append(.emailVertifyPopup)
-              }
+              isEmailAuthenticationTrue.toggle()
+              goToWriteReviewTapped = isEmailAuthenticationTrue
+//              if isEmailAuthenticationTrue {
+//                self.navigationPath.append(.writeReview)
+//              } else {
+//                self.navigationPath.append(.emailVertifyPopup)
+//              }
             }
+            .sheet(isPresented: $goToWriteReviewTapped, content: {
+              VStack {
+                CustomSheetView(buttonTitle: "인증하러 가기",  content: {
+                  EmailAuthPopupView()
+                }, buttonAction: {
+                  navigationPath.append(.emailVertify(.enterEmail) )
+                  goToWriteReviewTapped.toggle()
+                })
+              }
+              .presentationDetents([.height(330)])
+              .presentationDragIndicator(.hidden)
+            })
           
           TopMenuButtonsView(isSelected: $topMenuSelected)
             .onChange(of: topMenuSelected) { topMenuValue in
@@ -87,12 +106,8 @@ struct HomeView: View {
               navigationPath.removeLast()
             }, moreViewType: viewType)
             .toolbar(.hidden, for: .tabBar)
-          case .emailVertifyPopup:
-            EmailAuthPopupView(goToAuth: {
-              navigationPath.append(.emailVertify(.enterEmail) )
-            })
-            .toolbar(.hidden, for: .tabBar)
           case let .emailVertify(type):
+            @State var isValidValue = true
             EmailAuthenticationView(
               viewType: type,
               emailDidSent: {
@@ -100,10 +115,11 @@ struct HomeView: View {
               }, emailVertifySuccess: {
                 navigationPath.append(.emailVertify(.makeProfile))
               }, backButtonTapped: {
+                print(navigationPath)
                 navigationPath.removeLast()
               }, authSuccess: {
                 navigationPath.removeAll()
-              }
+              }, isValidValue: $isValidValue
             )
             .toolbar(.hidden, for: .tabBar)
           default:

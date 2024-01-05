@@ -38,6 +38,9 @@ enum EmailViewType: String {
 }
 
 struct EmailAuthenticationView: View {
+  @Environment(\.dismiss) private var dismiss
+//  @Binding var path: [HomeStackViewType]
+  
   var viewType: EmailViewType
   var emailDidSent: () -> Void
   var emailVertifySuccess: () -> Void
@@ -47,7 +50,7 @@ struct EmailAuthenticationView: View {
   @State var selectedImage = Image(.apple90)
   @State var enteredText: String = ""
   @State var isEmailTextNotEmpty: Bool = false
-  @State var isValidValue: Bool = true
+  @Binding var isValidValue: Bool
   @State var showDidSentEmail: Bool = false
   @State var showSelectProfileImage: Bool = false
   @State var makeProfileSuccess: Bool = false
@@ -61,13 +64,13 @@ struct EmailAuthenticationView: View {
       ZStack {
         if !makeProfileSuccess {
           VStack {
-            CustomNavigationView(
-              title: viewType == .makeProfile ? "프로필 생성" : "학교 인증",
-              leftItem: Image("icon-arrow-left-small-mono"),
-              leftItemTapped: {
-                backButtonTapped()
-              }
-            )
+//            CustomNavigationView(
+//              title: viewType == .makeProfile ? "프로필 생성" : "학교 인증",
+//              leftItem: Image("icon-arrow-left-small-mono"),
+//              leftItemTapped: {
+//                backButtonTapped()
+//              }
+//            )
             VStack(alignment: .leading, spacing: 0) {
               
               if viewType != .makeProfile {
@@ -122,7 +125,7 @@ struct EmailAuthenticationView: View {
               
               Text(viewType.rawValue)
                 .font(.pretendard(size: 12, weight: .regular))
-                .foregroundColor(.grey8)
+                .foregroundColor(textfieldIsFocused ? Color.grey8 : (isValidValue ? Color.grey8 : Color.redLight))
                 .padding(.bottom, 6)
               
               TextField("\(viewType.placeholder)", text: $enteredText)
@@ -149,6 +152,7 @@ struct EmailAuthenticationView: View {
                 Text(viewType.errorMessage)
                   .font(.pretendard(size: 12, weight: .regular))
                   .foregroundColor(.red)
+                
               }
               
               Spacer()
@@ -235,7 +239,25 @@ struct EmailAuthenticationView: View {
     .onAppear {
       UITextField.appearance().clearButtonMode = .whileEditing
     }
-    .navigationBarHidden(true)
+    .navigationTitle(viewType == .makeProfile ? "프로필 생성" : "학교 인증")
+    .navigationBarTitleDisplayMode(.inline)
+    .navigationBarBackButtonHidden()
+    .toolbar {
+      ToolbarItem(placement: .navigationBarLeading) {
+        Button {
+          dismiss()
+        } label: {
+          Image("icon-arrow-left-small-mono")
+            .resizable()
+            .frame(width: 24, height: 24)
+        }
+      }
+    }
+//    .navigationDestination(for: MyPageNavigationViewType.self) { view in
+//      if view == .withdrawalReason {
+//        SignOutDetailView(path: $path)
+//      }
+//    }
   }
 }
 
@@ -263,7 +285,8 @@ private func checkIsValidNickname(_ nickname: String) -> Bool {
 
 struct EmailAuthenticationViiew_Previews: PreviewProvider {
   static var previews: some View {
-    EmailAuthenticationView(viewType: .makeProfile, emailDidSent: { }, emailVertifySuccess: { }, backButtonTapped: { }, authSuccess: { })
+    @State var isValidValue = true
+    EmailAuthenticationView(viewType: .makeProfile, emailDidSent: { }, emailVertifySuccess: { }, backButtonTapped: { }, authSuccess: { }, isValidValue: $isValidValue)
   }
 }
 

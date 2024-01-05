@@ -38,15 +38,17 @@ struct CustomSheetView<Content>: View where Content: View {
   let buttonTitle: String?
   let content: Content
   let buttonAction: () -> Void
+  let backgroundTouchAction: () -> Void
   var bottomPadding: CGFloat {
     DeviceManager.shared.hasPhysicalHomeButton ? 10 : 0
   }
   
-  init(title: String? = nil, buttonTitle: String? = nil, @ViewBuilder content: () -> Content, buttonAction: @escaping () -> Void = {}) {
+  init(title: String? = nil, buttonTitle: String? = nil, @ViewBuilder content: () -> Content, buttonAction: @escaping () -> Void = {}, backgroundTouchAction: @escaping () -> Void = {}) {
     self.title = title
     self.buttonTitle = buttonTitle
     self.content = content()
     self.buttonAction = buttonAction
+    self.backgroundTouchAction = backgroundTouchAction
   }
   
   var body: some View {

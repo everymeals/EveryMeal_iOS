@@ -78,6 +78,7 @@ struct FilterBarView: View {
                 print("33")
               }
             }
+            .padding(.horizontal, 20)
           }
         }
         .presentationDetents([.height(330)])
