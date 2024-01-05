@@ -68,6 +68,7 @@
 		66935D892AF1F22000E80424 /* CustomAlertButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66935D852AF1F22000E80424 /* CustomAlertButton.swift */; };
 		66935D8A2AF1F22000E80424 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66935D862AF1F22000E80424 /* CustomAlert.swift */; };
 		66935D8B2AF1F22000E80424 /* FilterBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66935D872AF1F22000E80424 /* FilterBarView.swift */; };
+		66A3FFA22B47C52B002DC665 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 66A3FFA12B47C52B002DC665 /* ComposableArchitecture */; };
 		66BEA02B2B0C7C5900F3125B /* EmailAuthPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEA02A2B0C7C5900F3125B /* EmailAuthPopupView.swift */; };
 		66BEA02D2B0C8BFD00F3125B /* EveryMealToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEA02C2B0C8BFD00F3125B /* EveryMealToast.swift */; };
 		66BEA0302B0C9E0000F3125B /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 66BEA02F2B0C9E0000F3125B /* AlertToast */; };
@@ -152,6 +153,7 @@
 			files = (
 				0F78B0102A6D39AD006B8C80 /* Lottie in Frameworks */,
 				66BEA0302B0C9E0000F3125B /* AlertToast in Frameworks */,
+				66A3FFA22B47C52B002DC665 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,6 +524,7 @@
 			packageProductDependencies = (
 				0F78B00F2A6D39AD006B8C80 /* Lottie */,
 				66BEA02F2B0C9E0000F3125B /* AlertToast */,
+				66A3FFA12B47C52B002DC665 /* ComposableArchitecture */,
 			);
 			productName = EveryMeal_iOS;
 			productReference = 0F78AFF52A6CCA6B006B8C80 /* EveryMeal_iOS.app */;
@@ -554,6 +557,7 @@
 			packageReferences = (
 				0F78B00E2A6D39AD006B8C80 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				66BEA02E2B0C9E0000F3125B /* XCRemoteSwiftPackageReference "AlertToast" */,
+				66A3FFA02B47C52B002DC665 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = 0F78AFF62A6CCA6B006B8C80 /* Products */;
 			projectDirPath = "";
@@ -866,6 +870,14 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		66A3FFA02B47C52B002DC665 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.6;
+			};
+		};
 		66BEA02E2B0C9E0000F3125B /* XCRemoteSwiftPackageReference "AlertToast" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/elai950/AlertToast";
@@ -881,6 +893,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0F78B00E2A6D39AD006B8C80 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		66A3FFA12B47C52B002DC665 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66A3FFA02B47C52B002DC665 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
 		};
 		66BEA02F2B0C9E0000F3125B /* AlertToast */ = {
 			isa = XCSwiftPackageProductDependency;
