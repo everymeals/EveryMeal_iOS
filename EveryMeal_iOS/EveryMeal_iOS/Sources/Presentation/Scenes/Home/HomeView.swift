@@ -108,7 +108,6 @@ struct HomeView: View {
             }, moreViewType: viewType)
             .toolbar(.hidden, for: .tabBar)
           case let .emailVertify(type):
-            @State var isValidValue = true
             EmailAuthenticationView(
               viewType: type,
               emailDidSent: {
@@ -120,7 +119,7 @@ struct HomeView: View {
                 navigationPath.removeLast()
               }, authSuccess: {
                 navigationPath.removeAll()
-              }, isValidValue: $isValidValue
+              }
             )
             .toolbar(.hidden, for: .tabBar)
           default:

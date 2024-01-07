@@ -50,7 +50,7 @@ struct EmailAuthenticationView: View {
   @State var selectedImage = Image(.apple90)
   @State var enteredText: String = ""
   @State var isEmailTextNotEmpty: Bool = false
-  @Binding var isValidValue: Bool
+  @State var isValidValue: Bool = true
   @State var showDidSentEmail: Bool = false
   @State var showSelectProfileImage: Bool = false
   @State var makeProfileSuccess: Bool = false
@@ -286,7 +286,7 @@ private func checkIsValidNickname(_ nickname: String) -> Bool {
 struct EmailAuthenticationViiew_Previews: PreviewProvider {
   static var previews: some View {
     @State var isValidValue = true
-    EmailAuthenticationView(viewType: .makeProfile, emailDidSent: { }, emailVertifySuccess: { }, backButtonTapped: { }, authSuccess: { }, isValidValue: $isValidValue)
+    EmailAuthenticationView(viewType: .makeProfile, emailDidSent: { }, emailVertifySuccess: { }, backButtonTapped: { }, authSuccess: { })
   }
 }
 
