@@ -17,11 +17,7 @@ enum HomeStackViewType: Hashable {
 }
 
 struct HomeView: View {
-  @State var navigationPath: [HomeStackViewType] = [] {
-    didSet {
-      print("aaaaa \(navigationPath)")
-    }
-  }
+  @State var navigationPath: [HomeStackViewType] = []
   @State private var writeReviewViewTapped: Bool = false
   @State private var topMenuSelected: [Bool] = Array.init(repeating: false, count: 4)
   @Binding var otherViewShowing: Bool
@@ -115,7 +111,6 @@ struct HomeView: View {
               }, emailVertifySuccess: {
                 navigationPath.append(.emailVertify(.makeProfile))
               }, backButtonTapped: {
-                print(navigationPath)
                 navigationPath.removeLast()
               }, authSuccess: {
                 navigationPath.removeAll()
@@ -127,9 +122,6 @@ struct HomeView: View {
               .toolbar(.hidden, for: .tabBar)
           }
         }
-      }
-      .onAppear {
-        
       }
       .onChange(of: navigationPath) { value in
         otherViewShowing = value.count != 0

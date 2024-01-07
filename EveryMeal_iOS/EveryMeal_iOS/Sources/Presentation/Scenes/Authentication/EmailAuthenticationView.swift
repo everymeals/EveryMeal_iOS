@@ -38,9 +38,6 @@ enum EmailViewType: String {
 }
 
 struct EmailAuthenticationView: View {
-  @Environment(\.dismiss) private var dismiss
-//  @Binding var path: [HomeStackViewType]
-  
   var viewType: EmailViewType
   var emailDidSent: () -> Void
   var emailVertifySuccess: () -> Void
@@ -64,13 +61,13 @@ struct EmailAuthenticationView: View {
       ZStack {
         if !makeProfileSuccess {
           VStack {
-//            CustomNavigationView(
-//              title: viewType == .makeProfile ? "프로필 생성" : "학교 인증",
-//              leftItem: Image("icon-arrow-left-small-mono"),
-//              leftItemTapped: {
-//                backButtonTapped()
-//              }
-//            )
+            CustomNavigationView(
+              title: viewType == .makeProfile ? "프로필 생성" : "학교 인증",
+              leftItem: Image("icon-arrow-left-small-mono"),
+              leftItemTapped: {
+                backButtonTapped()
+              }
+            )
             VStack(alignment: .leading, spacing: 0) {
               
               if viewType != .makeProfile {
@@ -130,7 +127,7 @@ struct EmailAuthenticationView: View {
               
               TextField("\(viewType.placeholder)", text: $enteredText)
                 .font(.pretendard(size: 16, weight: .regular))
-                .frame(width: .infinity, height: 48)
+                .frame(height: 48)
                 .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
                 .foregroundColor(isEmailTextNotEmpty ? .grey8 : .grey5)
                 .background(textfieldIsFocused ? Color.grey2 : (isValidValue ? Color.grey1 : Color.redLight))
@@ -201,12 +198,6 @@ struct EmailAuthenticationView: View {
                 }
             }
           }
-          .opacity(viewOpacity)
-          .onDisappear {
-            withAnimation(.easeInOut(duration: 0.5)) {
-              self.viewOpacity = 0.0
-            }
-          }
           if showSelectProfileImage {
             VStack {
               Spacer()
@@ -216,7 +207,6 @@ struct EmailAuthenticationView: View {
               })
             }
           }
-          
         } else {
           VStack {
             AuthSuccessView()
@@ -226,38 +216,21 @@ struct EmailAuthenticationView: View {
               }
           }
         }
-      }
-      
-      if showDidSentEmail {
-        EveryMealToast(message: "인증번호를 다시 전송했어요") {
-          DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            showDidSentEmail = false
+        if showDidSentEmail {
+          EveryMealToast(message: "인증번호를 다시 전송했어요") {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+              showDidSentEmail = false
+            }
           }
         }
       }
+      
     }
     .onAppear {
       UITextField.appearance().clearButtonMode = .whileEditing
     }
-    .navigationTitle(viewType == .makeProfile ? "프로필 생성" : "학교 인증")
     .navigationBarTitleDisplayMode(.inline)
     .navigationBarBackButtonHidden()
-    .toolbar {
-      ToolbarItem(placement: .navigationBarLeading) {
-        Button {
-          dismiss()
-        } label: {
-          Image("icon-arrow-left-small-mono")
-            .resizable()
-            .frame(width: 24, height: 24)
-        }
-      }
-    }
-//    .navigationDestination(for: MyPageNavigationViewType.self) { view in
-//      if view == .withdrawalReason {
-//        SignOutDetailView(path: $path)
-//      }
-//    }
   }
 }
 
@@ -283,10 +256,6 @@ private func checkIsValidNickname(_ nickname: String) -> Bool {
   return true
 }
 
-struct EmailAuthenticationViiew_Previews: PreviewProvider {
-  static var previews: some View {
-    @State var isValidValue = true
-    EmailAuthenticationView(viewType: .makeProfile, emailDidSent: { }, emailVertifySuccess: { }, backButtonTapped: { }, authSuccess: { })
-  }
+#Preview {
+  EmailAuthenticationView(viewType: .makeProfile, emailDidSent: { }, emailVertifySuccess: { }, backButtonTapped: { }, authSuccess: { })
 }
-
