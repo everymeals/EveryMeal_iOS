@@ -46,8 +46,8 @@
 		0F78B0142A6D39DC006B8C80 /* MainTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F78B0132A6D39DC006B8C80 /* MainTabBarView.swift */; };
 		0F7CB2CB2AF9DFA800CBE762 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7CB2CA2AF9DFA800CBE762 /* OnBoardingView.swift */; };
 		0F80B4032ABAFABF00167AB6 /* MoreBestRestaurantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F80B4022ABAFABF00167AB6 /* MoreBestRestaurantView.swift */; };
-		0F8D3D052B200A440026FA5D /* CustomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8D3D042B200A440026FA5D /* CustomSheetView.swift */; };
 		0F82DF292B0EC7240049EDB4 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F82DF282B0EC7240049EDB4 /* Pretendard-SemiBold.otf */; };
+		0F8D3D052B200A440026FA5D /* CustomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8D3D042B200A440026FA5D /* CustomSheetView.swift */; };
 		0F95A0932B0F1CF2000317D8 /* SignOutDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F95A0922B0F1CF2000317D8 /* SignOutDetailView.swift */; };
 		0FF7C7192A91ECEF00BFC33D /* GradationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF7C7182A91ECEF00BFC33D /* GradationView.swift */; };
 		662C68FF2B3BECCE00B47C87 /* SelectProfileImagePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662C68FE2B3BECCE00B47C87 /* SelectProfileImagePopupView.swift */; };
@@ -63,10 +63,16 @@
 		6681C7A42AEA4D5000C3D2C1 /* MealModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681C7A32AEA4D5000C3D2C1 /* MealModel.swift */; };
 		6681C7A82AEA4E3400C3D2C1 /* MealEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681C7A72AEA4E3400C3D2C1 /* MealEntity.swift */; };
 		6681C7AA2AEA4FA700C3D2C1 /* EveryMealButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681C7A92AEA4FA700C3D2C1 /* EveryMealButton.swift */; };
+		668FB86F2B45734C00F5F00F /* GlobalDefine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668FB86E2B45734C00F5F00F /* GlobalDefine.swift */; };
 		66935D882AF1F22000E80424 /* CustomAlertModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66935D842AF1F22000E80424 /* CustomAlertModifier.swift */; };
 		66935D892AF1F22000E80424 /* CustomAlertButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66935D852AF1F22000E80424 /* CustomAlertButton.swift */; };
 		66935D8A2AF1F22000E80424 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66935D862AF1F22000E80424 /* CustomAlert.swift */; };
 		66935D8B2AF1F22000E80424 /* FilterBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66935D872AF1F22000E80424 /* FilterBarView.swift */; };
+		66A3FFA22B47C52B002DC665 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 66A3FFA12B47C52B002DC665 /* ComposableArchitecture */; };
+		66A3FFA42B47F5A0002DC665 /* SampleDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A3FFA32B47F5A0002DC665 /* SampleDTO.swift */; };
+		66A3FFA62B47F878002DC665 /* MapReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A3FFA52B47F878002DC665 /* MapReducer.swift */; };
+		66A3FFA82B47FB15002DC665 /* MapClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A3FFA72B47FB15002DC665 /* MapClient.swift */; };
+		66A3FFAA2B480462002DC665 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A3FFA92B480462002DC665 /* Type.swift */; };
 		66BEA02B2B0C7C5900F3125B /* EmailAuthPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEA02A2B0C7C5900F3125B /* EmailAuthPopupView.swift */; };
 		66BEA02D2B0C8BFD00F3125B /* EveryMealToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEA02C2B0C8BFD00F3125B /* EveryMealToast.swift */; };
 		66BEA0302B0C9E0000F3125B /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 66BEA02F2B0C9E0000F3125B /* AlertToast */; };
@@ -116,8 +122,8 @@
 		0F78B0132A6D39DC006B8C80 /* MainTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarView.swift; sourceTree = "<group>"; };
 		0F7CB2CA2AF9DFA800CBE762 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		0F80B4022ABAFABF00167AB6 /* MoreBestRestaurantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreBestRestaurantView.swift; sourceTree = "<group>"; };
-		0F8D3D042B200A440026FA5D /* CustomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSheetView.swift; sourceTree = "<group>"; };
 		0F82DF282B0EC7240049EDB4 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		0F8D3D042B200A440026FA5D /* CustomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSheetView.swift; sourceTree = "<group>"; };
 		0F95A0922B0F1CF2000317D8 /* SignOutDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutDetailView.swift; sourceTree = "<group>"; };
 		0FF7C7182A91ECEF00BFC33D /* GradationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradationView.swift; sourceTree = "<group>"; };
 		662C68FE2B3BECCE00B47C87 /* SelectProfileImagePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProfileImagePopupView.swift; sourceTree = "<group>"; };
@@ -133,10 +139,15 @@
 		6681C7A32AEA4D5000C3D2C1 /* MealModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealModel.swift; sourceTree = "<group>"; };
 		6681C7A72AEA4E3400C3D2C1 /* MealEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealEntity.swift; sourceTree = "<group>"; };
 		6681C7A92AEA4FA700C3D2C1 /* EveryMealButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveryMealButton.swift; sourceTree = "<group>"; };
+		668FB86E2B45734C00F5F00F /* GlobalDefine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDefine.swift; sourceTree = "<group>"; };
 		66935D842AF1F22000E80424 /* CustomAlertModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAlertModifier.swift; sourceTree = "<group>"; };
 		66935D852AF1F22000E80424 /* CustomAlertButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAlertButton.swift; sourceTree = "<group>"; };
 		66935D862AF1F22000E80424 /* CustomAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		66935D872AF1F22000E80424 /* FilterBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterBarView.swift; sourceTree = "<group>"; };
+		66A3FFA32B47F5A0002DC665 /* SampleDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDTO.swift; sourceTree = "<group>"; };
+		66A3FFA52B47F878002DC665 /* MapReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapReducer.swift; sourceTree = "<group>"; };
+		66A3FFA72B47FB15002DC665 /* MapClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapClient.swift; sourceTree = "<group>"; };
+		66A3FFA92B480462002DC665 /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 		66BEA02A2B0C7C5900F3125B /* EmailAuthPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthPopupView.swift; sourceTree = "<group>"; };
 		66BEA02C2B0C8BFD00F3125B /* EveryMealToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveryMealToast.swift; sourceTree = "<group>"; };
 		66FF637E2AD7CE3D00A10986 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -150,6 +161,7 @@
 			files = (
 				0F78B0102A6D39AD006B8C80 /* Lottie in Frameworks */,
 				66BEA0302B0C9E0000F3125B /* AlertToast in Frameworks */,
+				66A3FFA22B47C52B002DC665 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +251,8 @@
 			isa = PBXGroup;
 			children = (
 				0F43F6802A6EA86B00239AA4 /* MapView.swift */,
+				66A3FFA52B47F878002DC665 /* MapReducer.swift */,
+				66A3FFA72B47FB15002DC665 /* MapClient.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -258,6 +272,8 @@
 				0F660A8F2A845505000074BD /* Managers */,
 				0F660A8E2A8454FC000074BD /* Extensions */,
 				66FF63802AD7DEB800A10986 /* Functions.swift */,
+				668FB86E2B45734C00F5F00F /* GlobalDefine.swift */,
+				66A3FFA92B480462002DC665 /* Type.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -461,6 +477,7 @@
 			isa = PBXGroup;
 			children = (
 				6681C7A32AEA4D5000C3D2C1 /* MealModel.swift */,
+				66A3FFA32B47F5A0002DC665 /* SampleDTO.swift */,
 			);
 			path = NetworkDTO;
 			sourceTree = "<group>";
@@ -519,6 +536,7 @@
 			packageProductDependencies = (
 				0F78B00F2A6D39AD006B8C80 /* Lottie */,
 				66BEA02F2B0C9E0000F3125B /* AlertToast */,
+				66A3FFA12B47C52B002DC665 /* ComposableArchitecture */,
 			);
 			productName = EveryMeal_iOS;
 			productReference = 0F78AFF52A6CCA6B006B8C80 /* EveryMeal_iOS.app */;
@@ -551,6 +569,7 @@
 			packageReferences = (
 				0F78B00E2A6D39AD006B8C80 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				66BEA02E2B0C9E0000F3125B /* XCRemoteSwiftPackageReference "AlertToast" */,
+				66A3FFA02B47C52B002DC665 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = 0F78AFF62A6CCA6B006B8C80 /* Products */;
 			projectDirPath = "";
@@ -590,6 +609,7 @@
 				6681C7A02AEA4ABD00C3D2C1 /* MealItemLikeButton.swift in Sources */,
 				08C3B3962AE401720067FB53 /* CustomNavigationView.swift in Sources */,
 				0F7CB2CB2AF9DFA800CBE762 /* OnBoardingView.swift in Sources */,
+				66A3FFA42B47F5A0002DC665 /* SampleDTO.swift in Sources */,
 				08A877D22ACD97EE007AEDA1 /* EverymealAlertView.swift in Sources */,
 				0F78B0142A6D39DC006B8C80 /* MainTabBarView.swift in Sources */,
 				087A093E2A81545000F4D34F /* HomeReviewsView.swift in Sources */,
@@ -604,6 +624,7 @@
 				0F8D3D052B200A440026FA5D /* CustomSheetView.swift in Sources */,
 				663BFBA22A81EACC00A540A2 /* ViewModifier.swift in Sources */,
 				66FF63812AD7DEB800A10986 /* Functions.swift in Sources */,
+				668FB86F2B45734C00F5F00F /* GlobalDefine.swift in Sources */,
 				08D6BA632AE7F6DA00C0B516 /* ReviewStarPointView.swift in Sources */,
 				08D6BA642AE7F6DA00C0B516 /* WriteReviewStoreSearchView.swift in Sources */,
 				087A09382A81481100F4D34F /* HomeHeaderView.swift in Sources */,
@@ -632,9 +653,12 @@
 				66935D892AF1F22000E80424 /* CustomAlertButton.swift in Sources */,
 				664CC42C2AEA6274000EEBC5 /* MealHorizontalItemView.swift in Sources */,
 				6681C7A82AEA4E3400C3D2C1 /* MealEntity.swift in Sources */,
+				66A3FFA62B47F878002DC665 /* MapReducer.swift in Sources */,
 				0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */,
 				6681C7A42AEA4D5000C3D2C1 /* MealModel.swift in Sources */,
 				08D6BA662AE7F6DA00C0B516 /* ReviewStoreSearchListRecentCell.swift in Sources */,
+				66A3FFAA2B480462002DC665 /* Type.swift in Sources */,
+				66A3FFA82B47FB15002DC665 /* MapClient.swift in Sources */,
 				66BEA02B2B0C7C5900F3125B /* EmailAuthPopupView.swift in Sources */,
 				66935D8B2AF1F22000E80424 /* FilterBarView.swift in Sources */,
 				66FF637F2AD7CE3D00A10986 /* Constants.swift in Sources */,
@@ -862,6 +886,14 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		66A3FFA02B47C52B002DC665 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.6;
+			};
+		};
 		66BEA02E2B0C9E0000F3125B /* XCRemoteSwiftPackageReference "AlertToast" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/elai950/AlertToast";
@@ -877,6 +909,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0F78B00E2A6D39AD006B8C80 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		66A3FFA12B47C52B002DC665 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66A3FFA02B47C52B002DC665 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
 		};
 		66BEA02F2B0C9E0000F3125B /* AlertToast */ = {
 			isa = XCSwiftPackageProductDependency;

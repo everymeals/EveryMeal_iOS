@@ -147,6 +147,7 @@ struct MoreReviewButton: View {
 
 struct HomeReviewsView_Previews: PreviewProvider {
   static var previews: some View {
-    HomeView()
+    @State var otherViewShowing = false
+    HomeView(otherViewShowing: $otherViewShowing)
   }
 }

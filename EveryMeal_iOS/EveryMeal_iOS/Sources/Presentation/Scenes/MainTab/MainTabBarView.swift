@@ -12,17 +12,20 @@ struct MainTabBarView: View {
 
   @State private var selectedTab = 0
   @State private var favoritesCount = 10
+  @State var tabBarIsHidden = false
   
   var body: some View {
     TabView(selection: $selectedTab) {
-      HomeView()
+      HomeView(otherViewShowing: $tabBarIsHidden)
         .tabItem {
           Image("icon-store-mono")
             .renderingMode(.template)
           Text("맛집")
         }
         .tag(0)
-      MapView()
+      MapView(store: .init(initialState: MapViewReducer.State(), reducer: {
+        MapViewReducer()
+      }))
         .tabItem {
           Image("icon-folk-knife-mono")
             .renderingMode(.template)
@@ -44,6 +47,9 @@ struct MainTabBarView: View {
         }
         .tag(3)
         .badge(favoritesCount)
+    }
+    .onChange(of: tabBarIsHidden) { value in
+      GlobalDefine.shared.tabBarController?.view.subviews.first(where: { $0.accessibilityIdentifier == "TabBarShadow" })?.layer.isHidden = value
     }
     .tabViewStyle(.automatic)
     .onAppear(perform: { setupTabBarAppearance() })
@@ -96,36 +102,39 @@ extension UITabBarController {
   open override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
     
-    tabBar.layer.masksToBounds = true
-    tabBar.layer.cornerRadius = 20
-    tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-    tabBar.backgroundImage = UIImage()
-    tabBar.shadowImage = UIImage()
-    Constants.tabBarHeight = tabBar.frame.height
-    
-    if let shadowView = view.subviews.first(where: { $0.accessibilityIdentifier == "TabBarShadow" }) {
-      shadowView.frame = tabBar.frame
-    } else {
+    if GlobalDefine.shared.tabBarController == nil {
+      GlobalDefine.shared.tabBarController = self
+      
+      tabBar.layer.masksToBounds = true
+      tabBar.layer.cornerRadius = 20
+      tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+      tabBar.backgroundImage = UIImage()
+      tabBar.shadowImage = UIImage()
+      Constants.tabBarHeight = tabBar.frame.height
+      
       let tabBarCornerRadius = tabBar.layer.cornerRadius
       var tabBarFrame = tabBar.frame
       tabBarFrame.origin.y += 1
 
       let shadowView = UIView(frame: tabBarFrame)
-      
       shadowView.backgroundColor = UIColor.white
       shadowView.accessibilityIdentifier = "TabBarShadow"
-      shadowView.layer.cornerRadius = tabBarCornerRadius
-      shadowView.layer.maskedCorners = tabBar.layer.maskedCorners
-      shadowView.layer.masksToBounds = false
-      shadowView.layer.shadowColor = Color.grey2.cgColor
-      
-      shadowView.layer.shadowOpacity = 1
-      shadowView.layer.shadowRadius = 1
+      makeLayer(shadowView)
       
       view.addSubview(shadowView)
       view.bringSubviewToFront(tabBar)
       view.clipsToBounds = true
     }
+  }
+  
+  func makeLayer(_ shadowView: UIView) {
+    shadowView.layer.cornerRadius = tabBar.layer.cornerRadius
+    shadowView.layer.maskedCorners = tabBar.layer.maskedCorners
+    shadowView.layer.masksToBounds = false
+    shadowView.layer.shadowColor = Color.grey2.cgColor
+    
+    shadowView.layer.shadowOpacity = 1
+    shadowView.layer.shadowRadius = 1
   }
 }
 
