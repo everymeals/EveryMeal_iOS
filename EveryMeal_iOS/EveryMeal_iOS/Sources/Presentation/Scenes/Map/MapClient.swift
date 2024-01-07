@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 import ComposableArchitecture
 
 struct MapClient {
@@ -29,7 +30,7 @@ extension MapClient: DependencyKey {
         let decodedData = try decoder.decode(SampleDTO.self, from: data)
         return .success(decodedData)
       } catch {
-        return .failure(.invalidJSON)
+        return .failure(.invalidJSONResponse)
       }
     }
   )
