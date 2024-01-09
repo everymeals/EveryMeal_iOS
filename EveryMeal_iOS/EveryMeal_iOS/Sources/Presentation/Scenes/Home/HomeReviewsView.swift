@@ -40,6 +40,9 @@ struct HomeReviewsView: View {
 }
 
 struct ReviewCellView: View {
+  @State var isComplaintOpened: Bool = false
+  @State var isComplaintReasonOpened: Bool = false
+  
   var body: some View {
     VStack(spacing: 12) {
       VStack(alignment: .leading, spacing: 9) {
@@ -70,6 +73,7 @@ struct ReviewCellView: View {
               Image("icon-dots-mono")
                 .onTapGesture {
                   print("오른쪽 점 세개 버튼")
+                  isComplaintOpened.toggle()
                 }
               Spacer()
             }
@@ -102,6 +106,75 @@ struct ReviewCellView: View {
           print("좋아요 버튼")
         }
       }
+      .sheet(isPresented: $isComplaintOpened, content: {
+        VStack {
+          CustomSheetView {
+            HStack(spacing: 12) {
+              Image("icon-siren-mono")
+                .resizable()
+                .frame(width: 24, height: 24)
+              Text("신고하기")
+                .font(.pretendard(size: 16, weight: .medium))
+              Spacer()
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+              isComplaintOpened = false
+              isComplaintReasonOpened = true
+            }
+          }
+        }
+        .presentationDetents([.height(100)])
+        .presentationDragIndicator(.hidden)
+      })
+      .sheet(isPresented: $isComplaintReasonOpened, content: {
+        VStack {
+          CustomSheetView(title: "무엇으로 신고하시나요?", buttonTitle: "확인", isButtonEnabled: false) {
+            VStack {
+              HStack {
+                Text("해당 가게와 무관한 리뷰")
+                  .padding(.vertical, 14)
+                Spacer()
+                Image("icon-check-mono")
+                  .renderingMode(.template)
+                  .foregroundStyle(Color.grey4)
+              }
+              .contentShape(Rectangle())
+              .onTapGesture {
+                print("11")
+              }
+              HStack {
+                Text("비속어 및 혐오 발언")
+                  .padding(.vertical, 14)
+                Spacer()
+                Image("icon-check-mono")
+                  .renderingMode(.template)
+                  .foregroundStyle(Color.grey4)
+              }
+              .contentShape(Rectangle())
+              .onTapGesture {
+                print("22")
+              }
+              HStack {
+                Text("음란성 게시물")
+                  .padding(.vertical, 14)
+                Spacer()
+                Image("icon-check-mono")
+                  .renderingMode(.template)
+                  .foregroundStyle(Color.grey4)
+              }
+              .contentShape(Rectangle())
+              .onTapGesture {
+                print("33")
+              }
+            }
+          } buttonAction: {
+            isComplaintReasonOpened = false
+          }
+        }
+        .presentationDetents([.height(320)])
+        .presentationDragIndicator(.hidden)
+      })
       
       HStack {
         Image("icon-pin-location-mono")
