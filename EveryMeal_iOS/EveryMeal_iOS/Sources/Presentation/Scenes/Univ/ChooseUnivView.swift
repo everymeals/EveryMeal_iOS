@@ -99,7 +99,9 @@ struct ChooseButtonView: View {
     VStack(spacing: 20) {
       AddUnivView()
         .onTapGesture {
-          print("👆 학교 추가하기 버튼 - 구글 폼으로 연결할 예정")
+          if let url = URL(string: "https://forms.gle/dWY6rnUzkdGbrVs47") {
+            UIApplication.shared.open(url)
+          }
         }
       SelectUnivButton(isSelected: $isSelected, isFirstLaunching: $isFirstLaunching)
     }
