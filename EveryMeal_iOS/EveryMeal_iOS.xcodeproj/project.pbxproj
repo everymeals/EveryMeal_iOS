@@ -49,6 +49,16 @@
 		0F82DF292B0EC7240049EDB4 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F82DF282B0EC7240049EDB4 /* Pretendard-SemiBold.otf */; };
 		0F8D3D052B200A440026FA5D /* CustomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8D3D042B200A440026FA5D /* CustomSheetView.swift */; };
 		0F95A0932B0F1CF2000317D8 /* SignOutDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F95A0922B0F1CF2000317D8 /* SignOutDetailView.swift */; };
+		0FE449552B57D34D0054DED3 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 0FE449542B57D34D0054DED3 /* CombineMoya */; };
+		0FE449572B57D34D0054DED3 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 0FE449562B57D34D0054DED3 /* Moya */; };
+		0FE449592B57D34D0054DED3 /* ReactiveMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 0FE449582B57D34D0054DED3 /* ReactiveMoya */; };
+		0FE4495B2B57D34D0054DED3 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 0FE4495A2B57D34D0054DED3 /* RxMoya */; };
+		0FE4495E2B57D3FE0054DED3 /* UnivsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE4495D2B57D3FE0054DED3 /* UnivsResponseModel.swift */; };
+		0FE449602B57D4320054DED3 /* UnivsEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE4495F2B57D4320054DED3 /* UnivsEntity.swift */; };
+		0FE449652B57DC790054DED3 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE449642B57DC790054DED3 /* UserDefaultsManager.swift */; };
+		0FE4496E2B57DE3C0054DED3 /* UnivsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE4496D2B57DE3C0054DED3 /* UnivsAPI.swift */; };
+		0FE449702B57DE460054DED3 /* UnivsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE4496F2B57DE460054DED3 /* UnivsService.swift */; };
+		0FE449722B57DFBE0054DED3 /* Moya+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE449712B57DFBE0054DED3 /* Moya+Extensions.swift */; };
 		0FF7C7192A91ECEF00BFC33D /* GradationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF7C7182A91ECEF00BFC33D /* GradationView.swift */; };
 		662C68FF2B3BECCE00B47C87 /* SelectProfileImagePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662C68FE2B3BECCE00B47C87 /* SelectProfileImagePopupView.swift */; };
 		662C69012B3C15FC00B47C87 /* CameraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662C69002B3C15FC00B47C87 /* CameraPicker.swift */; };
@@ -72,7 +82,7 @@
 		66A3FFA42B47F5A0002DC665 /* SampleDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A3FFA32B47F5A0002DC665 /* SampleDTO.swift */; };
 		66A3FFA62B47F878002DC665 /* MapReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A3FFA52B47F878002DC665 /* MapReducer.swift */; };
 		66A3FFA82B47FB15002DC665 /* MapClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A3FFA72B47FB15002DC665 /* MapClient.swift */; };
-		66A3FFAA2B480462002DC665 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A3FFA92B480462002DC665 /* Type.swift */; };
+		66A3FFAA2B480462002DC665 /* EverMealErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A3FFA92B480462002DC665 /* EverMealErrorType.swift */; };
 		66BEA02B2B0C7C5900F3125B /* EmailAuthPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEA02A2B0C7C5900F3125B /* EmailAuthPopupView.swift */; };
 		66BEA02D2B0C8BFD00F3125B /* EveryMealToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEA02C2B0C8BFD00F3125B /* EveryMealToast.swift */; };
 		66BEA0302B0C9E0000F3125B /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 66BEA02F2B0C9E0000F3125B /* AlertToast */; };
@@ -125,6 +135,12 @@
 		0F82DF282B0EC7240049EDB4 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		0F8D3D042B200A440026FA5D /* CustomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSheetView.swift; sourceTree = "<group>"; };
 		0F95A0922B0F1CF2000317D8 /* SignOutDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutDetailView.swift; sourceTree = "<group>"; };
+		0FE4495D2B57D3FE0054DED3 /* UnivsResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivsResponseModel.swift; sourceTree = "<group>"; };
+		0FE4495F2B57D4320054DED3 /* UnivsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivsEntity.swift; sourceTree = "<group>"; };
+		0FE449642B57DC790054DED3 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		0FE4496D2B57DE3C0054DED3 /* UnivsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivsAPI.swift; sourceTree = "<group>"; };
+		0FE4496F2B57DE460054DED3 /* UnivsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivsService.swift; sourceTree = "<group>"; };
+		0FE449712B57DFBE0054DED3 /* Moya+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Moya+Extensions.swift"; sourceTree = "<group>"; };
 		0FF7C7182A91ECEF00BFC33D /* GradationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradationView.swift; sourceTree = "<group>"; };
 		662C68FE2B3BECCE00B47C87 /* SelectProfileImagePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProfileImagePopupView.swift; sourceTree = "<group>"; };
 		662C69002B3C15FC00B47C87 /* CameraPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPicker.swift; sourceTree = "<group>"; };
@@ -147,7 +163,7 @@
 		66A3FFA32B47F5A0002DC665 /* SampleDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDTO.swift; sourceTree = "<group>"; };
 		66A3FFA52B47F878002DC665 /* MapReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapReducer.swift; sourceTree = "<group>"; };
 		66A3FFA72B47FB15002DC665 /* MapClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapClient.swift; sourceTree = "<group>"; };
-		66A3FFA92B480462002DC665 /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
+		66A3FFA92B480462002DC665 /* EverMealErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EverMealErrorType.swift; sourceTree = "<group>"; };
 		66BEA02A2B0C7C5900F3125B /* EmailAuthPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthPopupView.swift; sourceTree = "<group>"; };
 		66BEA02C2B0C8BFD00F3125B /* EveryMealToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveryMealToast.swift; sourceTree = "<group>"; };
 		66FF637E2AD7CE3D00A10986 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -161,7 +177,11 @@
 			files = (
 				0F78B0102A6D39AD006B8C80 /* Lottie in Frameworks */,
 				66BEA0302B0C9E0000F3125B /* AlertToast in Frameworks */,
+				0FE449552B57D34D0054DED3 /* CombineMoya in Frameworks */,
+				0FE449572B57D34D0054DED3 /* Moya in Frameworks */,
+				0FE4495B2B57D34D0054DED3 /* RxMoya in Frameworks */,
 				66A3FFA22B47C52B002DC665 /* ComposableArchitecture in Frameworks */,
+				0FE449592B57D34D0054DED3 /* ReactiveMoya in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,11 +289,9 @@
 		0F5B15722A7F8C8500E698F4 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				0FE449672B57DD7B0054DED3 /* Common */,
 				0F660A8F2A845505000074BD /* Managers */,
 				0F660A8E2A8454FC000074BD /* Extensions */,
-				66FF63802AD7DEB800A10986 /* Functions.swift */,
-				668FB86E2B45734C00F5F00F /* GlobalDefine.swift */,
-				66A3FFA92B480462002DC665 /* Type.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -285,6 +303,7 @@
 				0F1AD46E2AE0046D003E29B0 /* View+Extensions.swift */,
 				081196B52AE36B100022B41A /* UIApplication+Extensions.swift */,
 				0F3BBF2C2AF23244003EBAB7 /* Font+Extensions.swift */,
+				0FE449712B57DFBE0054DED3 /* Moya+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -357,6 +376,7 @@
 		0F78B0082A6D38AB006B8C80 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				0FE449682B57DDF20054DED3 /* Platform */,
 				6681C7A22AEA4D3F00C3D2C1 /* Data */,
 				6681C7A12AEA4B7100C3D2C1 /* Domain */,
 				0F5B15722A7F8C8500E698F4 /* Utils */,
@@ -431,6 +451,74 @@
 			path = BottomSheet;
 			sourceTree = "<group>";
 		};
+		0FE4495C2B57D3B60054DED3 /* UniversityDTO */ = {
+			isa = PBXGroup;
+			children = (
+				0FE4495D2B57D3FE0054DED3 /* UnivsResponseModel.swift */,
+			);
+			path = UniversityDTO;
+			sourceTree = "<group>";
+		};
+		0FE449612B57DBF20054DED3 /* Storages */ = {
+			isa = PBXGroup;
+			children = (
+				0FE449642B57DC790054DED3 /* UserDefaultsManager.swift */,
+				66FF637E2AD7CE3D00A10986 /* Constants.swift */,
+				668FB86E2B45734C00F5F00F /* GlobalDefine.swift */,
+			);
+			path = Storages;
+			sourceTree = "<group>";
+		};
+		0FE449622B57DC190054DED3 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				0FE4495C2B57D3B60054DED3 /* UniversityDTO */,
+				6681C7A52AEA4D6F00C3D2C1 /* NetworkDTO */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		0FE449662B57DD3D0054DED3 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				66A3FFA92B480462002DC665 /* EverMealErrorType.swift */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		0FE449672B57DD7B0054DED3 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				66FF63802AD7DEB800A10986 /* Functions.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		0FE449682B57DDF20054DED3 /* Platform */ = {
+			isa = PBXGroup;
+			children = (
+				0FE4496C2B57DE1C0054DED3 /* Services */,
+				0FE4496B2B57DE130054DED3 /* APIs */,
+			);
+			path = Platform;
+			sourceTree = "<group>";
+		};
+		0FE4496B2B57DE130054DED3 /* APIs */ = {
+			isa = PBXGroup;
+			children = (
+				0FE4496D2B57DE3C0054DED3 /* UnivsAPI.swift */,
+			);
+			path = APIs;
+			sourceTree = "<group>";
+		};
+		0FE4496C2B57DE1C0054DED3 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0FE4496F2B57DE460054DED3 /* UnivsService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		663BFBA02A81EAA900A540A2 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -459,8 +547,8 @@
 		6681C7A12AEA4B7100C3D2C1 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				6681C7A62AEA4DFC00C3D2C1 /* Entity */,
-				66FF637D2AD7CE2800A10986 /* Consts */,
+				0FE449662B57DD3D0054DED3 /* Types */,
+				6681C7A62AEA4DFC00C3D2C1 /* Entities */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -468,7 +556,8 @@
 		6681C7A22AEA4D3F00C3D2C1 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				6681C7A52AEA4D6F00C3D2C1 /* NetworkDTO */,
+				0FE449622B57DC190054DED3 /* DTO */,
+				0FE449612B57DBF20054DED3 /* Storages */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -482,12 +571,13 @@
 			path = NetworkDTO;
 			sourceTree = "<group>";
 		};
-		6681C7A62AEA4DFC00C3D2C1 /* Entity */ = {
+		6681C7A62AEA4DFC00C3D2C1 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
 				6681C7A72AEA4E3400C3D2C1 /* MealEntity.swift */,
+				0FE4495F2B57D4320054DED3 /* UnivsEntity.swift */,
 			);
-			path = Entity;
+			path = Entities;
 			sourceTree = "<group>";
 		};
 		66935D832AF1F22000E80424 /* Alert */ = {
@@ -507,14 +597,6 @@
 				087F9F532ADD63D1001DB3F2 /* Views */,
 			);
 			path = Review;
-			sourceTree = "<group>";
-		};
-		66FF637D2AD7CE2800A10986 /* Consts */ = {
-			isa = PBXGroup;
-			children = (
-				66FF637E2AD7CE3D00A10986 /* Constants.swift */,
-			);
-			path = Consts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -537,6 +619,10 @@
 				0F78B00F2A6D39AD006B8C80 /* Lottie */,
 				66BEA02F2B0C9E0000F3125B /* AlertToast */,
 				66A3FFA12B47C52B002DC665 /* ComposableArchitecture */,
+				0FE449542B57D34D0054DED3 /* CombineMoya */,
+				0FE449562B57D34D0054DED3 /* Moya */,
+				0FE449582B57D34D0054DED3 /* ReactiveMoya */,
+				0FE4495A2B57D34D0054DED3 /* RxMoya */,
 			);
 			productName = EveryMeal_iOS;
 			productReference = 0F78AFF52A6CCA6B006B8C80 /* EveryMeal_iOS.app */;
@@ -570,6 +656,7 @@
 				0F78B00E2A6D39AD006B8C80 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				66BEA02E2B0C9E0000F3125B /* XCRemoteSwiftPackageReference "AlertToast" */,
 				66A3FFA02B47C52B002DC665 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				0FE449532B57D34D0054DED3 /* XCRemoteSwiftPackageReference "Moya" */,
 			);
 			productRefGroup = 0F78AFF62A6CCA6B006B8C80 /* Products */;
 			projectDirPath = "";
@@ -606,6 +693,7 @@
 				662C69012B3C15FC00B47C87 /* CameraPicker.swift in Sources */,
 				08900BFC2AF27D7E00392BAE /* EmailAuthenticationView.swift in Sources */,
 				0F43F6812A6EA86B00239AA4 /* MapView.swift in Sources */,
+				0FE449652B57DC790054DED3 /* UserDefaultsManager.swift in Sources */,
 				6681C7A02AEA4ABD00C3D2C1 /* MealItemLikeButton.swift in Sources */,
 				08C3B3962AE401720067FB53 /* CustomNavigationView.swift in Sources */,
 				0F7CB2CB2AF9DFA800CBE762 /* OnBoardingView.swift in Sources */,
@@ -617,6 +705,7 @@
 				0F1424242ADD3F3E00A79AA2 /* MoreReviewsView.swift in Sources */,
 				0F43F6832A6EA8AC00239AA4 /* HomeView.swift in Sources */,
 				0F1AD46F2AE0046D003E29B0 /* View+Extensions.swift in Sources */,
+				0FE449602B57D4320054DED3 /* UnivsEntity.swift in Sources */,
 				08D6BA692AE7F97800C0B516 /* ReviewWriteImageTextView.swift in Sources */,
 				087A093C2A8153BD00F4D34F /* HomeTopThreeMealsView.swift in Sources */,
 				0F660A912A84551C000074BD /* DeviceManager.swift in Sources */,
@@ -631,7 +720,9 @@
 				08D6BA6A2AE7F97800C0B516 /* ImagePicker.swift in Sources */,
 				663BFBA42A81EB2800A540A2 /* Separator.swift in Sources */,
 				0FF7C7192A91ECEF00BFC33D /* GradationView.swift in Sources */,
+				0FE4496E2B57DE3C0054DED3 /* UnivsAPI.swift in Sources */,
 				087F9F522ADD63C6001DB3F2 /* ReviewDetailView.swift in Sources */,
+				0FE4495E2B57D3FE0054DED3 /* UnivsResponseModel.swift in Sources */,
 				0F3BBF2D2AF23244003EBAB7 /* Font+Extensions.swift in Sources */,
 				0F58F6EB2AFA1E1600010A70 /* BaseLottieView.swift in Sources */,
 				663260AD2AF1F819006FC22C /* MealHGridView.swift in Sources */,
@@ -641,6 +732,7 @@
 				081196B62AE36B100022B41A /* UIApplication+Extensions.swift in Sources */,
 				66BEA02D2B0C8BFD00F3125B /* EveryMealToast.swift in Sources */,
 				0F95A0932B0F1CF2000317D8 /* SignOutDetailView.swift in Sources */,
+				0FE449702B57DE460054DED3 /* UnivsService.swift in Sources */,
 				6681C79E2AEA49B900C3D2C1 /* MealVerticalItemView.swift in Sources */,
 				0F69AFCA2B09E422008C98C6 /* SignOutView.swift in Sources */,
 				6674FC342B04BC9100CC4CA6 /* BaseWebView.swift in Sources */,
@@ -657,9 +749,10 @@
 				0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */,
 				6681C7A42AEA4D5000C3D2C1 /* MealModel.swift in Sources */,
 				08D6BA662AE7F6DA00C0B516 /* ReviewStoreSearchListRecentCell.swift in Sources */,
-				66A3FFAA2B480462002DC665 /* Type.swift in Sources */,
+				66A3FFAA2B480462002DC665 /* EverMealErrorType.swift in Sources */,
 				66A3FFA82B47FB15002DC665 /* MapClient.swift in Sources */,
 				66BEA02B2B0C7C5900F3125B /* EmailAuthPopupView.swift in Sources */,
+				0FE449722B57DFBE0054DED3 /* Moya+Extensions.swift in Sources */,
 				66935D8B2AF1F22000E80424 /* FilterBarView.swift in Sources */,
 				66FF637F2AD7CE3D00A10986 /* Constants.swift in Sources */,
 				66935D8A2AF1F22000E80424 /* CustomAlert.swift in Sources */,
@@ -886,6 +979,14 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		0FE449532B57D34D0054DED3 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.0.3;
+			};
+		};
 		66A3FFA02B47C52B002DC665 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
@@ -909,6 +1010,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0F78B00E2A6D39AD006B8C80 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		0FE449542B57D34D0054DED3 /* CombineMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0FE449532B57D34D0054DED3 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = CombineMoya;
+		};
+		0FE449562B57D34D0054DED3 /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0FE449532B57D34D0054DED3 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+		0FE449582B57D34D0054DED3 /* ReactiveMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0FE449532B57D34D0054DED3 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = ReactiveMoya;
+		};
+		0FE4495A2B57D34D0054DED3 /* RxMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0FE449532B57D34D0054DED3 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = RxMoya;
 		};
 		66A3FFA12B47C52B002DC665 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
