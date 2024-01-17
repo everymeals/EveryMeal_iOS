@@ -10,7 +10,8 @@ import SwiftUI
 struct ChooseUnivView: View {
   @State var isSelected: Bool = false
   @Binding var isFirstLaunching: Bool
-  
+  @State private var universities: [UnivsEntity] = []
+
   var body: some View {
     VStack(spacing: 0) {
       HStack {
@@ -28,7 +29,16 @@ struct ChooseUnivView: View {
         
         Spacer()
       }
-      UnivGridView(isSelected: $isSelected)
+      
+      .task {
+        do {
+          universities = try await UnivsService().fetchUniversities()
+        } catch {
+          print("⁉️ Error: \(error.localizedDescription)")
+        }
+      }
+      
+      UnivGridView(isSelected: $isSelected, universities: universities)
         .padding(.top, 28)
         .overlay(alignment: .bottom, content: {
           GradationView()
@@ -42,51 +52,36 @@ struct UnivGridView: View {
 
   @Binding var isSelected: Bool
   @State var selectedIndex: Int?
-
-  let univsTitle = [
-    "명지대",
-    "명지대",
-    "성신여대",
-    "성신여대",
-    "서울여대"
-  ]
-  
-  let univsSubtitle = [
-    "자연캠퍼스",
-    "인문캠퍼스",
-    "수정캠퍼스",
-    "운정캠퍼스",
-    ""
-  ]
+  var universities: [UnivsEntity]
 
   var body: some View {
     let columns = [GridItem(.flexible(), spacing: 10), GridItem(.flexible(), spacing: 10)]
     
     ScrollView {
       LazyVGrid(columns: columns, spacing: 10) {
-        ForEach(univsTitle.indices, id: \.self) { index in
+        ForEach(universities, id: \.id) { university in
           VStack(spacing: 8) {
-            Text(univsTitle[index])
+            Text(university.universityShortName)
               .font(.pretendard(size: 14, weight: .semibold))
               .foregroundColor(.grey8)
-            if !univsSubtitle[index].isEmpty {
-              Text(univsSubtitle[index])
+            if !university.campusName.isEmpty {
+              Text(university.campusName)
                 .font(.pretendard(size: 13, weight: .regular))
                 .foregroundColor(.grey6)
             }
           }
           .frame(maxWidth: .infinity)
           .frame(height: 90)
-          .background(index == selectedIndex ? Color.grey3 : Color.grey1)
+          .background(selectedIndex == university.id - 1 ? Color.grey3 : Color.grey1)
           .cornerRadius(10)
           .onTapGesture {
-            if selectedIndex == index {
+            if selectedIndex == university.id - 1 {
               selectedIndex = nil
             } else {
-              selectedIndex = index
+              selectedIndex = university.id - 1
             }
             isSelected = selectedIndex != nil
-            print("👆 tapped university cell: \(index)th \(univsTitle[index])")
+            print("👆 tapped university cell: \(university.universityShortName)")
           }
         }
       }
@@ -104,7 +99,7 @@ struct ChooseButtonView: View {
     VStack(spacing: 20) {
       AddUnivView()
         .onTapGesture {
-          print("학교 추가하기 버튼 👆")
+          print("👆 학교 추가하기 버튼 - 구글 폼으로 연결할 예정")
         }
       SelectUnivButton(isSelected: $isSelected, isFirstLaunching: $isFirstLaunching)
     }
