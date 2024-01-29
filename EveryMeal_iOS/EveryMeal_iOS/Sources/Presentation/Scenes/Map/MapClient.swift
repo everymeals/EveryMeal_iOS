@@ -10,7 +10,7 @@ import Foundation
 import ComposableArchitecture
 
 struct MapClient {
-  var fetchSample: () async throws -> Result<SampleDTO, EverMealError>
+  var fetchSample: () async throws -> Result<SampleDTO, EverMealErrorType>
 }
 
 extension MapClient: DependencyKey {

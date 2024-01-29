@@ -29,13 +29,12 @@ import SwiftUI
 /// ```
 ///
 /// 뷰의 본문은 그래버, 제목, 컨텐츠, 버튼의 레이아웃을 관리하는 `VStack`을 포함합니다.
-/// 일반적인 시트 동작을 처리하기 위해 `.dismiss`와 같은 환경 값을 사용합니다.
 /// 초기화 매개변수를 통해 뷰의 외관과 동작을 커스텀할 수 있습니다.
 struct CustomSheetView<Content>: View where Content: View {
-  @Environment(\.dismiss) var dismiss
 
   let title: String?
   let buttonTitle: String?
+  let isButtonEnabled: Bool?
   let content: Content
   let buttonAction: () -> Void
   let backgroundTouchAction: () -> Void
@@ -43,9 +42,10 @@ struct CustomSheetView<Content>: View where Content: View {
     DeviceManager.shared.hasPhysicalHomeButton ? 10 : 0
   }
   
-  init(title: String? = nil, buttonTitle: String? = nil, @ViewBuilder content: () -> Content, buttonAction: @escaping () -> Void = {}, backgroundTouchAction: @escaping () -> Void = {}) {
+  init(title: String? = nil, buttonTitle: String? = nil, isButtonEnabled: Bool? = true, @ViewBuilder content: () -> Content, buttonAction: @escaping () -> Void = {}, backgroundTouchAction: @escaping () -> Void = {}) {
     self.title = title
     self.buttonTitle = buttonTitle
+    self.isButtonEnabled = isButtonEnabled
     self.content = content()
     self.buttonAction = buttonAction
     self.backgroundTouchAction = backgroundTouchAction
@@ -79,16 +79,16 @@ struct CustomSheetView<Content>: View where Content: View {
       if let buttonTitle = buttonTitle {
         Button(action: {
           buttonAction()
-          dismiss()
         }, label: {
           Text(buttonTitle)
             .frame(maxWidth: .infinity)
             .padding()
-            .background(Color.everyMealRed)
+            .background((isButtonEnabled ?? true) ? Color.everyMealRed : Color.grey3)
             .foregroundColor(.white)
             .cornerRadius(10)
             .padding(.bottom, bottomPadding)
         })
+        .disabled(!(isButtonEnabled ?? true))
       }
     }
     .padding(.horizontal, 20)
