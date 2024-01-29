@@ -13,7 +13,7 @@ enum HomeStackViewType: Hashable {
   case restaurantList
   case reviewList
   case moreStoreView(MoreStoreViewType)
-  case emailVertify(EmailViewType, String?)
+  case emailVertify(EmailViewType, String?, String?)
 }
 
 struct HomeView: View {
@@ -51,7 +51,7 @@ struct HomeView: View {
                 CustomSheetView(buttonTitle: "인증하러 가기",  content: {
                   EmailAuthPopupView()
                 }, buttonAction: {
-                  navigationPath.append(.emailVertify(.enterEmail, nil) )
+                  navigationPath.append(.emailVertify(.enterEmail, nil, nil) )
                   goToWriteReviewTapped.toggle()
                 })
               }
@@ -103,18 +103,20 @@ struct HomeView: View {
               navigationPath.removeLast()
             }, moreViewType: viewType)
             .toolbar(.hidden, for: .tabBar)
-          case let .emailVertify(type, value):
+          case let .emailVertify(type, email, token):
             EmailAuthenticationView(
               store: .init(
-                initialState: EmailAuthenticationReducer.State(emailToken: value),
+                initialState: EmailAuthenticationReducer.State(email: email, emailToken: token),
                 reducer: {
                   EmailAuthenticationReducer()
                 }),
               viewType: type,
-              emailDidSent: { token in
-                navigationPath.append(.emailVertify(.enterAuthNumber, nil))
+              emailDidSent: { email, token in
+                if navigationPath.last != .emailVertify(.enterAuthNumber, email, token) {
+                  navigationPath.append(.emailVertify(.enterAuthNumber, email, token))
+                }
               }, emailVertifySuccess: {
-                navigationPath.append(.emailVertify(.makeProfile, nil))
+                navigationPath.append(.emailVertify(.makeProfile, nil, nil))
               }, backButtonTapped: {
                 navigationPath.removeLast()
               }, authSuccess: {

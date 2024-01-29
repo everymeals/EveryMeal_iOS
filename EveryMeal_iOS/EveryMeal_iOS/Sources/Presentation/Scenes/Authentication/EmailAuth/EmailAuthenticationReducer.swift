@@ -14,14 +14,23 @@ struct EmailAuthenticationReducer: Reducer {
   
   struct State: Equatable {
     var isEmailSending = false
+    var isVertifyCodeSending = false
+    var email: String?
     var emailToken: String?
     var data: EmailSendResponse?
+    var vertifyResult: Bool?
+    
+    var errorToastIsShown: Bool?
   }
   
   enum Action {
     case sendEmail(String)
     case sendEmailResponse(EmailSendResponse)
-    case removeAllData
+    
+    case sendVertifyCode(String, String)
+    case sendVertifyResponse(Bool)
+    
+    case showErrorToast
   }
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
@@ -33,8 +42,9 @@ struct EmailAuthenticationReducer: Reducer {
         switch response {
         case let .success(response):
           await send(.sendEmailResponse(response))
-        case .failure(let failure):
+        case let .failure(failure):
           print("failure \(failure.rawValue)")
+          await send(.showErrorToast)
           return
         }
       }
@@ -44,8 +54,28 @@ struct EmailAuthenticationReducer: Reducer {
       state.data = result
       return .none
       
-    case .removeAllData:
-      state.data = nil
+    case let .sendVertifyCode(token, code):
+      state.isVertifyCodeSending = true
+//      let token = state.data?.data?.emailAuthToken ?? ""
+      return .run { send in
+        let response = try await emailAuthClient.postVertifyNumber(.init(token: token, vertifyCode: code))
+        switch response {
+        case let .success(result):
+          await send(.sendVertifyResponse(result))
+        case let .failure(fail):
+          print("failure \(fail.rawValue)")
+          await send(.showErrorToast)
+          return
+        }
+      }
+      
+    case let .sendVertifyResponse(result):
+      state.isEmailSending = false
+      state.vertifyResult = result
+      return .none
+      
+    case .showErrorToast:
+      state.errorToastIsShown = true
       return .none
     }
   }

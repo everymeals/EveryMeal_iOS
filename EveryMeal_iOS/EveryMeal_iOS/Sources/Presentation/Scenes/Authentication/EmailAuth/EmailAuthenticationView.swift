@@ -13,7 +13,7 @@ struct EmailAuthenticationView: View {
   let store: StoreOf<EmailAuthenticationReducer>
   
   var viewType: EmailViewType
-  var emailDidSent: (String) -> Void
+  var emailDidSent: (String, String) -> Void
   var emailVertifySuccess: () -> Void
   var backButtonTapped: () -> Void
   var authSuccess: () -> Void
@@ -27,6 +27,7 @@ struct EmailAuthenticationView: View {
   @State var makeProfileSuccess: Bool = false
   @State var successButtonEnabled: Bool = true
   @State private var viewOpacity: Double = 1.0
+  @State var isErrorToastShown: Bool = false
   
   @FocusState private var textfieldIsFocused: Bool
   
@@ -142,8 +143,10 @@ struct EmailAuthenticationView: View {
                         .offset(y: 10)
                     )
                     .onTapGesture {
-                      print("showDidSentEmail \(showDidSentEmail)")
-                      showDidSentEmail = true
+                      if isValidValue {
+                        showDidSentEmail = true
+                        viewStore.send(.sendEmail(viewStore.email ?? ""))
+                      }
                     }
                 }
                 
@@ -160,7 +163,9 @@ struct EmailAuthenticationView: View {
                     case .enterAuthNumber:
                       isValidValue = checkIsValidAuthNumber(enteredText)
                       if isValidValue {
-                        emailVertifySuccess()
+                        guard let token = viewStore.emailToken else { return }
+                        viewStore.send(.sendVertifyCode(token, enteredText))
+//                        emailVertifySuccess()
                       }
                     case .makeProfile:
                       isValidValue = checkIsValidNickname(enteredText)
@@ -171,7 +176,17 @@ struct EmailAuthenticationView: View {
                   }
                   .onChange(of: viewStore.data) { value in
                     if let token = value?.data?.emailAuthToken {
-                      emailDidSent(token)
+                      emailDidSent(enteredText, token)
+                    }
+                  }
+                  .onChange(of: viewStore.vertifyResult) { value in
+                    if let result = value, result == true {
+                      emailVertifySuccess()
+                    }
+                  }
+                  .onChange(of: viewStore.errorToastIsShown) { isShown in
+                    if let result = isShown, result == true {
+                      isErrorToastShown = result
                     }
                   }
               }
@@ -198,6 +213,13 @@ struct EmailAuthenticationView: View {
             EveryMealToast(message: "인증번호를 다시 전송했어요") {
               DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                 showDidSentEmail = false
+              }
+            }
+          }
+          if isErrorToastShown {
+            EveryMealToast(message: "다시 시도해주세요") {
+              DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                isErrorToastShown = false
               }
             }
           }
@@ -245,7 +267,7 @@ private func checkIsValidNickname(_ nickname: String) -> Bool {
       }
     ),
     viewType: .makeProfile,
-    emailDidSent: { token in },
+    emailDidSent: { email, token in },
     emailVertifySuccess: { },
     backButtonTapped: { }, 
     authSuccess: { })
