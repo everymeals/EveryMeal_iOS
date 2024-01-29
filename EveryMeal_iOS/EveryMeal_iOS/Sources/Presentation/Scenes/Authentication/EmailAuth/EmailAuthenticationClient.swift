@@ -10,7 +10,7 @@ import Foundation
 import ComposableArchitecture
 
 struct EmailAuthenticationClient {
-  var postEmail: (String) async throws -> Result<EmailSendResponse, EverMealError>
+  var postEmail: (String) async throws -> Result<EmailSendResponse, EverMealErrorType>
 }
 
 extension EmailAuthenticationClient: DependencyKey {
