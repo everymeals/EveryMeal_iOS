@@ -13,15 +13,11 @@ enum HomeStackViewType: Hashable {
   case restaurantList
   case reviewList
   case moreStoreView(MoreStoreViewType)
-  case emailVertify(EmailViewType)
+  case emailVertify(EmailViewType, String?)
 }
 
 struct HomeView: View {
-  @State var navigationPath: [HomeStackViewType] = [] {
-    didSet {
-      print("aaaaa \(navigationPath)")
-    }
-  }
+  @State var navigationPath: [HomeStackViewType] = []
   @State private var writeReviewViewTapped: Bool = false
   @State private var topMenuSelected: [Bool] = Array.init(repeating: false, count: 4)
   @Binding var otherViewShowing: Bool
@@ -55,7 +51,7 @@ struct HomeView: View {
                 CustomSheetView(buttonTitle: "인증하러 가기",  content: {
                   EmailAuthPopupView()
                 }, buttonAction: {
-                  navigationPath.append(.emailVertify(.enterEmail) )
+                  navigationPath.append(.emailVertify(.enterEmail, nil) )
                   goToWriteReviewTapped.toggle()
                 })
               }
@@ -107,20 +103,23 @@ struct HomeView: View {
               navigationPath.removeLast()
             }, moreViewType: viewType)
             .toolbar(.hidden, for: .tabBar)
-          case let .emailVertify(type):
-            @State var isValidValue = true
+          case let .emailVertify(type, value):
             EmailAuthenticationView(
+              store: .init(
+                initialState: EmailAuthenticationReducer.State(emailToken: value),
+                reducer: {
+                  EmailAuthenticationReducer()
+                }),
               viewType: type,
-              emailDidSent: {
-                navigationPath.append(.emailVertify(.enterAuthNumber))
+              emailDidSent: { token in
+                navigationPath.append(.emailVertify(.enterAuthNumber, nil))
               }, emailVertifySuccess: {
-                navigationPath.append(.emailVertify(.makeProfile))
+                navigationPath.append(.emailVertify(.makeProfile, nil))
               }, backButtonTapped: {
-                print(navigationPath)
                 navigationPath.removeLast()
               }, authSuccess: {
                 navigationPath.removeAll()
-              }, isValidValue: $isValidValue
+              }
             )
             .toolbar(.hidden, for: .tabBar)
           default:
@@ -128,9 +127,6 @@ struct HomeView: View {
               .toolbar(.hidden, for: .tabBar)
           }
         }
-      }
-      .onAppear {
-        
       }
       .onChange(of: navigationPath) { value in
         otherViewShowing = value.count != 0

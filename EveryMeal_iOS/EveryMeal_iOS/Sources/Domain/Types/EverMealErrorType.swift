@@ -7,6 +7,7 @@
 
 enum EverMealErrorType: String, Error {
   case invalidURL
-  case invalidJSON
+  case invalidJSONParameter
+  case invalidJSONResponse
   case fail = "failed to something"
 }
