@@ -10,7 +10,7 @@ import Foundation
 import ComposableArchitecture
 
 struct EmailAuthenticationReducer: Reducer {
-  @Dependency(\.emailAuthResponseClient) var emailAuthClient
+  @Dependency(\.signupClient) var signupClient
   
   struct State: Equatable {
     var isEmailSending = false
@@ -30,6 +30,13 @@ struct EmailAuthenticationReducer: Reducer {
     case sendVertifyCode(String, String)
     case sendVertifyResponse(Bool)
     
+    case saveImage(Data)
+    case getImageURL
+    case saveToAWS(Data)
+    
+    case signup
+    case signupResponse(Bool, String)
+    
     case showErrorToast
   }
   
@@ -38,7 +45,7 @@ struct EmailAuthenticationReducer: Reducer {
     case let .sendEmail(email):
       state.isEmailSending = true
       return .run { send in
-        let response = try await emailAuthClient.postEmail(email)
+        let response = try await signupClient.postEmail(email)
         switch response {
         case let .success(response):
           await send(.sendEmailResponse(response))
@@ -58,7 +65,7 @@ struct EmailAuthenticationReducer: Reducer {
       state.isVertifyCodeSending = true
 //      let token = state.data?.data?.emailAuthToken ?? ""
       return .run { send in
-        let response = try await emailAuthClient.postVertifyNumber(.init(token: token, vertifyCode: code))
+        let response = try await signupClient.postVertifyNumber(.init(token: token, vertifyCode: code))
         switch response {
         case let .success(result):
           await send(.sendVertifyResponse(result))
@@ -77,6 +84,26 @@ struct EmailAuthenticationReducer: Reducer {
     case .showErrorToast:
       state.errorToastIsShown = true
       return .none
+      
+    case .getImageURL:
+      return .run { send in
+        let response = try await signupClient.getImageConfig()
+        switch response {
+        case .success:
+          await send(.signup)
+        case let .failure(fail):
+          print("failure \(fail.rawValue)")
+          await send(.showErrorToast)
+          return
+        }
+      }
+      
+    case let .saveImage(image)
+      
+      
+      
+    case .signupResponse(_, _):
+      <#code#>
     }
   }
 }
