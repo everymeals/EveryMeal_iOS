@@ -22,4 +22,14 @@ struct EmailVertifyService {
     }
   }
   
+  func postVertifyNumber(client: PostVertifyNumberClient) async throws -> EveryMealDefaultResponse<Bool> {
+    do {
+      let response = try await provider.request(.postVertifyNumber(client))
+      let result = try JSONDecoder().decode(EveryMealDefaultResponse<Bool>.self, from: response.data)
+      return result
+    } catch {
+      throw error
+    }
+  }
+  
 }

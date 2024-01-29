@@ -11,6 +11,12 @@ import ComposableArchitecture
 
 struct EmailAuthenticationClient {
   var postEmail: (String) async throws -> Result<EmailSendResponse, EverMealErrorType>
+  var postVertifyNumber: (PostVertifyNumberClient) async throws -> Result<Bool, EverMealErrorType>
+}
+
+struct PostVertifyNumberClient {
+  var token: String
+  var vertifyCode: String
 }
 
 extension EmailAuthenticationClient: DependencyKey {
@@ -22,6 +28,15 @@ extension EmailAuthenticationClient: DependencyKey {
       } catch {
         return .failure(.fail)
       }
+    }, 
+    postVertifyNumber: { client in
+      do {
+        let emailVertifyResponse = try await EmailVertifyService().postVertifyNumber(client: client)
+        return .success(emailVertifyResponse.data)
+      } catch {
+        return .failure(.fail)
+      }
+      
     }
   )
 }
