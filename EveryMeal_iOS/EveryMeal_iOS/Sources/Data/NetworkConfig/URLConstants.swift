@@ -25,7 +25,7 @@ enum URLConstant {
   }
   
   // MARK: - BaseURL
-  private var baseURL: String {
+  static public var baseURL: String {
     switch URLConstant.mode {
     case .production: "http://dev.everymeal.shop:8085" // FIXME: 상용서버 나오면 수정 필요
     case .test: "http://dev.everymeal.shop:8085"
@@ -42,6 +42,6 @@ enum URLConstant {
   
   // MARK: - URL
   var url: String {
-    self.baseURL + self.path
+    URLConstant.baseURL + self.path
   }
 }
