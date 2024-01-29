@@ -17,31 +17,10 @@ extension EmailAuthenticationClient: DependencyKey {
   static var liveValue = Self(
     postEmail: { email in
       do {
-        let parameters: [String: Any] = ["email": email]
-        let postData = try JSONSerialization.data(withJSONObject: parameters)
-        
-        let url = URLConstant.email.url
-        guard let url = URL(string: url) else {
-          return .failure(.invalidURL)
-        }
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.httpBody = postData
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-   
-        let (data, _) = try await URLSession.shared.data(for: request)
-        let decoder = JSONDecoder()
-        if let jsonString = String(data: data, encoding: .utf8) {
-          print(jsonString)
-        }
-        do {
-          let decodedData = try decoder.decode(EmailSendResponse.self, from: data)
-          return .success(decodedData)
-        } catch {
-          return .failure(.invalidJSONResponse)
-        }
+        let emailPostResponse = try await EmailVertifyService().postEmail(email: email)
+        return .success(emailPostResponse)
       } catch {
-        return .failure(.invalidJSONParameter)
+        return .failure(.fail)
       }
     }
   )

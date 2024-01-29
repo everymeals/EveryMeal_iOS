@@ -33,7 +33,7 @@ enum URLConstant {
   }
   
   // MARK: - Path
-  private var path: String {
+  var path: String {
     switch self {
     case .email: "/api/v1/users/email"
     case .emailVertify: "/api/v1/users/email/verify"
