@@ -28,6 +28,8 @@
 		08EC028C2B67BF9C003CD556 /* EmailSendResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC028A2B67BF9C003CD556 /* EmailSendResponse.swift */; };
 		08EC028D2B67BF9C003CD556 /* EmailSendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC028B2B67BF9C003CD556 /* EmailSendRequest.swift */; };
 		08EC02932B67C126003CD556 /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC02922B67C126003CD556 /* URLConstants.swift */; };
+		08EC02952B67C302003CD556 /* EmailVertifyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC02942B67C302003CD556 /* EmailVertifyService.swift */; };
+		08EC02972B67C30F003CD556 /* EmailVertifyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC02962B67C30F003CD556 /* EmailVertifyAPI.swift */; };
 		0F1424242ADD3F3E00A79AA2 /* MoreReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1424232ADD3F3E00A79AA2 /* MoreReviewsView.swift */; };
 		0F19FBAE2AF2252900197815 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA52AF2252900197815 /* Pretendard-Bold.otf */; };
 		0F19FBAF2AF2252900197815 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA62AF2252900197815 /* Pretendard-Regular.otf */; };
@@ -118,6 +120,8 @@
 		08EC028A2B67BF9C003CD556 /* EmailSendResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailSendResponse.swift; sourceTree = "<group>"; };
 		08EC028B2B67BF9C003CD556 /* EmailSendRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailSendRequest.swift; sourceTree = "<group>"; };
 		08EC02922B67C126003CD556 /* URLConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConstants.swift; sourceTree = "<group>"; };
+		08EC02942B67C302003CD556 /* EmailVertifyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVertifyService.swift; sourceTree = "<group>"; };
+		08EC02962B67C30F003CD556 /* EmailVertifyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVertifyAPI.swift; sourceTree = "<group>"; };
 		0F1424232ADD3F3E00A79AA2 /* MoreReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreReviewsView.swift; sourceTree = "<group>"; };
 		0F19FB9D2AF21E7E00197815 /* OSLog.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OSLog.framework; path = System/Library/Frameworks/OSLog.framework; sourceTree = SDKROOT; };
 		0F19FBA52AF2252900197815 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
@@ -555,6 +559,7 @@
 			isa = PBXGroup;
 			children = (
 				0FE4496D2B57DE3C0054DED3 /* UnivsAPI.swift */,
+				08EC02962B67C30F003CD556 /* EmailVertifyAPI.swift */,
 			);
 			path = APIs;
 			sourceTree = "<group>";
@@ -563,6 +568,7 @@
 			isa = PBXGroup;
 			children = (
 				0FE4496F2B57DE460054DED3 /* UnivsService.swift */,
+				08EC02942B67C302003CD556 /* EmailVertifyService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -784,6 +790,7 @@
 				66BEA02D2B0C8BFD00F3125B /* EveryMealToast.swift in Sources */,
 				08EC028D2B67BF9C003CD556 /* EmailSendRequest.swift in Sources */,
 				0F95A0932B0F1CF2000317D8 /* SignOutDetailView.swift in Sources */,
+				08EC02972B67C30F003CD556 /* EmailVertifyAPI.swift in Sources */,
 				0FE449702B57DE460054DED3 /* UnivsService.swift in Sources */,
 				6681C79E2AEA49B900C3D2C1 /* MealVerticalItemView.swift in Sources */,
 				085C7EFE2B4A9EFE0020DC51 /* EmailAuthenticationReducer.swift in Sources */,
@@ -801,6 +808,7 @@
 				66A3FFA62B47F878002DC665 /* MapReducer.swift in Sources */,
 				0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */,
 				6681C7A42AEA4D5000C3D2C1 /* MealModel.swift in Sources */,
+				08EC02952B67C302003CD556 /* EmailVertifyService.swift in Sources */,
 				08D6BA662AE7F6DA00C0B516 /* ReviewStoreSearchListRecentCell.swift in Sources */,
 				66A3FFAA2B480462002DC665 /* EverMealErrorType.swift in Sources */,
 				66A3FFA82B47FB15002DC665 /* MapClient.swift in Sources */,
