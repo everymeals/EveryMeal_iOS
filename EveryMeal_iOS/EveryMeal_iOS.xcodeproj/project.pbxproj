@@ -30,6 +30,8 @@
 		08EC02932B67C126003CD556 /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC02922B67C126003CD556 /* URLConstants.swift */; };
 		08EC02952B67C302003CD556 /* EmailVertifyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC02942B67C302003CD556 /* EmailVertifyService.swift */; };
 		08EC02972B67C30F003CD556 /* EmailVertifyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC02962B67C30F003CD556 /* EmailVertifyAPI.swift */; };
+		08EC02992B67CC8C003CD556 /* EveryMealDefaultResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC02982B67CC8C003CD556 /* EveryMealDefaultResponse.swift */; };
+		08EC029B2B67CCCF003CD556 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC029A2B67CCCF003CD556 /* Data+Extensions.swift */; };
 		0F1424242ADD3F3E00A79AA2 /* MoreReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1424232ADD3F3E00A79AA2 /* MoreReviewsView.swift */; };
 		0F19FBAE2AF2252900197815 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA52AF2252900197815 /* Pretendard-Bold.otf */; };
 		0F19FBAF2AF2252900197815 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA62AF2252900197815 /* Pretendard-Regular.otf */; };
@@ -122,6 +124,8 @@
 		08EC02922B67C126003CD556 /* URLConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConstants.swift; sourceTree = "<group>"; };
 		08EC02942B67C302003CD556 /* EmailVertifyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVertifyService.swift; sourceTree = "<group>"; };
 		08EC02962B67C30F003CD556 /* EmailVertifyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVertifyAPI.swift; sourceTree = "<group>"; };
+		08EC02982B67CC8C003CD556 /* EveryMealDefaultResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveryMealDefaultResponse.swift; sourceTree = "<group>"; };
+		08EC029A2B67CCCF003CD556 /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
 		0F1424232ADD3F3E00A79AA2 /* MoreReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreReviewsView.swift; sourceTree = "<group>"; };
 		0F19FB9D2AF21E7E00197815 /* OSLog.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OSLog.framework; path = System/Library/Frameworks/OSLog.framework; sourceTree = SDKROOT; };
 		0F19FBA52AF2252900197815 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
@@ -354,6 +358,7 @@
 				081196B52AE36B100022B41A /* UIApplication+Extensions.swift */,
 				0F3BBF2C2AF23244003EBAB7 /* Font+Extensions.swift */,
 				0FE449712B57DFBE0054DED3 /* Moya+Extensions.swift */,
+				08EC029A2B67CCCF003CD556 /* Data+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -526,6 +531,7 @@
 				08EC02892B67BF9C003CD556 /* UserDTO */,
 				0FE4495C2B57D3B60054DED3 /* UniversityDTO */,
 				6681C7A52AEA4D6F00C3D2C1 /* NetworkDTO */,
+				08EC02982B67CC8C003CD556 /* EveryMealDefaultResponse.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -801,8 +807,10 @@
 				0F6685EF2B037C3300EA1281 /* MyPageView.swift in Sources */,
 				0F80B4032ABAFABF00167AB6 /* MoreBestRestaurantView.swift in Sources */,
 				6681C79C2AEA44D400C3D2C1 /* MoreStoreView.swift in Sources */,
+				08EC029B2B67CCCF003CD556 /* Data+Extensions.swift in Sources */,
 				0F78AFF92A6CCA6B006B8C80 /* EveryMeal_iOSApp.swift in Sources */,
 				66935D892AF1F22000E80424 /* CustomAlertButton.swift in Sources */,
+				08EC02992B67CC8C003CD556 /* EveryMealDefaultResponse.swift in Sources */,
 				664CC42C2AEA6274000EEBC5 /* MealHorizontalItemView.swift in Sources */,
 				6681C7A82AEA4E3400C3D2C1 /* MealEntity.swift in Sources */,
 				66A3FFA62B47F878002DC665 /* MapReducer.swift in Sources */,
