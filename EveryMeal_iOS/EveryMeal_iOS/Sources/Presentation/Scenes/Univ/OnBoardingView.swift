@@ -10,7 +10,7 @@ import Lottie
 
 struct OnBoardingView: View {
   @State private var didFinishOnboarding = false
-  @Binding var isFirstLaunching: Bool
+  @Binding var isNotUnivChosen: Bool
 
   struct Board {
     let image: String
@@ -32,7 +32,7 @@ struct OnBoardingView: View {
   var body: some View {
     VStack {
       if didFinishOnboarding {
-        ChooseUnivView(isFirstLaunching: $isFirstLaunching)
+        ChooseUnivView(isNotUnivChosen: $isNotUnivChosen)
       } else {
         OnboardingTabView(currentIndex: $currentIndex, boards: boards)
         PageIndicator(currentIndex: $currentIndex, count: boards.items.count)
@@ -121,6 +121,6 @@ struct OnBoardingNextButton: View {
 
 struct OnBoardingView_Previews: PreviewProvider {
   static var previews: some View {
-    OnBoardingView(isFirstLaunching: .constant(true))
+    OnBoardingView(isNotUnivChosen: .constant(true))
   }
 }
