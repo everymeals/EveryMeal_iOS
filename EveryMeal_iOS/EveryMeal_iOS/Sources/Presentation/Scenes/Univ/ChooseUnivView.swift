@@ -153,7 +153,6 @@ struct SelectUnivButton: View {
       if isSelected {
         print("선택하기 버튼 클릭")
         isFirstLaunching = false
-        UserDefaults.standard.set(false, forKey: "isFirstLaunching")
       }
     } label: {
       Text("선택하기")

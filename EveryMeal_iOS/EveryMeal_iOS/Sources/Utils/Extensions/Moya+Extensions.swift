@@ -18,6 +18,7 @@ extension MoyaProvider {
           print("✅ Success Request API: \(target.baseURL)\(target.path)\nResponse: \(self.prettyPrintJSON(data: response.data))")
           print("========================================================")
           continuation.resume(returning: response)
+          
         case .failure(let error):
           print("========================================================")
           print("⁉️ Error on: \(target.baseURL)\(target.path)\nError message: \(error.localizedDescription)")
