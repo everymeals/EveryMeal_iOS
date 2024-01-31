@@ -53,3 +53,18 @@ extension MoyaProvider {
 //  }
   
 }
+
+extension TargetType {
+    var baseURL: URL {
+        URL(string: "http://dev.everymeal.shop:8085")!
+    }
+    
+    var defaultBody: [String: Any] {
+        [:]
+    }
+    
+    var headers: [String: String]? {
+        [:]
+    }
+    
+}
