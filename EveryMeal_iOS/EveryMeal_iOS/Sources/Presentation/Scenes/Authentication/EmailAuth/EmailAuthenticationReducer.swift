@@ -24,7 +24,7 @@ struct EmailAuthenticationReducer: Reducer {
     
     var signupSuccess: Bool?
     
-    var errorToastIsShown: Bool?
+    var errorToastWillBeShown: Bool = false
   }
   
   enum Action {
@@ -42,7 +42,7 @@ struct EmailAuthenticationReducer: Reducer {
     case signup
     case signupSuccess(SignupResponse)
 
-    case showErrorToast
+    case showErrorToast(Bool)
   }
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
@@ -58,7 +58,7 @@ struct EmailAuthenticationReducer: Reducer {
           return
         case let .failure(failure):
           print("failure \(failure.rawValue)")
-          await send(.showErrorToast)
+          await send(.showErrorToast(true))
           return
         }
       }
@@ -74,7 +74,7 @@ struct EmailAuthenticationReducer: Reducer {
       state.isVertifyCodeSending = true
       state.signupEntity.emailAuthValue = code
       guard let token = state.signupEntity.emailAuthToken else {
-        return .send(.showErrorToast)
+        return .send(.showErrorToast(true))
       }
       
       return .run { send in
@@ -85,18 +85,18 @@ struct EmailAuthenticationReducer: Reducer {
           return
         case let .failure(fail):
           print("failure \(fail.rawValue)")
-          await send(.showErrorToast)
+          await send(.showErrorToast(true))
           return
         }
       }
       
     case .sendVertifySuccess:
-      state.isEmailSending = false
       state.vertifyDidSuccess = true
       return .none
       
-    case .showErrorToast:
-      state.errorToastIsShown = true
+    case let .showErrorToast(willShow):
+      state.isEmailSending = false
+      state.errorToastWillBeShown = willShow
       return .none
       
     case let .signupButtonDidTappaed(image, nickname):
@@ -115,7 +115,7 @@ struct EmailAuthenticationReducer: Reducer {
           return
         case let .failure(fail):
           print("failure \(fail.rawValue)")
-          await send(.showErrorToast)
+          await send(.showErrorToast(true))
           return
         }
       }
@@ -130,7 +130,7 @@ struct EmailAuthenticationReducer: Reducer {
           return
         case let .failure(fail):
           print("failure \(fail.rawValue)")
-          await send(.showErrorToast)
+          await send(.showErrorToast(true))
           return
         }
       }
@@ -148,7 +148,7 @@ struct EmailAuthenticationReducer: Reducer {
           await send(.signupSuccess(result))
         case let .failure(fail):
           print("failure \(fail.rawValue)")
-          await send(.showErrorToast)
+          await send(.showErrorToast(true))
           return
         }
       }

@@ -44,12 +44,6 @@ struct SelectProfileImagePopupView: View {
   
   var body: some View {
     VStack(alignment: .leading) {
-      Text("이미지 선택")
-        .font(.pretendard(size: 22, weight: .bold))
-        .lineLimit(2)
-        .foregroundColor(Color.grey9)
-        .padding(.all, 20)
-      
       VStack(spacing: 32) {
         if changeSelectedImage,
            let selectedImage = selectedImages.first {
@@ -89,7 +83,6 @@ struct SelectProfileImagePopupView: View {
           changeSelectedImage = !value.isEmpty
         }
       })
-      
       EveryMealButton(selectEnable: $goToAuthButtonEnabled, title: "확인")
         .onTapGesture {
           saveButtonTapped(selectedImages.first ?? UIImage())

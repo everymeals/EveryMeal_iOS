@@ -22,8 +22,7 @@ struct HomeView: View {
   @State private var topMenuSelected: [Bool] = Array.init(repeating: false, count: 4)
   @Binding var otherViewShowing: Bool
   
-  @State private var goToWriteReviewTapped: Bool = false
-  @State private var isEmailAuthenticationTrue = false
+  @State private var goToWriteReviewTapped = false
   
   private let viewBottomargin: CGFloat = 24
   private let moreReviewBtnBottomMargin: CGFloat = 13
@@ -38,7 +37,7 @@ struct HomeView: View {
             .padding(.horizontal, 20)
             .onTapGesture {
               // FIXME: 학교 인증한 사용자인지 확인
-              isEmailAuthenticationTrue.toggle()
+              let isEmailAuthenticationTrue = true
               goToWriteReviewTapped = isEmailAuthenticationTrue
 //              if isEmailAuthenticationTrue {
 //                self.navigationPath.append(.writeReview)
@@ -51,8 +50,8 @@ struct HomeView: View {
                 CustomSheetView(buttonTitle: "인증하러 가기",  content: {
                   EmailAuthPopupView()
                 }, buttonAction: {
-                  navigationPath.append(.emailVertify(type: .enterEmail, model: SignupEntity()) )
                   goToWriteReviewTapped.toggle()
+                  navigationPath.append(.emailVertify(type: .enterEmail, model: SignupEntity()) )
                 })
               }
               .presentationDetents([.height(330)])

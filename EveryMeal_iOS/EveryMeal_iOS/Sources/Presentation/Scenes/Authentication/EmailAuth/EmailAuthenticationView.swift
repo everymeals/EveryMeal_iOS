@@ -28,6 +28,7 @@ struct EmailAuthenticationView: View {
   @State var successButtonEnabled: Bool = true
   @State private var viewOpacity: Double = 1.0
   @State var isErrorToastShown: Bool = false
+  @State var showIndicator: Bool = false
   
   @FocusState private var textfieldIsFocused: Bool
   
@@ -196,22 +197,28 @@ struct EmailAuthenticationView: View {
                       makeProfileSuccess = true
                     }
                   }
-                  .onChange(of: viewStore.errorToastIsShown) { isShown in
-                    if let result = isShown, result == true {
-                      isErrorToastShown = result
+                  .onChange(of: viewStore.errorToastWillBeShown) { willBeShown in
+                    if willBeShown {
+                      textfieldIsFocused = false
+                      isErrorToastShown = willBeShown
                     }
+                  }
+                  .onChange(of: viewStore.isEmailSending) { value in
+                    showIndicator = value
                   }
               }
             }
             .sheet(isPresented: $showSelectProfileImage, content: {
               VStack {
-                SelectProfileImagePopupView(saveButtonTapped: { image in
-                  selectedImage = image
-                  showSelectProfileImage = false
+                CustomSheetView(title: "이미지 선택", horizontalPadding: 0, content: {
+                  SelectProfileImagePopupView(saveButtonTapped: { image in
+                    selectedImage = image
+                    showSelectProfileImage = false
+                  })
                 })
               }
               .presentationDetents([.height(429)])
-              .presentationDragIndicator(.visible)
+              .presentationDragIndicator(.hidden)
             })
           } else {
             VStack {
@@ -233,11 +240,15 @@ struct EmailAuthenticationView: View {
             EveryMealToast(message: "다시 시도해주세요") {
               DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                 isErrorToastShown = false
+                viewStore.send(.showErrorToast(false))
               }
             }
           }
         }
         
+//        if showIndicator {
+//          LoadingView()
+//        }
       }
       .onAppear {
         UITextField.appearance().clearButtonMode = .whileEditing
