@@ -10,12 +10,12 @@ import SwiftUI
 struct EveryMealToast: View {
   @State var showToast: Bool = false
   
-  var message: String
+  var type: ToastType?
   var completion: (() -> Void)? = nil
   
   var body: some View {
     
-    Text(message)
+    Text(type?.message ?? "다시 시도해주세요")
       .font(.pretendard(size: 14, weight: .semibold))
       .foregroundColor(.white)
       .padding(.vertical, 12)
@@ -30,7 +30,7 @@ struct EveryMealToast: View {
 struct EveryMealToast_Previews: PreviewProvider {
   static var previews: some View {
     @State var isHidden: Bool = true
-    EveryMealToast(message: "인증번호를 다시 전송했어요") {
+    EveryMealToast(type: .emailVertifyRetry) {
       
     }
   }
@@ -66,4 +66,21 @@ extension View {
       }
     }))
   }
+}
+
+enum ToastType {
+  case emailVertifyRetry
+  case alreadySigninEmail
+
+  var message: String {
+    switch self {
+    case .emailVertifyRetry: "인증번호를 다시 전송했어요"
+    case .alreadySigninEmail: "이미 가입된 이메일입니다"
+    }
+  }
+}
+
+struct ToastModel: Equatable {
+  var isShown: Bool
+  var type: ToastType?
 }

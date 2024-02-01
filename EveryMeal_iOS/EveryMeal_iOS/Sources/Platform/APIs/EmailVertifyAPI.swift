@@ -9,6 +9,7 @@ import Foundation
 import Moya
 
 enum EmailVertifyAPI {
+  case checkAlreadySignIn(String)
   case postEmail(String)
   case postVertifyNumber(PostVertifyNumberClient)
 }
@@ -20,7 +21,7 @@ extension EmailVertifyAPI: TargetType {
   
   var path: String {
     switch self {
-    case .postEmail:
+    case .postEmail, .checkAlreadySignIn:
       return URLConstant.email.path
     case .postVertifyNumber:
       return URLConstant.emailVertify.path
@@ -31,7 +32,7 @@ extension EmailVertifyAPI: TargetType {
     switch self {
     case .postEmail:
       return .post
-    case .postVertifyNumber:
+    case .postVertifyNumber, .checkAlreadySignIn:
       return .get
     }
   }
@@ -46,6 +47,10 @@ extension EmailVertifyAPI: TargetType {
     case let .postVertifyNumber(client):
       body["emailAuthToken"] = client.token
       body["emailAuthValue"] = client.vertifyCode
+      return .requestParameters(parameters: body,
+                                encoding: URLEncoding.default)
+    case let .checkAlreadySignIn(email):
+      body["email"] = email
       return .requestParameters(parameters: body,
                                 encoding: URLEncoding.default)
     }
