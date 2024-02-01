@@ -21,4 +21,13 @@ struct ImageService {
       throw error
     }
   }
+  
+  func saveImageToAWS(url: URL, image: Data) async throws -> Bool {
+    do {
+      let response = try await provider.request(.saveImageToAWS(url, image))
+      return true
+    } catch {
+      throw error
+    }
+  }
 }

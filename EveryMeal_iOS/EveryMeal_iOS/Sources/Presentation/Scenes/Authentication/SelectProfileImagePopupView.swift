@@ -36,10 +36,10 @@ enum SelectImageType: CaseIterable {
 struct SelectProfileImagePopupView: View {
   @State var goToAuthButtonEnabled = true
   @State var selectIconColumns: [SelectImageType] = []
-  @State var selectedImages: [Image] = [Image(.rice90)]
+  @State var selectedImages: [UIImage] = [UIImage(named: "apple_90")!]
   @State var changeSelectedImage: Bool = false
   
-  var saveButtonTapped: (Image) -> Void
+  var saveButtonTapped: (UIImage) -> Void
   private let columns = Array(repeating: GridItem(.fixed(50), spacing: 20), count: 4)
   
   var body: some View {
@@ -53,13 +53,13 @@ struct SelectProfileImagePopupView: View {
       VStack(spacing: 32) {
         if changeSelectedImage,
            let selectedImage = selectedImages.first {
-          selectedImage
+          Image(uiImage: selectedImage)
             .resizable()
             .clipShape(Circle())
             .aspectRatio(contentMode: .fill)
             .frame(width: 90, height: 90)
         } else if let selectedImage = selectedImages.first {
-          selectedImage
+          Image(uiImage: selectedImage)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: 90)
@@ -74,7 +74,8 @@ struct SelectProfileImagePopupView: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 50)
                 .onTapGesture {
-                  selectedImages = [Image(selectIconColumns[index].imageSource)]
+                  let resource = selectIconColumns[index].imageSource
+                  selectedImages = [UIImage(resource: resource)]
                 }
             } else {
               CameraLibraryView(type: selectIconColumns[index],
@@ -91,7 +92,7 @@ struct SelectProfileImagePopupView: View {
       
       EveryMealButton(selectEnable: $goToAuthButtonEnabled, title: "확인")
         .onTapGesture {
-          saveButtonTapped(selectedImages.first ?? Image(.rice90))
+          saveButtonTapped(selectedImages.first ?? UIImage())
         }
     }
     .background(Color.white)
@@ -111,7 +112,7 @@ struct CameraLibraryView: View {
   @State var showCameraPicker: Bool = false
   @State private var showingAccessAlert = false
   
-  @Binding var images: [Image]
+  @Binding var images: [UIImage]
   
   var body: some View {
     ZStack {

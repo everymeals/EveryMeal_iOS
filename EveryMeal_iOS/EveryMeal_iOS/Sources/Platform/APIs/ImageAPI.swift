@@ -11,17 +11,25 @@ import Moya
 
 enum ImageAPI {
   case getImageURL(ImageType)
+  case saveImageToAWS(URL, Data)
 }
 
 extension ImageAPI: TargetType {
   var baseURL: URL {
-    return URL(string: URLConstant.baseURL)!
+    switch self {
+    case .getImageURL:
+      return URL(string: URLConstant.baseURL)!
+    case let .saveImageToAWS(url, _):
+      return url
+    }
   }
   
   var path: String {
     switch self {
     case .getImageURL:
       return URLConstant.image.path
+    case .saveImageToAWS:
+      return ""
     }
   }
   
@@ -29,6 +37,8 @@ extension ImageAPI: TargetType {
     switch self {
     case .getImageURL:
       return .get
+    case .saveImageToAWS:
+      return .put
     }
   }
   
@@ -39,11 +49,18 @@ extension ImageAPI: TargetType {
       body["fileDomain"] = type.rawValue
       return .requestParameters(parameters: body,
                                 encoding: URLEncoding.default)
+    case let .saveImageToAWS(_, image):
+      return .requestData(image)
     }
   }
   
   var headers: [String : String]? {
-    return ["Content-type": "application/json"]
+    switch self {
+    case .getImageURL:
+      return ["Content-type": "application/json"]
+    case .saveImageToAWS:
+      return nil
+    }
   }
 }
 

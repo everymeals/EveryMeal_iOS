@@ -18,7 +18,7 @@ struct EmailAuthenticationView: View {
   var backButtonTapped: () -> Void
   var authSuccess: () -> Void
   
-  @State var selectedImage = Image(.apple90)
+  @State var selectedImage = UIImage(named: "apple_90")!
   @State var enteredText: String = ""
   @State var isEmailTextNotEmpty: Bool = false
   @State var isValidValue: Bool = true
@@ -58,7 +58,7 @@ struct EmailAuthenticationView: View {
                     Spacer()
                     ZStack {
                       HStack {
-                        selectedImage
+                        Image(uiImage: selectedImage)
                           .resizable()
                           .clipShape(Circle())
                           .aspectRatio(contentMode: .fill)
