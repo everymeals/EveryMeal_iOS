@@ -13,8 +13,8 @@ struct EmailAuthenticationView: View {
   let store: StoreOf<EmailAuthenticationReducer>
   
   var viewType: EmailViewType
-  var emailDidSent: (String, String) -> Void
-  var emailVertifySuccess: () -> Void
+  var emailDidSent: (SignupEntity) -> Void
+  var emailVertifySuccess: (SignupEntity) -> Void
   var backButtonTapped: () -> Void
   var authSuccess: () -> Void
   
@@ -91,13 +91,14 @@ struct EmailAuthenticationView: View {
                       showSelectProfileImage.toggle()
                       
                     }
+                    
                     Spacer()
                   }
                 }
                 
                 Text(viewType.rawValue)
                   .font(.pretendard(size: 12, weight: .regular))
-                  .foregroundColor(textfieldIsFocused ? Color.grey8 : (isValidValue ? Color.grey8 : Color.redLight))
+                  .foregroundColor(isValidValue ? Color.grey8 : Color.red)
                   .padding(.bottom, 6)
                 
                 TextField("\(viewType.placeholder)", text: $enteredText)
@@ -105,11 +106,11 @@ struct EmailAuthenticationView: View {
                   .frame(height: 48)
                   .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
                   .foregroundColor(isEmailTextNotEmpty ? .grey8 : .grey5)
-                  .background(textfieldIsFocused ? Color.grey2 : (isValidValue ? Color.grey1 : Color.redLight))
+                  .background(isValidValue ? (textfieldIsFocused ? Color.grey2 : Color.grey1) : Color.redLight)
                   .overlay(
                     RoundedRectangle(cornerRadius: 12)
                       .inset(by: 0.5)
-                      .stroke(textfieldIsFocused ? Color.grey3 : Color.grey2, lineWidth: 1)
+                      .stroke(isValidValue ? (textfieldIsFocused ? Color.grey3 : Color.grey2) : Color.grey2, lineWidth: 1)
                   )
                   .cornerRadius(12)
                   .onChange(of: enteredText, perform: { value in
@@ -143,10 +144,9 @@ struct EmailAuthenticationView: View {
                         .offset(y: 10)
                     )
                     .onTapGesture {
-                      if isValidValue {
-                        showDidSentEmail = true
-                        viewStore.send(.sendEmail(viewStore.email ?? ""))
-                      }
+                      textfieldIsFocused = false
+                      showDidSentEmail = true
+                      viewStore.send(.sendEmail(viewStore.signupEntity.email ?? ""))
                     }
                 }
                 
@@ -163,25 +163,37 @@ struct EmailAuthenticationView: View {
                     case .enterAuthNumber:
                       isValidValue = checkIsValidAuthNumber(enteredText)
                       if isValidValue {
-                        guard let token = viewStore.emailToken else { return }
-                        viewStore.send(.sendVertifyCode(token, enteredText))
+                        viewStore.send(.sendVertifyCode(enteredText))
 //                        emailVertifySuccess()
                       }
                     case .makeProfile:
-                      isValidValue = checkIsValidNickname(enteredText)
-                      if isValidValue {
-                        makeProfileSuccess = true
+                      guard let imageData = selectedImage.jpegData(compressionQuality: 0.8) else {
+                        print("이미지 데이터 형식으로 변환 실패")
+                        return
                       }
+                      viewStore.send(.signupButtonDidTappaed(imageData, enteredText) )
+//                      isValidValue = checkIsValidNickname(enteredText)
+//                      if isValidValue {
+//                        makeProfileSuccess = true
+//                      }
                     }
                   }
-                  .onChange(of: viewStore.data) { value in
-                    if let token = value?.data?.emailAuthToken {
-                      emailDidSent(enteredText, token)
-                    }
+                  .onChange(of: viewStore.signupEntity.emailSentCount) { value in
+                    emailDidSent(viewStore.signupEntity)
                   }
-                  .onChange(of: viewStore.vertifyResult) { value in
+                  .onChange(of: viewStore.vertifyDidSuccess) { value in
                     if let result = value, result == true {
-                      emailVertifySuccess()
+                      emailVertifySuccess(viewStore.signupEntity)
+                    }
+                  }
+                  .onChange(of: viewStore.saveImageToAWSSuccess) { value in
+                    if let result = value, result == true {
+                      viewStore.send(.signup)
+                    }
+                  }
+                  .onChange(of: viewStore.signupSuccess) { value in
+                    if let result = value, result == true {
+                      makeProfileSuccess = true
                     }
                   }
                   .onChange(of: viewStore.errorToastIsShown) { isShown in
@@ -191,15 +203,16 @@ struct EmailAuthenticationView: View {
                   }
               }
             }
-            if showSelectProfileImage {
+            .sheet(isPresented: $showSelectProfileImage, content: {
               VStack {
-                Spacer()
                 SelectProfileImagePopupView(saveButtonTapped: { image in
                   selectedImage = image
                   showSelectProfileImage = false
                 })
               }
-            }
+              .presentationDetents([.height(429)])
+              .presentationDragIndicator(.visible)
+            })
           } else {
             VStack {
               AuthSuccessView()
@@ -261,15 +274,15 @@ private func checkIsValidNickname(_ nickname: String) -> Bool {
 #Preview {
   EmailAuthenticationView(
     store: .init(
-      initialState: EmailAuthenticationReducer.State(),
+      initialState: EmailAuthenticationReducer.State(signupEntity: SignupEntity()),
       reducer: {
         EmailAuthenticationReducer()
       }
     ),
     viewType: .makeProfile,
-    emailDidSent: { email, token in },
-    emailVertifySuccess: { },
-    backButtonTapped: { }, 
+    emailDidSent: { _ in },
+    emailVertifySuccess: { _ in},
+    backButtonTapped: { },
     authSuccess: { })
 }
 

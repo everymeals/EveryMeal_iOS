@@ -81,7 +81,9 @@
 		663260AD2AF1F819006FC22C /* MealHGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663260AC2AF1F819006FC22C /* MealHGridView.swift */; };
 		663BFBA22A81EACC00A540A2 /* ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663BFBA12A81EACC00A540A2 /* ViewModifier.swift */; };
 		663BFBA42A81EB2800A540A2 /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663BFBA32A81EB2800A540A2 /* Separator.swift */; };
+		663EA95F2B6911E600617067 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663EA95E2B6911E600617067 /* UserManager.swift */; };
 		664CC42C2AEA6274000EEBC5 /* MealHorizontalItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664CC42B2AEA6274000EEBC5 /* MealHorizontalItemView.swift */; };
+		665627D62B6B400700B36F1A /* SignupEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665627D52B6B400700B36F1A /* SignupEntity.swift */; };
 		6674FC342B04BC9100CC4CA6 /* BaseWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674FC332B04BC9100CC4CA6 /* BaseWebView.swift */; };
 		6681C79C2AEA44D400C3D2C1 /* MoreStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681C79B2AEA44D400C3D2C1 /* MoreStoreView.swift */; };
 		6681C79E2AEA49B900C3D2C1 /* MealVerticalItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681C79D2AEA49B900C3D2C1 /* MealVerticalItemView.swift */; };
@@ -180,7 +182,9 @@
 		663260AC2AF1F819006FC22C /* MealHGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealHGridView.swift; sourceTree = "<group>"; };
 		663BFBA12A81EACC00A540A2 /* ViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifier.swift; sourceTree = "<group>"; };
 		663BFBA32A81EB2800A540A2 /* Separator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
+		663EA95E2B6911E600617067 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		664CC42B2AEA6274000EEBC5 /* MealHorizontalItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealHorizontalItemView.swift; sourceTree = "<group>"; };
+		665627D52B6B400700B36F1A /* SignupEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupEntity.swift; sourceTree = "<group>"; };
 		6674FC332B04BC9100CC4CA6 /* BaseWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWebView.swift; sourceTree = "<group>"; };
 		6681C79B2AEA44D400C3D2C1 /* MoreStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreStoreView.swift; sourceTree = "<group>"; };
 		6681C79D2AEA49B900C3D2C1 /* MealVerticalItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealVerticalItemView.swift; sourceTree = "<group>"; };
@@ -545,6 +549,7 @@
 				0FE449642B57DC790054DED3 /* UserDefaultsManager.swift */,
 				66FF637E2AD7CE3D00A10986 /* Constants.swift */,
 				668FB86E2B45734C00F5F00F /* GlobalDefine.swift */,
+				663EA95E2B6911E600617067 /* UserManager.swift */,
 			);
 			path = Storages;
 			sourceTree = "<group>";
@@ -666,6 +671,7 @@
 			children = (
 				6681C7A72AEA4E3400C3D2C1 /* MealEntity.swift */,
 				0FE4495F2B57D4320054DED3 /* UnivsEntity.swift */,
+				665627D52B6B400700B36F1A /* SignupEntity.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -792,6 +798,7 @@
 				0F78B0142A6D39DC006B8C80 /* MainTabBarView.swift in Sources */,
 				087A093E2A81545000F4D34F /* HomeReviewsView.swift in Sources */,
 				087A093A2A81486400F4D34F /* HomeTopMenuView.swift in Sources */,
+				665627D62B6B400700B36F1A /* SignupEntity.swift in Sources */,
 				087EB0CD2B67CF7C001B752E /* UserAPI.swift in Sources */,
 				0F1424242ADD3F3E00A79AA2 /* MoreReviewsView.swift in Sources */,
 				0F43F6832A6EA8AC00239AA4 /* HomeView.swift in Sources */,
@@ -809,6 +816,7 @@
 				66FF63812AD7DEB800A10986 /* Functions.swift in Sources */,
 				668FB86F2B45734C00F5F00F /* GlobalDefine.swift in Sources */,
 				08D6BA632AE7F6DA00C0B516 /* ReviewStarPointView.swift in Sources */,
+				663EA95F2B6911E600617067 /* UserManager.swift in Sources */,
 				08D6BA642AE7F6DA00C0B516 /* WriteReviewStoreSearchView.swift in Sources */,
 				087A09382A81481100F4D34F /* HomeHeaderView.swift in Sources */,
 				08D6BA6A2AE7F97800C0B516 /* ImagePicker.swift in Sources */,

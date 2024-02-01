@@ -13,7 +13,7 @@ enum HomeStackViewType: Hashable {
   case restaurantList
   case reviewList
   case moreStoreView(MoreStoreViewType)
-  case emailVertify(EmailViewType, String?, String?)
+  case emailVertify(type: EmailViewType, model: SignupEntity)
 }
 
 struct HomeView: View {
@@ -51,7 +51,7 @@ struct HomeView: View {
                 CustomSheetView(buttonTitle: "인증하러 가기",  content: {
                   EmailAuthPopupView()
                 }, buttonAction: {
-                  navigationPath.append(.emailVertify(.enterEmail, nil, nil) )
+                  navigationPath.append(.emailVertify(type: .enterEmail, model: SignupEntity()) )
                   goToWriteReviewTapped.toggle()
                 })
               }
@@ -103,20 +103,20 @@ struct HomeView: View {
               navigationPath.removeLast()
             }, moreViewType: viewType)
             .toolbar(.hidden, for: .tabBar)
-          case let .emailVertify(type, email, token):
+          case let .emailVertify(type, model):
             EmailAuthenticationView(
               store: .init(
-                initialState: EmailAuthenticationReducer.State(email: email, emailToken: token),
+                initialState: EmailAuthenticationReducer.State(signupEntity: model),
                 reducer: {
                   EmailAuthenticationReducer()
                 }),
               viewType: type,
-              emailDidSent: { email, token in
-                if navigationPath.last != .emailVertify(.enterAuthNumber, email, token) {
-                  navigationPath.append(.emailVertify(.enterAuthNumber, email, token))
+              emailDidSent: { entity in
+                if navigationPath.count == 1 {
+                  navigationPath.append(.emailVertify(type: .enterAuthNumber, model: entity))
                 }
-              }, emailVertifySuccess: {
-                navigationPath.append(.emailVertify(.makeProfile, nil, nil))
+              }, emailVertifySuccess: { entity in
+                navigationPath.append(.emailVertify(type: .makeProfile, model: entity))
               }, backButtonTapped: {
                 navigationPath.removeLast()
               }, authSuccess: {
