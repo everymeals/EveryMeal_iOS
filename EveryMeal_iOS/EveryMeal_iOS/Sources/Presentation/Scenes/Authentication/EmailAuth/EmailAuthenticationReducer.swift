@@ -15,6 +15,7 @@ struct EmailAuthenticationReducer: Reducer {
   struct State: Equatable {
     var signupEntity: SignupEntity
     
+    var signinAlready: Bool? = false
     var isEmailSending = false
     var isVertifyCodeSending = false
     var emailSendSuccess: Bool?
@@ -24,10 +25,13 @@ struct EmailAuthenticationReducer: Reducer {
     
     var signupSuccess: Bool?
     
-    var errorToastWillBeShown: Bool = false
+    var errorToastWillBeShown = ToastModel(isShown: false, type: nil)
   }
   
   enum Action {
+    case checkAlreadySignin(String)
+    case setSigninAlready(Bool?)
+    
     case sendEmail(String)
     case sendEmailResponse(EmailSendResponse)
     
@@ -42,11 +46,27 @@ struct EmailAuthenticationReducer: Reducer {
     case signup
     case signupSuccess(SignupResponse)
 
-    case showErrorToast(Bool)
+    case showToastWithError(ToastModel)
   }
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
+    case let .checkAlreadySignin(email):
+      return .run { send in
+        let response = try await signupClient.checkAlreadySignin(email)
+        switch response {
+        case let .success(result):
+          await send(.setSigninAlready(result))
+        case let .failure(failure):
+          print("failure \(failure.rawValue)")
+          await send(.showToastWithError(.init(isShown: true)))
+          return
+        }
+      }
+    case let .setSigninAlready(result):
+      state.signinAlready = result
+      return .none
+      
     case let .sendEmail(email):
       state.isEmailSending = true
       state.signupEntity.email = email
@@ -58,7 +78,7 @@ struct EmailAuthenticationReducer: Reducer {
           return
         case let .failure(failure):
           print("failure \(failure.rawValue)")
-          await send(.showErrorToast(true))
+          await send(.showToastWithError(.init(isShown: true)))
           return
         }
       }
@@ -66,7 +86,6 @@ struct EmailAuthenticationReducer: Reducer {
     case let .sendEmailResponse(result):
       state.isEmailSending = false
       state.signupEntity.emailAuthToken = result.data?.emailAuthToken
-//      state.emailSendSuccess = true
       state.signupEntity.emailSentCount += 1
       return .none
       
@@ -74,7 +93,7 @@ struct EmailAuthenticationReducer: Reducer {
       state.isVertifyCodeSending = true
       state.signupEntity.emailAuthValue = code
       guard let token = state.signupEntity.emailAuthToken else {
-        return .send(.showErrorToast(true))
+        return .send(.showToastWithError(.init(isShown: true)))
       }
       
       return .run { send in
@@ -85,7 +104,7 @@ struct EmailAuthenticationReducer: Reducer {
           return
         case let .failure(fail):
           print("failure \(fail.rawValue)")
-          await send(.showErrorToast(true))
+          await send(.showToastWithError(.init(isShown: true)))
           return
         }
       }
@@ -94,9 +113,10 @@ struct EmailAuthenticationReducer: Reducer {
       state.vertifyDidSuccess = true
       return .none
       
-    case let .showErrorToast(willShow):
+    case let .showToastWithError(toastModel):
       state.isEmailSending = false
-      state.errorToastWillBeShown = willShow
+      state.errorToastWillBeShown = toastModel
+      state.signinAlready = nil
       return .none
       
     case let .signupButtonDidTappaed(image, nickname):
@@ -115,7 +135,7 @@ struct EmailAuthenticationReducer: Reducer {
           return
         case let .failure(fail):
           print("failure \(fail.rawValue)")
-          await send(.showErrorToast(true))
+          await send(.showToastWithError(.init(isShown: true)))
           return
         }
       }
@@ -130,7 +150,7 @@ struct EmailAuthenticationReducer: Reducer {
           return
         case let .failure(fail):
           print("failure \(fail.rawValue)")
-          await send(.showErrorToast(true))
+          await send(.showToastWithError(.init(isShown: true)))
           return
         }
       }
@@ -148,7 +168,7 @@ struct EmailAuthenticationReducer: Reducer {
           await send(.signupSuccess(result))
         case let .failure(fail):
           print("failure \(fail.rawValue)")
-          await send(.showErrorToast(true))
+          await send(.showToastWithError(.init(isShown: true)))
           return
         }
       }

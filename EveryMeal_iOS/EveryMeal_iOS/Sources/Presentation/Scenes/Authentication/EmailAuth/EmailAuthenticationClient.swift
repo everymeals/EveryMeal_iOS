@@ -10,6 +10,7 @@ import Foundation
 import ComposableArchitecture
 
 struct SignupClient {
+  var checkAlreadySignin: (String) async throws -> Result<Bool, EverMealErrorType>
   var postEmail: (String) async throws -> Result<EmailSendResponse, EverMealErrorType>
   var postVertifyNumber: (PostVertifyNumberClient) async throws -> Result<Bool, EverMealErrorType>
   var getImageConfig: () async throws -> Result<ImageResponse, EverMealErrorType>
@@ -24,6 +25,16 @@ struct PostVertifyNumberClient {
 
 extension SignupClient: DependencyKey {
   static var liveValue = Self(
+    checkAlreadySignin: { email in
+      do {
+        let response = try await EmailVertifyService().checkSignin(email: email)
+        if response.errorCode == nil {
+          return .success(response.data)
+        } else {
+          return .failure(.fail)
+        }
+      }
+    },
     postEmail: { email in
       do {
         let emailPostResponse = try await EmailVertifyService().postEmail(email: email)

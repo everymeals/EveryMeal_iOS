@@ -27,8 +27,9 @@ struct EmailAuthenticationView: View {
   @State var makeProfileSuccess: Bool = false
   @State var successButtonEnabled: Bool = true
   @State private var viewOpacity: Double = 1.0
-  @State var isErrorToastShown: Bool = false
+  @State var errorToastWillBeShown = ToastModel(isShown: false)
   @State var showIndicator: Bool = false
+  @State var alreadySignin: Bool = false
   
   @FocusState private var textfieldIsFocused: Bool
   
@@ -159,7 +160,7 @@ struct EmailAuthenticationView: View {
                     case .enterEmail:
                       isValidValue = checkIsValidEmail(email: enteredText)
                       if isValidValue {
-                        viewStore.send(.sendEmail(enteredText))
+                        viewStore.send(.checkAlreadySignin(enteredText))
                       }
                     case .enterAuthNumber:
                       isValidValue = checkIsValidAuthNumber(enteredText)
@@ -177,6 +178,13 @@ struct EmailAuthenticationView: View {
 //                      if isValidValue {
 //                        makeProfileSuccess = true
 //                      }
+                    }
+                  }
+                  .onChange(of: viewStore.signinAlready) { value in
+                    if value == false {
+                      viewStore.send(.sendEmail(enteredText))
+                    } else if value == true {
+                      viewStore.send(.showToastWithError(.init(isShown: true, type: .alreadySigninEmail)))
                     }
                   }
                   .onChange(of: viewStore.signupEntity.emailSentCount) { value in
@@ -197,10 +205,10 @@ struct EmailAuthenticationView: View {
                       makeProfileSuccess = true
                     }
                   }
-                  .onChange(of: viewStore.errorToastWillBeShown) { willBeShown in
-                    if willBeShown {
+                  .onChange(of: viewStore.errorToastWillBeShown) { model in
+                    errorToastWillBeShown = model
+                    if model.isShown {
                       textfieldIsFocused = false
-                      isErrorToastShown = willBeShown
                     }
                   }
                   .onChange(of: viewStore.isEmailSending) { value in
@@ -222,7 +230,7 @@ struct EmailAuthenticationView: View {
             })
           } else {
             VStack {
-              AuthSuccessView()
+              AuthSuccessView(nickname: viewStore.signupEntity.nickname ?? "에브리밀")
               EveryMealButton(selectEnable: $makeProfileSuccess, title: "완료")
                 .onTapGesture {
                   authSuccess()
@@ -230,17 +238,16 @@ struct EmailAuthenticationView: View {
             }
           }
           if showDidSentEmail {
-            EveryMealToast(message: "인증번호를 다시 전송했어요") {
+            EveryMealToast(type: .emailVertifyRetry) {
               DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                 showDidSentEmail = false
               }
             }
           }
-          if isErrorToastShown {
-            EveryMealToast(message: "다시 시도해주세요") {
+          if errorToastWillBeShown.isShown {
+            EveryMealToast(type: errorToastWillBeShown.type) {
               DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                isErrorToastShown = false
-                viewStore.send(.showErrorToast(false))
+                viewStore.send(.showToastWithError(.init(isShown: false)))
               }
             }
           }
@@ -258,13 +265,14 @@ struct EmailAuthenticationView: View {
       .navigationBarBackButtonHidden()
     }
   }
+  
+  private func checkIsValidEmail(email: String) -> Bool {
+    let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+    let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+    return emailPredicate.evaluate(with: email) && !alreadySignin
+  }
 }
 
-private func checkIsValidEmail(email: String) -> Bool {
-  let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
-  let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
-  return emailPredicate.evaluate(with: email)
-}
 
 private func checkIsValidAuthNumber(_ number: String) -> Bool {
   do {

@@ -9,11 +9,12 @@ import SwiftUI
 
 struct AuthSuccessView: View {
   @State private var viewOpacity: Double = 0.0
+  var nickname: String
   
   var body: some View {
     VStack(alignment: .leading, spacing: 0) {
       VStack(alignment: .leading, spacing: 0) {
-        Text("연유크림님,\n환영해요!")
+        Text("\(nickname)님,\n환영해요!")
           .font(.pretendard(size: 24, weight: .bold))
           .lineLimit(2)
           .foregroundColor(.grey9)
@@ -46,7 +47,7 @@ struct AuthSuccessView: View {
 
 struct AuthSuccessView_Previews: PreviewProvider {
   static var previews: some View {
-    AuthSuccessView()
+    AuthSuccessView(nickname: "연유크림")
   }
 }
 
