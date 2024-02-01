@@ -21,6 +21,7 @@ extension MoyaProvider {
           print("03. Response Body\n\(self.prettyPrintJSON(data: response.data) )")
           print("========================================================")
           continuation.resume(returning: response)
+          
         case .failure(let error):
           print("========================================================")
           print("⁉️ Error on: \(target.baseURL)\(target.path)\nError message: \(error.localizedDescription)")

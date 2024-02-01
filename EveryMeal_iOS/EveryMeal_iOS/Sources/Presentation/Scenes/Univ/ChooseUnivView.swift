@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ChooseUnivView: View {
   @State var isSelected: Bool = false
-  @Binding var isFirstLaunching: Bool
+  @Binding var isNotUnivChosen: Bool
   @State private var universities: [UnivsEntity] = []
 
   var body: some View {
@@ -43,7 +43,7 @@ struct ChooseUnivView: View {
         .overlay(alignment: .bottom, content: {
           GradationView()
         })
-      ChooseButtonView(isSelected: $isSelected, isFirstLaunching: $isFirstLaunching)
+      ChooseButtonView(isSelected: $isSelected, isNotUnivChosen: $isNotUnivChosen)
     }
   }
 }
@@ -93,7 +93,7 @@ struct UnivGridView: View {
 
 struct ChooseButtonView: View {
   @Binding var isSelected: Bool
-  @Binding var isFirstLaunching: Bool
+  @Binding var isNotUnivChosen: Bool
 
   var body: some View {
     VStack(spacing: 20) {
@@ -103,7 +103,7 @@ struct ChooseButtonView: View {
             UIApplication.shared.open(url)
           }
         }
-      SelectUnivButton(isSelected: $isSelected, isFirstLaunching: $isFirstLaunching)
+      SelectUnivButton(isSelected: $isSelected, isNotUnivChosen: $isNotUnivChosen)
     }
   }
 }
@@ -142,7 +142,7 @@ struct AddUnivView: View {
 
 struct SelectUnivButton: View {
   @Binding var isSelected: Bool
-  @Binding var isFirstLaunching: Bool
+  @Binding var isNotUnivChosen: Bool
 
   var bottomPadding: CGFloat {
     DeviceManager.shared.hasPhysicalHomeButton ? 24 : 0
@@ -152,8 +152,8 @@ struct SelectUnivButton: View {
     Button {
       if isSelected {
         print("선택하기 버튼 클릭")
-        isFirstLaunching = false
-        UserDefaults.standard.set(false, forKey: "isFirstLaunching")
+        UserDefaultsManager.setValue(.isUnivChosen, value: true)
+        isNotUnivChosen = false
       }
     } label: {
       Text("선택하기")
@@ -172,6 +172,6 @@ struct SelectUnivButton: View {
 
 struct ChooseUnivView_Previews: PreviewProvider {
   static var previews: some View {
-    ChooseUnivView(isSelected: true, isFirstLaunching: .constant(true))
+    ChooseUnivView(isSelected: true, isNotUnivChosen: .constant(true))
   }
 }

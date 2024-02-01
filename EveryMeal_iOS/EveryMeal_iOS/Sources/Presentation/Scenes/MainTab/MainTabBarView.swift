@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct MainTabBarView: View {
-  @AppStorage("isFirstLaunching") var isFirstLaunching: Bool = true
-
+  let isUnivChosen = UserDefaultsManager.getBool(.isUnivChosen)
+  @State var isNotUnivChosen: Bool = false
   @State private var selectedTab = 0
   @State private var favoritesCount = 10
   @State var tabBarIsHidden = false
@@ -52,9 +52,12 @@ struct MainTabBarView: View {
       GlobalDefine.shared.tabBarController?.view.subviews.first(where: { $0.accessibilityIdentifier == "TabBarShadow" })?.layer.isHidden = value
     }
     .tabViewStyle(.automatic)
-    .onAppear(perform: { setupTabBarAppearance() })
-    .fullScreenCover(isPresented: $isFirstLaunching, content: {
-      OnBoardingView(isFirstLaunching: $isFirstLaunching)
+    .onAppear {
+      isNotUnivChosen = !isUnivChosen
+      setupTabBarAppearance()
+    }
+    .fullScreenCover(isPresented: $isNotUnivChosen, content: {
+      OnBoardingView(isNotUnivChosen: $isNotUnivChosen)
     })
   }
   
