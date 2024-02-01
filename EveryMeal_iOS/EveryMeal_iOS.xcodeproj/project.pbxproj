@@ -15,6 +15,13 @@
 		087A093A2A81486400F4D34F /* HomeTopMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087A09392A81486400F4D34F /* HomeTopMenuView.swift */; };
 		087A093C2A8153BD00F4D34F /* HomeTopThreeMealsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087A093B2A8153BD00F4D34F /* HomeTopThreeMealsView.swift */; };
 		087A093E2A81545000F4D34F /* HomeReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087A093D2A81545000F4D34F /* HomeReviewsView.swift */; };
+		087EB0CD2B67CF7C001B752E /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087EB0CC2B67CF7C001B752E /* UserAPI.swift */; };
+		087EB0CF2B67CFFD001B752E /* SignupRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087EB0CE2B67CFFD001B752E /* SignupRequest.swift */; };
+		087EB0D12B67D068001B752E /* SignupResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087EB0D02B67D068001B752E /* SignupResponse.swift */; };
+		087EB0D32B67D262001B752E /* ImageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087EB0D22B67D262001B752E /* ImageAPI.swift */; };
+		087EB0D52B67D30D001B752E /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087EB0D42B67D30D001B752E /* ImageService.swift */; };
+		087EB0D82B67D387001B752E /* ImageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087EB0D72B67D387001B752E /* ImageResponse.swift */; };
+		087EB0DA2B67D5E8001B752E /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087EB0D92B67D5E8001B752E /* UserService.swift */; };
 		087F9F522ADD63C6001DB3F2 /* ReviewDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087F9F512ADD63C6001DB3F2 /* ReviewDetailView.swift */; };
 		08900BFC2AF27D7E00392BAE /* EmailAuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08900BFB2AF27D7E00392BAE /* EmailAuthenticationView.swift */; };
 		08A877D22ACD97EE007AEDA1 /* EverymealAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A877D12ACD97ED007AEDA1 /* EverymealAlertView.swift */; };
@@ -30,6 +37,8 @@
 		08EC02932B67C126003CD556 /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC02922B67C126003CD556 /* URLConstants.swift */; };
 		08EC02952B67C302003CD556 /* EmailVertifyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC02942B67C302003CD556 /* EmailVertifyService.swift */; };
 		08EC02972B67C30F003CD556 /* EmailVertifyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC02962B67C30F003CD556 /* EmailVertifyAPI.swift */; };
+		08EC02992B67CC8C003CD556 /* EveryMealDefaultResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC02982B67CC8C003CD556 /* EveryMealDefaultResponse.swift */; };
+		08EC029B2B67CCCF003CD556 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC029A2B67CCCF003CD556 /* Data+Extensions.swift */; };
 		0F1424242ADD3F3E00A79AA2 /* MoreReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1424232ADD3F3E00A79AA2 /* MoreReviewsView.swift */; };
 		0F19FBAE2AF2252900197815 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA52AF2252900197815 /* Pretendard-Bold.otf */; };
 		0F19FBAF2AF2252900197815 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA62AF2252900197815 /* Pretendard-Regular.otf */; };
@@ -72,7 +81,10 @@
 		663260AD2AF1F819006FC22C /* MealHGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663260AC2AF1F819006FC22C /* MealHGridView.swift */; };
 		663BFBA22A81EACC00A540A2 /* ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663BFBA12A81EACC00A540A2 /* ViewModifier.swift */; };
 		663BFBA42A81EB2800A540A2 /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663BFBA32A81EB2800A540A2 /* Separator.swift */; };
+		663EA95F2B6911E600617067 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663EA95E2B6911E600617067 /* UserManager.swift */; };
 		664CC42C2AEA6274000EEBC5 /* MealHorizontalItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664CC42B2AEA6274000EEBC5 /* MealHorizontalItemView.swift */; };
+		665627D62B6B400700B36F1A /* SignupEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665627D52B6B400700B36F1A /* SignupEntity.swift */; };
+		665627D82B6BA37600B36F1A /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665627D72B6BA37600B36F1A /* LoadingView.swift */; };
 		6674FC342B04BC9100CC4CA6 /* BaseWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674FC332B04BC9100CC4CA6 /* BaseWebView.swift */; };
 		6681C79C2AEA44D400C3D2C1 /* MoreStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681C79B2AEA44D400C3D2C1 /* MoreStoreView.swift */; };
 		6681C79E2AEA49B900C3D2C1 /* MealVerticalItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681C79D2AEA49B900C3D2C1 /* MealVerticalItemView.swift */; };
@@ -107,6 +119,13 @@
 		087A09392A81486400F4D34F /* HomeTopMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopMenuView.swift; sourceTree = "<group>"; };
 		087A093B2A8153BD00F4D34F /* HomeTopThreeMealsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopThreeMealsView.swift; sourceTree = "<group>"; };
 		087A093D2A81545000F4D34F /* HomeReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReviewsView.swift; sourceTree = "<group>"; };
+		087EB0CC2B67CF7C001B752E /* UserAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAPI.swift; sourceTree = "<group>"; };
+		087EB0CE2B67CFFD001B752E /* SignupRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupRequest.swift; sourceTree = "<group>"; };
+		087EB0D02B67D068001B752E /* SignupResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupResponse.swift; sourceTree = "<group>"; };
+		087EB0D22B67D262001B752E /* ImageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAPI.swift; sourceTree = "<group>"; };
+		087EB0D42B67D30D001B752E /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
+		087EB0D72B67D387001B752E /* ImageResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResponse.swift; sourceTree = "<group>"; };
+		087EB0D92B67D5E8001B752E /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		087F9F512ADD63C6001DB3F2 /* ReviewDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailView.swift; sourceTree = "<group>"; };
 		08900BFB2AF27D7E00392BAE /* EmailAuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthenticationView.swift; sourceTree = "<group>"; };
 		08A877D12ACD97ED007AEDA1 /* EverymealAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EverymealAlertView.swift; sourceTree = "<group>"; };
@@ -122,6 +141,8 @@
 		08EC02922B67C126003CD556 /* URLConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConstants.swift; sourceTree = "<group>"; };
 		08EC02942B67C302003CD556 /* EmailVertifyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVertifyService.swift; sourceTree = "<group>"; };
 		08EC02962B67C30F003CD556 /* EmailVertifyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVertifyAPI.swift; sourceTree = "<group>"; };
+		08EC02982B67CC8C003CD556 /* EveryMealDefaultResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveryMealDefaultResponse.swift; sourceTree = "<group>"; };
+		08EC029A2B67CCCF003CD556 /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
 		0F1424232ADD3F3E00A79AA2 /* MoreReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreReviewsView.swift; sourceTree = "<group>"; };
 		0F19FB9D2AF21E7E00197815 /* OSLog.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OSLog.framework; path = System/Library/Frameworks/OSLog.framework; sourceTree = SDKROOT; };
 		0F19FBA52AF2252900197815 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
@@ -162,7 +183,10 @@
 		663260AC2AF1F819006FC22C /* MealHGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealHGridView.swift; sourceTree = "<group>"; };
 		663BFBA12A81EACC00A540A2 /* ViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifier.swift; sourceTree = "<group>"; };
 		663BFBA32A81EB2800A540A2 /* Separator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
+		663EA95E2B6911E600617067 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		664CC42B2AEA6274000EEBC5 /* MealHorizontalItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealHorizontalItemView.swift; sourceTree = "<group>"; };
+		665627D52B6B400700B36F1A /* SignupEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupEntity.swift; sourceTree = "<group>"; };
+		665627D72B6BA37600B36F1A /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		6674FC332B04BC9100CC4CA6 /* BaseWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWebView.swift; sourceTree = "<group>"; };
 		6681C79B2AEA44D400C3D2C1 /* MoreStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreStoreView.swift; sourceTree = "<group>"; };
 		6681C79D2AEA49B900C3D2C1 /* MealVerticalItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealVerticalItemView.swift; sourceTree = "<group>"; };
@@ -211,6 +235,14 @@
 				085C7EFF2B4A9F450020DC51 /* EmailAuthenticationClient.swift */,
 			);
 			path = EmailAuth;
+			sourceTree = "<group>";
+		};
+		087EB0D62B67D369001B752E /* ImageDTO */ = {
+			isa = PBXGroup;
+			children = (
+				087EB0D72B67D387001B752E /* ImageResponse.swift */,
+			);
+			path = ImageDTO;
 			sourceTree = "<group>";
 		};
 		087F9F532ADD63D1001DB3F2 /* Views */ = {
@@ -266,6 +298,8 @@
 			children = (
 				08EC028A2B67BF9C003CD556 /* EmailSendResponse.swift */,
 				08EC028B2B67BF9C003CD556 /* EmailSendRequest.swift */,
+				087EB0CE2B67CFFD001B752E /* SignupRequest.swift */,
+				087EB0D02B67D068001B752E /* SignupResponse.swift */,
 			);
 			path = UserDTO;
 			sourceTree = "<group>";
@@ -354,6 +388,7 @@
 				081196B52AE36B100022B41A /* UIApplication+Extensions.swift */,
 				0F3BBF2C2AF23244003EBAB7 /* Font+Extensions.swift */,
 				0FE449712B57DFBE0054DED3 /* Moya+Extensions.swift */,
+				08EC029A2B67CCCF003CD556 /* Data+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -516,6 +551,7 @@
 				0FE449642B57DC790054DED3 /* UserDefaultsManager.swift */,
 				66FF637E2AD7CE3D00A10986 /* Constants.swift */,
 				668FB86E2B45734C00F5F00F /* GlobalDefine.swift */,
+				663EA95E2B6911E600617067 /* UserManager.swift */,
 			);
 			path = Storages;
 			sourceTree = "<group>";
@@ -523,9 +559,11 @@
 		0FE449622B57DC190054DED3 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
+				087EB0D62B67D369001B752E /* ImageDTO */,
 				08EC02892B67BF9C003CD556 /* UserDTO */,
 				0FE4495C2B57D3B60054DED3 /* UniversityDTO */,
 				6681C7A52AEA4D6F00C3D2C1 /* NetworkDTO */,
+				08EC02982B67CC8C003CD556 /* EveryMealDefaultResponse.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -560,6 +598,8 @@
 			children = (
 				0FE4496D2B57DE3C0054DED3 /* UnivsAPI.swift */,
 				08EC02962B67C30F003CD556 /* EmailVertifyAPI.swift */,
+				087EB0D22B67D262001B752E /* ImageAPI.swift */,
+				087EB0CC2B67CF7C001B752E /* UserAPI.swift */,
 			);
 			path = APIs;
 			sourceTree = "<group>";
@@ -569,6 +609,8 @@
 			children = (
 				0FE4496F2B57DE460054DED3 /* UnivsService.swift */,
 				08EC02942B67C302003CD556 /* EmailVertifyService.swift */,
+				087EB0D42B67D30D001B752E /* ImageService.swift */,
+				087EB0D92B67D5E8001B752E /* UserService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -586,6 +628,7 @@
 				0F58F6EA2AFA1E1600010A70 /* BaseLottieView.swift */,
 				6674FC332B04BC9100CC4CA6 /* BaseWebView.swift */,
 				66BEA02C2B0C8BFD00F3125B /* EveryMealToast.swift */,
+				665627D72B6BA37600B36F1A /* LoadingView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -631,6 +674,7 @@
 			children = (
 				6681C7A72AEA4E3400C3D2C1 /* MealEntity.swift */,
 				0FE4495F2B57D4320054DED3 /* UnivsEntity.swift */,
+				665627D52B6B400700B36F1A /* SignupEntity.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -757,13 +801,18 @@
 				0F78B0142A6D39DC006B8C80 /* MainTabBarView.swift in Sources */,
 				087A093E2A81545000F4D34F /* HomeReviewsView.swift in Sources */,
 				087A093A2A81486400F4D34F /* HomeTopMenuView.swift in Sources */,
+				665627D62B6B400700B36F1A /* SignupEntity.swift in Sources */,
+				087EB0CD2B67CF7C001B752E /* UserAPI.swift in Sources */,
 				0F1424242ADD3F3E00A79AA2 /* MoreReviewsView.swift in Sources */,
 				0F43F6832A6EA8AC00239AA4 /* HomeView.swift in Sources */,
+				087EB0DA2B67D5E8001B752E /* UserService.swift in Sources */,
 				08EC028C2B67BF9C003CD556 /* EmailSendResponse.swift in Sources */,
+				665627D82B6BA37600B36F1A /* LoadingView.swift in Sources */,
 				0F1AD46F2AE0046D003E29B0 /* View+Extensions.swift in Sources */,
 				0FE449602B57D4320054DED3 /* UnivsEntity.swift in Sources */,
 				08D6BA692AE7F97800C0B516 /* ReviewWriteImageTextView.swift in Sources */,
 				087A093C2A8153BD00F4D34F /* HomeTopThreeMealsView.swift in Sources */,
+				087EB0CF2B67CFFD001B752E /* SignupRequest.swift in Sources */,
 				0F660A912A84551C000074BD /* DeviceManager.swift in Sources */,
 				66935D882AF1F22000E80424 /* CustomAlertModifier.swift in Sources */,
 				0F8D3D052B200A440026FA5D /* CustomSheetView.swift in Sources */,
@@ -771,6 +820,7 @@
 				66FF63812AD7DEB800A10986 /* Functions.swift in Sources */,
 				668FB86F2B45734C00F5F00F /* GlobalDefine.swift in Sources */,
 				08D6BA632AE7F6DA00C0B516 /* ReviewStarPointView.swift in Sources */,
+				663EA95F2B6911E600617067 /* UserManager.swift in Sources */,
 				08D6BA642AE7F6DA00C0B516 /* WriteReviewStoreSearchView.swift in Sources */,
 				087A09382A81481100F4D34F /* HomeHeaderView.swift in Sources */,
 				08D6BA6A2AE7F97800C0B516 /* ImagePicker.swift in Sources */,
@@ -780,6 +830,7 @@
 				0FE4496E2B57DE3C0054DED3 /* UnivsAPI.swift in Sources */,
 				087F9F522ADD63C6001DB3F2 /* ReviewDetailView.swift in Sources */,
 				0FE4495E2B57D3FE0054DED3 /* UnivsResponseModel.swift in Sources */,
+				087EB0D32B67D262001B752E /* ImageAPI.swift in Sources */,
 				0F3BBF2D2AF23244003EBAB7 /* Font+Extensions.swift in Sources */,
 				0F58F6EB2AFA1E1600010A70 /* BaseLottieView.swift in Sources */,
 				663260AD2AF1F819006FC22C /* MealHGridView.swift in Sources */,
@@ -787,6 +838,7 @@
 				6681C7AA2AEA4FA700C3D2C1 /* EveryMealButton.swift in Sources */,
 				662C68FF2B3BECCE00B47C87 /* SelectProfileImagePopupView.swift in Sources */,
 				081196B62AE36B100022B41A /* UIApplication+Extensions.swift in Sources */,
+				087EB0D82B67D387001B752E /* ImageResponse.swift in Sources */,
 				66BEA02D2B0C8BFD00F3125B /* EveryMealToast.swift in Sources */,
 				08EC028D2B67BF9C003CD556 /* EmailSendRequest.swift in Sources */,
 				0F95A0932B0F1CF2000317D8 /* SignOutDetailView.swift in Sources */,
@@ -797,12 +849,16 @@
 				0F69AFCA2B09E422008C98C6 /* SignOutView.swift in Sources */,
 				6674FC342B04BC9100CC4CA6 /* BaseWebView.swift in Sources */,
 				08D6BA652AE7F6DA00C0B516 /* ReviewStoreSearchListView.swift in Sources */,
+				087EB0D52B67D30D001B752E /* ImageService.swift in Sources */,
 				0F5B15742A7F8C9C00E698F4 /* Color+Extensions.swift in Sources */,
 				0F6685EF2B037C3300EA1281 /* MyPageView.swift in Sources */,
 				0F80B4032ABAFABF00167AB6 /* MoreBestRestaurantView.swift in Sources */,
+				087EB0D12B67D068001B752E /* SignupResponse.swift in Sources */,
 				6681C79C2AEA44D400C3D2C1 /* MoreStoreView.swift in Sources */,
+				08EC029B2B67CCCF003CD556 /* Data+Extensions.swift in Sources */,
 				0F78AFF92A6CCA6B006B8C80 /* EveryMeal_iOSApp.swift in Sources */,
 				66935D892AF1F22000E80424 /* CustomAlertButton.swift in Sources */,
+				08EC02992B67CC8C003CD556 /* EveryMealDefaultResponse.swift in Sources */,
 				664CC42C2AEA6274000EEBC5 /* MealHorizontalItemView.swift in Sources */,
 				6681C7A82AEA4E3400C3D2C1 /* MealEntity.swift in Sources */,
 				66A3FFA62B47F878002DC665 /* MapReducer.swift in Sources */,

@@ -13,7 +13,7 @@ enum HomeStackViewType: Hashable {
   case restaurantList
   case reviewList
   case moreStoreView(MoreStoreViewType)
-  case emailVertify(EmailViewType, String?)
+  case emailVertify(type: EmailViewType, model: SignupEntity)
 }
 
 struct HomeView: View {
@@ -22,8 +22,7 @@ struct HomeView: View {
   @State private var topMenuSelected: [Bool] = Array.init(repeating: false, count: 4)
   @Binding var otherViewShowing: Bool
   
-  @State private var goToWriteReviewTapped: Bool = false
-  @State private var isEmailAuthenticationTrue = false
+  @State private var goToWriteReviewTapped = false
   
   private let viewBottomargin: CGFloat = 24
   private let moreReviewBtnBottomMargin: CGFloat = 13
@@ -38,7 +37,7 @@ struct HomeView: View {
             .padding(.horizontal, 20)
             .onTapGesture {
               // FIXME: 학교 인증한 사용자인지 확인
-              isEmailAuthenticationTrue.toggle()
+              let isEmailAuthenticationTrue = true
               goToWriteReviewTapped = isEmailAuthenticationTrue
 //              if isEmailAuthenticationTrue {
 //                self.navigationPath.append(.writeReview)
@@ -51,8 +50,8 @@ struct HomeView: View {
                 CustomSheetView(buttonTitle: "인증하러 가기",  content: {
                   EmailAuthPopupView()
                 }, buttonAction: {
-                  navigationPath.append(.emailVertify(.enterEmail, nil) )
                   goToWriteReviewTapped.toggle()
+                  navigationPath.append(.emailVertify(type: .enterEmail, model: SignupEntity()) )
                 })
               }
               .presentationDetents([.height(330)])
@@ -103,18 +102,20 @@ struct HomeView: View {
               navigationPath.removeLast()
             }, moreViewType: viewType)
             .toolbar(.hidden, for: .tabBar)
-          case let .emailVertify(type, value):
+          case let .emailVertify(type, model):
             EmailAuthenticationView(
               store: .init(
-                initialState: EmailAuthenticationReducer.State(emailToken: value),
+                initialState: EmailAuthenticationReducer.State(signupEntity: model),
                 reducer: {
                   EmailAuthenticationReducer()
                 }),
               viewType: type,
-              emailDidSent: { token in
-                navigationPath.append(.emailVertify(.enterAuthNumber, nil))
-              }, emailVertifySuccess: {
-                navigationPath.append(.emailVertify(.makeProfile, nil))
+              emailDidSent: { entity in
+                if navigationPath.count == 1 {
+                  navigationPath.append(.emailVertify(type: .enterAuthNumber, model: entity))
+                }
+              }, emailVertifySuccess: { entity in
+                navigationPath.append(.emailVertify(type: .makeProfile, model: entity))
               }, backButtonTapped: {
                 navigationPath.removeLast()
               }, authSuccess: {

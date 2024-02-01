@@ -10,6 +10,7 @@ import Moya
 
 enum EmailVertifyAPI {
   case postEmail(String)
+  case postVertifyNumber(PostVertifyNumberClient)
 }
 
 extension EmailVertifyAPI: TargetType {
@@ -21,6 +22,8 @@ extension EmailVertifyAPI: TargetType {
     switch self {
     case .postEmail:
       return URLConstant.email.path
+    case .postVertifyNumber:
+      return URLConstant.emailVertify.path
     }
   }
   
@@ -28,18 +31,27 @@ extension EmailVertifyAPI: TargetType {
     switch self {
     case .postEmail:
       return .post
+    case .postVertifyNumber:
+      return .get
     }
   }
   
   var task: Moya.Task {
+    var body: [String: Any] = [:]
     switch self {
     case let .postEmail(email):
-      return .requestParameters(parameters: ["email": email], encoding: JSONEncoding.default)
+      body["email"] = email
+      return .requestParameters(parameters: body,
+                                encoding: JSONEncoding.default)
+    case let .postVertifyNumber(client):
+      body["emailAuthToken"] = client.token
+      body["emailAuthValue"] = client.vertifyCode
+      return .requestParameters(parameters: body,
+                                encoding: URLEncoding.default)
     }
   }
   
   var headers: [String : String]? {
     return ["Content-type": "application/json"]
   }
-  
 }

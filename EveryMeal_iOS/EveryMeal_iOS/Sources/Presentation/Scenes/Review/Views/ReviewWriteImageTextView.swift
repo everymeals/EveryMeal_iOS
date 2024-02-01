@@ -197,7 +197,7 @@ struct ReviewTextEditor: View {
 }
 
 struct ReviewSelectedImageView: View {
-  @State var images: [Image]
+  @State var images: [UIImage]
   @State var showImagePicker: Bool = false
   @State var authorizationStatus: PHAuthorizationStatus = .denied
   @State private var showingAccessAlert = false
@@ -246,7 +246,7 @@ struct ReviewSelectedImageView: View {
         
         ForEach(images.indices, id: \.self) { index in
           ZStack(alignment: .center) {
-            images[index]
+            Image(uiImage: images[index])
               .resizable()
               .aspectRatio(contentMode: .fill)
               .frame(width: 91, height: 91)

@@ -15,7 +15,10 @@ extension MoyaProvider {
         switch result {
         case .success(let response):
           print("========================================================")
-          print("✅ Success Request API: \(target.baseURL)\(target.path)\nResponse: \(self.prettyPrintJSON(data: response.data))")
+          print("✅ Success Request API: \(target.baseURL)\(target.path)\n")
+          print("01. URL\n[\(target.method.rawValue)] \(target.baseURL)\(target.path)")
+          print("02. Request Body\n\(response.request?.httpBody?.prettyJSON ?? response.request?.urlRequest?.description ?? "NO Reqeust")")
+          print("03. Response Body\n\(self.prettyPrintJSON(data: response.data) )")
           print("========================================================")
           continuation.resume(returning: response)
           

@@ -38,14 +38,16 @@ struct CustomSheetView<Content>: View where Content: View {
   let content: Content
   let buttonAction: () -> Void
   let backgroundTouchAction: () -> Void
+  let horizontalPadding: CGFloat
   var bottomPadding: CGFloat {
     DeviceManager.shared.hasPhysicalHomeButton ? 10 : 0
   }
   
-  init(title: String? = nil, buttonTitle: String? = nil, isButtonEnabled: Bool? = true, @ViewBuilder content: () -> Content, buttonAction: @escaping () -> Void = {}, backgroundTouchAction: @escaping () -> Void = {}) {
+  init(title: String? = nil, buttonTitle: String? = nil, isButtonEnabled: Bool? = true, horizontalPadding: CGFloat = 20, @ViewBuilder content: () -> Content, buttonAction: @escaping () -> Void = {}, backgroundTouchAction: @escaping () -> Void = {}) {
     self.title = title
     self.buttonTitle = buttonTitle
     self.isButtonEnabled = isButtonEnabled
+    self.horizontalPadding = horizontalPadding
     self.content = content()
     self.buttonAction = buttonAction
     self.backgroundTouchAction = backgroundTouchAction
@@ -66,6 +68,7 @@ struct CustomSheetView<Content>: View where Content: View {
         HStack {
           Text(title)
             .font(.pretendard(size: 22, weight: .bold))
+            .padding(.leading, horizontalPadding == 0 ? 20 : 0)
           Spacer()
         }
       }
@@ -91,7 +94,7 @@ struct CustomSheetView<Content>: View where Content: View {
         .disabled(!(isButtonEnabled ?? true))
       }
     }
-    .padding(.horizontal, 20)
+    .padding(.horizontal, horizontalPadding)
     .background(Color.white)
   }
 }
