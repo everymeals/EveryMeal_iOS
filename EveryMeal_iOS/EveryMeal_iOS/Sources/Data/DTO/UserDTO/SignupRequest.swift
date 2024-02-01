@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct SignupRequest: Decodable {
-  let nickname: String
-  let emailAuthToken: String
-  let emailAuthValue: String
-  let universityIdx: Int
-  let profileImgKey: String
+struct SignupRequest: Codable, Equatable, Hashable {
+  var nickname: String?
+  var emailAuthToken: String?
+  var emailAuthValue: String?
+  var universityIdx: Int?
+  var profileImgKey: String?
 }

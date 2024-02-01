@@ -8,6 +8,6 @@
 import Foundation
 
 struct ImageResponse: Codable {
-  var imageKey: String?
-  var url: String?
+  var imageKey: String
+  var url: String
 }
