@@ -22,6 +22,7 @@ struct EmailAuthenticationView: View {
   @State var enteredText: String = ""
   @State var isEmailTextNotEmpty: Bool = false
   @State var isValidValue: Bool = true
+  @State var emailErrorType: EmailViewType.EmailErrorType = .invalidEmail
   @State var showDidSentEmail: Bool = false
   @State var showSelectProfileImage: Bool = false
   @State var makeProfileSuccess: Bool = false
@@ -124,10 +125,9 @@ struct EmailAuthenticationView: View {
                 
                 
                 if !isValidValue {
-                  Text(viewType.errorMessage)
+                  Text(viewType != .enterEmail ? viewType.errorMessage : emailErrorType.rawValue)
                     .font(.pretendard(size: 12, weight: .regular))
                     .foregroundColor(.red)
-                  
                 }
                 
                 Spacer()
@@ -166,7 +166,6 @@ struct EmailAuthenticationView: View {
                       isValidValue = checkIsValidAuthNumber(enteredText)
                       if isValidValue {
                         viewStore.send(.sendVertifyCode(enteredText))
-//                        emailVertifySuccess()
                       }
                     case .makeProfile:
                       guard let imageData = selectedImage.jpegData(compressionQuality: 0.8) else {
@@ -174,17 +173,17 @@ struct EmailAuthenticationView: View {
                         return
                       }
                       viewStore.send(.signupButtonDidTappaed(imageData, enteredText) )
-//                      isValidValue = checkIsValidNickname(enteredText)
-//                      if isValidValue {
-//                        makeProfileSuccess = true
-//                      }
                     }
                   }
                   .onChange(of: viewStore.signinAlready) { value in
                     if value == false {
+                      emailErrorType = .invalidEmail
+                      isValidValue = true
                       viewStore.send(.sendEmail(enteredText))
-                    } else if value == true {
-                      viewStore.send(.showToastWithError(.init(isShown: true, type: .alreadySigninEmail)))
+                    } else if value == true { // 이미 가입된 경우
+                      emailErrorType = .alreadySignin
+                      isValidValue = false
+                      viewStore.send(.setSigninAlready(nil))
                     }
                   }
                   .onChange(of: viewStore.signupEntity.emailSentCount) { value in
@@ -200,7 +199,7 @@ struct EmailAuthenticationView: View {
                       viewStore.send(.signup)
                     }
                   }
-                  .onChange(of: viewStore.signupSuccess) { value in
+                  .onChange(of: viewStore.loginSuccess) { value in
                     if let result = value, result == true {
                       makeProfileSuccess = true
                     }
@@ -231,6 +230,9 @@ struct EmailAuthenticationView: View {
           } else {
             VStack {
               AuthSuccessView(nickname: viewStore.signupEntity.nickname ?? "에브리밀")
+                .onAppear {
+                  
+                }
               EveryMealButton(selectEnable: $makeProfileSuccess, title: "완료")
                 .onTapGesture {
                   authSuccess()
@@ -267,6 +269,7 @@ struct EmailAuthenticationView: View {
   }
   
   private func checkIsValidEmail(email: String) -> Bool {
+    emailErrorType = .invalidEmail
     let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
     let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
     return emailPredicate.evaluate(with: email) && !alreadySignin
@@ -332,5 +335,10 @@ enum EmailViewType: String {
     case .enterAuthNumber: return "6자리 숫자"
     case .makeProfile: return "닉네임 규정" // FIXME: 추후 수정
     }
+  }
+  
+  enum EmailErrorType: String {
+    case invalidEmail = "잘못된 이메일 형식이에요"
+    case alreadySignin = "이미 가입된 이메일이에요"
   }
 }
