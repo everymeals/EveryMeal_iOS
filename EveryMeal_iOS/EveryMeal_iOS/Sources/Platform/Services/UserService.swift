@@ -21,4 +21,14 @@ struct UserService {
       throw error
     }
   }
+  
+  func postLogin(client: LoginRequest) async throws -> LoginResponse {
+    do {
+      let response = try await provider.request(.login(client))
+      let result = try JSONDecoder().decode(LoginResponse.self, from: response.data)
+      return result
+    } catch {
+      throw error
+    }
+  }
 }

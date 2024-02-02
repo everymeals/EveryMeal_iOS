@@ -23,7 +23,7 @@ struct EmailAuthenticationReducer: Reducer {
     var vertifyDidSuccess: Bool?
     var saveImageToAWSSuccess: Bool?
     
-    var signupSuccess: Bool?
+    var loginSuccess: Bool?
     
     var errorToastWillBeShown = ToastModel(isShown: false, type: nil)
   }
@@ -44,7 +44,9 @@ struct EmailAuthenticationReducer: Reducer {
     
     case signupButtonDidTappaed(Data, String)
     case signup
-    case signupSuccess(SignupResponse)
+    
+    case login(LoginRequest)
+    case loginSucccess(LoginResponse)
 
     case showToastWithError(ToastModel)
   }
@@ -160,12 +162,13 @@ struct EmailAuthenticationReducer: Reducer {
       return .none
       
     case .signup:
-      let requestModel = state.signupEntity.toSignupRequest()
+      let signinRequestModel = state.signupEntity.toSignupRequest()
+      let loginRequestModel = state.signupEntity.toLoginReqeust()
       return .run { send in
-        let response = try await signupClient.signup(requestModel)
+        let response = try await signupClient.signup(signinRequestModel)
         switch response {
-        case let .success(result):
-          await send(.signupSuccess(result))
+        case .success:
+          await send(.login(loginRequestModel))
         case let .failure(fail):
           print("failure \(fail.rawValue)")
           await send(.showToastWithError(.init(isShown: true)))
@@ -173,9 +176,23 @@ struct EmailAuthenticationReducer: Reducer {
         }
       }
       
-    case let .signupSuccess(resultModel):
-      state.signupSuccess = true
+    case let .login(requestModel):
+      return .run { send in
+        let response = try await signupClient.login(requestModel)
+        switch response {
+        case let .success(result):
+          await send(.loginSucccess(result))
+        case let .failure(fail):
+          print("failure \(fail.rawValue)")
+          await send(.showToastWithError(.init(isShown: true)))
+        }
+      }
+      
+    case let .loginSucccess(resultModel):
+      state.loginSuccess = true
       UserManager.shared.accessToken = resultModel.accessToken
+      UserDefaultsManager.setValue(.emailAuthToken, value: state.signupEntity.emailAuthToken)
+      UserDefaultsManager.setValue(.emailAuthValue, value: state.signupEntity.emailAuthValue)
       return .none
     }
   }
