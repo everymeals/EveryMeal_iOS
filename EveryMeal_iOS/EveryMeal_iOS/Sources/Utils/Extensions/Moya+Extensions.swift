@@ -56,3 +56,22 @@ extension MoyaProvider {
 //  }
   
 }
+
+extension TargetType {
+  var baseURL: URL {
+#if DEBUG
+    return URL(string: "http://dev.everymeal.shop:8085")!
+#else
+    return URL(string: "http://dev.everymeal.shop:8085")!  // FIXME: 상용 URL 나오면 변경
+#endif
+  }
+  
+  var defaultBody: [String: Any] {
+    [:]
+  }
+  
+  var headers: [String: String]? {
+    [:]
+  }
+  
+}

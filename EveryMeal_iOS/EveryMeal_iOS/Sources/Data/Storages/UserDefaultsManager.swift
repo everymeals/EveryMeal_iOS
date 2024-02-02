@@ -13,6 +13,7 @@ struct UserDefaultsManager {
     case isUnivChosen  // 대학 선택한지
     case emailAuthToken
     case emailAuthValue
+    case univIdx
   }
   
   /// UserDefault에서 키값으로 저장하기
