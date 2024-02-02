@@ -11,6 +11,7 @@ struct ChooseUnivView: View {
   @State var isSelected: Bool = false
   @Binding var isNotUnivChosen: Bool
   @State private var universities: [UnivsEntity] = []
+  @State var selectedIndex: Int?
 
   var body: some View {
     VStack(spacing: 0) {
@@ -32,18 +33,20 @@ struct ChooseUnivView: View {
       
       .task {
         do {
-          universities = try await UnivsService().fetchUniversities()
+          if let universities = try await UnivsService().fetchUniversities() {
+            self.universities = universities
+          }
         } catch {
           print("⁉️ Error: \(error.localizedDescription)")
         }
       }
       
-      UnivGridView(isSelected: $isSelected, universities: universities)
+      UnivGridView(isSelected: $isSelected, selectedIndex: $selectedIndex, universities: universities)
         .padding(.top, 28)
         .overlay(alignment: .bottom, content: {
           GradationView()
         })
-      ChooseButtonView(isSelected: $isSelected, isNotUnivChosen: $isNotUnivChosen)
+      ChooseButtonView(isSelected: $isSelected, isNotUnivChosen: $isNotUnivChosen, selectedIndex: $selectedIndex)
     }
   }
 }
@@ -51,7 +54,7 @@ struct ChooseUnivView: View {
 struct UnivGridView: View {
 
   @Binding var isSelected: Bool
-  @State var selectedIndex: Int?
+  @Binding var selectedIndex: Int?
   var universities: [UnivsEntity]
 
   var body: some View {
@@ -94,6 +97,7 @@ struct UnivGridView: View {
 struct ChooseButtonView: View {
   @Binding var isSelected: Bool
   @Binding var isNotUnivChosen: Bool
+  @Binding var selectedIndex: Int?
 
   var body: some View {
     VStack(spacing: 20) {
@@ -103,7 +107,7 @@ struct ChooseButtonView: View {
             UIApplication.shared.open(url)
           }
         }
-      SelectUnivButton(isSelected: $isSelected, isNotUnivChosen: $isNotUnivChosen)
+      SelectUnivButton(isSelected: $isSelected, isNotUnivChosen: $isNotUnivChosen, selectedIndex: $selectedIndex)
     }
   }
 }
@@ -143,6 +147,7 @@ struct AddUnivView: View {
 struct SelectUnivButton: View {
   @Binding var isSelected: Bool
   @Binding var isNotUnivChosen: Bool
+  @Binding var selectedIndex: Int?
 
   var bottomPadding: CGFloat {
     DeviceManager.shared.hasPhysicalHomeButton ? 24 : 0
@@ -152,6 +157,9 @@ struct SelectUnivButton: View {
     Button {
       if isSelected {
         print("선택하기 버튼 클릭")
+        
+        guard let selectedIndex = selectedIndex else { return }
+        UserDefaultsManager.setValue(.univIdx, value: selectedIndex + 1)
         UserDefaultsManager.setValue(.isUnivChosen, value: true)
         isNotUnivChosen = false
       }
@@ -172,6 +180,6 @@ struct SelectUnivButton: View {
 
 struct ChooseUnivView_Previews: PreviewProvider {
   static var previews: some View {
-    ChooseUnivView(isSelected: true, isNotUnivChosen: .constant(true))
+    ChooseUnivView(isSelected: true, isNotUnivChosen: .constant(true), selectedIndex: nil)
   }
 }

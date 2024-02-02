@@ -128,6 +128,10 @@ struct HomeView: View {
           }
         }
       }
+      .onAppear {
+        let univIdx = UserDefaultsManager.getInt(.univIdx)
+        print("univIdx: \(univIdx)")
+      }
       .onChange(of: navigationPath) { value in
         otherViewShowing = value.count != 0
       }

@@ -60,7 +60,7 @@
 		0FE449572B57D34D0054DED3 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 0FE449562B57D34D0054DED3 /* Moya */; };
 		0FE449592B57D34D0054DED3 /* ReactiveMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 0FE449582B57D34D0054DED3 /* ReactiveMoya */; };
 		0FE4495B2B57D34D0054DED3 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 0FE4495A2B57D34D0054DED3 /* RxMoya */; };
-		0FE4495E2B57D3FE0054DED3 /* UnivsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE4495D2B57D3FE0054DED3 /* UnivsResponseModel.swift */; };
+		0FE4495E2B57D3FE0054DED3 /* UnivsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE4495D2B57D3FE0054DED3 /* UnivsResponse.swift */; };
 		0FE449602B57D4320054DED3 /* UnivsEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE4495F2B57D4320054DED3 /* UnivsEntity.swift */; };
 		0FE449652B57DC790054DED3 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE449642B57DC790054DED3 /* UserDefaultsManager.swift */; };
 		0FE4496E2B57DE3C0054DED3 /* UnivsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE4496D2B57DE3C0054DED3 /* UnivsAPI.swift */; };
@@ -150,7 +150,8 @@
 		0F82DF282B0EC7240049EDB4 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		0F8D3D042B200A440026FA5D /* CustomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSheetView.swift; sourceTree = "<group>"; };
 		0F95A0922B0F1CF2000317D8 /* SignOutDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutDetailView.swift; sourceTree = "<group>"; };
-		0FE4495D2B57D3FE0054DED3 /* UnivsResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivsResponseModel.swift; sourceTree = "<group>"; };
+		0FCBABD72B6917D1007EB51C /* StoreAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreAPI.swift; sourceTree = "<group>"; };
+		0FE4495D2B57D3FE0054DED3 /* UnivsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivsResponse.swift; sourceTree = "<group>"; };
 		0FE4495F2B57D4320054DED3 /* UnivsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivsEntity.swift; sourceTree = "<group>"; };
 		0FE449642B57DC790054DED3 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		0FE4496D2B57DE3C0054DED3 /* UnivsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivsAPI.swift; sourceTree = "<group>"; };
@@ -505,7 +506,7 @@
 		0FE4495C2B57D3B60054DED3 /* UniversityDTO */ = {
 			isa = PBXGroup;
 			children = (
-				0FE4495D2B57D3FE0054DED3 /* UnivsResponseModel.swift */,
+				0FE4495D2B57D3FE0054DED3 /* UnivsResponse.swift */,
 			);
 			path = UniversityDTO;
 			sourceTree = "<group>";
@@ -779,7 +780,7 @@
 				0FF7C7192A91ECEF00BFC33D /* GradationView.swift in Sources */,
 				0FE4496E2B57DE3C0054DED3 /* UnivsAPI.swift in Sources */,
 				087F9F522ADD63C6001DB3F2 /* ReviewDetailView.swift in Sources */,
-				0FE4495E2B57D3FE0054DED3 /* UnivsResponseModel.swift in Sources */,
+				0FE4495E2B57D3FE0054DED3 /* UnivsResponse.swift in Sources */,
 				0F3BBF2D2AF23244003EBAB7 /* Font+Extensions.swift in Sources */,
 				0F58F6EB2AFA1E1600010A70 /* BaseLottieView.swift in Sources */,
 				663260AD2AF1F819006FC22C /* MealHGridView.swift in Sources */,

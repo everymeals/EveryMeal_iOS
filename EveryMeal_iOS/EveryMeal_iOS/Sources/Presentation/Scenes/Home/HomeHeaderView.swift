@@ -13,6 +13,11 @@ struct HomeHeaderView: View {
       Image("everyMealLogo")
       Spacer()
       Image("icon-search-mono")
+        .padding()
+        .onTapGesture {
+          print("임시 기능: 유저 디폴트 삭제")
+          UserDefaultsManager.removeAllDefault()
+        }
       Image("icon-heart-mono")
     }
     .padding(.horizontal, 20)
