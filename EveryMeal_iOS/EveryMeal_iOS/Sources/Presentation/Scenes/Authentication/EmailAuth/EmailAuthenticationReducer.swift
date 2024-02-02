@@ -197,7 +197,3 @@ struct EmailAuthenticationReducer: Reducer {
     }
   }
 }
-
-struct EmailAuthEnvironment {
-  var mapClient: MapClient
-}

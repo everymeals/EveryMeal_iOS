@@ -55,6 +55,14 @@ extension UserAPI: TargetType {
   }
   
   var headers: [String : String]? {
-    return ["Content-type": "application/json"]
+    var values: [String: String] = ["Content-type": "application/json"]
+    return values
+//    switch self {
+//    case .signup:
+//      return values
+//    case .login:
+//      values["Authorization"] = "Bearer \(String(describing: UserManager.shared.accessToken))"
+//      return values
+//    }
   }
 }

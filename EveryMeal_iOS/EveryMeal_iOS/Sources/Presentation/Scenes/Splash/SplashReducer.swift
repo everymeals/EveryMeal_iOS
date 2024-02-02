@@ -1,0 +1,47 @@
+//
+//  SplashReducer.swift
+//  EveryMeal_iOS
+//
+//  Created by 김하늘 on 2/2/24.
+//
+
+import Foundation
+
+import ComposableArchitecture
+
+struct SplashReducer: Reducer {
+  @Dependency(\.signupClient) var signupClient
+  
+  struct State: Equatable {
+    var signupEntity: SignupEntity
+    var loginSuccess: Bool = false
+  }
+  
+  enum Action {
+    case login
+    case loginSuccess(Bool)
+  }
+  
+  func reduce(into state: inout State, action: Action) -> Effect<Action> {
+    switch action {
+    case .login:
+      return .run { send in
+        let requestModel = LoginRequest(
+          emailAuthToken: UserDefaultsManager.getString(.emailAuthToken),
+          emailAuthValue: UserDefaultsManager.getString(.emailAuthValue)
+          )
+        let response = try await signupClient.login(requestModel)
+        switch response {
+        case let .success(response):
+          UserManager.shared.accessToken = response.accessToken
+          await send(.loginSuccess(response.errorCode != nil))
+        case let .failure(error):
+          print("failure \(error.rawValue)")
+        }
+      }
+    case let .loginSuccess(value):
+      state.loginSuccess = value
+      return .none
+    }
+  }
+}

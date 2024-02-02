@@ -6,38 +6,44 @@
 //
 
 import SwiftUI
+
+import ComposableArchitecture
 import Lottie
 
 struct SplashView: View {
+  let store: StoreOf<SplashReducer>
+  
   @State private var didFinishedLoading = false
   @State private var showingAlert = false
   @State private var alertMessage = ""
   
   var body: some View {
-    VStack {
-      if didFinishedLoading {
-        MainTabBarView()
-      } else {
-        BaseLottieView(jsonName: "everymeal_splash", loopMode: .playOnce)
-          .frame(width: 250, height: 250)
-          .offset(y: -50)
-          .onAppear {
-            startLottieAnimation()
-          }
+    WithViewStore(self.store, observe: { $0 }) { viewStore in
+      VStack {
+        if didFinishedLoading {
+          MainTabBarView()
+        } else {
+          BaseLottieView(jsonName: "everymeal_splash", loopMode: .playOnce)
+            .frame(width: 250, height: 250)
+            .offset(y: -50)
+            .onAppear {
+              startLottieAnimation()
+            }
+        }
       }
-    }
-    .edgesIgnoringSafeArea(.all)
-    .alert(isPresented: $showingAlert) {
-      Alert(
-        title: Text(""),
-        message: Text(alertMessage),
-        primaryButton: .default(Text("재시도"), action: {
-          startLottieAnimation()  // performAPIFetch를 재시도
-        }),
-        secondaryButton: .cancel(Text("취소"), action: {
-          
-        })
-      )
+      .edgesIgnoringSafeArea(.all)
+      .alert(isPresented: $showingAlert) {
+        Alert(
+          title: Text(""),
+          message: Text(alertMessage),
+          primaryButton: .default(Text("재시도"), action: {
+            startLottieAnimation()  // performAPIFetch를 재시도
+          }),
+          secondaryButton: .cancel(Text("취소"), action: {
+            
+          })
+        )
+      }
     }
   }
   

@@ -107,6 +107,7 @@
 		66BEA02B2B0C7C5900F3125B /* EmailAuthPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEA02A2B0C7C5900F3125B /* EmailAuthPopupView.swift */; };
 		66BEA02D2B0C8BFD00F3125B /* EveryMealToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEA02C2B0C8BFD00F3125B /* EveryMealToast.swift */; };
 		66BEA0302B0C9E0000F3125B /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 66BEA02F2B0C9E0000F3125B /* AlertToast */; };
+		66C5C85F2B6C977C00ED3272 /* SplashReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C5C85E2B6C977C00ED3272 /* SplashReducer.swift */; };
 		66FF637F2AD7CE3D00A10986 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FF637E2AD7CE3D00A10986 /* Constants.swift */; };
 		66FF63812AD7DEB800A10986 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FF63802AD7DEB800A10986 /* Functions.swift */; };
 /* End PBXBuildFile section */
@@ -210,6 +211,7 @@
 		66A3FFA92B480462002DC665 /* EverMealErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EverMealErrorType.swift; sourceTree = "<group>"; };
 		66BEA02A2B0C7C5900F3125B /* EmailAuthPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthPopupView.swift; sourceTree = "<group>"; };
 		66BEA02C2B0C8BFD00F3125B /* EveryMealToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveryMealToast.swift; sourceTree = "<group>"; };
+		66C5C85E2B6C977C00ED3272 /* SplashReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashReducer.swift; sourceTree = "<group>"; };
 		66FF637E2AD7CE3D00A10986 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		66FF63802AD7DEB800A10986 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -516,6 +518,7 @@
 			isa = PBXGroup;
 			children = (
 				0F78AFFA2A6CCA6B006B8C80 /* SplashView.swift */,
+				66C5C85E2B6C977C00ED3272 /* SplashReducer.swift */,
 			);
 			path = Splash;
 			sourceTree = "<group>";
@@ -799,6 +802,7 @@
 				662C69012B3C15FC00B47C87 /* CameraPicker.swift in Sources */,
 				08900BFC2AF27D7E00392BAE /* EmailAuthenticationView.swift in Sources */,
 				0F43F6812A6EA86B00239AA4 /* MapView.swift in Sources */,
+				66C5C85F2B6C977C00ED3272 /* SplashReducer.swift in Sources */,
 				0FE449652B57DC790054DED3 /* UserDefaultsManager.swift in Sources */,
 				6681C7A02AEA4ABD00C3D2C1 /* MealItemLikeButton.swift in Sources */,
 				08C3B3962AE401720067FB53 /* CustomNavigationView.swift in Sources */,
