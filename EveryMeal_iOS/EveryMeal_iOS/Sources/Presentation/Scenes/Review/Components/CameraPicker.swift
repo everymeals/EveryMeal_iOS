@@ -12,7 +12,7 @@ struct CameraPicker: UIViewControllerRepresentable {
   typealias UIViewControllerType = UIImagePickerController
   typealias Coordinator = CameraPickerCoordinator
   
-  @Binding var image: [Image]
+  @Binding var image: [UIImage]
   @Binding var isActive: Bool
   
   func makeUIViewController(context: Context) -> UIImagePickerController {
@@ -33,18 +33,17 @@ struct CameraPicker: UIViewControllerRepresentable {
 
 class CameraPickerCoordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   
-  @Binding var image: [Image]
+  @Binding var image: [UIImage]
   @Binding var isActive: Bool
   
-  init(image: Binding<[Image]>, isActive: Binding<Bool>) {
+  init(image: Binding<[UIImage]>, isActive: Binding<Bool>) {
     _image = image
     _isActive = isActive
   }
   
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     if let uiImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-      let image = Image(uiImage: uiImage)
-      self.image = [image]
+      self.image = [uiImage]
       self.isActive = false
     }
   }

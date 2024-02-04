@@ -10,6 +10,7 @@ import Foundation
 struct EmailSendResponse: Codable, Equatable {
   let localDateTime, message: String?
   let data: TokenModel?
+  let errorCode: String?
   
   static func == (lhs: EmailSendResponse, rhs: EmailSendResponse) -> Bool {
     lhs.localDateTime == rhs.localDateTime
