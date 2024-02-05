@@ -76,7 +76,10 @@ extension SignupClient: DependencyKey {
     signup: { client in
       do {
         let signupResponse = try await UserService().postSignup(client: client)
-        if signupResponse.errorCode == nil {
+        if let errorCode = signupResponse.errorCode,
+           errorCode == EverMealErrorType.signupSameNicknameError.rawValue {
+          return .failure(.signupSameNicknameError)
+        } else if signupResponse.errorCode == nil {
           return .success(signupResponse)
         } else {
           return .failure(.fail)

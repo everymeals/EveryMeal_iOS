@@ -15,7 +15,8 @@ struct EmailAuthenticationReducer: Reducer {
   struct State: Equatable {
     var signupEntity: SignupEntity
     
-    var signinAlready: Bool? = false
+    var sameNickname: Bool? = nil
+    var signinAlready: Bool? = nil
     var isEmailSending = false
     var isVertifyCodeSending = false
     var emailSendSuccess: Bool?
@@ -31,6 +32,7 @@ struct EmailAuthenticationReducer: Reducer {
   enum Action {
     case checkAlreadySignin(String)
     case setSigninAlready(Bool?)
+    case setSameNickname(Bool?)
     
     case sendEmail(String)
     case sendEmailResponse(EmailSendResponse)
@@ -59,6 +61,7 @@ struct EmailAuthenticationReducer: Reducer {
         switch response {
         case let .success(result):
           await send(.setSigninAlready(result))
+          return
         case let .failure(failure):
           print("failure \(failure.rawValue)")
           await send(.showToastWithError(.init(isShown: true)))
@@ -122,8 +125,7 @@ struct EmailAuthenticationReducer: Reducer {
       return .none
       
     case let .signupButtonDidTappaed(image, nickname):
-      // FIXME: universityIdx 수정
-      state.signupEntity.universityIdx = 1
+      state.signupEntity.universityIdx = UserDefaultsManager.getInt(.univIdx)
       state.signupEntity.nickname = nickname
       return .send(.getImageURL(image))
       
@@ -169,12 +171,21 @@ struct EmailAuthenticationReducer: Reducer {
         switch response {
         case .success:
           await send(.login(loginRequestModel))
+          return
         case let .failure(fail):
           print("failure \(fail.rawValue)")
-          await send(.showToastWithError(.init(isShown: true)))
+          if fail == .signupSameNicknameError {
+            await send(.setSameNickname(true))
+          } else {
+            await send(.showToastWithError(.init(isShown: true)))
+          }
           return
         }
       }
+      
+    case let .setSameNickname(value):
+      state.sameNickname = value
+      return .none
       
     case let .login(requestModel):
       return .run { send in
