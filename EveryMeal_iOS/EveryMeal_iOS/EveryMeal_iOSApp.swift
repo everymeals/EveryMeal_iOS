@@ -11,7 +11,9 @@ import SwiftUI
 struct EveryMeal_iOSApp: App {
   var body: some Scene {
     WindowGroup {
-      SplashView()
+      SplashView(store: .init(initialState: SplashReducer.State(), reducer: {
+        SplashReducer()
+      }))
     }
   }
 }

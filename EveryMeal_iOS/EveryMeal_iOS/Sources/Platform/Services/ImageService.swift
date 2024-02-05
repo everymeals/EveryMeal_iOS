@@ -16,7 +16,11 @@ struct ImageService {
     do {
       let response = try await provider.request(.getImageURL(fileDomain))
       let result = try JSONDecoder().decode(EveryMealDefaultResponse<ImageResponse>.self, from: response.data)
-      return result.data
+      if let data = result.data {
+        return data
+      } else {
+        throw EverMealErrorType.fail
+      }
     } catch {
       throw error
     }

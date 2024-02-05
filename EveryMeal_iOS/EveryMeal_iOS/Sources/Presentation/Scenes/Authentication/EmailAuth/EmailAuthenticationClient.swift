@@ -16,6 +16,7 @@ struct SignupClient {
   var getImageConfig: () async throws -> Result<ImageResponse, EverMealErrorType>
   var saveImageToAWS: (String, Data) async throws -> Result<Bool, EverMealErrorType>
   var signup: (SignupRequest) async throws -> Result<SignupResponse, EverMealErrorType>
+  var login: (LoginRequest) async throws -> Result<EveryMealDefaultResponse<LoginResponse>, EverMealErrorType>
 }
 
 struct PostVertifyNumberClient {
@@ -28,8 +29,8 @@ extension SignupClient: DependencyKey {
     checkAlreadySignin: { email in
       do {
         let response = try await EmailVertifyService().checkSignin(email: email)
-        if response.errorCode == nil {
-          return .success(response.data)
+        if let data = response.data {
+          return .success(data)
         } else {
           return .failure(.fail)
         }
@@ -50,7 +51,11 @@ extension SignupClient: DependencyKey {
     postVertifyNumber: { client in
       do {
         let emailVertifyResponse = try await EmailVertifyService().postVertifyNumber(client: client)
-        return .success(emailVertifyResponse.data)
+        if let data = emailVertifyResponse.data {
+          return .success(data)
+        } else {
+          return .failure(.fail)
+        }
       } catch {
         return .failure(.fail)
       }
@@ -75,13 +80,29 @@ extension SignupClient: DependencyKey {
     signup: { client in
       do {
         let signupResponse = try await UserService().postSignup(client: client)
-        return .success(signupResponse)
+        if let errorCode = signupResponse.errorCode,
+           errorCode == EverMealErrorType.signupSameNicknameError.rawValue {
+          return .failure(.signupSameNicknameError)
+        } else if signupResponse.errorCode == nil {
+          return .success(signupResponse)
+        } else {
+          return .failure(.fail)
+        }
       } catch {
         return .failure(.fail)
       }
       
+    },
+    login: { client in
+      do {
+        let loginResponse = try await UserService().postLogin(client: client)
+        if loginResponse.errorCode == nil {
+          return .success(loginResponse)
+        } else {
+          return .failure(.fail)
+        }
+      }
     }
-    
   )
 }
 

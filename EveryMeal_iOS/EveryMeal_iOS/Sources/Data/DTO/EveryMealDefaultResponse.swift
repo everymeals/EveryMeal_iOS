@@ -9,6 +9,6 @@ import Foundation
 
 struct EveryMealDefaultResponse<T: Decodable>: Decodable {
   let localDateTime, message: String?
-  let data: T
+  let data: T?
   let errorCode: String?
 }

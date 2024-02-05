@@ -11,6 +11,7 @@ import Moya
 
 enum UserAPI {
   case signup(SignupRequest)
+  case login(LoginRequest)
 }
 
 extension UserAPI: TargetType {
@@ -22,12 +23,14 @@ extension UserAPI: TargetType {
     switch self {
     case .signup:
       return URLConstant.signup.path
+    case .login:
+      return URLConstant.login.path
     }
   }
   
   var method: Moya.Method {
     switch self {
-    case .signup:
+    case .signup, .login:
       return .post
     }
   }
@@ -42,12 +45,24 @@ extension UserAPI: TargetType {
       body["universityIdx"] = client.universityIdx
       body["profileImgKey"] = client.profileImgKey
       
-      return .requestParameters(parameters: body,
-                                encoding: JSONEncoding.default)
+    case let .login(client):
+      body["emailAuthToken"] = client.emailAuthToken
+      body["emailAuthValue"] = client.emailAuthValue
     }
+    
+    return .requestParameters(parameters: body,
+                              encoding: JSONEncoding.default)
   }
   
   var headers: [String : String]? {
-    return ["Content-type": "application/json"]
+    var values: [String: String] = ["Content-type": "application/json"]
+    return values
+//    switch self {
+//    case .signup:
+//      return values
+//    case .login:
+//      values["Authorization"] = "Bearer \(String(describing: UserManager.shared.accessToken))"
+//      return values
+//    }
   }
 }

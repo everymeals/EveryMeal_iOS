@@ -17,6 +17,7 @@ enum URLConstant {
   case emailVertify
   case image
   case signup
+  case login
   
   static var mode: Mode {
     #if DEBUG
@@ -41,6 +42,7 @@ enum URLConstant {
     case .emailVertify: "/api/v1/users/email/verify"
     case .image: "/api/v1/s3/presigned-url"
     case .signup: "/api/v1/users/signup"
+    case .login: "/api/v1/users/login"
     }
   }
   

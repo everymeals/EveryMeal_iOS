@@ -15,7 +15,8 @@ struct EmailAuthenticationReducer: Reducer {
   struct State: Equatable {
     var signupEntity: SignupEntity
     
-    var signinAlready: Bool? = false
+    var sameNickname: Bool? = nil
+    var signinAlready: Bool? = nil
     var isEmailSending = false
     var isVertifyCodeSending = false
     var emailSendSuccess: Bool?
@@ -23,7 +24,7 @@ struct EmailAuthenticationReducer: Reducer {
     var vertifyDidSuccess: Bool?
     var saveImageToAWSSuccess: Bool?
     
-    var signupSuccess: Bool?
+    var loginSuccess: Bool?
     
     var errorToastWillBeShown = ToastModel(isShown: false, type: nil)
   }
@@ -31,6 +32,7 @@ struct EmailAuthenticationReducer: Reducer {
   enum Action {
     case checkAlreadySignin(String)
     case setSigninAlready(Bool?)
+    case setSameNickname(Bool?)
     
     case sendEmail(String)
     case sendEmailResponse(EmailSendResponse)
@@ -44,7 +46,9 @@ struct EmailAuthenticationReducer: Reducer {
     
     case signupButtonDidTappaed(Data, String)
     case signup
-    case signupSuccess(SignupResponse)
+    
+    case login(LoginRequest)
+    case loginSucccess(LoginResponse)
 
     case showToastWithError(ToastModel)
   }
@@ -57,6 +61,7 @@ struct EmailAuthenticationReducer: Reducer {
         switch response {
         case let .success(result):
           await send(.setSigninAlready(result))
+          return
         case let .failure(failure):
           print("failure \(failure.rawValue)")
           await send(.showToastWithError(.init(isShown: true)))
@@ -120,8 +125,7 @@ struct EmailAuthenticationReducer: Reducer {
       return .none
       
     case let .signupButtonDidTappaed(image, nickname):
-      // FIXME: universityIdx 수정
-      state.signupEntity.universityIdx = 1
+      state.signupEntity.universityIdx = UserDefaultsManager.getInt(.univIdx)
       state.signupEntity.nickname = nickname
       return .send(.getImageURL(image))
       
@@ -160,27 +164,54 @@ struct EmailAuthenticationReducer: Reducer {
       return .none
       
     case .signup:
-      let requestModel = state.signupEntity.toSignupRequest()
+      let signinRequestModel = state.signupEntity.toSignupRequest()
+      let loginRequestModel = state.signupEntity.toLoginReqeust()
       return .run { send in
-        let response = try await signupClient.signup(requestModel)
+        let response = try await signupClient.signup(signinRequestModel)
+        switch response {
+        case .success:
+          await send(.login(loginRequestModel))
+          return
+        case let .failure(fail):
+          print("failure \(fail.rawValue)")
+          if fail == .signupSameNicknameError {
+            await send(.setSameNickname(true))
+          } else {
+            await send(.showToastWithError(.init(isShown: true)))
+          }
+          return
+        }
+      }
+      
+    case let .setSameNickname(value):
+      state.sameNickname = value
+      return .none
+      
+    case let .login(requestModel):
+      return .run { send in
+        let response = try await signupClient.login(requestModel)
         switch response {
         case let .success(result):
-          await send(.signupSuccess(result))
+          if let data = result.data {
+            await send(.loginSucccess(data))
+          } else {
+            await send(.showToastWithError(.init(isShown: true)))
+          }
+          return
         case let .failure(fail):
+          UserManager.shared.accessToken = nil
           print("failure \(fail.rawValue)")
           await send(.showToastWithError(.init(isShown: true)))
           return
         }
       }
       
-    case let .signupSuccess(resultModel):
-      state.signupSuccess = true
+    case let .loginSucccess(resultModel):
+      state.loginSuccess = true
       UserManager.shared.accessToken = resultModel.accessToken
+      UserDefaultsManager.setValue(.emailAuthToken, value: state.signupEntity.emailAuthToken)
+      UserDefaultsManager.setValue(.emailAuthValue, value: state.signupEntity.emailAuthValue)
       return .none
     }
   }
-}
-
-struct EmailAuthEnvironment {
-  var mapClient: MapClient
 }
