@@ -113,7 +113,7 @@ struct ReviewWriteImageTextView: View {
         
         VStack {
           Spacer()
-          EveryMealButton(selectEnable: $saveButtonEnabled, title: "등록하기")
+          EveryMealButton(selectEnable: $saveButtonEnabled, title: "등록하기", didTapped: { })
             .onTapGesture {
               let dummyReviewModel = ReviewDetailModel(
                 nickname: "햄식이",
