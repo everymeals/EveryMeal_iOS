@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeTopThreeMealsView: View {
+  @Binding var campusStores: [CampusStoreContent]?
+  
   var body: some View {
     VStack(spacing: 8) {
       HStack(spacing: 0) {
@@ -18,48 +20,37 @@ struct HomeTopThreeMealsView: View {
           .padding(.top, 24)
         Spacer()
       }
-      MealGridView(didMealTapped: { _ in })
-      .padding(.top, 20)
+      MealGridView(campusStores: $campusStores, didMealTapped: { _ in })
+        .padding(.top, 20)
     }
   }
 }
 
 // FIXME: 추후 파일로 분리 필요
 struct MealGridView: View {
-  @State var didMealTapped: (MealEntity) -> Void
-  @State var mealModels: [MealEntity] = [MealEntity(title: "수아당",
-                                            type: .분식,
-                                            description: "ss",
-                                            score: 3.0,
-                                            doUserLike: true,
-                                            imageURLs: ["fdsafdas", "fdsafdas", "fdsafdas"],
-                                            likesCount: 24),
-                                  MealEntity(title: "동경산책 성신여대점",
-                                            type: .일식,
-                                            description: "ss",
-                                            score: 4.0,
-                                            doUserLike: false,
-                                            imageURLs: ["fdsfads", "fdsafdas"],
-                                            likesCount: 32),
-                                  MealEntity(title: "언앨리셰프",
-                                            type: .양식,
-                                            description: "ss",
-                                            score: 2.5,
-                                            doUserLike: false,
-                                            imageURLs: nil,
-                                            likesCount: 0)
-  ]
-  
-  let columns = [GridItem(.flexible())]
+  @Binding var campusStores: [CampusStoreContent]?
+  @State var didMealTapped: (StoreEntity) -> Void
   
   var body: some View {
-    LazyVGrid(columns: columns, spacing: 8) {
-      ForEach(mealModels.indices, id: \.self) { index in
-        MealVerticalItemView(mealModel: mealModels[index])
+    let storeModels = campusStores?.map { storeContent -> StoreEntity in
+      StoreEntity(
+        name: storeContent.name ?? "",
+        categoryDetail: storeContent.categoryDetail ?? "",
+        grade: storeContent.grade ?? 0.0,
+        reviewCount: storeContent.reviewCount ?? 0,
+        recommendedCount: storeContent.recommendedCount ?? 0,
+        images: storeContent.images,
+        isLiked: storeContent.isLiked ?? false
+      )
+    } ?? []
+    
+    LazyVGrid(columns: [GridItem(.flexible())], spacing: 8) {
+      ForEach(storeModels, id: \.self) { storeModel in
+        MealVerticalItemView(storeModel: storeModel)
           .onTapGesture {
-            didMealTapped(mealModels[index])
+            // 여기에 탭 제스처 처리 로직 추가
+            didMealTapped(storeModel)
           }
-        Spacer()
       }
     }.padding(.horizontal, 20)
   }
@@ -85,6 +76,10 @@ struct MoreRestuarantButton: View {
 
 struct HomeTopThreeMealsView_Previews: PreviewProvider {
   static var previews: some View {
-    HomeTopThreeMealsView()
+    HomeTopThreeMealsView(campusStores: .constant([
+      CampusStoreContent(idx: nil, name: "수아당", address: nil, phoneNumber: nil, categoryDetail: "분식", distance: nil, grade: 3.0, reviewCount: 5, recommendedCount: 24, images: nil, isLiked: true),
+      CampusStoreContent(idx: nil, name: "동경산책 성신여대점", address: nil, phoneNumber: nil, categoryDetail: "일식", distance: nil, grade: 3.0, reviewCount: 5, recommendedCount: 32, images: nil, isLiked: false),
+      CampusStoreContent(idx: nil, name: "언앨리셰프", address: nil, phoneNumber: nil, categoryDetail: "양식", distance: nil, grade: 0, reviewCount: 0, recommendedCount: 0, images: nil, isLiked: false)
+    ]))
   }
 }

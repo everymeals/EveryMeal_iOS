@@ -27,6 +27,8 @@ struct HomeView: View {
   private let viewBottomargin: CGFloat = 24
   private let moreReviewBtnBottomMargin: CGFloat = 13
   
+  @State var campusStores: [CampusStoreContent]?
+  
   var body: some View {
     NavigationStack(path: $navigationPath) {
       VStack {
@@ -75,7 +77,7 @@ struct HomeView: View {
             }
           
           Separator()
-          HomeTopThreeMealsView()
+          HomeTopThreeMealsView(campusStores: $campusStores)
           MoreRestuarantButton()
             .onTapGesture {
               self.navigationPath.append(.moreStoreView(.best))
@@ -131,7 +133,12 @@ struct HomeView: View {
       }
       .onAppear {
         let univIdx = UserDefaultsManager.getInt(.univIdx)
-        print("univIdx: \(univIdx)")
+        Task {
+          let model = GetCampusStoresRequest(offset: "0", limit: "3", order: .distance, group: .all, grade: nil)
+          if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
+            campusStores = result.content
+          }
+        }
       }
       .onChange(of: navigationPath) { value in
         otherViewShowing = value.count != 0

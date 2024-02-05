@@ -17,7 +17,7 @@ struct BestStoreSearchView: View {
   @State private var scrollToTop: Bool = false
   @State private var goToWriteReview: Bool = false // 삭제 필요
   
-  var nextButtonTapped: (MealEntity) -> Void
+  var nextButtonTapped: (StoreEntity) -> Void
   
   // MARK: - Property
   
@@ -51,8 +51,10 @@ struct BestStoreSearchView: View {
           // FIXME: focus 문제 해결 필요
           
           if isSearchBarFocused { // TODO: scrollToTop toggle
-            let resultMealView = MealGridView(didMealTapped: { mealModel in
-              nextButtonTapped(mealModel)
+            let resultMealView = MealGridView(
+              campusStores: .constant(nil),
+              didMealTapped: { storeModel in
+                nextButtonTapped(storeModel)
             })
             resultMealView
           } else {
