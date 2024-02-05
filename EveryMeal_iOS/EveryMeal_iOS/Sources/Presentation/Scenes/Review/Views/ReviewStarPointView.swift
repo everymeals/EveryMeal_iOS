@@ -13,8 +13,8 @@ struct ReviewStarPointView: View {
   @State var text: String = ""
   @State var starChecked = Array(repeating: false, count: 5)
   @State var isBubbleShown: Bool = true
-  @State var mealModel: MealEntity
-  var nextButtonTapped: (MealEntity) -> Void
+  @State var storeModel: StoreEntity
+  var nextButtonTapped: (StoreEntity) -> Void
   var backButtonTapped: () -> Void
   
   
@@ -43,7 +43,7 @@ struct ReviewStarPointView: View {
         }
         VStack(alignment: .center, spacing: 0) {
           Spacer()
-          Text(mealModel.type.rawValue)
+          Text(storeModel.categoryDetail)
             .foregroundColor(Color.grey6)
             .font(.pretendard(size: 12, weight: .medium))
             .padding(.horizontal, 6)
@@ -52,7 +52,7 @@ struct ReviewStarPointView: View {
             .cornerRadius(4)
             .padding(.bottom, 12)
           
-          Text(mealModel.title)
+          Text(storeModel.name)
             .foregroundColor(Color.grey9)
             .font(Font.pretendard(size: 18, weight: .bold))
             .lineLimit(1)
@@ -71,9 +71,9 @@ struct ReviewStarPointView: View {
                     print("index  \(index), starIndex \(startIndex)")
                     starChecked[startIndex] = startIndex <= index
                     if startIndex == starChecked.count - 1 {
-                      mealModel.score = Double(index+1)
+                      storeModel.grade = Double(index + 1)
                       DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        nextButtonTapped(mealModel)
+                        nextButtonTapped(storeModel)
                       }
                     }
                   }
@@ -121,15 +121,10 @@ struct SpeachBubbleView: View {
 
 struct ReviewStarPointView_Previews: PreviewProvider {
   static var previews: some View {
-    let dummyMealEntity = MealEntity(title: "동경산책 성신여대점",
-                                   type: .일식,
-                                   description: "ss",
-                                   score: 4.0,
-                                   doUserLike: false,
-                                   imageURLs: ["fdsfads", "fdsafdas"],
-                                   likesCount: 3)
+    let dummy = StoreEntity(name: "동경산책 성신여대점", categoryDetail: "일식", grade: 4.0, reviewCount: 52, recommendedCount: 3, images: ["fdsfads", "fdsafdas"], isLiked: false, description: "dummy")
+    
     ReviewStarPointView(
-      mealModel: dummyMealEntity,
+      storeModel: dummy,
       nextButtonTapped: { _ in
         print("go next")
       }, backButtonTapped: {

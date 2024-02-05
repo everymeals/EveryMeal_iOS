@@ -8,28 +8,11 @@
 import SwiftUI
 
 struct MealHGridView: View {
-  @State var didMealTapped: (MealEntity) -> Void
-  @State var mealModels: [MealEntity] = [MealEntity(title: "수아당",
-                                            type: .분식,
-                                            description: "ss",
-                                            score: 3.0,
-                                            doUserLike: true,
-                                            imageURLs: ["fdsafdas", "fdsafdas", "fdsafdas"],
-                                            likesCount: 24),
-                                  MealEntity(title: "동경산책 성신여대점",
-                                            type: .일식,
-                                            description: "ss",
-                                            score: 4.0,
-                                            doUserLike: false,
-                                            imageURLs: ["fdsfads", "fdsafdas"],
-                                            likesCount: 32),
-                                  MealEntity(title: "언앨리셰프",
-                                            type: .양식,
-                                            description: "ss",
-                                            score: 2.5,
-                                            doUserLike: false,
-                                            imageURLs: nil,
-                                            likesCount: 0)
+  @State var didMealTapped: (StoreEntity) -> Void
+  @State var storeModels: [StoreEntity] = [
+    StoreEntity(name: "수아당", categoryDetail: "분식", grade: 3.0, reviewCount: 123, recommendedCount: 24, images: ["fdsafdas", "fdsafdas", "fdsafdas"], isLiked: true, description: "test"),
+    StoreEntity(name: "동경산책 성신여대점", categoryDetail: "일식", grade: 4.0, reviewCount: 123, recommendedCount: 24, images: ["fdsfads", "fdsafdas"], isLiked: false, description: "test"),
+    StoreEntity(name: "언앨리셰프", categoryDetail: "양식", grade: 2.5, reviewCount: 123, recommendedCount: 24, images: nil, isLiked: false, description: "test")
   ]
   
   let columns = [GridItem(.flexible())]
@@ -37,10 +20,10 @@ struct MealHGridView: View {
   var body: some View {
     ScrollView(.horizontal, showsIndicators: false) {
       LazyHGrid(rows: columns, spacing: 12) {
-        ForEach(mealModels.indices, id: \.self) { index in
-          MealHorizontalItemView(mealModel: mealModels[index])
+        ForEach(storeModels.indices, id: \.self) { index in
+          MealHorizontalItemView(storeModel: storeModels[index])
             .onTapGesture {
-              didMealTapped(mealModels[index])
+              didMealTapped(storeModels[index])
             }
         }
       }
@@ -50,17 +33,13 @@ struct MealHGridView: View {
 
 struct MealHGridView_Previews: PreviewProvider {
   static var previews: some View {
-    let dummyMealEntity = MealEntity(title: "동경산책 성신여대점",
-                                   type: .일식,
-                                   description: "ss",
-                                   score: 4.0,
-                                   doUserLike: false,
-                                   imageURLs: ["fdsfads", "fdsafdas"],
-                                   likesCount: 3)
-    MealHGridView(didMealTapped: { model in
-      print("tapped \(model.title)")
-      
-    }, mealModels: [dummyMealEntity, dummyMealEntity, dummyMealEntity, dummyMealEntity, dummyMealEntity])
+    let dummy = StoreEntity(name: "동경산책 성신여대점", categoryDetail: "일식", grade: 4.0, reviewCount: 123, recommendedCount: 3, images: ["fdsfads", "fdsafdas"], isLiked: false, description: "dummy")
+    
+    MealHGridView(
+      didMealTapped: { model in
+        print("tapped \(model.name)")
+      },
+      storeModels: [dummy, dummy, dummy, dummy, dummy])
     Spacer()
   }
 }

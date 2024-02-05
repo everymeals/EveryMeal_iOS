@@ -18,6 +18,9 @@ enum MoreStoreViewType: String, Hashable {
 struct MoreStoreView: View {
   var backButtonTapped: () -> Void
   var moreViewType: MoreStoreViewType
+  @State var campusStores: [CampusStoreContent]? = []
+  @State private var currentPage = 1
+  @State private var isLoading = false
   
   var body: some View {
     NavigationView {
@@ -25,9 +28,7 @@ struct MoreStoreView: View {
         CustomNavigationView(
           title: moreViewType.rawValue,
           leftItem: Image("icon-arrow-left-small-mono"),
-          leftItemTapped: {
-            backButtonTapped()
-          }
+          leftItemTapped: backButtonTapped
         )
         
         ScrollView {
@@ -55,19 +56,57 @@ struct MoreStoreView: View {
             
             FilterBarView(viewType: .stores)
             
-            MealGridView(didMealTapped: { _ in })
+            MealGridView(campusStores: $campusStores, didMealTapped: { _ in })
               .padding(.top, 20)
             
             Spacer()
           }
         }
       }
-      
     }
     .navigationBarHidden(true)
     .onAppear {
       UITabBar.appearance().isHidden = true
+      loadInitialContent()
     }
+  }
+  
+  func loadInitialContent() {
+    let univIdx = UserDefaultsManager.getInt(.univIdx)
+    let model = GetCampusStoresRequest(offset: "0", limit: "15", order: .distance, group: .all, grade: nil)
+    
+    Task {
+      if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
+        campusStores = result.content
+      }
+    }
+  }
+  
+  // TODO: 무한 스크롤(페이지네이션) 미완성
+  func loadMoreContent() {
+    guard !isLoading else { return }
+    isLoading = true
+    let univIdx = UserDefaultsManager.getInt(.univIdx)
+    let nextPage = currentPage + 1
+    let model = GetCampusStoresRequest(offset: "\(nextPage)", limit: "15", order: .distance, group: .all, grade: nil)
+    
+    Task {
+      if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
+        if let newStores = result.content, !newStores.isEmpty {
+          campusStores?.append(contentsOf: newStores)
+          currentPage += 1
+        }
+      }
+      isLoading = false
+    }
+  }
+  
+}
+
+struct ViewOffsetKey: PreferenceKey {
+  static var defaultValue: CGFloat = 0
+  static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+    value = nextValue()
   }
 }
 

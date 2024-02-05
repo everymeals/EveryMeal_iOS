@@ -10,9 +10,9 @@ import PhotosUI
 
 struct ReviewWriteImageTextView: View {
   
-  init(mealModel: MealEntity, saveButtonTapped: @escaping (ReviewDetailModel) -> Void, closeButtonTapped: @escaping () -> Void) {
+  init(storeModel: StoreEntity, saveButtonTapped: @escaping (ReviewDetailModel) -> Void, closeButtonTapped: @escaping () -> Void) {
     UITextView.appearance().backgroundColor = .clear
-    self.mealModel = mealModel
+    self.storeModel = storeModel
     self.saveButtonTapped = saveButtonTapped
     self.closeButtonTapped = closeButtonTapped
   }
@@ -25,7 +25,7 @@ struct ReviewWriteImageTextView: View {
   @State private var textHeight = CGFloat.zero
   
   private let writeReviewScrollViewID = "writeReviewScrollViewID"
-  var mealModel: MealEntity
+  var storeModel: StoreEntity
   var saveButtonTapped: (ReviewDetailModel) -> Void
   var closeButtonTapped: () -> Void
   
@@ -52,7 +52,7 @@ struct ReviewWriteImageTextView: View {
           ScrollView {
             VStack {
               VStack(alignment: .center, spacing: 0) {
-                Text(mealModel.type.rawValue)
+                Text(storeModel.categoryDetail)
                   .foregroundColor(Color.grey6)
                   .font(.pretendard(size: 12, weight: .medium))
                   .padding(.horizontal, 6)
@@ -62,7 +62,7 @@ struct ReviewWriteImageTextView: View {
                   .padding(.bottom, 12)
                   .padding(.top, 30)
                 
-                Text(mealModel.title)
+                Text(storeModel.name)
                   .foregroundColor(Color.grey9)
                   .font(Font.pretendard(size: 18, weight: .bold))
                   .lineLimit(1)
@@ -113,22 +113,23 @@ struct ReviewWriteImageTextView: View {
         
         VStack {
           Spacer()
-          EveryMealButton(selectEnable: $saveButtonEnabled, title: "등록하기", didTapped: {
-            let dummyReviewModel = ReviewDetailModel(
-              nickname: "햄식이",
-              userID: "4324324",
-              profileImageURL: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1752&q=80",
-              mealModel: mealModel,
-              dateBefore: 3
-            )
-            saveButtonTapped(dummyReviewModel)
-          })
+          EveryMealButton(selectEnable: $saveButtonEnabled, title: "등록하기", didTapped: { })
+            .onTapGesture {
+              let dummyReviewModel = ReviewDetailModel(
+                nickname: "햄식이",
+                userID: "4324324",
+                profileImageURL: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1752&q=80",
+                storeModel: storeModel,
+                dateBefore: 3
+              )
+              saveButtonTapped(dummyReviewModel)
+            }
         }
         
       }
       .onAppear {
-        print("score \(mealModel.score)")
-        for index in 0..<Int(mealModel.score) {
+        print("score \(storeModel.grade)")
+        for index in 0..<Int(storeModel.grade) {
           starChecked[index] = true
         }
       }
@@ -307,18 +308,15 @@ struct ReviewSelectedImageView: View {
 
 struct ReviewWriteImageTextView_Previews: PreviewProvider {
   static var previews: some View {
-    let dummyMealEntity = MealEntity(title: "동경산책 성신여대점",
-                                   type: .일식,
-                                   description: "ss",
-                                   score: 4.0,
-                                   doUserLike: false,
-                                   imageURLs: ["fdsfads", "fdsafdas"],
-                                   likesCount: 3)
-    ReviewWriteImageTextView(mealModel: dummyMealEntity,
-                             saveButtonTapped: {_ in 
-      print("save")
-    }, closeButtonTapped: {
-      print("close")
-    })
+    let dummy = StoreEntity(name: "동경산책 성신여대점", categoryDetail: "일식", grade: 4.0, reviewCount: 52, recommendedCount: 3, images: ["fdsfads", "fdsafdas"], isLiked: false, description: "dummy")
+    
+    ReviewWriteImageTextView(
+      storeModel: dummy,
+      saveButtonTapped: {_ in
+        print("save")
+      },
+      closeButtonTapped: {
+        print("close")
+      })
   }
 }
