@@ -10,4 +10,5 @@ enum EverMealErrorType: String, Error {
   case invalidJSONParameter
   case invalidJSONResponse
   case fail = "failed to something"
+  case signupSameNicknameError = "USR0005"
 }

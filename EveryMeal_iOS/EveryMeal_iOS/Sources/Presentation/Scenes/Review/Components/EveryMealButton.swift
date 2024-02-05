@@ -13,6 +13,7 @@ struct EveryMealButton: View {
   var deselectableColor: Color = .grey3
   var selectableColor: Color = .red
   var textColor: Color = .white
+  var didTapped: () -> Void
   
   var body: some View {
     HStack {
@@ -28,12 +29,18 @@ struct EveryMealButton: View {
     }
     .padding(.top, 20)
     .background(.white)
+    .disabled(selectEnable)
+    .onTapGesture {
+      if selectEnable {
+        didTapped()        
+      }
+    }
   }
 }
 
 struct ReviewSaveButton_Previews: PreviewProvider {
   static var previews: some View {
     @State var didSelected = true
-    EveryMealButton(selectEnable: $didSelected)
+    EveryMealButton(selectEnable: $didSelected, didTapped: { })
   }
 }

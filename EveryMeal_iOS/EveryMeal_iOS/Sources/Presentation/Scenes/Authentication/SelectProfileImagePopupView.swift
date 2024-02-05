@@ -83,10 +83,9 @@ struct SelectProfileImagePopupView: View {
           changeSelectedImage = !value.isEmpty
         }
       })
-      EveryMealButton(selectEnable: $goToAuthButtonEnabled, title: "확인")
-        .onTapGesture {
-          saveButtonTapped(selectedImages.first ?? UIImage())
-        }
+      EveryMealButton(selectEnable: $goToAuthButtonEnabled, title: "확인", didTapped: {
+        saveButtonTapped(selectedImages.first ?? UIImage())
+      })
     }
     .background(Color.white)
     .onAppear {

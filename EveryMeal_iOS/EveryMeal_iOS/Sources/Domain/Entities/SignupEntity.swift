@@ -27,4 +27,11 @@ struct SignupEntity: Codable, Equatable, Hashable {
       profileImgKey: self.profileImgKey
     )
   }
+  
+  func toLoginReqeust() -> LoginRequest {
+    return LoginRequest(
+      emailAuthToken: self.emailAuthToken,
+      emailAuthValue: self.emailAuthValue
+    )
+  }
 }
