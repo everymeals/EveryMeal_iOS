@@ -27,7 +27,14 @@ struct SplashView: View {
             .frame(width: 250, height: 250)
             .offset(y: -50)
             .onAppear {
-              startLottieAnimation()
+//              startLottieAnimation()
+              if !UserDefaultsManager.getString(.emailAuthToken).isEmpty {
+                viewStore.send(.login)
+              } else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                  didFinishedLoading = true
+                }
+              }
             }
         }
       }
@@ -37,12 +44,18 @@ struct SplashView: View {
           title: Text(""),
           message: Text(alertMessage),
           primaryButton: .default(Text("재시도"), action: {
-            startLottieAnimation()  // performAPIFetch를 재시도
+//            startLottieAnimation()  // performAPIFetch를 재시도
+            store.send(.login)
           }),
           secondaryButton: .cancel(Text("취소"), action: {
             
           })
         )
+      }
+      .onChange(of: viewStore.loginSuccess) { value in
+        if value != nil {
+          didFinishedLoading = true
+        }
       }
     }
   }
@@ -67,6 +80,8 @@ struct SplashView: View {
   private func performAPIFetch(completion: @escaping (Bool, String) -> Void) {
     // API 호출 로직을 구현합니다.
     // 여기서는 예시로 2초 후에 완료되었다고 가정하고 있습니다.
+    store.send(.login)
+    
     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
       // API 호출 결과에 따라서 success 값을 true 또는 false로 설정
       // false인 경우, 에러코드 또는 메시지 전달
@@ -80,6 +95,8 @@ struct SplashView: View {
 
 struct SplashView_Previews: PreviewProvider {
   static var previews: some View {
-    SplashView()
+    SplashView(store: .init(initialState: SplashReducer.State(), reducer: {
+      SplashReducer()
+    }))
   }
 }

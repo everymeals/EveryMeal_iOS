@@ -13,8 +13,7 @@ struct SplashReducer: Reducer {
   @Dependency(\.signupClient) var signupClient
   
   struct State: Equatable {
-    var signupEntity: SignupEntity
-    var loginSuccess: Bool = false
+    var loginSuccess: Bool? = nil
   }
   
   enum Action {
@@ -36,6 +35,7 @@ struct SplashReducer: Reducer {
           UserManager.shared.accessToken = response.accessToken
           await send(.loginSuccess(response.errorCode != nil))
         case let .failure(error):
+          await send(.loginSuccess(false))
           print("failure \(error.rawValue)")
         }
       }
