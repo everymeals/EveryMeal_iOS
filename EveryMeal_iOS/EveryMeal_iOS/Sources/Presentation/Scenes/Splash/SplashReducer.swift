@@ -32,11 +32,12 @@ struct SplashReducer: Reducer {
         let response = try await signupClient.login(requestModel)
         switch response {
         case let .success(response):
-          UserManager.shared.accessToken = response.accessToken
-          await send(.loginSuccess(response.errorCode != nil))
+          UserManager.shared.accessToken = response.data?.accessToken
+          await send(.loginSuccess(response.data?.accessToken != nil))
         case let .failure(error):
           await send(.loginSuccess(false))
           print("failure \(error.rawValue)")
+        return
         }
       }
     case let .loginSuccess(value):

@@ -16,7 +16,7 @@ struct SignupClient {
   var getImageConfig: () async throws -> Result<ImageResponse, EverMealErrorType>
   var saveImageToAWS: (String, Data) async throws -> Result<Bool, EverMealErrorType>
   var signup: (SignupRequest) async throws -> Result<SignupResponse, EverMealErrorType>
-  var login: (LoginRequest) async throws -> Result<LoginResponse, EverMealErrorType>
+  var login: (LoginRequest) async throws -> Result<EveryMealDefaultResponse<LoginResponse>, EverMealErrorType>
 }
 
 struct PostVertifyNumberClient {
@@ -29,8 +29,8 @@ extension SignupClient: DependencyKey {
     checkAlreadySignin: { email in
       do {
         let response = try await EmailVertifyService().checkSignin(email: email)
-        if response.errorCode == nil {
-          return .success(response.data)
+        if let data = response.data {
+          return .success(data)
         } else {
           return .failure(.fail)
         }
@@ -51,7 +51,11 @@ extension SignupClient: DependencyKey {
     postVertifyNumber: { client in
       do {
         let emailVertifyResponse = try await EmailVertifyService().postVertifyNumber(client: client)
-        return .success(emailVertifyResponse.data)
+        if let data = emailVertifyResponse.data {
+          return .success(data)
+        } else {
+          return .failure(.fail)
+        }
       } catch {
         return .failure(.fail)
       }

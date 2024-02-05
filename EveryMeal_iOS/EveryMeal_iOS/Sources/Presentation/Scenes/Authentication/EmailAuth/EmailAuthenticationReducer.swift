@@ -192,10 +192,17 @@ struct EmailAuthenticationReducer: Reducer {
         let response = try await signupClient.login(requestModel)
         switch response {
         case let .success(result):
-          await send(.loginSucccess(result))
+          if let data = result.data {
+            await send(.loginSucccess(data))
+          } else {
+            await send(.showToastWithError(.init(isShown: true)))
+          }
+          return
         case let .failure(fail):
+          UserManager.shared.accessToken = nil
           print("failure \(fail.rawValue)")
           await send(.showToastWithError(.init(isShown: true)))
+          return
         }
       }
       

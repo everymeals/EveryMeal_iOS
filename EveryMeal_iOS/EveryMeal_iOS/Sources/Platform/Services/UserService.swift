@@ -22,10 +22,10 @@ struct UserService {
     }
   }
   
-  func postLogin(client: LoginRequest) async throws -> LoginResponse {
+  func postLogin(client: LoginRequest) async throws -> EveryMealDefaultResponse<LoginResponse> {
     do {
       let response = try await provider.request(.login(client))
-      let result = try JSONDecoder().decode(LoginResponse.self, from: response.data)
+      let result = try JSONDecoder().decode(EveryMealDefaultResponse<LoginResponse>.self, from: response.data)
       return result
     } catch {
       throw error

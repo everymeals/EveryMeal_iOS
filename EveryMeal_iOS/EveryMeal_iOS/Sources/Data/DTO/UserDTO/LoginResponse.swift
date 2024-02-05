@@ -11,8 +11,4 @@ struct LoginResponse: Codable {
   var accessToken: String?
   var nickname: String?
   var profileImg: String?
-  
-  var errorCode: String?
-  var localDateTime: String?
-  var message: String?
 }
