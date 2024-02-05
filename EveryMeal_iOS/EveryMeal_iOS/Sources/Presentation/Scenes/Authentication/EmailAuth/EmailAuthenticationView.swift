@@ -152,38 +152,45 @@ struct EmailAuthenticationView: View {
                     }
                 }
                 
-                EveryMealButton(selectEnable: $isEmailTextNotEmpty, title: viewType == .makeProfile ? "확인" : "다음")
-                  .onTapGesture {
-                    UIApplication.shared.hideKeyboard()
-                    
-                    switch viewType {
-                    case .enterEmail:
-                      isValidValue = checkIsValidEmail(email: enteredText)
-                      if isValidValue {
-                        viewStore.send(.checkAlreadySignin(enteredText))
-                      }
-                    case .enterAuthNumber:
-                      isValidValue = checkIsValidAuthNumber(enteredText)
-                      if isValidValue {
-                        viewStore.send(.sendVertifyCode(enteredText))
-                      }
-                    case .makeProfile:
-                      guard let imageData = selectedImage.jpegData(compressionQuality: 0.8) else {
-                        print("이미지 데이터 형식으로 변환 실패")
-                        return
-                      }
-                      viewStore.send(.signupButtonDidTappaed(imageData, enteredText) )
+                EveryMealButton(selectEnable: $isEmailTextNotEmpty, title: viewType == .makeProfile ? "확인" : "다음", didTapped: {
+                  UIApplication.shared.hideKeyboard()
+                  
+                  switch viewType {
+                  case .enterEmail:
+                    isValidValue = checkIsValidEmail(email: enteredText)
+                    if isValidValue {
+                      viewStore.send(.checkAlreadySignin(enteredText))
                     }
+                  case .enterAuthNumber:
+                    isValidValue = checkIsValidAuthNumber(enteredText)
+                    if isValidValue {
+                      viewStore.send(.sendVertifyCode(enteredText))
+                    }
+                  case .makeProfile:
+                    guard let imageData = selectedImage.jpegData(compressionQuality: 0.8) else {
+                      print("이미지 데이터 형식으로 변환 실패")
+                      return
+                    }
+                    viewStore.send(.signupButtonDidTappaed(imageData, enteredText) )
                   }
+                })
                   .onChange(of: viewStore.signinAlready) { value in
                     if value == false {
                       emailErrorType = .invalidEmail
                       isValidValue = true
                       viewStore.send(.sendEmail(enteredText))
+                      viewStore.send(.setSigninAlready(nil))
                     } else if value == true { // 이미 가입된 경우
                       emailErrorType = .alreadySignin
                       isValidValue = false
                       viewStore.send(.setSigninAlready(nil))
+                    }
+                  }
+                  .onChange(of: viewStore.sameNickname) { value in
+                    if value == true {
+                      isValidValue = false
+                    } else if value == false {
+                      isValidValue = true
                     }
                   }
                   .onChange(of: viewStore.signupEntity.emailSentCount) { value in
@@ -233,10 +240,9 @@ struct EmailAuthenticationView: View {
                 .onAppear {
                   
                 }
-              EveryMealButton(selectEnable: $makeProfileSuccess, title: "완료")
-                .onTapGesture {
-                  authSuccess()
-                }
+              EveryMealButton(selectEnable: $makeProfileSuccess, title: "완료", didTapped: {
+                authSuccess()
+              })
             }
           }
           if showDidSentEmail {
