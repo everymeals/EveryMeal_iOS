@@ -10,11 +10,12 @@ import PhotosUI
 
 struct ReviewWriteImageTextView: View {
   
-  init(mealModel: MealEntity, saveButtonTapped: @escaping (ReviewDetailModel) -> Void, closeButtonTapped: @escaping () -> Void) {
+  init(mealModel: MealEntity, saveButtonTapped: @escaping (ReviewDetailModel) -> Void, closeButtonTapped: @escaping () -> Void, starButtonTapped: @escaping (ReviewDetailModel) -> Void) {
     UITextView.appearance().backgroundColor = .clear
     self.mealModel = mealModel
     self.saveButtonTapped = saveButtonTapped
     self.closeButtonTapped = closeButtonTapped
+    self.starButtonTapped = starButtonTapped
   }
   
   @State var starChecked = Array(repeating: false, count: 5)
@@ -23,11 +24,13 @@ struct ReviewWriteImageTextView: View {
   
   @State var content: String = ""
   @State private var textHeight = CGFloat.zero
+  @State private var bubbleShown: Bool = true
   
   private let writeReviewScrollViewID = "writeReviewScrollViewID"
   var mealModel: MealEntity
   var saveButtonTapped: (ReviewDetailModel) -> Void
   var closeButtonTapped: () -> Void
+  var starButtonTapped: (ReviewDetailModel) -> Void
   
   
   private let navigationHeight: CGFloat = 48
@@ -78,7 +81,21 @@ struct ReviewWriteImageTextView: View {
                       .frame(width: 20, height: 20)
                   }
                 }
-                .padding(.bottom, 60)
+                .onTapGesture {
+                  let dummyReviewModel = ReviewDetailModel(
+                    nickname: "햄식이",
+                    userID: "4324324",
+                    profileImageURL: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1752&q=80",
+                    mealModel: mealModel,
+                    dateBefore: 3
+                  )
+                  
+                  starButtonTapped(dummyReviewModel)
+                }
+                .padding(.bottom, 6)
+                
+                SpeachBubbleView(text: "별점을 수정할 수 있어요!", isShown: $bubbleShown)
+                .padding(.bottom, 20)
                 
                 ZStack {
                   // TextEditor의 height를 동적으로 조절하기 위한 Text
@@ -95,12 +112,12 @@ struct ReviewWriteImageTextView: View {
                     .frame(height: max(120, textHeight + 20))
                   
                 }.onPreferenceChange(ViewHeightKey.self) {
-                  reader.scrollTo(writeReviewScrollViewID, anchor: .top)
+                  reader.scrollTo(writeReviewScrollViewID, anchor: .bottom)
                   textHeight = $0
                 }
                 .padding(.bottom, 16)
               }
-              ReviewSelectedImageView(images: [])
+              ReviewSelectedImageView(images: [.init(named: "dummyImage")!])
                 .padding(.leading, 20)
               
               Spacer()
@@ -249,7 +266,7 @@ struct ReviewSelectedImageView: View {
               .resizable()
               .aspectRatio(contentMode: .fill)
               .frame(width: 91, height: 91)
-              .cornerRadius(8)
+              .cornerRadius(10)
             VStack {
               HStack(alignment: .top) {
                 Spacer()
@@ -319,6 +336,8 @@ struct ReviewWriteImageTextView_Previews: PreviewProvider {
       print("save")
     }, closeButtonTapped: {
       print("close")
+    }, starButtonTapped: { _ in
+      print("star edit")
     })
   }
 }

@@ -104,6 +104,8 @@ struct WriteReviewStoreSearchView: View {
             },
             closeButtonTapped: {
               exitAlertPresent.toggle()
+            }, starButtonTapped: { model in
+              reviewNavigationStack.removeLast()
             })
           reviewWriteImageTextView
             .fullScreenCover(isPresented: $exitAlertPresent) {
@@ -130,9 +132,9 @@ struct WriteReviewStoreSearchView: View {
           reviewDetailView
         }
       }
-      .padding(.bottom)
-      .navigationBarTitleDisplayMode(.inline)
-      .navigationBarHidden(true)
+//      .padding(.bottom)
+//      .navigationBarTitleDisplayMode(.inline)
+//      .navigationBarHidden(true)
     }
   }
 }
