@@ -87,6 +87,7 @@
 		665627D82B6BA37600B36F1A /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665627D72B6BA37600B36F1A /* LoadingView.swift */; };
 		665627DA2B6C7AB300B36F1A /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665627D92B6C7AB300B36F1A /* LoginRequest.swift */; };
 		665627DC2B6C7ADE00B36F1A /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665627DB2B6C7ADE00B36F1A /* LoginResponse.swift */; };
+		666C253E2B71D8A200AD6917 /* AgreePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666C253D2B71D8A200AD6917 /* AgreePopupView.swift */; };
 		6674FC342B04BC9100CC4CA6 /* BaseWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674FC332B04BC9100CC4CA6 /* BaseWebView.swift */; };
 		6681C79C2AEA44D400C3D2C1 /* MoreStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681C79B2AEA44D400C3D2C1 /* MoreStoreView.swift */; };
 		6681C79E2AEA49B900C3D2C1 /* MealVerticalItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681C79D2AEA49B900C3D2C1 /* MealVerticalItemView.swift */; };
@@ -174,7 +175,6 @@
 		0F82DF282B0EC7240049EDB4 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		0F8D3D042B200A440026FA5D /* CustomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSheetView.swift; sourceTree = "<group>"; };
 		0F95A0922B0F1CF2000317D8 /* SignOutDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutDetailView.swift; sourceTree = "<group>"; };
-		0FCBABD72B6917D1007EB51C /* StoreAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreAPI.swift; sourceTree = "<group>"; };
 		0FE4495D2B57D3FE0054DED3 /* UnivsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivsResponse.swift; sourceTree = "<group>"; };
 		0FE4495F2B57D4320054DED3 /* UnivsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivsEntity.swift; sourceTree = "<group>"; };
 		0FE449642B57DC790054DED3 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
@@ -193,6 +193,7 @@
 		665627D72B6BA37600B36F1A /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		665627D92B6C7AB300B36F1A /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
 		665627DB2B6C7ADE00B36F1A /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
+		666C253D2B71D8A200AD6917 /* AgreePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreePopupView.swift; sourceTree = "<group>"; };
 		6674FC332B04BC9100CC4CA6 /* BaseWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWebView.swift; sourceTree = "<group>"; };
 		6681C79B2AEA44D400C3D2C1 /* MoreStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreStoreView.swift; sourceTree = "<group>"; };
 		6681C79D2AEA49B900C3D2C1 /* MealVerticalItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealVerticalItemView.swift; sourceTree = "<group>"; };
@@ -288,6 +289,7 @@
 				66BEA02A2B0C7C5900F3125B /* EmailAuthPopupView.swift */,
 				662C68FE2B3BECCE00B47C87 /* SelectProfileImagePopupView.swift */,
 				0836A5722B44236C0098A41A /* AuthSuccessView.swift */,
+				666C253D2B71D8A200AD6917 /* AgreePopupView.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -884,6 +886,7 @@
 				0FE449722B57DFBE0054DED3 /* Moya+Extensions.swift in Sources */,
 				66935D8B2AF1F22000E80424 /* FilterBarView.swift in Sources */,
 				08EC02932B67C126003CD556 /* URLConstants.swift in Sources */,
+				666C253E2B71D8A200AD6917 /* AgreePopupView.swift in Sources */,
 				66FF637F2AD7CE3D00A10986 /* Constants.swift in Sources */,
 				665627DC2B6C7ADE00B36F1A /* LoginResponse.swift in Sources */,
 				66935D8A2AF1F22000E80424 /* CustomAlert.swift in Sources */,

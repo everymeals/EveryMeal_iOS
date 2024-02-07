@@ -23,10 +23,16 @@ struct EmailAuthenticationView: View {
   @State var isEmailTextNotEmpty: Bool = false
   @State var isValidValue: Bool = true
   @State var emailErrorType: EmailViewType.EmailErrorType = .invalidEmail
+  @State var nicknameProfileErrorType: EmailViewType.NicknameProfileErrorType = .invalidNickname
+  
   @State var showDidSentEmail: Bool = false
+  @State var showTermsAndConditionAgree: Bool = false
+  @State var didTermsAgreed: Bool = false
+  
   @State var showSelectProfileImage: Bool = false
   @State var makeProfileSuccess: Bool = false
   @State var successButtonEnabled: Bool = true
+  
   @State private var viewOpacity: Double = 1.0
   @State var errorToastWillBeShown = ToastModel(isShown: false)
   @State var showIndicator: Bool = false
@@ -125,7 +131,17 @@ struct EmailAuthenticationView: View {
                 
                 
                 if !isValidValue {
-                  Text(viewType != .enterEmail ? viewType.errorMessage : emailErrorType.rawValue)
+                  let errorMessage: String = {
+                    switch viewType {
+                    case .enterEmail:
+                      return emailErrorType.rawValue
+                    case .enterAuthNumber:
+                      return viewType.errorMessage
+                    case .makeProfile:
+                      return nicknameProfileErrorType.rawValue
+                    }
+                  }()
+                  Text(errorMessage)
                     .font(.pretendard(size: 12, weight: .regular))
                     .foregroundColor(.red)
                 }
@@ -178,8 +194,7 @@ struct EmailAuthenticationView: View {
                     if value == false {
                       emailErrorType = .invalidEmail
                       isValidValue = true
-                      viewStore.send(.sendEmail(enteredText))
-                      viewStore.send(.setSigninAlready(nil))
+                      showTermsAndConditionAgree = true
                     } else if value == true { // 이미 가입된 경우
                       emailErrorType = .alreadySignin
                       isValidValue = false
@@ -188,13 +203,21 @@ struct EmailAuthenticationView: View {
                   }
                   .onChange(of: viewStore.sameNickname) { value in
                     if value == true {
+                      nicknameProfileErrorType = .duplicatedNickname
                       isValidValue = false
                     } else if value == false {
+                      nicknameProfileErrorType = .invalidNickname
                       isValidValue = true
                     }
                   }
                   .onChange(of: viewStore.signupEntity.emailSentCount) { value in
                     emailDidSent(viewStore.signupEntity)
+                  }
+                  .onChange(of: didTermsAgreed) { value in
+                    if value && showTermsAndConditionAgree {
+                      viewStore.send(.sendEmail(enteredText))
+                      viewStore.send(.setSigninAlready(nil))
+                    }
                   }
                   .onChange(of: viewStore.vertifyDidSuccess) { value in
                     if let result = value, result == true {
@@ -232,6 +255,23 @@ struct EmailAuthenticationView: View {
                 })
               }
               .presentationDetents([.height(429)])
+              .presentationDragIndicator(.hidden)
+            })
+            .sheet(isPresented: $showTermsAndConditionAgree, content: {
+              VStack {
+                CustomSheetView(title: "이용을 위한 동의가 필요해요",
+                                buttonTitle: "동의하기",
+                                isButtonEnabled: didTermsAgreed,
+                                horizontalPadding: 20,
+                                content: {
+                  AgreePopupView(nextButtonEnabled: $didTermsAgreed)
+                    .padding(.top, 20)
+                }, buttonAction: {
+                  didTermsAgreed = true
+                  showTermsAndConditionAgree = false
+                })
+              }
+              .presentationDetents([.height(299)])
               .presentationDragIndicator(.hidden)
             })
           } else {
@@ -295,8 +335,14 @@ private func checkIsValidAuthNumber(_ number: String) -> Bool {
 }
 
 private func checkIsValidNickname(_ nickname: String) -> Bool {
-  // TODO: 닉네임 API 호출
-  return true
+  do {
+    let regexString = "^[가-힣a-zA-Z0-9]{2,7}$"
+    let regex = try NSRegularExpression(pattern: regexString, options: .anchorsMatchLines)
+    let range = NSRange(location: 0, length: nickname.utf16.count)
+    return regex.firstMatch(in: nickname, options: [], range: range) != nil && (2...7).contains(nickname.count)
+  } catch {
+    return false
+  }
 }
 
 #Preview {
@@ -346,5 +392,10 @@ enum EmailViewType: String {
   enum EmailErrorType: String {
     case invalidEmail = "잘못된 이메일 형식이에요"
     case alreadySignin = "이미 가입된 이메일이에요"
+  }
+  
+  enum NicknameProfileErrorType: String {
+    case invalidNickname = "한글, 영어, 숫자를 이용해 2~7자로 지어주세요"
+    case duplicatedNickname = "이미 사용중인 닉네임이에요"
   }
 }
