@@ -26,17 +26,17 @@ struct SplashReducer: Reducer {
     case .login:
       return .run { send in
         let requestModel = LoginRequest(
-          emailAuthToken: UserDefaultsManager.getString(.emailAuthToken),
-          emailAuthValue: UserDefaultsManager.getString(.emailAuthValue)
+          emailAuthToken: UserDefaultsManager.getString(.accessToken),
+          emailAuthValue: UserDefaultsManager.getString(.refreshToken)
           )
         let response = try await signupClient.login(requestModel)
         switch response {
         case let .success(response):
-          UserManager.shared.accessToken = response.data?.accessToken
+//          UserManager.shared.accessToken = response.data?.accessToken
           await send(.loginSuccess(response.data?.accessToken != nil))
         case let .failure(error):
           await send(.loginSuccess(false))
-          print("failure \(error.rawValue)")
+          print("failure \(error)")
         return
         }
       }

@@ -17,6 +17,7 @@ struct SignupClient {
   var saveImageToAWS: (String, Data) async throws -> Result<Bool, EverMealErrorType>
   var signup: (SignupRequest) async throws -> Result<SignupResponse, EverMealErrorType>
   var login: (LoginRequest) async throws -> Result<EveryMealDefaultResponse<LoginResponse>, EverMealErrorType>
+//  var getAccessToken(String)
 }
 
 struct PostVertifyNumberClient {
@@ -81,10 +82,11 @@ extension SignupClient: DependencyKey {
       do {
         let signupResponse = try await UserService().postSignup(client: client)
         if let errorCode = signupResponse.errorCode,
-           errorCode == EverMealErrorType.signupSameNicknameError.rawValue {
-          return .failure(.signupSameNicknameError)
-        } else if signupResponse.errorCode == nil {
-          return .success(signupResponse)
+           errorCode == ErrorCode.USR0005.rawValue {
+          return .failure(.failWithError(.USR0005))
+        } else if signupResponse.errorCode == nil,
+                  let data = signupResponse.data {
+          return .success(data)
         } else {
           return .failure(.fail)
         }
