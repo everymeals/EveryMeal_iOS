@@ -21,7 +21,7 @@ struct HomeTopThreeMealsView: View {
         Spacer()
       }
       MealGridView(campusStores: $campusStores, didMealTapped: { _ in })
-        .padding(.top, 20)
+        .padding(.top, 8)
     }
   }
 }
@@ -44,13 +44,20 @@ struct MealGridView: View {
       )
     } ?? []
     
-    LazyVGrid(columns: [GridItem(.flexible())], spacing: 8) {
-      ForEach(storeModels, id: \.self) { storeModel in
+    LazyVGrid(columns: [GridItem(.flexible())], spacing: 0) {
+      ForEach(Array(storeModels.enumerated()), id: \.element) { index, storeModel in
         MealVerticalItemView(storeModel: storeModel)
           .onTapGesture {
             // 여기에 탭 제스처 처리 로직 추가
             didMealTapped(storeModel)
           }
+          .padding(.vertical, 12)
+        
+        if index < storeModels.count - 1 {
+          Rectangle()
+            .frame(height: 1)
+            .foregroundColor(.grey2)
+        }
       }
     }.padding(.horizontal, 20)
   }
