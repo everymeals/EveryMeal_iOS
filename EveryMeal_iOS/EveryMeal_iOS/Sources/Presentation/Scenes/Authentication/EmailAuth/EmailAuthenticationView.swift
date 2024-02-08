@@ -27,6 +27,7 @@ struct EmailAuthenticationView: View {
   
   @State var showDidSentEmail: Bool = false
   @State var showTermsAndConditionAgree: Bool = false
+  @State var didTermsSaveButtonEnabled: Bool = false
   @State var didTermsAgreed: Bool = false
   
   @State var showSelectProfileImage: Bool = false
@@ -213,8 +214,8 @@ struct EmailAuthenticationView: View {
                   .onChange(of: viewStore.signupEntity.emailSentCount) { value in
                     emailDidSent(viewStore.signupEntity)
                   }
-                  .onChange(of: didTermsAgreed) { value in
-                    if value && showTermsAndConditionAgree {
+                  .onChange(of: didTermsSaveButtonEnabled) { value in
+                    if value {
                       viewStore.send(.sendEmail(enteredText))
                       viewStore.send(.setSigninAlready(nil))
                     }
@@ -267,7 +268,7 @@ struct EmailAuthenticationView: View {
                   AgreePopupView(nextButtonEnabled: $didTermsAgreed)
                     .padding(.top, 20)
                 }, buttonAction: {
-                  didTermsAgreed = true
+                  didTermsSaveButtonEnabled = true
                   showTermsAndConditionAgree = false
                 })
               }
