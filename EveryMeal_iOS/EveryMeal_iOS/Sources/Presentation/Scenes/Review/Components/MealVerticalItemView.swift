@@ -49,27 +49,25 @@ struct MealVerticalItemView: View {
       .padding(.bottom, 14)
       
       let imageColumn = Array(repeating: GridItem(.flexible()), count: 3)
+
       if let imageURLs = storeModel.images {
         LazyVGrid(columns: imageColumn) {
-          ForEach(imageURLs.indices, id: \.self) { index in
+          ForEach(0..<min(imageURLs.count, 3), id: \.self) { index in
             Rectangle()
               .foregroundColor(.clear)
               .frame(maxWidth: .infinity, minHeight: 104, maxHeight: 104)
               .background(
                 ZStack {
-                  Image("dummyImage") // FIXME: 추후 수정 필요
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 105, height: 104) // 추후 해상도로 대응
+                  AsyncImage(url: URL(string: imageURLs[index]))
                   
-                  if index == imageURLs.indices.last && imageURLs.count == 3 {
+                  if index == 2 && imageURLs.count > 3 {
                     ZStack {
                       Rectangle()
                         .foregroundColor(.clear)
                         .frame(maxWidth: .infinity, minHeight: 104, maxHeight: 104)
                         .background(.black.opacity(0.4))
                         .cornerRadius(8)
-                      Text("+ 18")
+                      Text("+ \(imageURLs.count - 3)")
                         .font(.pretendard(size: 16, weight: .medium))
                         .foregroundColor(Color.white)
                     }
@@ -91,7 +89,7 @@ struct MealVerticalItemView_Previews: PreviewProvider {
                             grade: 4.0,
                             reviewCount: 34,
                             recommendedCount: 29,
-                            images: ["fdsfads", "fdsafdas"],
+                            images: ["fdsfads", "fdsafdas", "fdsafdas", "fdsafdas", "fdsafdas"],
                             isLiked: false)
     
     MealVerticalItemView(storeModel: dummy)
