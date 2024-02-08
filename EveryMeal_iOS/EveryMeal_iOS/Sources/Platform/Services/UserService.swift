@@ -8,15 +8,35 @@
 import Foundation
 
 import Moya
+import KeychainSwift
 
 struct UserService {
-  let provider = MoyaProvider<UserAPI>()
+  let provider = MoyaProvider<UserAPI>(session: Session(interceptor: AuthInterceptor.shared))
+  let keychain = KeychainSwift()
   
-  func postSignup(client: SignupRequest) async throws -> SignupResponse {
+  func postSignup(client: SignupRequest) async throws -> EveryMealDefaultResponse<SignupResponse> {
     do {
       let response = try await provider.request(.signup(client))
-      let result = try JSONDecoder().decode(SignupResponse.self, from: response.data)
-      return result
+      let result = try JSONDecoder().decode(EveryMealDefaultResponse<SignupResponse>.self, from: response.data)
+      do {
+        guard let fields = response.response?.allHeaderFields as? [String: String],
+              let url = response.request?.url else {
+          throw EverMealErrorType.fail
+        }
+        
+        let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: url)
+        for cookie in cookies {
+          if cookie.name == "refresh-token" {
+            let refreshToken = cookie.value
+            keychain.set(refreshToken, forKey: .refreshToken)
+            break
+          }
+        }
+        return result
+      } catch {
+        print("Error parsing cookies: \(error)")
+        throw error
+      }
     } catch {
       throw error
     }

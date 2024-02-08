@@ -33,7 +33,7 @@ struct MapViewReducer: Reducer {
         case .success(let success):
           await send(.fetchDataResponse(success))
         case .failure(let failure):
-          print("failure \(failure.rawValue)")
+//          print("failure \(failure.rawValue)")
           return
         }
       }

@@ -18,6 +18,7 @@ enum URLConstant {
   case image
   case signup
   case login
+  case access
   
   static var mode: Mode {
     #if DEBUG
@@ -43,6 +44,7 @@ enum URLConstant {
     case .image: "/api/v1/s3/presigned-url"
     case .signup: "/api/v1/users/signup"
     case .login: "/api/v1/users/login"
+    case .access: "/api/v1/users/token/access"
     }
   }
   

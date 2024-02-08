@@ -8,10 +8,12 @@
 import Foundation
 
 import Moya
+import KeychainSwift
 
 enum UserAPI {
   case signup(SignupRequest)
   case login(LoginRequest)
+  case getAccessToken
 }
 
 extension UserAPI: TargetType {
@@ -25,6 +27,8 @@ extension UserAPI: TargetType {
       return URLConstant.signup.path
     case .login:
       return URLConstant.login.path
+    case .getAccessToken:
+      return URLConstant.access.path
     }
   }
   
@@ -32,6 +36,8 @@ extension UserAPI: TargetType {
     switch self {
     case .signup, .login:
       return .post
+    case .getAccessToken:
+      return .get
     }
   }
   
@@ -44,19 +50,32 @@ extension UserAPI: TargetType {
       body["emailAuthValue"] = client.emailAuthValue
       body["universityIdx"] = client.universityIdx
       body["profileImgKey"] = client.profileImgKey
+      return .requestParameters(parameters: body,
+                                encoding: JSONEncoding.default)
       
     case let .login(client):
       body["emailAuthToken"] = client.emailAuthToken
       body["emailAuthValue"] = client.emailAuthValue
+      return .requestParameters(parameters: body,
+                                encoding: JSONEncoding.default)
+    case .getAccessToken:
+      return .requestPlain
     }
     
-    return .requestParameters(parameters: body,
-                              encoding: JSONEncoding.default)
+  
   }
+  
   
   var headers: [String : String]? {
     var values: [String: String] = ["Content-type": "application/json"]
-    return values
+    switch self {
+    case .login, .signup:
+      return values
+    case .getAccessToken:
+      let keychain = KeychainSwift()
+      values["Cookie"] = keychain.get(.refreshToken)
+      return values
+    }
 //    switch self {
 //    case .signup:
 //      return values

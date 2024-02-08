@@ -8,6 +8,7 @@
 import Foundation
 
 import ComposableArchitecture
+import KeychainSwift
 
 struct EmailAuthenticationReducer: Reducer {
   @Dependency(\.signupClient) var signupClient
@@ -63,7 +64,7 @@ struct EmailAuthenticationReducer: Reducer {
           await send(.setSigninAlready(result))
           return
         case let .failure(failure):
-          print("failure \(failure.rawValue)")
+          print("failure \(failure)")
           await send(.showToastWithError(.init(isShown: true)))
           return
         }
@@ -82,7 +83,7 @@ struct EmailAuthenticationReducer: Reducer {
           await send(.sendEmailResponse(response))
           return
         case let .failure(failure):
-          print("failure \(failure.rawValue)")
+          print("failure \(failure)")
           await send(.showToastWithError(.init(isShown: true)))
           return
         }
@@ -108,7 +109,7 @@ struct EmailAuthenticationReducer: Reducer {
           await send(.sendVertifySuccess)
           return
         case let .failure(fail):
-          print("failure \(fail.rawValue)")
+          print("failure \(fail)")
           await send(.showToastWithError(.init(isShown: true)))
           return
         }
@@ -138,7 +139,7 @@ struct EmailAuthenticationReducer: Reducer {
           await send(.saveToAWS(imageInfo, image))
           return
         case let .failure(fail):
-          print("failure \(fail.rawValue)")
+          print("failure \(fail)")
           await send(.showToastWithError(.init(isShown: true)))
           return
         }
@@ -153,7 +154,7 @@ struct EmailAuthenticationReducer: Reducer {
           await send(.saveToAWSSuccess)
           return
         case let .failure(fail):
-          print("failure \(fail.rawValue)")
+          print("failure \(fail)")
           await send(.showToastWithError(.init(isShown: true)))
           return
         }
@@ -169,12 +170,19 @@ struct EmailAuthenticationReducer: Reducer {
       return .run { send in
         let response = try await signupClient.signup(signinRequestModel)
         switch response {
-        case .success:
+        case let .success(response):
+          let keychain = KeychainSwift()
+          if let accessToken = response.accessToken,
+             let refreshToken = keychain.get(.refreshToken) {
+            keychain.set(accessToken, forKey: .accessToken)
+            UserDefaultsManager.setValue(.accessToken, value: accessToken)
+            UserDefaultsManager.setValue(.refreshToken, value: refreshToken)
+          }
           await send(.login(loginRequestModel))
           return
         case let .failure(fail):
-          print("failure \(fail.rawValue)")
-          if fail == .signupSameNicknameError {
+          if fail == EverMealErrorType.failWithError(.USR0005) {
+            print("failure \(fail)")
             await send(.setSameNickname(true))
           } else {
             await send(.showToastWithError(.init(isShown: true)))
@@ -199,8 +207,8 @@ struct EmailAuthenticationReducer: Reducer {
           }
           return
         case let .failure(fail):
-          UserManager.shared.accessToken = nil
-          print("failure \(fail.rawValue)")
+          UserDefaultsManager.setValue(.accessToken, value: nil)
+          print("failure \(fail)")
           await send(.showToastWithError(.init(isShown: true)))
           return
         }
@@ -208,9 +216,9 @@ struct EmailAuthenticationReducer: Reducer {
       
     case let .loginSucccess(resultModel):
       state.loginSuccess = true
-      UserManager.shared.accessToken = resultModel.accessToken
-      UserDefaultsManager.setValue(.emailAuthToken, value: state.signupEntity.emailAuthToken)
-      UserDefaultsManager.setValue(.emailAuthValue, value: state.signupEntity.emailAuthValue)
+      UserDefaultsManager.setValue(.accessToken, value: resultModel.accessToken)
+//      UserDefaultsManager.setValue(.emailAuthToken, value: state.signupEntity.emailAuthToken)
+//      UserDefaultsManager.setValue(.emailAuthValue, value: state.signupEntity.emailAuthValue)
       return .none
     }
   }

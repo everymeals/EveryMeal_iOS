@@ -10,7 +10,7 @@ import Foundation
 import Moya
 
 struct EmailVertifyService {
-  let provider = MoyaProvider<EmailVertifyAPI>()
+  let provider = MoyaProvider<EmailVertifyAPI>(session: Session(interceptor: AuthInterceptor.shared))
   
   func checkSignin(email: String) async throws -> EveryMealDefaultResponse<Bool> {
     do {

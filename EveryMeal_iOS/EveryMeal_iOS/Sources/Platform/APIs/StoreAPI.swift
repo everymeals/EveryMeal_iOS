@@ -43,7 +43,14 @@ extension StoreAPI: TargetType {
   }
   
   var headers: [String : String]? {
-    return ["Content-type": "application/json"]
+    return ["Content-type": "application/json",
+            "Authorization": "Bearer \(String(describing: UserDefaultsManager.getString(.accessToken)))"]
   }
   
+}
+
+extension StoreAPI {
+  var validationType: ValidationType {
+      return .successCodes
+  }
 }

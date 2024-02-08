@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 struct StoreService {
-  let provider = MoyaProvider<StoreAPI>()
+  let provider = MoyaProvider<StoreAPI>(session: Session(interceptor: AuthInterceptor.shared))
   
   func getCampusStores(univIndex: Int, requestModel: GetCampusStoresRequest) async throws -> CampusStoreData? {
     do {

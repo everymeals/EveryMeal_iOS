@@ -11,8 +11,8 @@ struct UserDefaultsManager {
   
   enum KeyType: String {
     case isUnivChosen  // 대학 선택한지
-    case emailAuthToken
-    case emailAuthValue
+    case accessToken
+    case refreshToken
     case univIdx
   }
   

@@ -8,7 +8,6 @@
 import Foundation
 
 struct SignupResponse: Codable {
-  let localDateTime, message, errorCode: String?
   let accessToken: String?
   let nickname: String?
   let profileImg: String?
