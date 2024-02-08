@@ -10,7 +10,7 @@ import Foundation
 import Moya
 
 struct ImageService {
-  let provider = MoyaProvider<ImageAPI>()
+  let provider = MoyaProvider<ImageAPI>(session: Session(interceptor: AuthInterceptor.shared))
   
   func getImageURL(fileDomain: ImageType) async throws -> ImageResponse {
     do {

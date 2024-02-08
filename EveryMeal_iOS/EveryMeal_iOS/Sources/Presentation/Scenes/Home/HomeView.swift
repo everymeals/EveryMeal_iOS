@@ -18,11 +18,11 @@ enum HomeStackViewType: Hashable {
 
 struct HomeView: View {
   @State var navigationPath: [HomeStackViewType] = []
-  @State private var writeReviewViewTapped: Bool = false
   @State private var topMenuSelected: [Bool] = Array.init(repeating: false, count: 4)
   @Binding var otherViewShowing: Bool
   
-  @State private var goToWriteReviewTapped = false
+  @State private var gotoWriteReview: Bool = false
+  @State private var goToEmailAuth = false
   
   private let viewBottomargin: CGFloat = 24
   private let moreReviewBtnBottomMargin: CGFloat = 13
@@ -38,27 +38,30 @@ struct HomeView: View {
             .padding(.top, 12)
             .padding(.horizontal, 20)
             .onTapGesture {
-              // FIXME: 학교 인증한 사용자인지 확인
-              let isEmailAuthenticationTrue = true
-              goToWriteReviewTapped = isEmailAuthenticationTrue
-//              if isEmailAuthenticationTrue {
-//                self.navigationPath.append(.writeReview)
-//              } else {
-//                self.navigationPath.append(.emailVertifyPopup)
-//              }
+              let isEmailAuthenticationTrue = !UserDefaultsManager.getString(.accessToken).isEmpty
+              if isEmailAuthenticationTrue {
+                gotoWriteReview = true
+              } else {
+                goToEmailAuth = true
+              }
             }
-            .sheet(isPresented: $goToWriteReviewTapped, content: {
+            .sheet(isPresented: $goToEmailAuth, content: {
               VStack {
                 CustomSheetView(buttonTitle: "인증하러 가기",  content: {
                   EmailAuthPopupView()
                 }, buttonAction: {
-                  goToWriteReviewTapped.toggle()
+                  goToEmailAuth.toggle()
                   navigationPath.append(.emailVertify(type: .enterEmail, model: SignupEntity()) )
                 })
               }
               .presentationDetents([.height(330)])
               .presentationDragIndicator(.hidden)
             })
+            .fullScreenCover(isPresented: $gotoWriteReview) {
+              WriteReviewStoreSearchView {
+                gotoWriteReview.toggle()
+              }
+            }
           
           TopMenuButtonsView(isSelected: $topMenuSelected)
             .onChange(of: topMenuSelected) { topMenuValue in

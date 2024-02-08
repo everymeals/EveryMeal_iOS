@@ -10,7 +10,7 @@ import Foundation
 final class UserManager {
   private init() {}
 
-  var accessToken: String?
+//  var accessToken: String?
 
   static let shared = UserManager()
 }

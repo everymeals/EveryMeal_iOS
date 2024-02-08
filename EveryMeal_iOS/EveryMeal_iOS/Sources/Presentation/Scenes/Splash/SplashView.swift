@@ -9,9 +9,11 @@ import SwiftUI
 
 import ComposableArchitecture
 import Lottie
+import KeychainSwift
 
 struct SplashView: View {
   let store: StoreOf<SplashReducer>
+  let keychain = KeychainSwift()
   
   @State private var didFinishedLoading = false
   @State private var showingAlert = false
@@ -27,9 +29,13 @@ struct SplashView: View {
             .frame(width: 250, height: 250)
             .offset(y: -50)
             .onAppear {
-//              startLottieAnimation()
-              if !UserDefaultsManager.getString(.emailAuthToken).isEmpty {
-                viewStore.send(.login)
+              if let accessToken = keychain.get(.accessToken),
+                 let refreshToken = keychain.get(.refreshToken) {
+                UserDefaultsManager.setValue(.accessToken, value: accessToken)
+                UserDefaultsManager.setValue(.refreshToken, value: refreshToken)
+                // FIXME: 다른 로그인으로 변경
+                didFinishedLoading = true // 이 로직 삭제
+//                viewStore.send(.login)
               } else {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                   didFinishedLoading = true

@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 struct UnivsService {
-  let provider = MoyaProvider<UnivsAPI>()
+  let provider = MoyaProvider<UnivsAPI>(session: Session(interceptor: AuthInterceptor.shared))
   
   func fetchUniversities() async throws -> [UnivsEntity]? {
     do {
