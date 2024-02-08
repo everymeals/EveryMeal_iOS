@@ -132,9 +132,9 @@ struct HomeView: View {
         }
       }
       .onAppear {
-        let univIdx = UserDefaultsManager.getInt(.univIdx)
+        let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? 1 : UserDefaultsManager.getInt(.univIdx)
+        let model = GetCampusStoresRequest(offset: "0", limit: "3", order: .name, group: .all, grade: nil)
         Task {
-          let model = GetCampusStoresRequest(offset: "0", limit: "3", order: .distance, group: .all, grade: nil)
           if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
             campusStores = result.content
           }

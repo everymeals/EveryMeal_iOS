@@ -31,6 +31,10 @@ struct MoreStoreView: View {
           leftItemTapped: backButtonTapped
         )
         
+        FilterBarView(viewType: .stores) {
+          loadMoreContent()
+        }
+        
         ScrollView {
           VStack(spacing: 0) {
             if moreViewType != .best {
@@ -54,10 +58,7 @@ struct MoreStoreView: View {
               }
             }
             
-            FilterBarView(viewType: .stores)
-            
             MealGridView(campusStores: $campusStores, didMealTapped: { _ in })
-              .padding(.top, 20)
             
             Spacer()
           }
@@ -72,8 +73,8 @@ struct MoreStoreView: View {
   }
   
   func loadInitialContent() {
-    let univIdx = UserDefaultsManager.getInt(.univIdx)
-    let model = GetCampusStoresRequest(offset: "0", limit: "15", order: .distance, group: .all, grade: nil)
+    let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? 1 : UserDefaultsManager.getInt(.univIdx)
+    let model = GetCampusStoresRequest(offset: "0", limit: "15", order: .name, group: .all, grade: nil)
     
     Task {
       if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
@@ -86,9 +87,9 @@ struct MoreStoreView: View {
   func loadMoreContent() {
     guard !isLoading else { return }
     isLoading = true
-    let univIdx = UserDefaultsManager.getInt(.univIdx)
+    let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? 1 : UserDefaultsManager.getInt(.univIdx)
     let nextPage = currentPage + 1
-    let model = GetCampusStoresRequest(offset: "\(nextPage)", limit: "15", order: .distance, group: .all, grade: nil)
+    let model = GetCampusStoresRequest(offset: "\(nextPage)", limit: "15", order: .name, group: .all, grade: nil)
     
     Task {
       if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
