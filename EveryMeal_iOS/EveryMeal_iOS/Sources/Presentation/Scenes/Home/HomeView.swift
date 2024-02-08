@@ -36,8 +36,8 @@ struct HomeView: View {
             .padding(.top, 12)
             .padding(.horizontal, 20)
             .onTapGesture {
-              let isEmailAuthenticationTrue = UserManager.shared.accessToken != nil
-              if isEmailAuthenticationTrue { // FIXME: 반대로 수정
+              let isEmailAuthenticationTrue = !UserDefaultsManager.getString(.accessToken).isEmpty
+              if isEmailAuthenticationTrue {
                 gotoWriteReview = true
               } else {
                 goToEmailAuth = true
