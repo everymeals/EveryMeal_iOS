@@ -10,7 +10,7 @@ import PhotosUI
 
 struct ReviewWriteImageTextView: View {
   
-  init(storeModel: StoreEntity, saveButtonTapped: @escaping (ReviewDetailModel) -> Void, closeButtonTapped: @escaping () -> Void) {
+  init(storeModel: StoreEntity, saveButtonTapped: @escaping (ReviewDetailModel) -> Void, closeButtonTapped: @escaping () -> Void, starButtonTapped: @escaping (ReviewDetailModel) -> Void) {
     UITextView.appearance().backgroundColor = .clear
     self.storeModel = storeModel
     self.saveButtonTapped = saveButtonTapped
@@ -86,7 +86,7 @@ struct ReviewWriteImageTextView: View {
                     nickname: "햄식이",
                     userID: "4324324",
                     profileImageURL: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1752&q=80",
-                    mealModel: mealModel,
+                    storeModel: storeModel,
                     dateBefore: 3
                   )
                   
@@ -142,7 +142,6 @@ struct ReviewWriteImageTextView: View {
               saveButtonTapped(dummyReviewModel)
             }
         }
-        
       }
       .onAppear {
         print("score \(storeModel.grade)")
@@ -334,6 +333,6 @@ struct ReviewWriteImageTextView_Previews: PreviewProvider {
       },
       closeButtonTapped: {
         print("close")
-      })
+      }, starButtonTapped: { _ in })
   }
 }
