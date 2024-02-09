@@ -74,6 +74,7 @@ struct MoreRestuarantButton: View {
             .inset(by: 0.5)
             .stroke(Color.everyMealRed, lineWidth: 1)
         )
+        .contentShape(Rectangle())
     }
     .padding(.bottom, 30)
     .padding(.horizontal, 20)
