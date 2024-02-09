@@ -10,7 +10,6 @@ import ComposableArchitecture
 
 enum HomeStackViewType: Hashable {
   case writeReview
-  case restaurantList
   case reviewList
   case moreStoreView(MoreStoreViewType)
   case emailVertify(type: EmailViewType, model: SignupEntity)
@@ -96,9 +95,6 @@ struct HomeView: View {
         }
         .navigationDestination(for: HomeStackViewType.self) { stackViewType in
           switch stackViewType {
-          case .restaurantList:
-            MoreBestRestaurantView()
-              .toolbar(.hidden, for: .tabBar)
           case .reviewList:
             MoreReviewsView()
               .toolbar(.hidden, for: .tabBar)
@@ -129,14 +125,14 @@ struct HomeView: View {
             )
             .toolbar(.hidden, for: .tabBar)
           default:
-            MoreBestRestaurantView()
+            MyPageView()
               .toolbar(.hidden, for: .tabBar)
           }
         }
       }
       .onAppear {
         let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? 1 : UserDefaultsManager.getInt(.univIdx)
-        let model = GetCampusStoresRequest(offset: "0", limit: "3", order: .name, group: .all, grade: nil)
+        let model = GetCampusStoresRequest(offset: "0", limit: "3", order: .registDate, group: .all, grade: nil)
         Task {
           if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
             campusStores = result.content
