@@ -19,9 +19,10 @@ struct MoreStoreView: View {
   var backButtonTapped: () -> Void
   var moreViewType: MoreStoreViewType
   @State var campusStores: [CampusStoreContent]? = []
-  @State private var currentPage = 1
+  @State private var currentPage = 0
   @State private var isLoading = false
-  
+  @State private var isLastPage = false
+
   var body: some View {
     NavigationView {
       VStack {
@@ -31,9 +32,7 @@ struct MoreStoreView: View {
           leftItemTapped: backButtonTapped
         )
         
-        FilterBarView(viewType: .stores) {
-          loadMoreContent()
-        }
+        FilterBarView(viewType: .stores)
         
         ScrollView {
           VStack(spacing: 0) {
@@ -60,6 +59,18 @@ struct MoreStoreView: View {
             
             MealGridView(campusStores: $campusStores, didMealTapped: { _ in })
             
+            if let campusStores = campusStores, !campusStores.isEmpty {
+              GeometryReader { geometry -> Color in
+                let maxY = geometry.frame(in: .global).maxY
+                let height = UIScreen.main.bounds.height
+                if maxY < height * 1.1 { // 스크롤 뷰가 바닥에 가까워지면
+                  loadMoreContent()
+                }
+                return Color.clear
+              }
+              .frame(height: 20)
+            }
+            
             Spacer()
           }
         }
@@ -79,13 +90,17 @@ struct MoreStoreView: View {
     Task {
       if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
         campusStores = result.content
+        
+        // 초기 로딩한 페이지가 마지막 페이지인지 검사
+        if let totalPages = result.totalPages {
+          isLastPage = currentPage >= totalPages
+        }
       }
     }
   }
   
-  // TODO: 무한 스크롤(페이지네이션) 미완성
   func loadMoreContent() {
-    guard !isLoading else { return }
+    guard !isLoading, !isLastPage else { return }
     isLoading = true
     let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? 1 : UserDefaultsManager.getInt(.univIdx)
     let nextPage = currentPage + 1
@@ -97,18 +112,13 @@ struct MoreStoreView: View {
           campusStores?.append(contentsOf: newStores)
           currentPage += 1
         }
+        // totalPages에 도달했는데도 스크롤이 바닥에 있으면 API를 계속 요청하는 이슈 해결
+        isLastPage = result.last ?? isLastPage
       }
       isLoading = false
     }
   }
   
-}
-
-struct ViewOffsetKey: PreferenceKey {
-  static var defaultValue: CGFloat = 0
-  static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-    value = nextValue()
-  }
 }
 
 struct MoreStoreView_Previews: PreviewProvider {
