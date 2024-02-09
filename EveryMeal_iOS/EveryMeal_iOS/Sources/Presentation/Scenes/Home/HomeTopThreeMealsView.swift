@@ -21,7 +21,6 @@ struct HomeTopThreeMealsView: View {
         Spacer()
       }
       MealGridView(campusStores: $campusStores, didMealTapped: { _ in })
-        .padding(.top, 8)
     }
   }
 }
