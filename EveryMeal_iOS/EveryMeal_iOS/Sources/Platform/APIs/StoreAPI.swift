@@ -42,9 +42,13 @@ extension StoreAPI: TargetType {
     }
   }
   
-  var headers: [String : String]? {
-    return ["Content-type": "application/json",
-            "Authorization": "Bearer \(String(describing: UserDefaultsManager.getString(.accessToken)))"]
+  var headers: [String: String]? {
+    // 회원가입(이메일 인증?)하기 전에도 홈 탭 맛집 영역이 보여야 함
+    if UserDefaultsManager.getString(.accessToken) == "" {
+      return ["Content-type": "application/json"]
+    } else {
+      return ["Content-type": "application/json", "Authorization": "Bearer \(String(describing: UserDefaultsManager.getString(.accessToken)))"]
+    }
   }
   
 }
