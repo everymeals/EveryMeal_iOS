@@ -22,6 +22,10 @@ struct MoreStoreView: View {
   @State private var currentPage = 0
   @State private var isLoading = false
   @State private var isLastPage = false
+  @State private var selectedSortOption: SortOption? = .registDate
+  
+  @State var isSortOpened = false
+  @State var isFilterOpened = false
 
   var body: some View {
     NavigationView {
@@ -32,7 +36,33 @@ struct MoreStoreView: View {
           leftItemTapped: backButtonTapped
         )
         
-        FilterBarView(viewType: .stores)
+        FilterBarView(
+          viewType: .stores,
+          selectedSortOption: $selectedSortOption,
+          sortCompletionHandler: {
+            isSortOpened.toggle()
+          },
+          filterCompletionHandler: {
+            isFilterOpened.toggle()
+          }
+        )
+        .sheet(isPresented: $isSortOpened) {
+          VStack {
+            Color.gray.opacity(0.3)
+              .frame(width: 73, height: 6)
+              .cornerRadius(30)
+            
+            ForEach(SortOption.allCases, id: \.self) { option in
+              SortOptionView(option: option, isSelected: selectedSortOption == option) { selectedOption in
+                print("\(selectedOption.title) 선택됨")
+                selectedSortOption = option
+                isSortOpened = false
+              }
+            }
+          }
+          .presentationDetents([.height(210)])
+        }
+
         
         ScrollView {
           VStack(spacing: 0) {
@@ -76,6 +106,9 @@ struct MoreStoreView: View {
         }
       }
     }
+    .onChange(of: selectedSortOption) { _ in
+      loadNewContent()
+    }
     .navigationBarHidden(true)
     .onAppear {
       UITabBar.appearance().isHidden = true
@@ -85,7 +118,7 @@ struct MoreStoreView: View {
   
   func loadInitialContent() {
     let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? 1 : UserDefaultsManager.getInt(.univIdx)
-    let model = GetCampusStoresRequest(offset: "0", limit: "15", order: .name, group: .all, grade: nil)
+    let model = GetCampusStoresRequest(offset: "0", limit: "15", order: .registDate, group: .all, grade: nil)
     
     Task {
       if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
@@ -103,8 +136,9 @@ struct MoreStoreView: View {
     guard !isLoading, !isLastPage else { return }
     isLoading = true
     let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? 1 : UserDefaultsManager.getInt(.univIdx)
+    let orderType = selectedSortOption?.toOrderType ?? .registDate
     let nextPage = currentPage + 1
-    let model = GetCampusStoresRequest(offset: "\(nextPage)", limit: "15", order: .name, group: .all, grade: nil)
+    let model = GetCampusStoresRequest(offset: "\(nextPage)", limit: "15", order: orderType, group: .all, grade: nil)
     
     Task {
       if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
@@ -119,6 +153,26 @@ struct MoreStoreView: View {
     }
   }
   
+  /// 정렬을 선택하고 다시 데이터를 받아올 때 사용
+  func loadNewContent() {
+    isLoading = true
+    campusStores = nil // 기존 목록을 초기화
+    currentPage = 0 // 페이지 번호 초기화
+    let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? 1 : UserDefaultsManager.getInt(.univIdx)
+    let orderType = selectedSortOption?.toOrderType ?? .registDate
+    let model = GetCampusStoresRequest(offset: "\(currentPage)", limit: "15", order: orderType, group: .all, grade: nil)
+
+    Task {
+      if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
+        campusStores = result.content
+        if let totalPages = result.totalPages {
+          isLastPage = currentPage >= totalPages
+        }
+      }
+      isLoading = false
+    }
+  }
+
 }
 
 struct MoreStoreView_Previews: PreviewProvider {
@@ -128,4 +182,3 @@ struct MoreStoreView_Previews: PreviewProvider {
     }, moreViewType: .best)
   }
 }
-

@@ -101,5 +101,5 @@ struct CustomSheetView<Content>: View where Content: View {
 
 
 #Preview {
-  FilterBarView()
+  FilterBarView(selectedSortOption: .constant(.registDate))
 }
