@@ -16,8 +16,6 @@ struct FilterBarView: View {
   
   @State var viewType: ViewType = .reviews
   @Binding var selectedSortOption: SortOption?
-//  @State var isSortOpened = false
-//  @State var isFilterOpened = false
   var sortCompletionHandler: (() -> Void)?
   var filterCompletionHandler: (() -> Void)?
   
@@ -39,70 +37,8 @@ struct FilterBarView: View {
       .background(Color(red: 0.95, green: 0.96, blue: 0.96))
       .cornerRadius(100)
       .onTapGesture {
-//        isSortOpened.toggle()
         sortCompletionHandler?()
       }
-      // Sample code 1
-//      .sheet(isPresented: $isSortOpened, content: {
-//        VStack {
-//          CustomSheetView(title: "무엇으로 신고하시나요?", buttonTitle: "확인") {
-//            VStack {
-//              HStack {
-//                Text("해당 가게와 무관한 리뷰")
-//                  .padding(.vertical, 14)
-//                Spacer()
-//                Image("icon-check-mono")
-//                  .renderingMode(.template)
-//                  .foregroundStyle(Color.grey4)
-//              }
-//              .contentShape(Rectangle())
-//              .onTapGesture {
-//                print("11")
-//              }
-//              HStack {
-//                Text("비속어 및 혐오 발언")
-//                  .padding(.vertical, 14)
-//                Spacer()
-//                Image("icon-check-mono")
-//                  .renderingMode(.template)
-//                  .foregroundStyle(Color.grey4)
-//              }
-//              .contentShape(Rectangle())
-//              .onTapGesture {
-//                print("22")
-//              }
-//              HStack {
-//                Text("음란성 게시물")
-//                  .padding(.vertical, 14)
-//                Spacer()
-//                Image("icon-check-mono")
-//                  .renderingMode(.template)
-//                  .foregroundStyle(Color.grey4)
-//              }
-//              .contentShape(Rectangle())
-//              .onTapGesture {
-//                print("33")
-//              }
-//            }
-//          }
-//        }
-//        .presentationDetents([.height(330)])
-//        .presentationDragIndicator(.hidden)
-//      })
-       // Sample code 2
-//      .sheet(isPresented: $isSortOpened, content: {
-//        VStack {
-//          CustomSheetView(isPresented: $isSortOpened) {
-//            HStack {
-//              Image("icon-siren-mono")
-//              Text("신고하기")
-//              Spacer()
-//            }
-//          }
-//        }
-//        .presentationDetents([.height(126)])
-//        .presentationDragIndicator(.hidden)
-//      })
       
       HStack(alignment: .center, spacing: 4) {
         Text("필터")
@@ -123,7 +59,7 @@ struct FilterBarView: View {
         //isFilterOpened.toggle()
         filterCompletionHandler?()
       }
-      // Sample code 3
+      // Sample code
 //      .alert(title: "이거는 버튼 하나 짜리\nddd\nddd\ndd", message: "하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하", dismissButton: CustomAlertButton(title: "버튼\n두줄"), isPresented: $isFilterOpened)
       
       Spacer()
