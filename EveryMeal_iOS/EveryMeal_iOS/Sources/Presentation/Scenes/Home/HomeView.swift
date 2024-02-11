@@ -125,7 +125,7 @@ struct HomeView: View {
             )
             .toolbar(.hidden, for: .tabBar)
           default:
-            MyPageView()
+            MoreReviewsView()
               .toolbar(.hidden, for: .tabBar)
           }
         }

@@ -9,7 +9,7 @@ import Foundation
 
 import KeychainSwift
 
-enum KeychainKey: String {
+enum KeychainKey: String, CaseIterable {
   case accessToken
   case refreshToken
 }

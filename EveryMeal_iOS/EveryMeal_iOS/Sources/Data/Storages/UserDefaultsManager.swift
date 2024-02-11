@@ -9,7 +9,7 @@ import UIKit
 
 struct UserDefaultsManager {
   
-  enum KeyType: String {
+  enum KeyType: String, CaseIterable {
     case isUnivChosen  // 대학 선택한지
     case accessToken
     case refreshToken
