@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct MealHorizontalItemView: View {
-  var mealModel: MealEntity
+  var storeModel: StoreEntity
   
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
       
-      if let imageURLs = mealModel.imageURLs?.first {
+      if let imageURLs = storeModel.images?.first {
         ZStack {
           AsyncImage(url: URL(string: imageURLs)!) { image in
             image.resizable()
@@ -29,7 +29,7 @@ struct MealHorizontalItemView: View {
           VStack {
             HStack {
               Spacer()
-              MealItemLikeButton(isPressed: mealModel.doUserLike, likesCount: mealModel.likesCount, likeCountHidden: true, deselectedColor: Color.black.opacity(0.5))
+              MealItemLikeButton(isPressed: storeModel.isLiked, likesCount: storeModel.recommendedCount, likeCountHidden: true, deselectedColor: Color.black.opacity(0.5))
             }
             Spacer()
           }
@@ -39,7 +39,7 @@ struct MealHorizontalItemView: View {
         .cornerRadius(10)
       }
       VStack(alignment: .leading, spacing: 4) {
-        Text(mealModel.title)
+        Text(storeModel.name)
           .foregroundColor(Color.grey9)
           .font(Font.pretendard(size: 17, weight: .semibold))
         
@@ -49,10 +49,10 @@ struct MealHorizontalItemView: View {
             .aspectRatio(contentMode: .fit)
             .frame(width: 14)
             .padding(.trailing, 2)
-          Text(String(mealModel.score))
+          Text(String(storeModel.grade))
             .foregroundColor(Color.grey7)
             .font(.pretendard(size: 12, weight: .medium))
-          Text("(\(String(mealModel.likesCount)))")
+          Text("(\(String(storeModel.recommendedCount)))")
             .foregroundColor(Color.grey7)
             .font(.pretendard(size: 12, weight: .medium))
           Spacer()
@@ -65,14 +65,9 @@ struct MealHorizontalItemView: View {
 
 struct MealHorizontalItemView_Previews: PreviewProvider {
   static var previews: some View {
-    let dummyMealEntity = MealEntity(title: "동경산책 성신여대점",
-                                   type: .일식,
-                                   description: "ss",
-                                   score: 4.0,
-                                   doUserLike: false,
-                                   imageURLs: ["fdsfads", "fdsafdas"],
-                                   likesCount: 3)
-    MealHorizontalItemView(mealModel: dummyMealEntity)
+    let dummy = StoreEntity(name: "동경산책 성신여대점", categoryDetail: "일식", grade: 4.0, reviewCount: 23, recommendedCount: 3, images: ["fdsfads", "fdsafdas"], isLiked: false, description: "dummy")
+    
+    MealHorizontalItemView(storeModel: dummy)
     Spacer()
   }
 }

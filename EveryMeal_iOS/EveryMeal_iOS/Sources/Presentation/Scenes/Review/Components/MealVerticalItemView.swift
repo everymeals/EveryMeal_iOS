@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct MealVerticalItemView: View {
-  var mealModel: MealEntity
+  var storeModel: StoreEntity
   
   var body: some View {
     VStack(alignment: .leading, spacing: 0) {
       HStack(alignment: .center, spacing: 0) {
         VStack(alignment: .leading, spacing: 0) {
           HStack(alignment: .center, spacing: 4) {
-            Text(mealModel.title)
+            Text(storeModel.name)
               .foregroundColor(Color.grey9)
               .font(.pretendard(size: 17, weight: .semibold))
-            Text(mealModel.type.rawValue)
+            Text(storeModel.categoryDetail)
               .foregroundColor(Color.grey6)
               .font(.pretendard(size: 12, weight: .medium))
               .padding(.horizontal, 6)
@@ -34,7 +34,7 @@ struct MealVerticalItemView: View {
               .aspectRatio(contentMode: .fit)
               .frame(width: 14)
               .padding(.trailing, 2)
-            Text(String(mealModel.score))
+            Text(String(storeModel.grade))
               .foregroundColor(Color.grey7)
               .font(.pretendard(size: 12, weight: .medium))
             Text("(5)")
@@ -44,32 +44,30 @@ struct MealVerticalItemView: View {
           }
         }
         Spacer()
-        MealItemLikeButton(isPressed: mealModel.doUserLike, likesCount: mealModel.likesCount)
+        MealItemLikeButton(isPressed: storeModel.isLiked, likesCount: storeModel.recommendedCount)
       }
       .padding(.bottom, 14)
       
       let imageColumn = Array(repeating: GridItem(.flexible()), count: 3)
-      if let imageURLs = mealModel.imageURLs {
+
+      if let imageURLs = storeModel.images {
         LazyVGrid(columns: imageColumn) {
-          ForEach(imageURLs.indices, id: \.self) { index in
+          ForEach(0..<min(imageURLs.count, 3), id: \.self) { index in
             Rectangle()
               .foregroundColor(.clear)
               .frame(maxWidth: .infinity, minHeight: 104, maxHeight: 104)
               .background(
                 ZStack {
-                  Image("dummyImage") // FIXME: 추후 수정 필요
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 105, height: 104) // 추후 해상도로 대응
+                  AsyncImage(url: URL(string: imageURLs[index]))
                   
-                  if index == imageURLs.indices.last && imageURLs.count == 3 {
+                  if index == 2 && imageURLs.count > 3 {
                     ZStack {
                       Rectangle()
                         .foregroundColor(.clear)
                         .frame(maxWidth: .infinity, minHeight: 104, maxHeight: 104)
                         .background(.black.opacity(0.4))
                         .cornerRadius(8)
-                      Text("+ 18")
+                      Text("+ \(imageURLs.count - 3)")
                         .font(.pretendard(size: 16, weight: .medium))
                         .foregroundColor(Color.white)
                     }
@@ -86,14 +84,15 @@ struct MealVerticalItemView: View {
 
 struct MealVerticalItemView_Previews: PreviewProvider {
   static var previews: some View {
-    let dummyMealEntity = MealEntity(title: "동경산책 성신여대점",
-                                   type: .일식,
-                                   description: "ss",
-                                   score: 4.0,
-                                   doUserLike: false,
-                                   imageURLs: ["fdsfads", "fdsafdas"],
-                                   likesCount: 3)
-    MealVerticalItemView(mealModel: dummyMealEntity)
+    let dummy = StoreEntity(name: "동경산책 성신여대점",
+                            categoryDetail: "일식",
+                            grade: 4.0,
+                            reviewCount: 34,
+                            recommendedCount: 29,
+                            images: ["fdsfads", "fdsafdas", "fdsafdas", "fdsafdas", "fdsafdas"],
+                            isLiked: false)
+    
+    MealVerticalItemView(storeModel: dummy)
     Spacer()
   }
 }

@@ -16,7 +16,7 @@ struct MoreReviewsView: View {
   
   var body: some View {
     VStack {
-      FilterBarView(viewType: .reviews)
+      FilterBarView(viewType: .reviews, selectedSortOption: .constant(.registDate))
       
       ScrollView (showsIndicators: false) {
         LazyVGrid(columns: columns) {

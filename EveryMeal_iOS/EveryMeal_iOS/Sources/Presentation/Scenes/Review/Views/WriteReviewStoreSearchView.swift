@@ -9,8 +9,8 @@ import SwiftUI
 
 enum ReviewStackViewType: Hashable {
   case searchView
-  case starPointView(MealEntity)
-  case imageTextView(MealEntity)
+  case starPointView(StoreEntity)
+  case imageTextView(StoreEntity)
   case reviewDetail(ReviewDetailModel)
   
   func hash(into hasher: inout Hasher) {
@@ -85,19 +85,19 @@ struct WriteReviewStoreSearchView: View {
             reviewNavigationStack.removeLast()
           })
           searchView
-        case let .starPointView(mealModel):
+        case let .starPointView(storeModel):
           let startPointView = ReviewStarPointView(
-            mealModel: mealModel,
-            nextButtonTapped: { mealModel in
-              reviewNavigationStack.append(.imageTextView(mealModel))
+            storeModel: storeModel,
+            nextButtonTapped: { storeModel in
+              reviewNavigationStack.append(.imageTextView(storeModel))
             },
             backButtonTapped: {
               reviewNavigationStack.removeLast()
             })
           startPointView
-        case let .imageTextView(mealModel):
+        case let .imageTextView(storeModel):
           let reviewWriteImageTextView = ReviewWriteImageTextView(
-            mealModel: mealModel,
+            storeModel: storeModel,
             saveButtonTapped: { reviewModel in
               // TODO: 토스트 노출
               reviewNavigationStack.append(.reviewDetail(reviewModel))

@@ -30,12 +30,12 @@ struct ReviewDetailView: View {
         }
       )
       ReviewUserProfileView(reviewModel: reviewModel)
-      ReviewImagesView(urls: reviewModel.mealModel.imageURLs)
+      ReviewImagesView(urls: reviewModel.storeModel.images)
         .aspectRatio(contentMode: .fit)
         .frame(width: UIScreen.main.bounds.width)
       
       VStack(spacing: 40) {
-        Text(reviewModel.mealModel.description)
+        Text(reviewModel.storeModel.description ?? "no review")
           .font(.pretendard(size: 15, weight: .regular))
           .foregroundColor(.grey8)
           .frame(width: UIScreen.main.bounds.width)
@@ -45,23 +45,23 @@ struct ReviewDetailView: View {
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: 22)
-            .foregroundColor(reviewModel.mealModel.doUserLike ? .red : .grey5)
-          Text(String(describing: reviewModel.mealModel.likesCount))
+            .foregroundColor(reviewModel.storeModel.isLiked ? .red : .grey5)
+          Text(String(describing: reviewModel.storeModel.recommendedCount))
             .font(.pretendard(size: 16, weight: .semibold))
-            .foregroundColor(reviewModel.mealModel.doUserLike ? .red : .grey5)
+            .foregroundColor(reviewModel.storeModel.isLiked ? .red : .grey5)
         }
         .onTapGesture {
           // FIXME: 임시 UI 처리. 추후 수정 필요
-          reviewModel.mealModel.doUserLike.toggle()
-          if reviewModel.mealModel.doUserLike {
-            reviewModel.mealModel.likesCount += 1
+          reviewModel.storeModel.isLiked.toggle()
+          if reviewModel.storeModel.isLiked {
+            reviewModel.storeModel.recommendedCount += 1
           } else {
-            reviewModel.mealModel.likesCount -= 1
+            reviewModel.storeModel.recommendedCount -= 1
           }
         }
         .padding(.vertical, 10)
         .padding(.horizontal, 21.5)
-        .background(reviewModel.mealModel.doUserLike ? Color.redLight : Color.grey2)
+        .background(reviewModel.storeModel.isLiked ? Color.redLight : Color.grey2)
         .clipShape(RoundedRectangle(cornerRadius: 8))
       }
         .padding(20)
@@ -128,7 +128,7 @@ struct ReviewUserProfileView: View {
     .padding(.horizontal, 20)
     .onAppear {
       starChecked.enumerated().forEach { startIndex, value in
-          starChecked[startIndex] = startIndex < reviewModel.mealModel.likesCount
+          starChecked[startIndex] = startIndex < reviewModel.storeModel.recommendedCount
       }
     }
   }
@@ -239,30 +239,34 @@ struct ReviewDetailModel: Hashable, Equatable {
   let nickname: String
   let userID: String
   let profileImageURL: String
-  var mealModel: MealEntity
+  var storeModel: StoreEntity
   let dateBefore: Int
   
   static func == (lhs: ReviewDetailModel, rhs: ReviewDetailModel) -> Bool {
-    return lhs.userID == rhs.userID && lhs.mealModel.title == rhs.mealModel.title
+    return lhs.userID == rhs.userID && lhs.storeModel.name == rhs.storeModel.name
    }
 }
 
 struct ReviewDetailView_Previews: PreviewProvider {
   static var previews: some View {
-    let dummyMealEntity = MealEntity(title: "동경산책 성신여대점",
-                                   type: .일식,
-                                   description: "사장님이 친절하시고 안주가 다 너무 맛있었습니다~! 분위기가 좋아서 다음에 또 갈 것 같아요!! 동기들이랑 여럿이서 가도 자리 넉넉하고 좋았어요!! ^_^",
-                                   score: 4.0,
-                                   doUserLike: false,
-                                   imageURLs: [
-                                    "https://crcf.cookatmarket.com/product/images/2019/11/tudi_1574662390_2739_720.jpg",
-                                    "https://img.khan.co.kr/news/2023/04/20/news-p.v1.20230420.527bc9f1e42f4edfa5dec034ee3b91bd_P1.jpg"
-                                   ],
-                                   likesCount: 3)
-    let reviewModel = ReviewDetailModel(nickname: "햄식이", userID: "4324324",
+    let dummyStore = StoreEntity(name: "동경산책 성신여대점", 
+                                 categoryDetail: "일식",
+                                 grade: 4.0,
+                                 reviewCount: 123,
+                                 recommendedCount: 3,
+                                 images: [
+                                  "https://crcf.cookatmarket.com/product/images/2019/11/tudi_1574662390_2739_720.jpg",
+                                  "https://img.khan.co.kr/news/2023/04/20/news-p.v1.20230420.527bc9f1e42f4edfa5dec034ee3b91bd_P1.jpg"
+                                 ],
+                                 isLiked: false,
+                                 description: "사장님이 친절하시고 안주가 다 너무 맛있었습니다~! 분위기가 좋아서 다음에 또 갈 것 같아요!! 동기들이랑 여럿이서 가도 자리 넉넉하고 좋았어요!! ^_^")
+    
+    let reviewModel = ReviewDetailModel(nickname: "햄식이", 
+                                        userID: "4324324",
                                         profileImageURL: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1752&q=80",
-                                        mealModel: dummyMealEntity,
+                                        storeModel: dummyStore,
                                         dateBefore: 3)
+    
     ReviewDetailView(
       reviewModel: reviewModel,
       backButtonDidTapped: {
