@@ -44,6 +44,10 @@ struct MoreStoreView: View {
       VStack {
         navigationBar
         filterBar
+        
+        if (campusStores ?? []).isEmpty {
+          noDataView
+        }
         storesList
       }
     }
@@ -115,6 +119,19 @@ struct MoreStoreView: View {
       .padding(.horizontal, 20)
       .presentationDetents([.height(350)])
     }
+  }
+  
+  private var noDataView: some View {
+    VStack(spacing: 8) {
+      Image("icon-store-mono")
+        .resizable()
+        .frame(width: 40, height: 40)
+      
+      Text("조건에 해당하는 맛집이 없어요")
+        .font(.pretendard(size: 15, weight: .medium))
+        .foregroundStyle(Color.grey8)
+    }
+    .padding(.top, 200)
   }
   
   private var storesList: some View {
