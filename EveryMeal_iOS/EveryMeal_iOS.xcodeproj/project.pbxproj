@@ -40,6 +40,7 @@
 		08EC02972B67C30F003CD556 /* EmailVertifyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC02962B67C30F003CD556 /* EmailVertifyAPI.swift */; };
 		08EC02992B67CC8C003CD556 /* EveryMealDefaultResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC02982B67CC8C003CD556 /* EveryMealDefaultResponse.swift */; };
 		08EC029B2B67CCCF003CD556 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC029A2B67CCCF003CD556 /* Data+Extensions.swift */; };
+		0F0D42F02B7A337100B4BFF3 /* UnivMealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0D42EF2B7A337100B4BFF3 /* UnivMealView.swift */; };
 		0F1424242ADD3F3E00A79AA2 /* MoreReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1424232ADD3F3E00A79AA2 /* MoreReviewsView.swift */; };
 		0F19FBAE2AF2252900197815 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA52AF2252900197815 /* Pretendard-Bold.otf */; };
 		0F19FBAF2AF2252900197815 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA62AF2252900197815 /* Pretendard-Regular.otf */; };
@@ -159,6 +160,7 @@
 		08EC02962B67C30F003CD556 /* EmailVertifyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVertifyAPI.swift; sourceTree = "<group>"; };
 		08EC02982B67CC8C003CD556 /* EveryMealDefaultResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveryMealDefaultResponse.swift; sourceTree = "<group>"; };
 		08EC029A2B67CCCF003CD556 /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
+		0F0D42EF2B7A337100B4BFF3 /* UnivMealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivMealView.swift; sourceTree = "<group>"; };
 		0F1424232ADD3F3E00A79AA2 /* MoreReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreReviewsView.swift; sourceTree = "<group>"; };
 		0F19FB9D2AF21E7E00197815 /* OSLog.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OSLog.framework; path = System/Library/Frameworks/OSLog.framework; sourceTree = SDKROOT; };
 		0F19FBA52AF2252900197815 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
@@ -346,6 +348,14 @@
 			path = NetworkConfig;
 			sourceTree = "<group>";
 		};
+		0F0D42EE2B7A336200B4BFF3 /* UnivMeal */ = {
+			isa = PBXGroup;
+			children = (
+				0F0D42EF2B7A337100B4BFF3 /* UnivMealView.swift */,
+			);
+			path = UnivMeal;
+			sourceTree = "<group>";
+		};
 		0F19FB862AF21A5F00197815 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -528,6 +538,7 @@
 		0F78B00D2A6D3942006B8C80 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				0F0D42EE2B7A336200B4BFF3 /* UnivMeal */,
 				08900BFA2AF27D5800392BAE /* Authentication */,
 				6681C79A2AEA44AB00C3D2C1 /* Stores */,
 				669734652A9F3361009DEF06 /* Review */,
@@ -914,6 +925,7 @@
 				66935D892AF1F22000E80424 /* CustomAlertButton.swift in Sources */,
 				08EC02992B67CC8C003CD556 /* EveryMealDefaultResponse.swift in Sources */,
 				664CC42C2AEA6274000EEBC5 /* MealHorizontalItemView.swift in Sources */,
+				0F0D42F02B7A337100B4BFF3 /* UnivMealView.swift in Sources */,
 				6681C7A82AEA4E3400C3D2C1 /* MealEntity.swift in Sources */,
 				0F5B60452B7A2E0E009EE78D /* FoodMapView.swift in Sources */,
 				66A3FFA62B47F878002DC665 /* MapReducer.swift in Sources */,
