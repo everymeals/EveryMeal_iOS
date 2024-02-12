@@ -56,11 +56,8 @@ struct FilterBarView: View {
       .background(Color(red: 0.95, green: 0.96, blue: 0.96))
       .cornerRadius(100)
       .onTapGesture {
-        //isFilterOpened.toggle()
         filterCompletionHandler?()
       }
-      // Sample code
-//      .alert(title: "이거는 버튼 하나 짜리\nddd\nddd\ndd", message: "하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하\n하하하하하하하", dismissButton: CustomAlertButton(title: "버튼\n두줄"), isPresented: $isFilterOpened)
       
       Spacer()
     }

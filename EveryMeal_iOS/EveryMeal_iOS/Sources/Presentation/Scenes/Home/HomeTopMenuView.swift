@@ -103,9 +103,7 @@ struct TopMenuButton: View {
   }
 }
 
-struct HomeTopMenuView_Previews: PreviewProvider {
-  static var previews: some View {
-    @State var otherViewShowing = false
-    HomeView(otherViewShowing: $otherViewShowing)
-  }
+#Preview {
+//  HomeView(otherViewShowing: .constant(false))
+  TopMenuButtonsView(isSelected: .constant([false, false, false, false]))
 }
