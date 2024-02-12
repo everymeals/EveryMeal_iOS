@@ -113,7 +113,6 @@ extension UITabBarController {
       tabBar.shadowImage = UIImage()
       Constants.tabBarHeight = tabBar.frame.height
       
-      let tabBarCornerRadius = tabBar.layer.cornerRadius
       var tabBarFrame = tabBar.frame
       tabBarFrame.origin.y += 1
 
