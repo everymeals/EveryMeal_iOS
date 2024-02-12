@@ -39,7 +39,7 @@ struct MainTabBarView: View {
           Text("뭐먹지")
         }
         .tag(2)
-      MyPageView()
+      MyPageView(otherViewShowing: $tabBarIsHidden)
         .tabItem {
           Image("icon-user-mono")
             .renderingMode(.template)

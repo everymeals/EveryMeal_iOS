@@ -24,6 +24,7 @@
 		087EB0DA2B67D5E8001B752E /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087EB0D92B67D5E8001B752E /* UserService.swift */; };
 		087F9F522ADD63C6001DB3F2 /* ReviewDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087F9F512ADD63C6001DB3F2 /* ReviewDetailView.swift */; };
 		08900BFC2AF27D7E00392BAE /* EmailAuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08900BFB2AF27D7E00392BAE /* EmailAuthenticationView.swift */; };
+		089359812B78AC2A00C1FDAC /* DevModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089359802B78AC2A00C1FDAC /* DevModeView.swift */; };
 		08A877D22ACD97EE007AEDA1 /* EverymealAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A877D12ACD97ED007AEDA1 /* EverymealAlertView.swift */; };
 		08C3B3962AE401720067FB53 /* CustomNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C3B3952AE401720067FB53 /* CustomNavigationView.swift */; };
 		08D6BA632AE7F6DA00C0B516 /* ReviewStarPointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D6BA5F2AE7F6DA00C0B516 /* ReviewStarPointView.swift */; };
@@ -141,6 +142,7 @@
 		087EB0D92B67D5E8001B752E /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		087F9F512ADD63C6001DB3F2 /* ReviewDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailView.swift; sourceTree = "<group>"; };
 		08900BFB2AF27D7E00392BAE /* EmailAuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthenticationView.swift; sourceTree = "<group>"; };
+		089359802B78AC2A00C1FDAC /* DevModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevModeView.swift; sourceTree = "<group>"; };
 		08A877D12ACD97ED007AEDA1 /* EverymealAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EverymealAlertView.swift; sourceTree = "<group>"; };
 		08C3B3952AE401720067FB53 /* CustomNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationView.swift; sourceTree = "<group>"; };
 		08D6BA5F2AE7F6DA00C0B516 /* ReviewStarPointView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewStarPointView.swift; sourceTree = "<group>"; };
@@ -438,6 +440,7 @@
 				0F6685EE2B037C3300EA1281 /* MyPageView.swift */,
 				0F69AFC92B09E422008C98C6 /* SignOutView.swift */,
 				0F95A0922B0F1CF2000317D8 /* SignOutDetailView.swift */,
+				089359802B78AC2A00C1FDAC /* DevModeView.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -886,6 +889,7 @@
 				081196B62AE36B100022B41A /* UIApplication+Extensions.swift in Sources */,
 				087EB0D82B67D387001B752E /* ImageResponse.swift in Sources */,
 				66BEA02D2B0C8BFD00F3125B /* EveryMealToast.swift in Sources */,
+				089359812B78AC2A00C1FDAC /* DevModeView.swift in Sources */,
 				08EC028D2B67BF9C003CD556 /* EmailSendRequest.swift in Sources */,
 				0F589A2C2B76391A00C52F7B /* SortOptionView.swift in Sources */,
 				0F95A0932B0F1CF2000317D8 /* SignOutDetailView.swift in Sources */,

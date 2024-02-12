@@ -17,10 +17,12 @@ enum MyPageNavigationViewType: Hashable {
   case license
   case withdrawal  // 탈퇴
   case withdrawalReason  // 탈퇴 사유
+  case devMode
 }
 
 struct MyPageView: View {
   @State private var navigationPath: [MyPageNavigationViewType] = []
+  @Binding var otherViewShowing: Bool
 
   var body: some View {
     NavigationStack(path: $navigationPath) {
@@ -68,6 +70,12 @@ struct MyPageView: View {
               .onTapGesture {
                 navigationPath.append(.withdrawal)
               }
+            #if DEBUG
+            MyActivitiesRow(title: "개발자 모드 {}")
+              .onTapGesture {
+                navigationPath.append(.devMode)
+              }
+            #endif
           }
           .padding(.horizontal, 20)
         }
@@ -87,16 +95,25 @@ struct MyPageView: View {
         case .license: SignOutView(path: $navigationPath)
         case .withdrawal: SignOutView(path: $navigationPath)
         case .withdrawalReason: SignOutDetailView(path: $navigationPath)
+        case .devMode:
+          DevModeView()
+            .toolbar(.hidden, for: .tabBar)
         }
       }
     }
     .navigationBarTitleDisplayMode(.inline)
     .navigationBarHidden(true)
+    .onChange(of: navigationPath) { value in
+      otherViewShowing = value.count != 0
+    }
   }
 }
 
-#Preview {
-  MyPageView()
+struct MyPageView_Previews: PreviewProvider {
+  static var previews: some View {
+    @State var otherViewShowing: Bool = false
+    MyPageView(otherViewShowing: $otherViewShowing)
+  }
 }
 
 struct ProfileView: View {
