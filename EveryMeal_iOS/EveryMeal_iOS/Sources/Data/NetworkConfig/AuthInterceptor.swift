@@ -19,33 +19,46 @@ final class AuthInterceptor: RequestInterceptor {
   private init() {}
   
   func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
-    
-    guard let response = request.task?.response as? HTTPURLResponse,
-            response.statusCode == 401 else {
+    guard let request = request as? DataRequest else {
       completion(.doNotRetryWithError(error))
       return
     }
-    
-    // 토큰 갱신 API 호출
-    fetchDataWithCookie { [weak self] result in
-      switch result {
-      case let .success(data):
-        do {
-          let decodedResult = try JSONDecoder().decode(EveryMealDefaultResponse<String>.self, from: data)
-          if let newAccessToken = decodedResult.data {
-            self?.keychain.set(newAccessToken, forKey: .accessToken)
-            completion(.retry)
-          } else {
-            completion(.retry)
+
+    do {
+      if let data = request.data {
+        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        if let errorCode = json?["errorCode"] as? String,
+           errorCode == ErrorCode.TKN0002.rawValue { // 정의된 토큰 만료 코드
+          self.fetchDataWithCookie { [weak self] result in
+            switch result {
+            case let .success(data):
+              do {
+                let decodedResult = try JSONDecoder().decode(EveryMealDefaultResponse<String>.self, from: data)
+                if let newAccessToken = decodedResult.data {
+                  self?.keychain.set(newAccessToken, forKey: .accessToken)
+                  UserDefaultsManager.setValue(.accessToken, value: newAccessToken)
+                  completion(.retry)
+                } else {
+                  completion(.doNotRetry)
+                }
+              } catch {
+                completion(.doNotRetry)
+              }
+            case .failure:
+              completion(.doNotRetry)
+            }
           }
-        } catch {
+        } else {
           completion(.doNotRetry)
         }
-      case .failure:
+      } else {
         completion(.doNotRetry)
       }
+    } catch {
+      completion(.doNotRetry)
     }
   }
+  
   
   func fetchDataWithCookie(completion: @escaping (Result<Data, Error>) -> Void) {
     guard let url = URL(string: URLConstant.access.url) else {
@@ -56,7 +69,7 @@ final class AuthInterceptor: RequestInterceptor {
       completion(.failure(EverMealErrorType.fail))
       return
     }
-    let headers: HTTPHeaders = ["Cookie": refreshToken]
+    let headers: HTTPHeaders = ["refresh-token": refreshToken]
     
     AF.request(url, headers: headers)
       .validate()

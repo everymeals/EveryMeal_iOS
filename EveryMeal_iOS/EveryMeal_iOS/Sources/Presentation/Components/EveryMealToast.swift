@@ -71,11 +71,15 @@ extension View {
 enum ToastType {
   case emailVertifyRetry
   case alreadySigninEmail
+  case copyComplete
+  case deleteComplete
 
   var message: String {
     switch self {
     case .emailVertifyRetry: "인증번호를 다시 전송했어요"
     case .alreadySigninEmail: "이미 가입된 이메일입니다"
+    case .copyComplete: "✅ 복사되었습니다"
+    case .deleteComplete: "🗑️ 삭제되었습니다"
     }
   }
 }
