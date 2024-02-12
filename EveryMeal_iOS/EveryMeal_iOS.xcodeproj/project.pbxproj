@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		081196B62AE36B100022B41A /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081196B52AE36B100022B41A /* UIApplication+Extensions.swift */; };
+		08277B472B7A2B3C004CF1D7 /* AdminAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08277B462B7A2B3C004CF1D7 /* AdminAPI.swift */; };
+		08277B492B7A2BCC004CF1D7 /* AdminService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08277B482B7A2BCC004CF1D7 /* AdminService.swift */; };
+		08277B4C2B7A2C20004CF1D7 /* DefaultImageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08277B4B2B7A2C20004CF1D7 /* DefaultImageResponse.swift */; };
 		0836A5732B44236C0098A41A /* AuthSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836A5722B44236C0098A41A /* AuthSuccessView.swift */; };
 		085C7EFE2B4A9EFE0020DC51 /* EmailAuthenticationReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085C7EFD2B4A9EFE0020DC51 /* EmailAuthenticationReducer.swift */; };
 		085C7F002B4A9F450020DC51 /* EmailAuthenticationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085C7EFF2B4A9F450020DC51 /* EmailAuthenticationClient.swift */; };
@@ -124,6 +127,9 @@
 
 /* Begin PBXFileReference section */
 		081196B52AE36B100022B41A /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
+		08277B462B7A2B3C004CF1D7 /* AdminAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminAPI.swift; sourceTree = "<group>"; };
+		08277B482B7A2BCC004CF1D7 /* AdminService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminService.swift; sourceTree = "<group>"; };
+		08277B4B2B7A2C20004CF1D7 /* DefaultImageResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImageResponse.swift; sourceTree = "<group>"; };
 		0836A5722B44236C0098A41A /* AuthSuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSuccessView.swift; sourceTree = "<group>"; };
 		085C7EFD2B4A9EFE0020DC51 /* EmailAuthenticationReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthenticationReducer.swift; sourceTree = "<group>"; };
 		085C7EFF2B4A9F450020DC51 /* EmailAuthenticationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthenticationClient.swift; sourceTree = "<group>"; };
@@ -253,6 +259,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08277B4A2B7A2C03004CF1D7 /* AdminDTO */ = {
+			isa = PBXGroup;
+			children = (
+				08277B4B2B7A2C20004CF1D7 /* DefaultImageResponse.swift */,
+			);
+			path = AdminDTO;
+			sourceTree = "<group>";
+		};
 		085C7EFC2B4A9EE10020DC51 /* EmailAuth */ = {
 			isa = PBXGroup;
 			children = (
@@ -592,6 +606,7 @@
 		0FE449622B57DC190054DED3 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
+				08277B4A2B7A2C03004CF1D7 /* AdminDTO */,
 				087EB0D62B67D369001B752E /* ImageDTO */,
 				0FCBABDB2B691981007EB51C /* StoreDTO */,
 				08EC02892B67BF9C003CD556 /* UserDTO */,
@@ -635,6 +650,7 @@
 				087EB0D22B67D262001B752E /* ImageAPI.swift */,
 				087EB0CC2B67CF7C001B752E /* UserAPI.swift */,
 				0FCBABD72B6917D1007EB51C /* StoreAPI.swift */,
+				08277B462B7A2B3C004CF1D7 /* AdminAPI.swift */,
 			);
 			path = APIs;
 			sourceTree = "<group>";
@@ -647,6 +663,7 @@
 				087EB0D42B67D30D001B752E /* ImageService.swift */,
 				087EB0D92B67D5E8001B752E /* UserService.swift */,
 				0F6D72832B69C3E50065B3B6 /* StoreService.swift */,
+				08277B482B7A2BCC004CF1D7 /* AdminService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -859,6 +876,7 @@
 				087EB0CF2B67CFFD001B752E /* SignupRequest.swift in Sources */,
 				0F660A912A84551C000074BD /* DeviceManager.swift in Sources */,
 				66935D882AF1F22000E80424 /* CustomAlertModifier.swift in Sources */,
+				08277B492B7A2BCC004CF1D7 /* AdminService.swift in Sources */,
 				0F8D3D052B200A440026FA5D /* CustomSheetView.swift in Sources */,
 				663BFBA22A81EACC00A540A2 /* ViewModifier.swift in Sources */,
 				66FF63812AD7DEB800A10986 /* Functions.swift in Sources */,
@@ -905,6 +923,7 @@
 				08EC029B2B67CCCF003CD556 /* Data+Extensions.swift in Sources */,
 				0F78AFF92A6CCA6B006B8C80 /* EveryMeal_iOSApp.swift in Sources */,
 				66935D892AF1F22000E80424 /* CustomAlertButton.swift in Sources */,
+				08277B472B7A2B3C004CF1D7 /* AdminAPI.swift in Sources */,
 				08EC02992B67CC8C003CD556 /* EveryMealDefaultResponse.swift in Sources */,
 				664CC42C2AEA6274000EEBC5 /* MealHorizontalItemView.swift in Sources */,
 				6681C7A82AEA4E3400C3D2C1 /* MealEntity.swift in Sources */,
@@ -924,6 +943,7 @@
 				08EC02932B67C126003CD556 /* URLConstants.swift in Sources */,
 				666C253E2B71D8A200AD6917 /* AgreePopupView.swift in Sources */,
 				66FF637F2AD7CE3D00A10986 /* Constants.swift in Sources */,
+				08277B4C2B7A2C20004CF1D7 /* DefaultImageResponse.swift in Sources */,
 				665627DC2B6C7ADE00B36F1A /* LoginResponse.swift in Sources */,
 				66935D8A2AF1F22000E80424 /* CustomAlert.swift in Sources */,
 			);
