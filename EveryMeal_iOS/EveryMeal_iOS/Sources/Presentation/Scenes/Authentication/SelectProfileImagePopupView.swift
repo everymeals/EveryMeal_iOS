@@ -9,8 +9,8 @@ import SwiftUI
 import Photos
 import PhotosUI
 
-enum SelectImageType: CaseIterable {
-  case camera
+enum SelectImageType: Int, CaseIterable {
+  case camera = 1
   case rice
   case sushi
   case puding
@@ -94,6 +94,19 @@ struct SelectProfileImagePopupView: View {
           self.selectIconColumns.append(type)
         }
       }
+      
+      Task {
+        if var result = try await AdminService().getDefaultImages() {
+          result.sort()
+          result.forEach { images in
+            selectIconColumns[]
+          }
+          selectIconColumns[]
+        }
+        
+      }
+      
+      
     }
   }
 }
