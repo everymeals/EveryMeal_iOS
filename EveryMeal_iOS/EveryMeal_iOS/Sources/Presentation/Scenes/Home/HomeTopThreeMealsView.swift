@@ -47,7 +47,7 @@ struct MealGridView: View {
       ForEach(Array(storeModels.enumerated()), id: \.element) { index, storeModel in
         MealVerticalItemView(storeModel: storeModel)
           .onTapGesture {
-            // 여기에 탭 제스처 처리 로직 추가
+            // TODO: 여기에 탭 제스처 처리 로직 추가
             didMealTapped(storeModel)
           }
           .padding(.vertical, 12)

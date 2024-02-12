@@ -51,6 +51,7 @@
 		0F43F6832A6EA8AC00239AA4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43F6822A6EA8AC00239AA4 /* HomeView.swift */; };
 		0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4C83562A7727BE0006A8EA /* ChooseUnivView.swift */; };
 		0F589A2C2B76391A00C52F7B /* SortOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F589A2B2B76391A00C52F7B /* SortOptionView.swift */; };
+		0F589A2E2B7658B400C52F7B /* FilterOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F589A2D2B7658B400C52F7B /* FilterOptionView.swift */; };
 		0F58F6EB2AFA1E1600010A70 /* BaseLottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F58F6EA2AFA1E1600010A70 /* BaseLottieView.swift */; };
 		0F5B15742A7F8C9C00E698F4 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5B15732A7F8C9C00E698F4 /* Color+Extensions.swift */; };
 		0F660A912A84551C000074BD /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F660A902A84551C000074BD /* DeviceManager.swift */; };
@@ -169,6 +170,7 @@
 		0F43F6822A6EA8AC00239AA4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		0F4C83562A7727BE0006A8EA /* ChooseUnivView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseUnivView.swift; sourceTree = "<group>"; };
 		0F589A2B2B76391A00C52F7B /* SortOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOptionView.swift; sourceTree = "<group>"; };
+		0F589A2D2B7658B400C52F7B /* FilterOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterOptionView.swift; sourceTree = "<group>"; };
 		0F58F6EA2AFA1E1600010A70 /* BaseLottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLottieView.swift; sourceTree = "<group>"; };
 		0F5B15732A7F8C9C00E698F4 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
 		0F660A902A84551C000074BD /* DeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
@@ -666,6 +668,7 @@
 				66BEA02C2B0C8BFD00F3125B /* EveryMealToast.swift */,
 				665627D72B6BA37600B36F1A /* LoadingView.swift */,
 				0F589A2B2B76391A00C52F7B /* SortOptionView.swift */,
+				0F589A2D2B7658B400C52F7B /* FilterOptionView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -869,6 +872,7 @@
 				08D6BA642AE7F6DA00C0B516 /* WriteReviewStoreSearchView.swift in Sources */,
 				087A09382A81481100F4D34F /* HomeHeaderView.swift in Sources */,
 				08D6BA6A2AE7F97800C0B516 /* ImagePicker.swift in Sources */,
+				0F589A2E2B7658B400C52F7B /* FilterOptionView.swift in Sources */,
 				663BFBA42A81EB2800A540A2 /* Separator.swift in Sources */,
 				085C7F002B4A9F450020DC51 /* EmailAuthenticationClient.swift in Sources */,
 				0FF7C7192A91ECEF00BFC33D /* GradationView.swift in Sources */,
@@ -1055,7 +1059,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EveryMeal_iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 758HB8VJD7;
+				DEVELOPMENT_TEAM = 5686R3T7XU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
@@ -1091,7 +1095,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EveryMeal_iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 758HB8VJD7;
+				DEVELOPMENT_TEAM = 5686R3T7XU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;

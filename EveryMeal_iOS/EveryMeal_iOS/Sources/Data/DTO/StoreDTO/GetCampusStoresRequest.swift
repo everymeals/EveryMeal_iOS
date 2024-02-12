@@ -37,7 +37,7 @@ enum CampusStoreGroupType: String {
   case western
 }
 
-enum CampusStoreGradeType: String {
+enum CampusStoreGradeType: String, CaseIterable {
   case one = "1"
   case two = "2"
   case three = "3"
