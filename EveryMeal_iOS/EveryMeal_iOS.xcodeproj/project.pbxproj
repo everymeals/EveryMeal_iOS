@@ -42,6 +42,7 @@
 		08EC029B2B67CCCF003CD556 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC029A2B67CCCF003CD556 /* Data+Extensions.swift */; };
 		0F0D42F02B7A337100B4BFF3 /* UnivMealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0D42EF2B7A337100B4BFF3 /* UnivMealView.swift */; };
 		0F0D42F22B7A367100B4BFF3 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0D42F12B7A367100B4BFF3 /* Date+Extensions.swift */; };
+		0F0D42F42B7A582700B4BFF3 /* DietCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0D42F32B7A582700B4BFF3 /* DietCell.swift */; };
 		0F1424242ADD3F3E00A79AA2 /* MoreReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1424232ADD3F3E00A79AA2 /* MoreReviewsView.swift */; };
 		0F19FBAE2AF2252900197815 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA52AF2252900197815 /* Pretendard-Bold.otf */; };
 		0F19FBAF2AF2252900197815 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA62AF2252900197815 /* Pretendard-Regular.otf */; };
@@ -163,6 +164,7 @@
 		08EC029A2B67CCCF003CD556 /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
 		0F0D42EF2B7A337100B4BFF3 /* UnivMealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivMealView.swift; sourceTree = "<group>"; };
 		0F0D42F12B7A367100B4BFF3 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
+		0F0D42F32B7A582700B4BFF3 /* DietCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietCell.swift; sourceTree = "<group>"; };
 		0F1424232ADD3F3E00A79AA2 /* MoreReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreReviewsView.swift; sourceTree = "<group>"; };
 		0F19FB9D2AF21E7E00197815 /* OSLog.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OSLog.framework; path = System/Library/Frameworks/OSLog.framework; sourceTree = SDKROOT; };
 		0F19FBA52AF2252900197815 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
@@ -354,6 +356,7 @@
 			isa = PBXGroup;
 			children = (
 				0F0D42EF2B7A337100B4BFF3 /* UnivMealView.swift */,
+				0F0D42F32B7A582700B4BFF3 /* DietCell.swift */,
 			);
 			path = UnivMeal;
 			sourceTree = "<group>";
@@ -851,6 +854,7 @@
 				0F78AFFB2A6CCA6B006B8C80 /* SplashView.swift in Sources */,
 				662C69012B3C15FC00B47C87 /* CameraPicker.swift in Sources */,
 				08900BFC2AF27D7E00392BAE /* EmailAuthenticationView.swift in Sources */,
+				0F0D42F42B7A582700B4BFF3 /* DietCell.swift in Sources */,
 				0F43F6812A6EA86B00239AA4 /* MapView.swift in Sources */,
 				66C5C85F2B6C977C00ED3272 /* SplashReducer.swift in Sources */,
 				0FE449652B57DC790054DED3 /* UserDefaultsManager.swift in Sources */,
