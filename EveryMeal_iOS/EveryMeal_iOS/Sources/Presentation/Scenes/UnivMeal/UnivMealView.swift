@@ -28,7 +28,8 @@ struct UnivMealView: View {
       
       subTitle
     }
-    .padding(.vertical, 28)
+    .padding(.top, 20)
+    .padding(.bottom, 28)
     .padding(.horizontal, 20)
   }
   
@@ -48,18 +49,24 @@ struct UnivMealView: View {
   }
   
   var arrows: some View {
-    HStack(spacing: 16) {
+    HStack(spacing: 0) {
       Image("icon-arrow-left-small-mono")
+        .renderingMode(.template)
         .resizable()
         .frame(width: 20, height: 20)
+        .foregroundStyle(Color.grey6)
+        .padding(8)
         .onTapGesture {
           setDate(.minus)
         }
       
       Image("icon-arrow-left-small-mono")
+        .renderingMode(.template)
         .resizable()
         .frame(width: 20, height: 20)
+        .foregroundStyle(Color.grey6)
         .scaleEffect(x: -1, y: 1)
+        .padding(8)
         .onTapGesture {
           setDate(.plus)
         }
