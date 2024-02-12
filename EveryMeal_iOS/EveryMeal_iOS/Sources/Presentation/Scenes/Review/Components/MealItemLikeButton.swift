@@ -18,7 +18,13 @@ struct MealItemLikeButton: View {
   
   var body: some View {
     Button(action: {
-      isPressed = !isPressed
+      let isUserAlreadyRegistered = UserDefaultsManager.getString(.accessToken) == "" ? false : true
+      if isUserAlreadyRegistered {
+        isPressed = !isPressed
+      } else {
+        // TODO: 회원가입(학교 이메일 인증) 페이지로
+        print("회원가입(학교 이메일 인증) 페이지로")
+      }
     }, label: {
       VStack(spacing: 2) {
         Image("icon-heart-mono")
