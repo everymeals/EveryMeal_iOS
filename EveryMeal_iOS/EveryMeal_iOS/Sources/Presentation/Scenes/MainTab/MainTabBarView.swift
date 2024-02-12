@@ -32,7 +32,7 @@ struct MainTabBarView: View {
           Text("학식")
         }
         .tag(1)
-      Text("뭐먹지")
+      FoodMapView()
         .tabItem {
           Image("icon-chat-bubble-question-mono")
             .renderingMode(.template)

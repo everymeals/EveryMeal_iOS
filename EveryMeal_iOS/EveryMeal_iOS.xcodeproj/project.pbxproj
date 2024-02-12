@@ -54,6 +54,7 @@
 		0F589A2E2B7658B400C52F7B /* FilterOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F589A2D2B7658B400C52F7B /* FilterOptionView.swift */; };
 		0F58F6EB2AFA1E1600010A70 /* BaseLottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F58F6EA2AFA1E1600010A70 /* BaseLottieView.swift */; };
 		0F5B15742A7F8C9C00E698F4 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5B15732A7F8C9C00E698F4 /* Color+Extensions.swift */; };
+		0F5B60452B7A2E0E009EE78D /* FoodMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5B60442B7A2E0E009EE78D /* FoodMapView.swift */; };
 		0F660A912A84551C000074BD /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F660A902A84551C000074BD /* DeviceManager.swift */; };
 		0F6685EF2B037C3300EA1281 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6685EE2B037C3300EA1281 /* MyPageView.swift */; };
 		0F69AFCA2B09E422008C98C6 /* SignOutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F69AFC92B09E422008C98C6 /* SignOutView.swift */; };
@@ -173,6 +174,7 @@
 		0F589A2D2B7658B400C52F7B /* FilterOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterOptionView.swift; sourceTree = "<group>"; };
 		0F58F6EA2AFA1E1600010A70 /* BaseLottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLottieView.swift; sourceTree = "<group>"; };
 		0F5B15732A7F8C9C00E698F4 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
+		0F5B60442B7A2E0E009EE78D /* FoodMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodMapView.swift; sourceTree = "<group>"; };
 		0F660A902A84551C000074BD /* DeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
 		0F6685EE2B037C3300EA1281 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		0F69AFC92B09E422008C98C6 /* SignOutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutView.swift; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 				0F43F6802A6EA86B00239AA4 /* MapView.swift */,
 				66A3FFA52B47F878002DC665 /* MapReducer.swift */,
 				66A3FFA72B47FB15002DC665 /* MapClient.swift */,
+				0F5B60442B7A2E0E009EE78D /* FoodMapView.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -912,6 +915,7 @@
 				08EC02992B67CC8C003CD556 /* EveryMealDefaultResponse.swift in Sources */,
 				664CC42C2AEA6274000EEBC5 /* MealHorizontalItemView.swift in Sources */,
 				6681C7A82AEA4E3400C3D2C1 /* MealEntity.swift in Sources */,
+				0F5B60452B7A2E0E009EE78D /* FoodMapView.swift in Sources */,
 				66A3FFA62B47F878002DC665 /* MapReducer.swift in Sources */,
 				0FCBABDD2B69199A007EB51C /* GetCampusStoreResponse.swift in Sources */,
 				0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */,
