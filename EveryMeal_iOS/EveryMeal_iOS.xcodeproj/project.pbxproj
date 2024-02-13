@@ -72,6 +72,7 @@
 		0F7CB2CB2AF9DFA800CBE762 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7CB2CA2AF9DFA800CBE762 /* OnBoardingView.swift */; };
 		0F82DF292B0EC7240049EDB4 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F82DF282B0EC7240049EDB4 /* Pretendard-SemiBold.otf */; };
 		0F8D3D052B200A440026FA5D /* CustomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8D3D042B200A440026FA5D /* CustomSheetView.swift */; };
+		0F931B4F2B7B6E91002F7297 /* FavoritesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F931B4E2B7B6E91002F7297 /* FavoritesListView.swift */; };
 		0F95A0932B0F1CF2000317D8 /* SignOutDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F95A0922B0F1CF2000317D8 /* SignOutDetailView.swift */; };
 		0FCBABD82B6917D1007EB51C /* StoreAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCBABD72B6917D1007EB51C /* StoreAPI.swift */; };
 		0FCBABDA2B691969007EB51C /* StoreEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCBABD92B691969007EB51C /* StoreEntity.swift */; };
@@ -196,6 +197,7 @@
 		0F7CB2CA2AF9DFA800CBE762 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		0F82DF282B0EC7240049EDB4 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		0F8D3D042B200A440026FA5D /* CustomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSheetView.swift; sourceTree = "<group>"; };
+		0F931B4E2B7B6E91002F7297 /* FavoritesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesListView.swift; sourceTree = "<group>"; };
 		0F95A0922B0F1CF2000317D8 /* SignOutDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutDetailView.swift; sourceTree = "<group>"; };
 		0FCBABD72B6917D1007EB51C /* StoreAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreAPI.swift; sourceTree = "<group>"; };
 		0FCBABD92B691969007EB51C /* StoreEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreEntity.swift; sourceTree = "<group>"; };
@@ -460,6 +462,7 @@
 				0F69AFC92B09E422008C98C6 /* SignOutView.swift */,
 				0F95A0922B0F1CF2000317D8 /* SignOutDetailView.swift */,
 				089359802B78AC2A00C1FDAC /* DevModeView.swift */,
+				0F931B4E2B7B6E91002F7297 /* FavoritesListView.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -855,6 +858,7 @@
 				662C69012B3C15FC00B47C87 /* CameraPicker.swift in Sources */,
 				08900BFC2AF27D7E00392BAE /* EmailAuthenticationView.swift in Sources */,
 				0F0D42F42B7A582700B4BFF3 /* DietCell.swift in Sources */,
+				0F931B4F2B7B6E91002F7297 /* FavoritesListView.swift in Sources */,
 				0F43F6812A6EA86B00239AA4 /* MapView.swift in Sources */,
 				66C5C85F2B6C977C00ED3272 /* SplashReducer.swift in Sources */,
 				0FE449652B57DC790054DED3 /* UserDefaultsManager.swift in Sources */,
@@ -1080,10 +1084,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EveryMeal_iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 5686R3T7XU;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 5XGLRW6VG4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
@@ -1100,9 +1106,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.everyMeal.EveryMeal2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.everyMeal.EveryMeal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = EveryMeal_Dev;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_VERSION = 5.0;
@@ -1116,10 +1123,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EveryMeal_iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 5686R3T7XU;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 5XGLRW6VG4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
@@ -1136,9 +1145,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.everyMeal.EveryMeal2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.everyMeal.EveryMeal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = EveryMeal_Dis;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
