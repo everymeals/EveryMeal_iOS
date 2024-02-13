@@ -7,17 +7,165 @@
 
 import SwiftUI
 
+// API Response와 파싱해서 사용할 것 (현재 임시)
+// 학식 식당
+struct UnivStoreInfo: Identifiable {
+  let id: UUID = UUID()
+  var name: String
+  var grade: Double
+  var recommendCount: Int
+  var meals: [MealInfo]
+}
+
+struct MealInfo: Identifiable {
+  let id: UUID = UUID()
+  var mealTime: MealTimeType
+  var menuDesc: String
+}
+
+// MARK: -
+
 struct UnivMealView: View {
   @State var currentDate: Date = Date()
+  @State var stores: [UnivStoreInfo] = []
+  
+  let dummy: [UnivStoreInfo] = [
+    UnivStoreInfo(name: "A 식당",
+                  grade: 4.5,
+                  recommendCount: 14,
+                  meals: [MealInfo(mealTime: .breakfast, menuDesc: "미역국, 밥, 김치"),
+                          MealInfo(mealTime: .lunch, menuDesc: "등록된 메뉴가 없어요"),
+                          MealInfo(mealTime: .dinner, menuDesc: "짜장면, 단무지, 깍두기, 미니만두튀김, 짬뽕국, 양배추샐러드, 당근주스")]),
+    UnivStoreInfo(name: "B 식당",
+                  grade: 3.2,
+                  recommendCount: 8,
+                  meals: [MealInfo(mealTime: .lunch, menuDesc: "등록된 메뉴가 없어요"),
+                          MealInfo(mealTime: .dinner, menuDesc: "등록된 메뉴가 없어요")]),
+    UnivStoreInfo(name: "C 식당",
+                  grade: 4.8,
+                  recommendCount: 20,
+                  meals: [MealInfo(mealTime: .breakfast, menuDesc: "미역국, 밥, 김치")])
+  ]
   
   var body: some View {
-    VStack(spacing: 0) {
-      navigation
-      Spacer()
+    ZStack {
+      VStack(spacing: 0) {
+        UnivMealNavigationView(currentDate: $currentDate)
+        UnivMealContentView(stores: $stores)
+        Spacer()
+      }
+      
+      EditFloatingButton()
+    }
+    .onChange(of: currentDate) { newValue in
+      print("선택된 날짜: \(newValue.toString())")
+      // TODO: 해당 날짜로 학식 불러오기 API 재요청
+    }
+    .onAppear {
+      // TODO: 진입 시 최초 fetch data
+      stores = dummy
     }
   }
+}
+
+struct EditFloatingButton: View {
+  var body: some View {
+    HStack {
+      Spacer()
+      VStack {
+        Spacer()
+        Image("icon-pencil-mono")
+          .resizable()
+          .frame(width: 24, height: 24)
+          .background(
+            Color.red
+              .frame(width: 48, height: 48)
+              .cornerRadius(24)
+              .clipShape(Circle())
+          )
+          .onTapGesture {
+            print("연필 버튼 누름")
+          }
+      }
+      .padding(20)
+    }
+    .padding(20)
+  }
+}
+
+struct UnivMealContentView: View {
+  @Binding var stores:[UnivStoreInfo]
   
-  var navigation: some View {
+  var body: some View {
+    ScrollView {
+      VStack(spacing: 0) {
+        ForEach(stores) { store in
+          storeInfoView(store: store)
+          
+          VStack(spacing: 0) {
+            ForEach(store.meals) { meal in
+              DietCell(mealTime: meal.mealTime, menuDesc: meal.menuDesc)
+            }
+          }
+          
+          // FIXME: 마지막 데이터에는 구분선 그리지 않도록 수정
+          UnivMealSeparatorView()
+          
+        }
+      }
+    }
+    .frame(maxWidth: .infinity)
+  }
+  
+  func storeInfoView(store: UnivStoreInfo) -> some View {
+    HStack {
+      VStack(spacing: 6) {
+        HStack {
+          Text(store.name)
+            .font(.pretendard(size: 18, weight: .bold))
+          Spacer()
+        }
+        HStack {
+          Image("icon-star-mono")
+            .resizable()
+            .renderingMode(.template)
+            .frame(width: 14, height: 14)
+            .foregroundStyle(Color.everyMealYellow)
+          
+          HStack(spacing: 0) {
+            Text(String(format: "%.1f", store.grade))
+              .font(.pretendard(size: 14, weight: .medium))
+              .foregroundStyle(Color.grey7)
+            Text("(\(store.recommendCount))")
+              .font(.pretendard(size: 14, weight: .medium))
+              .foregroundStyle(Color.grey7)
+          }
+          
+          Spacer()
+        }
+      }
+      Spacer()
+      Text("리뷰 보기")
+        .font(.pretendard(size: 14, weight: .semibold))
+        .padding(.vertical, 6)
+        .padding(.horizontal, 8)
+        .background(Color.redLight)
+        .clipShape(Rectangle())
+        .foregroundStyle(Color.red)
+        .cornerRadius(6)
+        .onTapGesture {
+          print("\(store.name)의 리뷰 보기 누름")
+        }
+    }
+    .padding(.horizontal, 20)
+    .padding(.bottom, 12)
+  }
+}
+
+struct UnivMealNavigationView: View {
+  @Binding var currentDate: Date
+  
+  var body: some View {
     VStack(spacing: 2) {
       HStack(spacing: 0) {
         title
@@ -26,7 +174,7 @@ struct UnivMealView: View {
       }
       .frame(height: 31)
       
-      subTitle
+      dateView
     }
     .padding(.top, 20)
     .padding(.bottom, 28)
@@ -39,7 +187,7 @@ struct UnivMealView: View {
       .foregroundStyle(Color.everyMealBlack)
   }
   
-  var subTitle: some View {
+  var dateView: some View {
     HStack {
       Text(currentDate.toKoreanDateString())
         .font(.pretendard(size: 15, weight: .medium))
@@ -49,7 +197,7 @@ struct UnivMealView: View {
   }
   
   var arrows: some View {
-    HStack(spacing: 0) {
+    HStack(spacing: 2) {
       Image("icon-arrow-left-small-mono")
         .renderingMode(.template)
         .resizable()
@@ -91,6 +239,16 @@ struct UnivMealView: View {
     }
   }
   
+}
+
+struct UnivMealSeparatorView: View {
+  var body: some View {
+    Rectangle()
+      .frame(maxWidth: .infinity, maxHeight: 12)
+      .foregroundStyle(Color.grey1)
+      .padding(.top, 12)
+      .padding(.bottom, 24)
+  }
 }
 
 #Preview {
