@@ -47,8 +47,9 @@ struct MoreStoreView: View {
         
         if (campusStores ?? []).isEmpty {
           noDataView
+        } else {
+          storesList
         }
-        storesList
       }
     }
     .navigationBarHidden(true)
@@ -122,16 +123,20 @@ struct MoreStoreView: View {
   }
   
   private var noDataView: some View {
-    VStack(spacing: 8) {
-      Image("icon-store-mono")
-        .resizable()
-        .frame(width: 40, height: 40)
-      
-      Text("조건에 해당하는 맛집이 없어요")
-        .font(.pretendard(size: 15, weight: .medium))
-        .foregroundStyle(Color.grey8)
+    VStack(spacing: 0) {
+      Spacer()
+      VStack(spacing: 8) {
+        Image("icon-store-mono")
+          .resizable()
+          .frame(width: 40, height: 40)
+        
+        Text("설정한 필터에 맞는 맛집이 없어요")
+          .font(.pretendard(size: 15, weight: .medium))
+          .foregroundStyle(Color.grey8)
+      }
+      .padding(.bottom, 180)
+      Spacer()
     }
-    .padding(.top, 200)
   }
   
   private var storesList: some View {

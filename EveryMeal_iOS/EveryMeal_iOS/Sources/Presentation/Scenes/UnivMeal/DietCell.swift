@@ -7,29 +7,29 @@
 
 import SwiftUI
 
-struct DietCell: View {
-  enum MealTimeType {
-    case breakfast, lunch, dinner
-    
-    var title: String {
-      switch self {
-      case .breakfast: "아침"
-      case .lunch: "점심"
-      case .dinner: "저녁"
-      }
-    }
-    
-    var image: String {
-      switch self {
-      case .breakfast: "morning"
-      case .lunch: "lunch"
-      case .dinner: "dinner"
-      }
+enum MealTimeType {
+  case breakfast, lunch, dinner
+  
+  var title: String {
+    switch self {
+    case .breakfast: "아침"
+    case .lunch: "점심"
+    case .dinner: "저녁"
     }
   }
   
+  var image: String {
+    switch self {
+    case .breakfast: "morning"
+    case .lunch: "lunch"
+    case .dinner: "dinner"
+    }
+  }
+}
+
+struct DietCell: View {
   var mealTime: MealTimeType = .breakfast
-  var menuDesc: String
+  var menuDesc: String = ""
   let noMenu: String = "등록된 메뉴가 없어요"
   
   var body: some View {
@@ -38,7 +38,7 @@ struct DietCell: View {
         Image(mealTime.image)
         Spacer()
       }
-      VStack(spacing: 8) {
+      VStack(spacing: 11) {
         HStack {
           Text(mealTime.title)
             .font(.pretendard(size: 14, weight: .semibold))
@@ -62,6 +62,7 @@ struct DietCell: View {
       }
     }
     .padding(.vertical, 14)
+    .padding(.horizontal, 20)
   }
 }
 
