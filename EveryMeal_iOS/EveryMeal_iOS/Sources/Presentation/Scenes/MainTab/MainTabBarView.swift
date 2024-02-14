@@ -23,14 +23,14 @@ struct MainTabBarView: View {
           Text("맛집")
         }
         .tag(0)
-      UnivMealView()
+      FoodMapView() // UnivMealView() FIXME: 1차 상용 배포에서 제외
         .tabItem {
           Image("icon-folk-knife-mono")
             .renderingMode(.template)
           Text("학식")
         }
         .tag(1)
-      FoodMapView()
+      FoodMapView()  // FIXME: 1차 상용 배포에서 제외
         .tabItem {
           Image("icon-chat-bubble-question-mono")
             .renderingMode(.template)
