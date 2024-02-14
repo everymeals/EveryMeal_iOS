@@ -28,6 +28,8 @@ struct MealInfo: Identifiable {
 struct UnivMealView: View {
   @State var currentDate: Date = Date()
   @State var stores: [UnivStoreInfo] = []
+  @State var isSelected: Bool = false
+  @State private var showAdditionalButton = false
   
   let dummy: [UnivStoreInfo] = [
     UnivStoreInfo(name: "A 식당",
@@ -55,7 +57,16 @@ struct UnivMealView: View {
         Spacer()
       }
       
-      EditFloatingButton()
+      if isSelected {
+        Color.black.opacity(0.5)
+          .edgesIgnoringSafeArea(.all)
+          .onTapGesture {
+            isSelected = false
+            showAdditionalButton = false
+          }
+      }
+      
+      EditFloatingButton(isSelected: $isSelected, showAdditionalButton: $showAdditionalButton)
     }
     .onChange(of: currentDate) { newValue in
       print("선택된 날짜: \(newValue.toString())")
@@ -69,25 +80,43 @@ struct UnivMealView: View {
 }
 
 struct EditFloatingButton: View {
+  @Binding var isSelected: Bool
+  @Binding var showAdditionalButton: Bool
+  
   var body: some View {
     HStack {
       Spacer()
-      VStack {
+      VStack(alignment: .trailing) {
         Spacer()
-        Image("icon-pencil-mono")
-          .resizable()
-          .frame(width: 24, height: 24)
-          .background(
-            Color.red
-              .frame(width: 48, height: 48)
-              .cornerRadius(24)
-              .clipShape(Circle())
-          )
-          .onTapGesture {
-            print("연필 버튼 누름")
+        
+        if showAdditionalButton {
+          AdditionalButtonView(isSelected: $isSelected, showAdditionalButton: $showAdditionalButton)
+        }
+        
+        ZStack {
+          Circle()
+            .foregroundColor(isSelected ? .white : .red)
+            .frame(width: 48, height: 48)
+          
+          Image(isSelected ? "icon-x-mono" : "icon-pencil-mono")
+            .renderingMode(.template)
+            .resizable()
+            .frame(width: 24, height: 24)
+            .foregroundStyle(isSelected ? Color.grey9 : Color.white)
+        }
+        .onTapGesture {
+          if isSelected {
+            isSelected = false
+            showAdditionalButton = false
+          } else {
+            withAnimation {
+              isSelected = true
+              showAdditionalButton = true
+            }
           }
+        }
+        
       }
-      .padding(20)
     }
     .padding(20)
   }
@@ -253,4 +282,52 @@ struct UnivMealSeparatorView: View {
 
 #Preview {
   UnivMealView()
+}
+
+struct AdditionalButtonView: View {
+  @Binding var isSelected: Bool
+  @Binding var showAdditionalButton: Bool
+  
+  var body: some View {
+    VStack(spacing: 14) {
+//      HStack(spacing: 4) {
+//        Image("icon-camera-mono")
+//          .renderingMode(.template)
+//          .resizable()
+//          .frame(width: 16, height: 16)
+//          .foregroundStyle(Color.everyMealRed)
+//        Text("사진만 올리기")
+//          .font(.pretendard(size: 16, weight: .regular))
+//          .foregroundStyle(Color.grey9)
+//      }
+//      .padding(.horizontal, 12)
+//      .padding(.vertical, 10)
+//      .background()
+//      .cornerRadius(6)
+//      .onTapGesture {
+//        isSelected = false
+//        showAdditionalButton = false
+//      }
+      
+      HStack(spacing: 4) {
+        Image("icon-document-mono")
+          .resizable()
+          .frame(width: 16, height: 16)
+        Text("리뷰 작성하기")
+          .font(.pretendard(size: 16, weight: .regular))
+          .foregroundStyle(Color.grey9)
+      }
+      .padding(.horizontal, 12)
+      .padding(.vertical, 10)
+      .background()
+      .cornerRadius(6)
+      .onTapGesture {
+        isSelected = false
+        showAdditionalButton = false
+      }
+      
+    }
+    .offset(x: 0, y: -14)
+    .transition(.scale)
+  }
 }
