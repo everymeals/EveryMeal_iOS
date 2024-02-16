@@ -218,9 +218,6 @@ struct MoreReviewButton: View {
   }
 }
 
-struct HomeReviewsView_Previews: PreviewProvider {
-  static var previews: some View {
-    @State var otherViewShowing = false
-    HomeView(otherViewShowing: $otherViewShowing)
-  }
+#Preview {
+  HomeReviewsView(reviews: .constant(Constants.dummyReviews))
 }

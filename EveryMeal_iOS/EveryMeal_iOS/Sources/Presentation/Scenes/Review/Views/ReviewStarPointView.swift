@@ -121,10 +121,8 @@ struct SpeachBubbleView: View {
 
 struct ReviewStarPointView_Previews: PreviewProvider {
   static var previews: some View {
-    let dummy = StoreEntity(name: "동경산책 성신여대점", categoryDetail: "일식", grade: 4.0, reviewCount: 52, recommendedCount: 3, images: ["fdsfads", "fdsafdas"], isLiked: false, description: "dummy")
-    
     ReviewStarPointView(
-      storeModel: dummy,
+      storeModel: Constants.dummyStore,
       nextButtonTapped: { _ in
         print("go next")
       }, backButtonTapped: {

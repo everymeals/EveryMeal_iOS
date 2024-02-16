@@ -60,8 +60,6 @@ struct MoreReviewsView: View {
   }
 }
 
-struct MoreReviewsView_Previews: PreviewProvider {
-  static var previews: some View {
-    MoreReviewsView()
-  }
+#Preview {
+  MoreReviewsView()
 }
