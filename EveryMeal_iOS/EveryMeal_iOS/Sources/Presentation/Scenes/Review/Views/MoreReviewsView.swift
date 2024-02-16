@@ -9,7 +9,8 @@ import SwiftUI
 
 struct MoreReviewsView: View {
   @Environment(\.dismiss) private var dismiss
-
+  @State var reviews: [UnivStoreReviewInfo]?
+  
   let columns = [
     GridItem(.flexible())
   ]
@@ -20,19 +21,19 @@ struct MoreReviewsView: View {
       
       ScrollView (showsIndicators: false) {
         LazyVGrid(columns: columns) {
-          ReviewCellView()
+          ReviewCellView(review: Constants.dummyStoreReview)
           
           Rectangle()
             .frame(height: 1)
             .foregroundColor(.grey2)
           
-          ReviewCellView()
+          ReviewCellView(review: Constants.dummyStoreReview)
           
           Rectangle()
             .frame(height: 1)
             .foregroundColor(.grey2)
           
-          ReviewCellView()
+          ReviewCellView(review: Constants.dummyStoreReview)
           
           Rectangle()
             .frame(height: 1)

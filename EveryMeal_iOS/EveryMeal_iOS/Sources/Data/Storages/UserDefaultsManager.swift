@@ -14,6 +14,7 @@ struct UserDefaultsManager {
     case accessToken
     case refreshToken
     case univIdx
+    case restaurantIdx
   }
   
   /// UserDefault에서 키값으로 저장하기

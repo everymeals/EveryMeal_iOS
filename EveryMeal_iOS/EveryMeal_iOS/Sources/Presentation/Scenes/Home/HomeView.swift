@@ -27,6 +27,7 @@ struct HomeView: View {
   private let moreReviewBtnBottomMargin: CGFloat = 13
   
   @State var campusStores: [CampusStoreContent]?
+  @State var reviews: [GetStoreReviewsContent]?
   
   var body: some View {
     NavigationStack(path: $navigationPath) {
@@ -85,7 +86,7 @@ struct HomeView: View {
               self.navigationPath.append(.moreStoreView(.best))
             }
           Separator()
-          HomeReviewsView()
+          HomeReviewsView(reviews: $reviews)
           MoreReviewButton()
             .padding(.horizontal, 20)
             .padding(.bottom, Constants.tabBarHeight + viewBottomargin - moreReviewBtnBottomMargin)
@@ -148,15 +149,17 @@ struct HomeView: View {
     let model = GetCampusStoresRequest(offset: "0", limit: "3", order: .registDate, group: .all, grade: nil)
     Task {
       if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
-        campusStores = result.content
+        self.campusStores = result.content
       }
     }
   }
   
   private func fetchReviews() {
     Task {
-      if let univStoreList = try await MealService().getUnivStoreLists(univName: "명지대학교", campusName: "인문캠퍼스") {
-        print("univStoreList: \(univStoreList)")
+      let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? "1" : "\(UserDefaultsManager.getInt(.univIdx))"
+      let model = GetStoreReviewsRequest(offset: "0", limit: "3", order: .name, group: .all, campusIdx: univIdx)
+      if let result = try await StoreService().getStoresReviews(requestModel: model) {
+        self.reviews = result.content
       }
     }
   }
