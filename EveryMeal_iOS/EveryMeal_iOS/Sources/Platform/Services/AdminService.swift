@@ -11,10 +11,10 @@ import Moya
 struct AdminService {
   let provider = MoyaProvider<AdminAPI>(session: Session(interceptor: AuthInterceptor.shared))
   
-  func getDefaultImages() async throws -> [DefaultImageResponse]? {
+  func getDefaultImages() async throws -> [DefaultProfileImageResponse]? {
     do {
       let response = try await provider.request(.getDefaultProfileImage)
-      let result = try JSONDecoder().decode(EveryMealDefaultResponse<[DefaultImageResponse]>.self, from: response.data)
+      let result = try JSONDecoder().decode(EveryMealDefaultResponse<[DefaultProfileImageResponse]>.self, from: response.data)
       return result.data
     } catch {
       throw error

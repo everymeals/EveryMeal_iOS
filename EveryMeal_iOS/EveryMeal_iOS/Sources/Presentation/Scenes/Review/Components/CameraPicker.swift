@@ -14,6 +14,7 @@ struct CameraPicker: UIViewControllerRepresentable {
   
   @Binding var image: [UIImage]
   @Binding var isActive: Bool
+  var selectedCompletion: (([UIImage]) -> Void)?
   
   func makeUIViewController(context: Context) -> UIImagePickerController {
     let picker = UIImagePickerController()
@@ -27,7 +28,7 @@ struct CameraPicker: UIViewControllerRepresentable {
   func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) { }
   
   func makeCoordinator() -> CameraPickerCoordinator {
-    return CameraPickerCoordinator(image: $image, isActive: $isActive)
+    return CameraPickerCoordinator(image: $image, isActive: $isActive, completion: self.selectedCompletion)
   }
 }
 
@@ -35,15 +36,19 @@ class CameraPickerCoordinator: NSObject, UIImagePickerControllerDelegate, UINavi
   
   @Binding var image: [UIImage]
   @Binding var isActive: Bool
+  var selectedCompletion: (([UIImage]) -> Void)?
   
-  init(image: Binding<[UIImage]>, isActive: Binding<Bool>) {
+  init(image: Binding<[UIImage]>, isActive: Binding<Bool>, completion: (([UIImage]) -> Void)?) {
     _image = image
     _isActive = isActive
+    selectedCompletion = completion
   }
   
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     if let uiImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
       self.image = [uiImage]
+      self.selectedCompletion?([uiImage])
+      
       self.isActive = false
     }
   }

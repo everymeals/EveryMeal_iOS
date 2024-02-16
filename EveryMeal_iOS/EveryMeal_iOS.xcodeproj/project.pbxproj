@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		081196B62AE36B100022B41A /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081196B52AE36B100022B41A /* UIApplication+Extensions.swift */; };
+		081774B02B7FADF100C5C45E /* ProfileImageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081774AF2B7FADF100C5C45E /* ProfileImageEntity.swift */; };
 		08277B472B7A2B3C004CF1D7 /* AdminAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08277B462B7A2B3C004CF1D7 /* AdminAPI.swift */; };
 		08277B492B7A2BCC004CF1D7 /* AdminService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08277B482B7A2BCC004CF1D7 /* AdminService.swift */; };
 		08277B4C2B7A2C20004CF1D7 /* DefaultImageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08277B4B2B7A2C20004CF1D7 /* DefaultImageResponse.swift */; };
@@ -127,6 +128,7 @@
 
 /* Begin PBXFileReference section */
 		081196B52AE36B100022B41A /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
+		081774AF2B7FADF100C5C45E /* ProfileImageEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageEntity.swift; sourceTree = "<group>"; };
 		08277B462B7A2B3C004CF1D7 /* AdminAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminAPI.swift; sourceTree = "<group>"; };
 		08277B482B7A2BCC004CF1D7 /* AdminService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminService.swift; sourceTree = "<group>"; };
 		08277B4B2B7A2C20004CF1D7 /* DefaultImageResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImageResponse.swift; sourceTree = "<group>"; };
@@ -730,6 +732,7 @@
 				0FE4495F2B57D4320054DED3 /* UnivsEntity.swift */,
 				665627D52B6B400700B36F1A /* SignupEntity.swift */,
 				0FCBABD92B691969007EB51C /* StoreEntity.swift */,
+				081774AF2B7FADF100C5C45E /* ProfileImageEntity.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -929,6 +932,7 @@
 				6681C7A82AEA4E3400C3D2C1 /* MealEntity.swift in Sources */,
 				66A3FFA62B47F878002DC665 /* MapReducer.swift in Sources */,
 				0FCBABDD2B69199A007EB51C /* GetCampusStoreResponse.swift in Sources */,
+				081774B02B7FADF100C5C45E /* ProfileImageEntity.swift in Sources */,
 				0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */,
 				6681C7A42AEA4D5000C3D2C1 /* MealModel.swift in Sources */,
 				08EC02952B67C302003CD556 /* EmailVertifyService.swift in Sources */,
