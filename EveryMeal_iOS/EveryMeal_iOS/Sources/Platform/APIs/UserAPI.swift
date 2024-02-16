@@ -48,7 +48,7 @@ extension UserAPI: TargetType {
       body["nickname"] = client.nickname
       body["emailAuthToken"] = client.emailAuthToken
       body["emailAuthValue"] = client.emailAuthValue
-      body["universityIdx"] = client.universityIdx
+      body["campusIdx"] = client.campusIdx
       body["profileImgKey"] = client.profileImgKey
       return .requestParameters(parameters: body,
                                 encoding: JSONEncoding.default)

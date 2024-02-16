@@ -11,6 +11,6 @@ struct SignupRequest: Codable, Equatable, Hashable {
   var nickname: String?
   var emailAuthToken: String?
   var emailAuthValue: String?
-  var universityIdx: Int?
+  var campusIdx: Int?
   var profileImgKey: String?
 }
