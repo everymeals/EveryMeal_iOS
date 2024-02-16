@@ -18,6 +18,17 @@ final class AuthInterceptor: RequestInterceptor {
   
   private init() {}
   
+  func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+    var urlRequest = urlRequest
+    
+    if urlRequest.allHTTPHeaderFields?["Authorization"] != nil,
+       let keychainToken = self.keychain.get(.accessToken) {
+      urlRequest.setValue("Bearer \(keychainToken)",
+                          forHTTPHeaderField: "Authorization")
+    }
+    completion(.success(urlRequest))
+  }
+  
   func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
     guard let request = request as? DataRequest else {
       completion(.doNotRetryWithError(error))

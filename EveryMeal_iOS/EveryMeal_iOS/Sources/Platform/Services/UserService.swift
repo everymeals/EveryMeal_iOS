@@ -51,4 +51,14 @@ struct UserService {
       throw error
     }
   }
+  
+  func verifyAccessToken(_ token: String) async throws -> EveryMealDefaultResponse<Bool> {
+    do {
+      let response = try await provider.request(.vertifyAccessToken(token))
+      let result = try JSONDecoder().decode(EveryMealDefaultResponse<Bool>.self, from: response.data)
+      return result
+    } catch {
+      throw error
+    }
+  }
 }

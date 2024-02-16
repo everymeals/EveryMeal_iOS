@@ -8,6 +8,7 @@
 import Foundation
 
 import ComposableArchitecture
+import KeychainSwift
 
 struct SplashReducer: Reducer {
   @Dependency(\.signupClient) var signupClient
@@ -25,20 +26,21 @@ struct SplashReducer: Reducer {
     switch action {
     case .login:
       return .run { send in
-        let requestModel = LoginRequest(
-          emailAuthToken: UserDefaultsManager.getString(.accessToken),
-          emailAuthValue: UserDefaultsManager.getString(.refreshToken)
-          )
-        let response = try await signupClient.login(requestModel)
-        switch response {
-        case let .success(response):
-//          UserManager.shared.accessToken = response.data?.accessToken
-          await send(.loginSuccess(response.data?.accessToken != nil))
-        case let .failure(error):
-          await send(.loginSuccess(false))
-          print("failure \(error)")
-        return
+        let keychain = KeychainSwift()
+        if let accessToken = keychain.get(.accessToken) {
+          let response = try await signupClient.verifyAccessToken(accessToken)
+          switch response {
+          case let .success(response):
+            await send(.loginSuccess(response))
+          case let .failure(error):
+            await send(.loginSuccess(false))
+            print("failure \(error)")
+            return
+          }
+        } else {
+          
         }
+        
       }
     case let .loginSuccess(value):
       state.loginSuccess = value

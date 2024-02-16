@@ -17,7 +17,7 @@ struct SignupClient {
   var saveImageToAWS: (String, Data) async throws -> Result<Bool, EverMealErrorType>
   var signup: (SignupRequest) async throws -> Result<SignupResponse, EverMealErrorType>
   var login: (LoginRequest) async throws -> Result<EveryMealDefaultResponse<LoginResponse>, EverMealErrorType>
-//  var getAccessToken(String)
+  var verifyAccessToken: (String) async throws -> Result<Bool, EverMealErrorType>
 }
 
 struct PostVertifyNumberClient {
@@ -104,6 +104,17 @@ extension SignupClient: DependencyKey {
           return .failure(.fail)
         }
       }
+    },
+    verifyAccessToken: { token in
+      do {
+        let response = try await UserService().verifyAccessToken(token)
+        if let data = response.data {
+          return .success(data)
+        } else {
+          return .failure(.fail)
+        }
+      }
+      
     }
   )
 }

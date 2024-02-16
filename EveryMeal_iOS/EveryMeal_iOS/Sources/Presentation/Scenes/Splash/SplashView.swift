@@ -33,9 +33,7 @@ struct SplashView: View {
                  let refreshToken = keychain.get(.refreshToken) {
                 UserDefaultsManager.setValue(.accessToken, value: accessToken)
                 UserDefaultsManager.setValue(.refreshToken, value: refreshToken)
-                // FIXME: 다른 로그인으로 변경
-                didFinishedLoading = true // 이 로직 삭제
-//                viewStore.send(.login)
+                viewStore.send(.login)
               } else {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                   didFinishedLoading = true
