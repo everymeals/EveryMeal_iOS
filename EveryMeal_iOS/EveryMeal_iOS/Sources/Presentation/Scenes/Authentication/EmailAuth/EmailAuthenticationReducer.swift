@@ -24,6 +24,7 @@ struct EmailAuthenticationReducer: Reducer {
     var emailSentCount: Int = 0
     var vertifyDidSuccess: Bool?
     var saveImageToAWSSuccess: Bool?
+    var imageKeyAlreadyExist: Bool?
     
     var loginSuccess: Bool?
     
@@ -44,8 +45,9 @@ struct EmailAuthenticationReducer: Reducer {
     case getImageURL(Data)
     case saveToAWS(ImageResponse, Data)
     case saveToAWSSuccess
+    case imageKeyAlreadyExist(Bool)
     
-    case signupButtonDidTappaed(Data, String)
+    case signupButtonDidTappaed(SelectedProfileImageModel, String)
     case signup
     
     case login(LoginRequest)
@@ -125,10 +127,20 @@ struct EmailAuthenticationReducer: Reducer {
       state.signinAlready = nil
       return .none
       
-    case let .signupButtonDidTappaed(image, nickname):
-      state.signupEntity.universityIdx = UserDefaultsManager.getInt(.univIdx)
+    case let .signupButtonDidTappaed(model, nickname):
+      state.signupEntity.campusIdx = UserDefaultsManager.getInt(.univIdx)
       state.signupEntity.nickname = nickname
-      return .send(.getImageURL(image))
+      if let cameraORLibrarayImage = model.image {
+        guard let imageData = cameraORLibrarayImage.jpegData(compressionQuality: 0.8) else {
+          return .none
+        }
+        return .send(.getImageURL(imageData))
+      } else if let imageKey = model.imageKey {
+        state.signupEntity.profileImgKey = imageKey
+        return .send(.imageKeyAlreadyExist(true))
+      } else {
+        return .none
+      }
       
     case let .getImageURL(image):
       
@@ -162,6 +174,10 @@ struct EmailAuthenticationReducer: Reducer {
       
     case .saveToAWSSuccess:
       state.saveImageToAWSSuccess = true
+      return .none
+      
+    case let .imageKeyAlreadyExist(value):
+      state.imageKeyAlreadyExist = value
       return .none
       
     case .signup:

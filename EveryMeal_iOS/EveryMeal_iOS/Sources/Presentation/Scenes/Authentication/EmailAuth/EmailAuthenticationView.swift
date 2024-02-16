@@ -197,11 +197,7 @@ struct EmailAuthenticationView: View {
                       viewStore.send(.sendVertifyCode(enteredText))
                     }
                   case .makeProfile:
-                    guard let imageData = selectedImage.jpegData(compressionQuality: 0.8) else {
-                      print("이미지 데이터 형식으로 변환 실패")
-                      return
-                    }
-                    viewStore.send(.signupButtonDidTappaed(imageData, enteredText) )
+                    viewStore.send(.signupButtonDidTappaed(selectedImage, enteredText) )
                   }
                 })
                   .onChange(of: viewStore.signinAlready) { value in
@@ -241,6 +237,12 @@ struct EmailAuthenticationView: View {
                   .onChange(of: viewStore.saveImageToAWSSuccess) { value in
                     if let result = value, result == true {
                       viewStore.send(.signup)
+                    }
+                  }
+                  .onChange(of: viewStore.imageKeyAlreadyExist) { value in
+                    if let result = value, result == true {
+                      viewStore.send(.signup)
+                      viewStore.send(.imageKeyAlreadyExist(false))
                     }
                   }
                   .onChange(of: viewStore.loginSuccess) { value in

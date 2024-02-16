@@ -12,6 +12,7 @@ import PhotosUI
 struct SelectedProfileImageModel: Equatable {
   var imageURL: URL?
   var image: UIImage?
+  var imageKey: String?
 }
 
 struct SelectProfileImagePopupView: View {
@@ -62,7 +63,7 @@ struct SelectProfileImagePopupView: View {
                 image.resizable()
                   .frame(width: 50, height: 50, alignment: .center)
                   .onTapGesture {
-                    selectedImages = SelectedProfileImageModel(imageURL: selectIconColumns[index].profileImageUrl!)
+                    selectedImages = SelectedProfileImageModel(imageURL: selectIconColumns[index].profileImageUrl!, imageKey: selectIconColumns[index].imageKey)
                   }
               } placeholder: {
                 Image(ProfileImageType.apple.imageSource)
@@ -105,9 +106,6 @@ struct SelectProfileImagePopupView: View {
         }
      
       }
-      
-      
-      
     }
   }
 }
