@@ -7,9 +7,7 @@
 
 import Foundation
 
-// MARK: - 학식 리뷰 응답 데이터 모델
-
-/// `GetUnivStoreReviewsResponse` 구조체는 가게 리뷰 요청에 대한 응답 데이터를 포함합니다.
+/// 학생 식당 리뷰 요청에 대한 응답 데이터를 포함합니다.
 ///
 /// - Parameters:
 ///   - 🕰️ localDateTime: 응답이 생성된 로컬 날짜와 시간
@@ -20,7 +18,7 @@ struct GetUnivStoreReviewsResponse: Codable {
   let data: GetUnivStoreReviewsData?
 }
 
-/// `GetUnivStoreReviewsData` 구조체는 리뷰의 총 개수와 페이지별 리뷰 정보 리스트를 포함합니다.
+/// 학생 식당 리뷰의 총 개수와 페이지별 리뷰 정보 리스트를 포함합니다.
 ///
 /// - Parameters:
 ///   - 📊 reviewTotalCnt: 리뷰의 총 개수
@@ -30,7 +28,7 @@ struct GetUnivStoreReviewsData: Codable {
   let reviewPagingList: [UnivStoreReviewInfo]?
 }
 
-/// `UnivStoreReviewInfo` 구조체는 개별 리뷰 정보를 상세하게 포함합니다.
+/// 학생 식당 리뷰들의 개별 정보를 상세하게 포함합니다.
 ///
 /// - Parameters:
 ///   - 🔢 reviewIdx: 리뷰 고유 식별자

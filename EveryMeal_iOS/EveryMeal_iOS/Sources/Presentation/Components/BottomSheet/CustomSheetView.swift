@@ -98,8 +98,3 @@ struct CustomSheetView<Content>: View where Content: View {
     .background(Color.white)
   }
 }
-
-
-#Preview {
-  FilterBarView(selectedSortOption: .constant(.registDate))
-}

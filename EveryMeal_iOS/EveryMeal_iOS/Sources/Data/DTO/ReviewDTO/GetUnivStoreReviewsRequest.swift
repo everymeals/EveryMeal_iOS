@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// `GetUnivStoreReviewsRequest` 구조체는 특정 대학의 가게 리뷰를 가져오는 데 사용됩니다.
+/// 특정 대학의 학생 식당의 리뷰를 가져오는 데 사용됩니다.
 ///
 /// - Parameters:
 ///   - 📍 cursorIdx: 페이징 시작점
