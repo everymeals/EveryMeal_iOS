@@ -9,50 +9,45 @@ import SwiftUI
 import Photos
 import PhotosUI
 
-enum SelectImageType: Int, CaseIterable {
-  case camera = 1
-  case rice
-  case sushi
-  case puding
-  case library
-  case apple
-  case egg
-  case ramen
-  
-  var imageSource: ImageResource {
-    switch self {
-    case .camera: return .iconCameraMono
-    case .rice: return .rice90
-    case .sushi: return .sushi90
-    case .puding: return .puding90
-    case .library: return .iconPictureMono
-    case .apple: return .apple90
-    case .egg: return .egg90
-    case .ramen: return .ramen90
-    }
-  }
+struct SelectedProfileImageModel: Equatable {
+  var imageURL: URL?
+  var image: UIImage?
 }
 
 struct SelectProfileImagePopupView: View {
   @State var goToAuthButtonEnabled = true
-  @State var selectIconColumns: [SelectImageType] = []
-  @State var selectedImages: [UIImage] = [UIImage(named: "apple_90")!]
+  @State var allProfileImageType: [ProfileImageType] = []
+  @State var selectIconColumns: [ProfileImageEntity] = []
+//  @State var selectedImages: [UIImage] = [UIImage(named: "apple_90")!]
+  @State var selectedImages: SelectedProfileImageModel = .init(image: UIImage(named: "apple_90")!)
   @State var changeSelectedImage: Bool = false
   
-  var saveButtonTapped: (UIImage) -> Void
+  var saveButtonTapped: (SelectedProfileImageModel) -> Void
   private let columns = Array(repeating: GridItem(.fixed(50), spacing: 20), count: 4)
   
   var body: some View {
     VStack(alignment: .leading) {
       VStack(spacing: 32) {
-        if changeSelectedImage,
-           let selectedImage = selectedImages.first {
+        if let imageURL = selectedImages.imageURL {
+          AsyncImage(url: imageURL) { image in
+            image.resizable()
+              .aspectRatio(contentMode: .fit)
+              .frame(width: 90, height: 90)
+          } placeholder: {
+            
+            Image(.apple90)
+              .resizable()
+              .aspectRatio(contentMode: .fit)
+              .frame(width: 90, height: 90)
+          }
+        } else if changeSelectedImage,
+                  let selectedImage = selectedImages.image {
           Image(uiImage: selectedImage)
             .resizable()
             .clipShape(Circle())
             .aspectRatio(contentMode: .fill)
             .frame(width: 90, height: 90)
-        } else if let selectedImage = selectedImages.first {
+        } else if let selectedImage = selectedImages.image{
           Image(uiImage: selectedImage)
             .resizable()
             .aspectRatio(contentMode: .fit)
@@ -60,51 +55,57 @@ struct SelectProfileImagePopupView: View {
         }
         
         LazyVGrid(columns: columns, spacing: 14) {
-          ForEach($selectIconColumns.indices, id: \.self) { index in
-            if selectIconColumns[index] != .camera,
-               selectIconColumns[index] != .library {
-              Image(selectIconColumns[index].imageSource)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 50)
-                .onTapGesture {
-                  let resource = selectIconColumns[index].imageSource
-                  selectedImages = [UIImage(resource: resource)]
-                }
+          ForEach($allProfileImageType.indices, id: \.self) { index in
+            if selectIconColumns[index].type != .camera,
+               selectIconColumns[index].type != .library {
+              AsyncImage(url: selectIconColumns[index].profileImageUrl!) { image in
+                image.resizable()
+                  .frame(width: 50, height: 50, alignment: .center)
+                  .onTapGesture {
+                    selectedImages = SelectedProfileImageModel(imageURL: selectIconColumns[index].profileImageUrl!)
+                  }
+              } placeholder: {
+                Image(ProfileImageType.apple.imageSource)
+                  .resizable()
+                  .aspectRatio(contentMode: .fit)
+                  .frame(width: 50)
+              }
             } else {
-              CameraLibraryView(type: selectIconColumns[index],
-                                images: $selectedImages)
+              CameraLibraryView(type: selectIconColumns[index].type, imageSelectedCompletion: { image in
+                changeSelectedImage = !image.isEmpty
+                selectedImages = SelectedProfileImageModel(image: image.first!)
+              })
             }
           }
         }
       }
-      .onChange(of: selectedImages, perform: { value in
-        DispatchQueue.main.async {
-          changeSelectedImage = !value.isEmpty
-        }
-      })
       EveryMealButton(selectEnable: $goToAuthButtonEnabled, title: "확인", didTapped: {
-        saveButtonTapped(selectedImages.first ?? UIImage())
+        saveButtonTapped(selectedImages)
       })
     }
     .background(Color.white)
     .onAppear {
       if selectIconColumns.isEmpty {
-        SelectImageType.allCases.forEach { type in
-          self.selectIconColumns.append(type)
+        Task {
+          if let result = try await AdminService().getDefaultImages() {
+            let profileImageEntities = result.map { $0.toProfileImageEntity() }
+            
+            ProfileImageType.allCases.forEach { type in
+              switch type {
+              case .camera, .library:
+                allProfileImageType.append(type)
+                self.selectIconColumns.append(.init(type: type, imageResource: type.imageSource))
+              default:
+                allProfileImageType.append(type)
+                self.selectIconColumns.append(profileImageEntities.first(where: { $0.type == type })!)
+              }
+            }
+            
+          }
         }
+     
       }
       
-      Task {
-        if var result = try await AdminService().getDefaultImages() {
-          result.sort()
-          result.forEach { images in
-            selectIconColumns[]
-          }
-          selectIconColumns[]
-        }
-        
-      }
       
       
     }
@@ -112,12 +113,13 @@ struct SelectProfileImagePopupView: View {
 }
 
 struct CameraLibraryView: View {
-  var type: SelectImageType
+  var type: ProfileImageType
   @State var showImagePicker: Bool = false
   @State var showCameraPicker: Bool = false
   @State private var showingAccessAlert = false
   
-  @Binding var images: [UIImage]
+  @State var images: [UIImage] = []
+  var imageSelectedCompletion: (([UIImage]) -> Void)?
   
   var body: some View {
     ZStack {
@@ -157,7 +159,9 @@ struct CameraLibraryView: View {
         .ignoresSafeArea()
     }
     .fullScreenCover(isPresented: $showCameraPicker) {
-      CameraPicker(image: $images, isActive: $showCameraPicker)
+      CameraPicker(image: $images, isActive: $showCameraPicker, selectedCompletion: { selected in
+        imageSelectedCompletion?(selected)
+      })
         .ignoresSafeArea()
     }
   }
@@ -179,7 +183,9 @@ struct CameraLibraryView: View {
     var configuration = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
     configuration.filter = .any(of: [.images, .livePhotos])
     configuration.selectionLimit = 1
-    return ImagePicker(configuration: configuration, isPresented: $showImagePicker, selectedImages: $images)
+    return ImagePicker(configuration: configuration, isPresented: $showImagePicker, selectedImages: $images, selectedCompletion: { selectedImage in
+      self.imageSelectedCompletion?(selectedImage)
+    })
   }
   
   private func requestCameraAuthorization() {
