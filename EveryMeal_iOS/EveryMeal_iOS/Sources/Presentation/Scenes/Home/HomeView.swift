@@ -131,13 +131,8 @@ struct HomeView: View {
         }
       }
       .onAppear {
-        let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? 1 : UserDefaultsManager.getInt(.univIdx)
-        let model = GetCampusStoresRequest(offset: "0", limit: "3", order: .registDate, group: .all, grade: nil)
-        Task {
-          if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
-            campusStores = result.content
-          }
-        }
+        fetchCampusStores()
+        fetchReviews()
       }
       .onChange(of: navigationPath) { value in
         otherViewShowing = value.count != 0
@@ -147,6 +142,25 @@ struct HomeView: View {
       .navigationBarHidden(true)
     }
   }
+  
+  private func fetchCampusStores() {
+    let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? 1 : UserDefaultsManager.getInt(.univIdx)
+    let model = GetCampusStoresRequest(offset: "0", limit: "3", order: .registDate, group: .all, grade: nil)
+    Task {
+      if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
+        campusStores = result.content
+      }
+    }
+  }
+  
+  private func fetchReviews() {
+    Task {
+      if let univStoreList = try await MealService().getUnivStoreLists(univName: "명지대학교", campusName: "인문캠퍼스") {
+        print("univStoreList: \(univStoreList)")
+      }
+    }
+  }
+  
 }
 
 struct HomeView_Previews: PreviewProvider {
