@@ -62,6 +62,9 @@
 		0F6685EF2B037C3300EA1281 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6685EE2B037C3300EA1281 /* MyPageView.swift */; };
 		0F69AFCA2B09E422008C98C6 /* SignOutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F69AFC92B09E422008C98C6 /* SignOutView.swift */; };
 		0F6D72842B69C3E50065B3B6 /* StoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6D72832B69C3E50065B3B6 /* StoreService.swift */; };
+		0F6EC79E2B7C5D6E00D5AE5B /* MealService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6EC79D2B7C5D6E00D5AE5B /* MealService.swift */; };
+		0F6EC7A02B7C5D8500D5AE5B /* MealAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6EC79F2B7C5D8500D5AE5B /* MealAPI.swift */; };
+		0F6EC7A32B7C651400D5AE5B /* GetUnivStoreListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6EC7A22B7C651400D5AE5B /* GetUnivStoreListResponse.swift */; };
 		0F78AFF92A6CCA6B006B8C80 /* EveryMeal_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F78AFF82A6CCA6B006B8C80 /* EveryMeal_iOSApp.swift */; };
 		0F78AFFB2A6CCA6B006B8C80 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F78AFFA2A6CCA6B006B8C80 /* SplashView.swift */; };
 		0F78AFFD2A6CCA6C006B8C80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F78AFFC2A6CCA6C006B8C80 /* Assets.xcassets */; };
@@ -186,6 +189,9 @@
 		0F6685EE2B037C3300EA1281 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		0F69AFC92B09E422008C98C6 /* SignOutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutView.swift; sourceTree = "<group>"; };
 		0F6D72832B69C3E50065B3B6 /* StoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreService.swift; sourceTree = "<group>"; };
+		0F6EC79D2B7C5D6E00D5AE5B /* MealService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealService.swift; sourceTree = "<group>"; };
+		0F6EC79F2B7C5D8500D5AE5B /* MealAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealAPI.swift; sourceTree = "<group>"; };
+		0F6EC7A22B7C651400D5AE5B /* GetUnivStoreListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUnivStoreListResponse.swift; sourceTree = "<group>"; };
 		0F78AFF52A6CCA6B006B8C80 /* EveryMeal_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EveryMeal_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F78AFF82A6CCA6B006B8C80 /* EveryMeal_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveryMeal_iOSApp.swift; sourceTree = "<group>"; };
 		0F78AFFA2A6CCA6B006B8C80 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
@@ -467,6 +473,14 @@
 			path = MyPage;
 			sourceTree = "<group>";
 		};
+		0F6EC7A12B7C64FB00D5AE5B /* MealDTO */ = {
+			isa = PBXGroup;
+			children = (
+				0F6EC7A22B7C651400D5AE5B /* GetUnivStoreListResponse.swift */,
+			);
+			path = MealDTO;
+			sourceTree = "<group>";
+		};
 		0F78AFEC2A6CCA6B006B8C80 = {
 			isa = PBXGroup;
 			children = (
@@ -617,6 +631,7 @@
 		0FE449622B57DC190054DED3 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
+				0F6EC7A12B7C64FB00D5AE5B /* MealDTO */,
 				087EB0D62B67D369001B752E /* ImageDTO */,
 				0FCBABDB2B691981007EB51C /* StoreDTO */,
 				08EC02892B67BF9C003CD556 /* UserDTO */,
@@ -660,6 +675,7 @@
 				087EB0D22B67D262001B752E /* ImageAPI.swift */,
 				087EB0CC2B67CF7C001B752E /* UserAPI.swift */,
 				0FCBABD72B6917D1007EB51C /* StoreAPI.swift */,
+				0F6EC79F2B7C5D8500D5AE5B /* MealAPI.swift */,
 			);
 			path = APIs;
 			sourceTree = "<group>";
@@ -672,6 +688,7 @@
 				087EB0D42B67D30D001B752E /* ImageService.swift */,
 				087EB0D92B67D5E8001B752E /* UserService.swift */,
 				0F6D72832B69C3E50065B3B6 /* StoreService.swift */,
+				0F6EC79D2B7C5D6E00D5AE5B /* MealService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -876,6 +893,7 @@
 				087EB0CD2B67CF7C001B752E /* UserAPI.swift in Sources */,
 				0F1424242ADD3F3E00A79AA2 /* MoreReviewsView.swift in Sources */,
 				0F43F6832A6EA8AC00239AA4 /* HomeView.swift in Sources */,
+				0F6EC7A32B7C651400D5AE5B /* GetUnivStoreListResponse.swift in Sources */,
 				087EB0DA2B67D5E8001B752E /* UserService.swift in Sources */,
 				08EC028C2B67BF9C003CD556 /* EmailSendResponse.swift in Sources */,
 				665627D82B6BA37600B36F1A /* LoadingView.swift in Sources */,
@@ -914,6 +932,7 @@
 				081196B62AE36B100022B41A /* UIApplication+Extensions.swift in Sources */,
 				087EB0D82B67D387001B752E /* ImageResponse.swift in Sources */,
 				66BEA02D2B0C8BFD00F3125B /* EveryMealToast.swift in Sources */,
+				0F6EC7A02B7C5D8500D5AE5B /* MealAPI.swift in Sources */,
 				089359812B78AC2A00C1FDAC /* DevModeView.swift in Sources */,
 				0F0D42F22B7A367100B4BFF3 /* Date+Extensions.swift in Sources */,
 				08EC028D2B67BF9C003CD556 /* EmailSendRequest.swift in Sources */,
@@ -943,6 +962,7 @@
 				66A3FFA62B47F878002DC665 /* MapReducer.swift in Sources */,
 				0FCBABDD2B69199A007EB51C /* GetCampusStoreResponse.swift in Sources */,
 				0F4C83572A7727BF0006A8EA /* ChooseUnivView.swift in Sources */,
+				0F6EC79E2B7C5D6E00D5AE5B /* MealService.swift in Sources */,
 				6681C7A42AEA4D5000C3D2C1 /* MealModel.swift in Sources */,
 				08EC02952B67C302003CD556 /* EmailVertifyService.swift in Sources */,
 				08D6BA662AE7F6DA00C0B516 /* ReviewStoreSearchListRecentCell.swift in Sources */,
