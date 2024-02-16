@@ -50,7 +50,13 @@ struct ReviewCellView: View {
   
   private var header: some View {
     HStack(spacing: 12) {
-      Circle().frame(width: 40, height: 40).foregroundColor(.grey5)
+      AsyncImage(url: URL(string: (review.profileImageUrl ?? ""))!) { image in
+        image.image?.resizable()
+          .aspectRatio(contentMode: .fill)
+          .frame(width: 40, height: 40)
+          .cornerRadius(20)
+      }
+      
       VStack {
         VStack(alignment: .leading, spacing: 3.5) {
           Text(review.nickName ?? "")
