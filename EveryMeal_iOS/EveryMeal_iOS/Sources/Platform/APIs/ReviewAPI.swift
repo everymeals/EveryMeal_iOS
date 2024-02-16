@@ -8,6 +8,9 @@
 import Foundation
 import Moya
 
+/// `ReviewAPI` 열거형은 리뷰 관련 API 엔드포인트를 정의합니다.
+///
+/// - `getUnivStoreReviews`: 학식 가게 리뷰를 페이지별로 조회하는 엔드포인트입니다.
 enum ReviewAPI {
   /// 학식 리뷰 페이징 조회
   case getUnivStoreReviews(GetUnivStoreReviewsRequest)
