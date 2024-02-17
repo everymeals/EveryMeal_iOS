@@ -31,7 +31,7 @@ struct HomeView: View {
   
   var body: some View {
     NavigationStack(path: $navigationPath) {
-      VStack {
+      VStack(spacing: 0) {
         HomeHeaderView()
         ScrollView(showsIndicators: true) {
           GoToReviewBannerView()
@@ -155,9 +155,9 @@ struct HomeView: View {
   }
   
   private func fetchReviews() {
+    let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? "1" : "\(UserDefaultsManager.getInt(.univIdx))"
+    let model = GetStoreReviewsRequest(offset: "0", limit: "3", order: .name, group: .all, campusIdx: univIdx)
     Task {
-      let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? "1" : "\(UserDefaultsManager.getInt(.univIdx))"
-      let model = GetStoreReviewsRequest(offset: "0", limit: "3", order: .name, group: .all, campusIdx: univIdx)
       if let result = try await StoreService().getStoresReviews(requestModel: model) {
         self.reviews = result.content
       }

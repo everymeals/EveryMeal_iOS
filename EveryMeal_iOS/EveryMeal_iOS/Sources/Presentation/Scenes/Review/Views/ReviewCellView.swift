@@ -15,7 +15,7 @@ struct ReviewCellView: View {
   
   var body: some View {
     VStack(spacing: 12) {
-      VStack(alignment: .leading, spacing: 9) {
+      VStack(alignment: .leading, spacing: 6) {
         VStack(alignment: .leading, spacing: 14) {
           header
           reviewContent
@@ -95,7 +95,7 @@ struct ReviewCellView: View {
         .font(.pretendard(size: 14))
         .foregroundColor(.grey8)
         .frame(maxWidth: .infinity, minHeight: 42, alignment: .topLeading)
-        .padding(.top, 3)
+        .padding(.top, 2)
         .lineLimit(3)
         .lineSpacing(6)
       

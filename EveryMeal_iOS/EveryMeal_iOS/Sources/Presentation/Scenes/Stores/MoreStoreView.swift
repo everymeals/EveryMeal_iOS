@@ -19,6 +19,7 @@ struct MoreStoreView: View {
   var backButtonTapped: () -> Void
   var moreViewType: MoreStoreViewType
   @State var campusStores: [CampusStoreContent]? = []
+  
   @State private var currentPage = 0
   @State private var isLoading = false
   @State private var isLastPage = false

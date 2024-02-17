@@ -76,7 +76,7 @@ struct MoreRestuarantButton: View {
         )
         .contentShape(Rectangle())
     }
-    .padding(.bottom, 30)
+    .padding(.bottom, 22)
     .padding(.horizontal, 20)
   }
 }
