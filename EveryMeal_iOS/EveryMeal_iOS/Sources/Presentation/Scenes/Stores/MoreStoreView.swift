@@ -113,7 +113,6 @@ struct MoreStoreView: View {
             .cornerRadius(12)
         }
         .onTapGesture {
-          print("적용하기 버튼 클릭 - 선택한 카테고리: \(tempSelectedFilterCategoryOption.title), 선택한 별점: \(tempSelectedFilterGradeOption?.rawValue ?? "777")")
           applyFilters()
           isFilterOpened = false
         }
@@ -187,7 +186,13 @@ struct MoreStoreView: View {
     UITabBar.appearance().isHidden = true
     
     let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? 1 : UserDefaultsManager.getInt(.univIdx)
-    let model = GetCampusStoresRequest(offset: "0", limit: "15", order: .registDate, group: .all, grade: nil)
+    let model = GetCampusStoresRequest(
+      offset: "0",
+      limit: "15",
+      order: .registDate,
+      group: .all,
+      grade: nil
+    )
     
     Task {
       if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
@@ -205,11 +210,15 @@ struct MoreStoreView: View {
     guard !isLoading, !isLastPage else { return }
     isLoading = true
     let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? 1 : UserDefaultsManager.getInt(.univIdx)
-    let orderType = selectedSortOption?.toOrderType ?? .registDate
-    let category = selectedFilterCategoryOption.toCategoryType
-    let grade = selectedFilterGradeOption
     let nextPage = currentPage + 1
-    let model = GetCampusStoresRequest(offset: "\(nextPage)", limit: "15", order: orderType, group: category, grade: grade)
+    
+    let model = GetCampusStoresRequest(
+      offset: "\(nextPage)",
+      limit: "15",
+      order: selectedSortOption?.toOrderType ?? .registDate,
+      group: selectedFilterCategoryOption.toCategoryType,
+      grade: selectedFilterGradeOption
+    )
     
     Task {
       if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
@@ -230,14 +239,17 @@ struct MoreStoreView: View {
     campusStores = nil // 기존 목록을 초기화
     currentPage = 0 // 페이지 번호 초기화
     let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? 1 : UserDefaultsManager.getInt(.univIdx)
-    let orderType = selectedSortOption?.toOrderType ?? .registDate
-    let category = selectedFilterCategoryOption.toCategoryType
-    let grade = selectedFilterGradeOption
-    let model = GetCampusStoresRequest(offset: "\(currentPage)", limit: "15", order: orderType, group: category, grade: grade)
-    
+    let model = GetCampusStoresRequest(
+      offset: "\(currentPage)",
+      limit: "15",
+      order: selectedSortOption?.toOrderType ?? .registDate,
+      group: selectedFilterCategoryOption.toCategoryType,
+      grade: selectedFilterGradeOption
+    )
     Task {
       if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
         campusStores = result.content
+        
         if let totalPages = result.totalPages {
           isLastPage = currentPage >= totalPages
         }

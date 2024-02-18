@@ -25,6 +25,7 @@ enum CampusStoreOrderType: String {
   case registDate
 }
 
+/// 대학 주변 맛집 리스트 조회 API와 맛집 리뷰를 조회하는 데에 쓰이는 타입
 enum CampusStoreGroupType: String {
   case all
   case etc
@@ -38,6 +39,7 @@ enum CampusStoreGroupType: String {
   case western
 }
 
+/// 대학 주변 맛집 리스트 조회 API와 맛집 리뷰를 조회하는 데에 쓰이는 타입
 enum CampusStoreGradeType: String, CaseIterable {
   case one = "1"
   case two = "2"
