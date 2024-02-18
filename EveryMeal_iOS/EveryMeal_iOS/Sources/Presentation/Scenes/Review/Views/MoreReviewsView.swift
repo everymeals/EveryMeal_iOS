@@ -194,7 +194,6 @@ struct MoreReviewsView: View {
   private func loadMoreContent() {
     guard !isLoading, !isLastPage else { return }
     isLoading = true
-    let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? 1 : UserDefaultsManager.getInt(.univIdx)
     let nextPage = currentPage + 1
     
     let model = GetStoreReviewsRequest(

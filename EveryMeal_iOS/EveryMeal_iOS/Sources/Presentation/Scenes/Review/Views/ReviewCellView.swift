@@ -64,16 +64,14 @@ struct ReviewCellView: View {
             .foregroundStyle(Color.grey8)
           
           HStack(spacing: 2) {
-            Image("icon-star-mono")
-            Image("icon-star-mono")
-            Image("icon-star-mono")
-            Image("icon-star-mono")
-            Image("icon-star-mono")
+            StarRateView(grade: review.grade ?? 5)
+            
             Text("·")
               .font(.pretendard(size: 12, weight: .semibold))
               .multilineTextAlignment(.center)
               .foregroundColor(.grey5)
-            Text("3일전")
+            
+            Text(review.formattedCreatedAt ?? "")
               .font(.pretendard(size: 12, weight: .regular))
               .foregroundColor(.grey5)
           }
@@ -156,6 +154,21 @@ struct ReviewCellView: View {
     }
   }
   
+}
+
+struct StarRateView: View {
+  var grade: Int
+  
+  var body: some View {
+      ForEach(0..<grade, id: \.self) { _ in
+        Image("icon-star-mono")
+      }
+      ForEach(0..<(5 - grade), id: \.self) { _ in
+        Image("icon-star-mono")
+          .renderingMode(.template)
+          .foregroundStyle(Color.grey4)
+      }
+  }
 }
 
 #Preview {
