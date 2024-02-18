@@ -9,14 +9,14 @@ import Foundation
 import Moya
 
 enum MealAPI {
-  case getUnivStoreList(String, String)
+  case getUnivStoreList(Int)
 }
 
 extension MealAPI: TargetType {
   var path: String {
     switch self {
-    case .getUnivStoreList:
-      return "/api/v1/meals/restaurant"
+    case .getUnivStoreList(let univIdx):
+      return "/api/v1/meals/restaurant/\(univIdx)"
     }
   }
   
@@ -29,12 +29,8 @@ extension MealAPI: TargetType {
   
   var task: Moya.Task {
     switch self {
-    case let .getUnivStoreList(universityName, campusName):
-      var body = defaultBody
-      body["universityName"] = universityName
-      body["campusName"] = campusName
-      
-      return .requestParameters(parameters: body, encoding: URLEncoding.queryString)
+    case .getUnivStoreList:
+      return .requestPlain
     }
   }
   
