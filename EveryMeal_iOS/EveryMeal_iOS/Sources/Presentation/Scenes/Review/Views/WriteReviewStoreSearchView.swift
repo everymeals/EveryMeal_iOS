@@ -36,6 +36,7 @@ struct WriteReviewStoreSearchView: View {
   @State private var text: String = ""
   @State private var reviewNavigationStack: [ReviewStackViewType] = []
   @State var exitAlertPresent = false
+  @State var images: [UIImage] = []
   
   var closeButtonTapped: () -> Void
   
@@ -97,7 +98,9 @@ struct WriteReviewStoreSearchView: View {
           startPointView
         case let .imageTextView(storeModel):
           let reviewWriteImageTextView = ReviewWriteImageTextView(
-            storeModel: storeModel,
+            store: .init(initialState: ReviewWriteImageTextViewReducer.State(storeEntity: storeModel), reducer: {
+              ReviewWriteImageTextViewReducer()
+            }), selectedImages: $images,
             saveButtonTapped: { reviewModel in
               // TODO: 토스트 노출
               reviewNavigationStack.append(.reviewDetail(reviewModel))
@@ -135,14 +138,6 @@ struct WriteReviewStoreSearchView: View {
 //      .padding(.bottom)
 //      .navigationBarTitleDisplayMode(.inline)
 //      .navigationBarHidden(true)
-    }
-  }
-}
-
-struct WriteReviewStoreSearchView_Previews: PreviewProvider {
-  static var previews: some View {
-    WriteReviewStoreSearchView {
-      print("close")
     }
   }
 }
