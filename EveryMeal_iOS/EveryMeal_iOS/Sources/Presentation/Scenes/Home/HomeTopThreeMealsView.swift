@@ -46,6 +46,7 @@ struct MealGridView: View {
     LazyVGrid(columns: [GridItem(.flexible())], spacing: 0) {
       ForEach(Array(storeModels.enumerated()), id: \.element) { index, storeModel in
         MealVerticalItemView(storeModel: storeModel)
+          .contentShape(Rectangle())
           .onTapGesture {
             // 여기에 탭 제스처 처리 로직 추가
             didMealTapped(storeModel)
