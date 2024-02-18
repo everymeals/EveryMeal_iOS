@@ -29,7 +29,7 @@ struct BestStoreSearchView: View {
   private let searchViewID = "searchViewID"
   
   var body: some View {
-    let searchDebounce = searchPublisher.debounce(for: .seconds(1), scheduler: RunLoop.main)
+    let searchDebounce = searchPublisher.debounce(for: .seconds(0.5), scheduler: RunLoop.main)
     
     ScrollViewReader { reader in
       ScrollView {
@@ -42,10 +42,8 @@ struct BestStoreSearchView: View {
               }
             BestStoreSearchBar(text: $searchText, placeholder: placeholder,
                                onSearchButtonClicked: {
-              var recordedSearchStore = UserDefaultsManager.getArrayString(.recentSearchStores) ?? []
-              if !recordedSearchStore.contains(searchText) {
-                recordedSearchStore.append(searchText)
-                UserDefaultsManager.setValue(.recentSearchStores, value: recordedSearchStore)
+              if !recentSearchStores.contains(searchText) {
+                recentSearchStores.append(searchText)
               }
               UIApplication.shared.hideKeyboard()
             })
@@ -65,15 +63,13 @@ struct BestStoreSearchView: View {
             let resultMealView = MealGridView(
               campusStores: $searchResults,
               didMealTapped: { storeModel in
-                var recordedSearchStore = UserDefaultsManager.getArrayString(.recentSearchStores) ?? []
-                if !recordedSearchStore.contains(searchText) {
-                  recordedSearchStore.append(searchText)
-                  UserDefaultsManager.setValue(.recentSearchStores, value: recordedSearchStore)
+                if !recentSearchStores.contains(searchText) {
+                  recentSearchStores.append(searchText)
                 }
                 nextButtonTapped(storeModel)
             })
             resultMealView
-          } else {
+          } else if !recentSearchStores.isEmpty {
             HStack {
               Text("최근 검색어")
                 .font(.pretendard(size: 14, weight: .medium))
@@ -91,6 +87,7 @@ struct BestStoreSearchView: View {
                     deleteButtonTapped: {
                       recentSearchStores.remove(at: index)
                     })
+                  .contentShape(Rectangle())
                   .onTapGesture {
                     searchText = recentSearchStores[index]
                   }
@@ -121,6 +118,10 @@ struct BestStoreSearchView: View {
             }
           }
         }
+        .onChange(of: recentSearchStores) { stores in
+          UserDefaultsManager.setValue(.recentSearchStores, value: stores)
+          
+        }
 //        .onChange(of: scrollToTop) { _ in
 //          withAnimation {
 //            reader.scrollTo(searchViewID, anchor: .top)
@@ -147,6 +148,9 @@ struct BestStoreSearchBar: View {
       Image("icon-search-mono")
         .frame(width: 24, height: 24)
       TextField(placeholder, text: $text, onCommit: onSearchButtonClicked)
+        .onAppear {
+          UITextField.appearance().clearButtonMode = .whileEditing
+        }
     }
     .padding(.horizontal, 16)
     .frame(height: 48)
