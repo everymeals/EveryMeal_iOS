@@ -82,7 +82,7 @@ extension UserAPI: TargetType {
       return values
     case .getAccessToken:
       let keychain = KeychainSwift()
-      values["Cookie"] = keychain.get(.refreshToken)
+      values["refresh-token"] = keychain.get(.refreshToken)
       return values
     }
 //    switch self {

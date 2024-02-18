@@ -61,4 +61,14 @@ struct UserService {
       throw error
     }
   }
+  
+  func getAccessToken() async throws -> EveryMealDefaultResponse<String> {
+    do {
+      let response = try await provider.request(.getAccessToken)
+      let result = try JSONDecoder().decode(EveryMealDefaultResponse<String>.self, from: response.data)
+      return result
+    } catch {
+      throw error
+    }
+  }
 }

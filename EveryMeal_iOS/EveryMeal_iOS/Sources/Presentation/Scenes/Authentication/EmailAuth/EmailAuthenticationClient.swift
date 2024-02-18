@@ -18,6 +18,7 @@ struct SignupClient {
   var signup: (SignupRequest) async throws -> Result<SignupResponse, EverMealErrorType>
   var login: (LoginRequest) async throws -> Result<EveryMealDefaultResponse<LoginResponse>, EverMealErrorType>
   var verifyAccessToken: (String) async throws -> Result<Bool, EverMealErrorType>
+  var getNewAccessToken: () async throws -> Result<String, EverMealErrorType>
 }
 
 struct PostVertifyNumberClient {
@@ -108,13 +109,23 @@ extension SignupClient: DependencyKey {
     verifyAccessToken: { token in
       do {
         let response = try await UserService().verifyAccessToken(token)
+        if let data = response.data,
+           data == true {
+          return .success(data)
+        } else {
+          return .failure(.fail)
+        }
+      }
+    },
+    getNewAccessToken: {
+      do {
+        let response = try await UserService().getAccessToken()
         if let data = response.data {
           return .success(data)
         } else {
           return .failure(.fail)
         }
       }
-      
     }
   )
 }

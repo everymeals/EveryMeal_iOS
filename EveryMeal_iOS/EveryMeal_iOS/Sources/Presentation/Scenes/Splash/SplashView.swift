@@ -57,7 +57,7 @@ struct SplashView: View {
         )
       }
       .onChange(of: viewStore.loginSuccess) { value in
-        if value != nil {
+        if value != nil && value == true {
           didFinishedLoading = true
         }
       }
