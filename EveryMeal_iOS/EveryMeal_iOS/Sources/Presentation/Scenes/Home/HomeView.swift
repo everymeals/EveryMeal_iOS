@@ -100,9 +100,10 @@ struct HomeView: View {
             MoreReviewsView()
               .toolbar(.hidden, for: .tabBar)
           case let .moreStoreView(viewType):
-            MoreStoreView(backButtonTapped: {
-              navigationPath.removeLast()
-            }, moreViewType: viewType)
+            MoreStoreView(
+              backButtonTapped: { navigationPath.removeLast() },
+              moreViewType: viewType
+            )
             .toolbar(.hidden, for: .tabBar)
           case let .emailVertify(type, model):
             EmailAuthenticationView(

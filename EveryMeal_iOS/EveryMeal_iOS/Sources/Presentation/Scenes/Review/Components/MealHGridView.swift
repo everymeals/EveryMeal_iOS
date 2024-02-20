@@ -37,7 +37,20 @@ struct MealHGridView_Previews: PreviewProvider {
       didMealTapped: { model in
         print("tapped \(model.name)")
       },
-      storeModels: [Constants.dummyStore, Constants.dummyStore, Constants.dummyStore, Constants.dummyStore, Constants.dummyStore])
+      storeModels: [
+        Constants.dummyStore,
+        Constants.dummyStore,
+        StoreEntity(
+          name: "동경산책 성신여대점",
+          categoryDetail: "일식",
+          grade: 4.0,
+          reviewCount: 23,
+          recommendedCount: 3,
+          images: nil,
+          isLiked: false,
+          description: "dummy"
+        )
+      ])
     Spacer()
   }
 }

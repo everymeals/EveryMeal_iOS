@@ -25,7 +25,7 @@ struct MoreStoreView: View {
   @State private var isLastPage = false
   
   /// 최신순, 인기순, 거리순
-  @State private var selectedSortOption: SortOption? = .registDate
+  @State var selectedSortOption: SortOption? = .registDate
   
   /// 전체, 밥집, 카페, 술집 - 초기값: '전체'
   @State var selectedFilterCategoryOption: FilterCategoryOption = .all
@@ -54,7 +54,10 @@ struct MoreStoreView: View {
       }
     }
     .navigationBarHidden(true)
-    .onAppear(perform: loadInitialContent)
+    .onAppear {
+      initialSettings()
+      loadInitialContent()
+    }
     .onChange(of: selectedSortOption) { _ in loadNewContent() }
     .onChange(of: selectedFilterCategoryOption) { _ in loadNewContent() }
     .onChange(of: selectedFilterGradeOption) { _ in loadNewContent() }
@@ -182,14 +185,17 @@ struct MoreStoreView: View {
     }
   }
   
-  private func loadInitialContent() {
+  private func initialSettings() {
     UITabBar.appearance().isHidden = true
-    
+    selectedSortOption = moreViewType == .best ? .registDate : .popularity
+  }
+  
+  private func loadInitialContent() {
     let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? 1 : UserDefaultsManager.getInt(.univIdx)
     let model = GetCampusStoresRequest(
       offset: "0",
       limit: "15",
-      order: .registDate,
+      order: selectedSortOption?.toOrderType ?? .registDate,
       group: .all,
       grade: nil
     )
@@ -271,6 +277,8 @@ struct MoreStoreView: View {
 }
 
 #Preview {
-  MoreStoreView(backButtonTapped: { print("back") },
-                moreViewType: .best)
+  MoreStoreView(
+    backButtonTapped: { print("back") },
+    moreViewType: .recommend
+  )
 }
