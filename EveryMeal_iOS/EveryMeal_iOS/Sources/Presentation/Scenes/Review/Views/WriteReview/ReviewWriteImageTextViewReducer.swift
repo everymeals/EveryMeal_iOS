@@ -35,28 +35,14 @@ struct ReviewWriteImageTextViewReducer: Reducer {
     case let .requestImageKeys(data):
       state.imageDatas = data
       return .run { send in
-        var imageConfiges: [ImageResponse] = []
-        try await withThrowingTaskGroup(of: ImageResponse?.self) { group in
-          for _ in 0..<data.count {
-            group.addTask{
-              let response = try await reviewClient.getImageConfig()
-              switch response {
-              case let .success(config):
-                return config
-              case .failure:
-                print("이미지 key 획득 실패")
-                return nil
-              }
-            }
-            
-            for try await imageConfig in group {
-              if let imageConfig = imageConfig {
-                imageConfiges.append(imageConfig)
-              }
-            }
-            await send(.setImageConfigs(imageConfiges))
-          }
-          
+        let response = try await reviewClient.getImageConfig(data.count)
+        switch response {
+        case let .success(config):
+          await send(.setImageConfigs(config))
+          return
+        case .failure:
+          print("이미지 key 획득 실패")
+          return
         }
       }
     case let .setImageConfigs(values):
@@ -64,29 +50,11 @@ struct ReviewWriteImageTextViewReducer: Reducer {
       return .none
       
     case .saveImages:
-      let imageConfiges = state.imageConfiges
-      let imageDatas = state.imageDatas
+      let state = state
       return .run { send in
-        var allTaskSuccess = Array(repeating: false, count: imageConfiges.count)
-        try await withThrowingTaskGroup(of: Bool.self) { group in
-          for (index, config) in imageConfiges.enumerated() {
-            group.addTask{
-              let response = try await signupClient.saveImageToAWS(config.url, imageDatas[index])
-              switch response {
-              case .success:
-                return true
-              case .failure:
-                return false
-              }
-            }
-            for try await result in group {
-              allTaskSuccess[index] = result
-            }
-            
-            await send(.saveImageSuccess(!allTaskSuccess.contains(false)))
-            return
-          }
-        }
+        let response = await saveAllImage(state: state)
+        await send(.saveImageSuccess(response.filter({ $0 != true }).isEmpty))
+        return
       }
     case let .saveImageSuccess(value):
       state.saveImageSuccess = value
@@ -101,6 +69,40 @@ struct ReviewWriteImageTextViewReducer: Reducer {
     case let .saveReviewSuccess(value):
       state.saveReviewSuccess = value
       return .none
+    }
+  }
+  
+  func saveAllImage(state: State) async -> [Bool?] {
+    let imageDatas = state.imageDatas
+    let imageConfiges = state.imageConfiges
+    
+    let resultArray = await withTaskGroup(of: Bool?.self) { group in
+      for (index, config) in imageConfiges.enumerated() {
+        group.addTask {
+          try? await self.saveImages(imageData: imageDatas[index], url: config.url)
+        }
+      }
+      
+      var result: [Bool?] = []
+      for await didSuccess in group {
+        result.append(didSuccess)
+      }
+      return result
+    }
+    return resultArray
+  }
+  
+  private func saveImages(imageData: Data, url: String) async throws -> Bool {
+    do {
+      let response = try await signupClient.saveImageToAWS(url, imageData)
+      switch response {
+      case .success:
+        return true
+      case .failure:
+        return false
+      }
+    } catch {
+      throw error
     }
   }
 }

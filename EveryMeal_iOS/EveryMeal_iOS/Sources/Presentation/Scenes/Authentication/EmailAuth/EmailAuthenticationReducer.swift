@@ -145,7 +145,7 @@ struct EmailAuthenticationReducer: Reducer {
     case let .getImageURL(image):
       
       return .run { send in
-        let response = try await signupClient.getImageConfig()
+        let response = try await signupClient.getImageConfig(1)
         switch response {
         case let .success(imageInfo):
           await send(.saveToAWS(imageInfo, image))
