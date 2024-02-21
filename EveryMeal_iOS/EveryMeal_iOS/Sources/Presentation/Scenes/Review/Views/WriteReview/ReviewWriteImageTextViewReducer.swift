@@ -17,7 +17,7 @@ struct ReviewWriteImageTextViewReducer: Reducer {
     var imageConfiges: [ImageResponse] = []
     var imageDatas: [Data] = []
     var saveImageSuccess: Bool = false
-    var storeEntity: StoreEntity
+    var storeContent: CampusStoreContent
     var saveReviewSuccess: Bool = false
   }
   

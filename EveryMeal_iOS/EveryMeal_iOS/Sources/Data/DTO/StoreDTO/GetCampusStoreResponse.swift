@@ -27,18 +27,22 @@ struct CampusStoreData: Codable {
   let empty: Bool?
 }
 
-struct CampusStoreContent: Codable {
-  let idx: Int?
+struct CampusStoreContent: Codable, Equatable, Hashable {
+  let idx: Int
   let name: String?
   let address: String?
   let phoneNumber: String?
   let categoryDetail: String?
   let distance: Int?
-  let grade: Double?
+  var grade: Double?
   let reviewCount: Int?
-  let recommendedCount: Int?
+  var recommendedCount: Int = 0
   let images: [String]?
-  let isLiked: Bool?
+  var isLiked: Bool = false
+  
+  static func == (lhs: CampusStoreContent, rhs: CampusStoreContent) -> Bool {
+    return lhs.idx == rhs.idx
+   }
 }
 
 struct CampusStorePageable: Codable {

@@ -13,8 +13,8 @@ struct ReviewStarPointView: View {
   @State var text: String = ""
   @State var starChecked = Array(repeating: false, count: 5)
   @State var isBubbleShown: Bool = true
-  @State var storeModel: StoreEntity
-  var nextButtonTapped: (StoreEntity) -> Void
+  @State var storeModel: CampusStoreContent
+  var nextButtonTapped: (CampusStoreContent) -> Void
   var backButtonTapped: () -> Void
   
   
@@ -43,7 +43,7 @@ struct ReviewStarPointView: View {
         }
         VStack(alignment: .center, spacing: 0) {
           Spacer()
-          Text(storeModel.categoryDetail)
+          Text(storeModel.categoryDetail ?? "")
             .foregroundColor(Color.grey6)
             .font(.pretendard(size: 12, weight: .medium))
             .padding(.horizontal, 6)
@@ -52,7 +52,7 @@ struct ReviewStarPointView: View {
             .cornerRadius(4)
             .padding(.bottom, 12)
           
-          Text(storeModel.name)
+          Text(storeModel.name ?? "")
             .foregroundColor(Color.grey9)
             .font(Font.pretendard(size: 18, weight: .bold))
             .lineLimit(1)
@@ -121,7 +121,7 @@ struct SpeachBubbleView: View {
 
 struct ReviewStarPointView_Previews: PreviewProvider {
   static var previews: some View {
-    let dummy = StoreEntity(name: "동경산책 성신여대점", categoryDetail: "일식", grade: 4.0, reviewCount: 52, recommendedCount: 3, images: ["fdsfads", "fdsafdas"], isLiked: false, description: "dummy")
+    let dummy = CampusStoreContent(idx: 11, name: "수아당", address: nil, phoneNumber: nil, categoryDetail: "분식", distance: nil, grade: 3.0, reviewCount: 5, recommendedCount: 24, images: nil, isLiked: true)
     
     ReviewStarPointView(
       storeModel: dummy,

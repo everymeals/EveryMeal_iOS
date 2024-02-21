@@ -20,7 +20,7 @@ struct BestStoreSearchView: View {
   @State private var recentSearchStores = UserDefaultsManager.getArrayString(.recentSearchStores) ?? []
   private let searchPublisher = PassthroughSubject<String, Never>()
   
-  var nextButtonTapped: (StoreEntity) -> Void
+  var nextButtonTapped: (CampusStoreContent) -> Void
   
   // MARK: - Property
   

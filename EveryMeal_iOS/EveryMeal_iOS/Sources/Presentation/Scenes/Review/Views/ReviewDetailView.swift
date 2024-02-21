@@ -35,7 +35,7 @@ struct ReviewDetailView: View {
         .frame(width: UIScreen.main.bounds.width)
       
       VStack(spacing: 40) {
-        Text(reviewModel.storeModel.description ?? "no review")
+        Text(reviewModel.storeModel.name ?? "no review") // FIXME: 여기 리뷰 작성한 내용으로 변경 필요
           .font(.pretendard(size: 15, weight: .regular))
           .foregroundColor(.grey8)
           .frame(width: UIScreen.main.bounds.width)
@@ -128,7 +128,7 @@ struct ReviewUserProfileView: View {
     .padding(.horizontal, 20)
     .onAppear {
       starChecked.enumerated().forEach { startIndex, value in
-          starChecked[startIndex] = startIndex < reviewModel.storeModel.recommendedCount
+        starChecked[startIndex] = startIndex < reviewModel.storeModel.recommendedCount ?? 0
       }
     }
   }
@@ -239,7 +239,7 @@ struct ReviewDetailModel: Hashable, Equatable {
   let nickname: String
   let userID: String
   let profileImageURL: String
-  var storeModel: StoreEntity
+  var storeModel: CampusStoreContent
   let dateBefore: Int
   
   static func == (lhs: ReviewDetailModel, rhs: ReviewDetailModel) -> Bool {
@@ -249,17 +249,7 @@ struct ReviewDetailModel: Hashable, Equatable {
 
 struct ReviewDetailView_Previews: PreviewProvider {
   static var previews: some View {
-    let dummyStore = StoreEntity(name: "동경산책 성신여대점", 
-                                 categoryDetail: "일식",
-                                 grade: 4.0,
-                                 reviewCount: 123,
-                                 recommendedCount: 3,
-                                 images: [
-                                  "https://crcf.cookatmarket.com/product/images/2019/11/tudi_1574662390_2739_720.jpg",
-                                  "https://img.khan.co.kr/news/2023/04/20/news-p.v1.20230420.527bc9f1e42f4edfa5dec034ee3b91bd_P1.jpg"
-                                 ],
-                                 isLiked: false,
-                                 description: "사장님이 친절하시고 안주가 다 너무 맛있었습니다~! 분위기가 좋아서 다음에 또 갈 것 같아요!! 동기들이랑 여럿이서 가도 자리 넉넉하고 좋았어요!! ^_^")
+    let dummyStore = CampusStoreContent(idx: 11, name: "수아당", address: nil, phoneNumber: nil, categoryDetail: "분식", distance: nil, grade: 3.0, reviewCount: 5, recommendedCount: 24, images: nil, isLiked: true)
     
     let reviewModel = ReviewDetailModel(nickname: "햄식이", 
                                         userID: "4324324",
