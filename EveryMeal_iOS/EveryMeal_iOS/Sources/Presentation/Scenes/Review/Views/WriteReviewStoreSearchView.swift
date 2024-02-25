@@ -11,7 +11,7 @@ enum ReviewStackViewType: Hashable {
   case searchView
   case starPointView(StoreEntity)
   case imageTextView(StoreEntity)
-  case reviewDetail(StoreReviewContent)
+  case reviewDetail(String, StoreReviewContent)
   
   func hash(into hasher: inout Hasher) {
     switch self {
@@ -23,9 +23,9 @@ enum ReviewStackViewType: Hashable {
     case .imageTextView(let mealModel):
       hasher.combine(2)
       hasher.combine(mealModel)
-    case .reviewDetail(let reviewDetailModel):
+    case let .reviewDetail(storeName, _):
       hasher.combine(3)
-      hasher.combine(reviewDetailModel)
+      hasher.combine(storeName)
     }
   }
 }
@@ -101,9 +101,9 @@ struct WriteReviewStoreSearchView: View {
             store: .init(initialState: ReviewWriteImageTextViewReducer.State(storeEntity: storeModel), reducer: {
               ReviewWriteImageTextViewReducer()
             }), selectedImages: $images,
-            saveButtonTapped: { reviewModel in
+            saveButtonTapped: { storeName, reviewModel in
               // TODO: 토스트 노출
-              reviewNavigationStack.append(.reviewDetail(reviewModel))
+              reviewNavigationStack.append(.reviewDetail(storeName, reviewModel))
             },
             closeButtonTapped: {
               exitAlertPresent.toggle()
@@ -126,8 +126,9 @@ struct WriteReviewStoreSearchView: View {
                 })
               alert
             }
-        case let .reviewDetail(reviewModel):
+        case let .reviewDetail(storeName, reviewModel):
           let reviewDetailView = ReviewDetailView(
+            storeName: storeName,
             storeReviewContent: reviewModel,
             backButtonDidTapped: {
               reviewNavigationStack.removeLast()

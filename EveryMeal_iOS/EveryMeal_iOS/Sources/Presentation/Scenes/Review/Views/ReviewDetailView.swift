@@ -11,6 +11,7 @@ struct ReviewDetailView: View {
   
   // MARK: - States
   
+  var storeName: String
   @State var storeReviewContent: StoreReviewContent
   @State var didClickedLikeButton: Bool = false
   
@@ -30,15 +31,23 @@ struct ReviewDetailView: View {
         }
       )
       ReviewUserProfileView(reviewModel: storeReviewContent)
-      ReviewImagesView(urls: storeReviewContent.images)
-        .aspectRatio(contentMode: .fit)
-        .frame(width: UIScreen.main.bounds.width)
+      if let images = storeReviewContent.images {
+        ReviewImagesView(storeName: storeName, urls: images)
+          .aspectRatio(contentMode: .fit)
+          .frame(width: UIScreen.main.bounds.width)
+      }
       
       VStack(spacing: 40) {
-        Text(storeReviewContent.content ?? "no review")
-          .font(.pretendard(size: 15, weight: .regular))
-          .foregroundColor(.grey8)
-          .frame(width: UIScreen.main.bounds.width)
+        HStack {
+          Text(storeReviewContent.content ?? "no review")
+            .font(.pretendard(size: 15, weight: .regular))
+            .foregroundColor(.grey8)
+          Spacer()
+        }
+
+        if (storeReviewContent.images ?? []).isEmpty {
+          ReviewTagView(tagName: storeName)
+        }
         HStack(spacing: 6) {
           Image("icon-thumb-up-mono")
             .renderingMode(.template)
@@ -138,15 +147,16 @@ struct ReviewUserProfileView: View {
 
 struct ReviewImagesView: View {
   @State private var currentPage: Int = 0
+  var storeName: String
   
-  var urls: [String]?
+  var urls: [String]
   let defaultImageURL = "https://media.tarkett-image.com/large/TH_25094221_25187221_001.jpg"
   
   var body: some View {
     ZStack {
       ScrollView(.horizontal) {
         LazyHStack(spacing: 0) {
-          ForEach(urls ?? [defaultImageURL], id: \.self) { url in
+          ForEach(urls, id: \.self) { url in
             AsyncImage(url: URL(string: url)!) { image in
               image.resizable()
                 .scaledToFit()
@@ -176,7 +186,6 @@ struct ReviewImagesView: View {
         
       }
       .coordinateSpace(name: "scroll")
-      
       .frame(width: UIScreen.main.bounds.width,
              height: UIScreen.main.bounds.width,
              alignment: .center)
@@ -184,36 +193,11 @@ struct ReviewImagesView: View {
       VStack {
         Spacer()
         HStack(spacing: 0) {
-          HStack {
-            Image("icon-pin-location-mono")
-              .renderingMode(.template)
-              .resizable()
-              .aspectRatio(contentMode: .fit)
-              .foregroundColor(.white)
-              .frame(width: 16)
-              .padding(.trailing, 4)
-            
-            Text("만약 태그 이름이 길어지면 이렇게 보이게해주세요")
-              .font(.pretendard(size: 14, weight: .medium))
-              .lineLimit(1)
-              .foregroundColor(.white)
-            
-            Spacer()
-            
-            Image("icon-arrow-right-small-mono")
-              .renderingMode(.template)
-              .resizable()
-              .aspectRatio(contentMode: .fit)
-              .foregroundColor(.white)
-              .frame(width: 14)
-          }
-          .padding(6)
-          .background(.ultraThinMaterial) // TODO: 시스템 블러로 대응해도 될지 논의 필요
-          .clipShape(RoundedRectangle(cornerRadius: 6))
+          ReviewTagView(tagName: storeName)
           
           Spacer()
           
-          Text("\(currentPage)/\(urls?.count ?? 1)")
+          Text("\(currentPage)/\(urls.count)")
             .font(.pretendard(size: 14, weight: .regular))
             .foregroundColor(.white)
             .padding(6)
@@ -229,6 +213,37 @@ struct ReviewImagesView: View {
       UIScrollView.appearance().isPagingEnabled = true
       UIScrollView.appearance().showsHorizontalScrollIndicator = false
     }
+  }
+}
+
+struct ReviewTagView: View {
+  @State var tagName: String
+  
+  var body: some View {
+    HStack {
+      Image("icon-pin-location-mono")
+        .renderingMode(.template)
+        .resizable()
+        .aspectRatio(contentMode: .fit)
+        .foregroundColor(.white)
+        .frame(width: 16)
+        .padding(.trailing, 4)
+      
+      Text(tagName)
+        .font(.pretendard(size: 14, weight: .medium))
+        .lineLimit(1)
+        .foregroundColor(.white)
+      
+      Image("icon-arrow-right-small-mono")
+        .renderingMode(.template)
+        .resizable()
+        .aspectRatio(contentMode: .fit)
+        .foregroundColor(.white)
+        .frame(width: 14)
+    }
+    .padding(6)
+    .background(.ultraThinMaterial) // TODO: 시스템 블러로 대응해도 될지 논의 필요
+    .clipShape(RoundedRectangle(cornerRadius: 6))
   }
 }
 
@@ -253,10 +268,10 @@ struct ReviewDetailView_Previews: PreviewProvider {
   static var previews: some View {
     let dummyContent = StoreReviewContent(
       reviewIdx: 0,
-      content: "fds",
+      content: "사장님이 친절하시고 안주가 다 너무 맛있었습니다~! 분위기가 좋아서 다음에 또 갈 것 같아요!! 동기들이랑 여럿이서 가도 자리 넉넉하고 좋았어요!! ^_^",
       grade: 0,
       createdAt: "2024-02-25T10:02:40.954Z",
-      nickName: "fdsa",
+      nickName: "fdsafdsfsdfds",
       profileImageUrl: "https://crcf.cookatmarket.com/product/images/2019/11/tudi_1574662390_2739_720.jpg",
       recommendedCount: 0,
       images: [
@@ -264,6 +279,7 @@ struct ReviewDetailView_Previews: PreviewProvider {
         "https://img.khan.co.kr/news/2023/04/20/news-p.v1.20230420.527bc9f1e42f4edfa5dec034ee3b91bd_P1.jpg"
       ])
     ReviewDetailView(
+      storeName: "fds", 
       storeReviewContent: dummyContent,
       backButtonDidTapped: {
         print("backButtonDidTapped")
