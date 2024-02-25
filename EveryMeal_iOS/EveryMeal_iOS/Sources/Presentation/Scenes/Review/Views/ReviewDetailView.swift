@@ -32,7 +32,7 @@ struct ReviewDetailView: View {
       )
       ReviewUserProfileView(reviewModel: storeReviewContent)
       if let images = storeReviewContent.images {
-        ReviewImagesView(storeName: storeName, urls: images)
+        MultipleImagesView(storeName: storeName, urls: images)
           .aspectRatio(contentMode: .fit)
           .frame(width: UIScreen.main.bounds.width)
       }
@@ -145,9 +145,9 @@ struct ReviewUserProfileView: View {
   }
 }
 
-struct ReviewImagesView: View {
+struct MultipleImagesView: View {
   @State private var currentPage: Int = 0
-  var storeName: String
+  var storeName: String?
   
   var urls: [String]
   let defaultImageURL = "https://media.tarkett-image.com/large/TH_25094221_25187221_001.jpg"
@@ -193,7 +193,9 @@ struct ReviewImagesView: View {
       VStack {
         Spacer()
         HStack(spacing: 0) {
-          ReviewTagView(tagName: storeName)
+          if let storeName = storeName {
+            ReviewTagView(tagName: storeName)
+          }
           
           Spacer()
           
