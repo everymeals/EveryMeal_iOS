@@ -24,7 +24,7 @@ struct ReviewWriteImageTextView: View {
   @State private var bubbleShown: Bool = true
   
   private let writeReviewScrollViewID = "writeReviewScrollViewID"
-  var saveButtonTapped: ((ReviewDetailModel) -> Void)?
+  var saveButtonTapped: ((StoreReviewContent) -> Void)?
   var closeButtonTapped: (() -> Void)?
   var starButtonTapped: ((ReviewDetailModel) -> Void)?
   

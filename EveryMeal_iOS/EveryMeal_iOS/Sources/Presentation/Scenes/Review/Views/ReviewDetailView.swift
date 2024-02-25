@@ -11,7 +11,7 @@ struct ReviewDetailView: View {
   
   // MARK: - States
   
-  @State var reviewModel: ReviewDetailModel
+  @State var storeReviewContent: StoreReviewContent
   @State var didClickedLikeButton: Bool = false
   
   // MARK: - Property
@@ -29,13 +29,13 @@ struct ReviewDetailView: View {
           backButtonDidTapped()
         }
       )
-      ReviewUserProfileView(reviewModel: reviewModel)
-      ReviewImagesView(urls: reviewModel.storeModel.images)
+      ReviewUserProfileView(reviewModel: storeReviewContent)
+      ReviewImagesView(urls: storeReviewContent.images)
         .aspectRatio(contentMode: .fit)
         .frame(width: UIScreen.main.bounds.width)
       
       VStack(spacing: 40) {
-        Text(reviewModel.storeModel.description ?? "no review")
+        Text(storeReviewContent.content ?? "no review")
           .font(.pretendard(size: 15, weight: .regular))
           .foregroundColor(.grey8)
           .frame(width: UIScreen.main.bounds.width)
@@ -45,23 +45,23 @@ struct ReviewDetailView: View {
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: 22)
-            .foregroundColor(reviewModel.storeModel.isLiked ? .red : .grey5)
-          Text(String(describing: reviewModel.storeModel.recommendedCount))
+            .foregroundColor(true ? .red : .grey5) // FIXME: 확인 후 수정 필요
+          Text(String(describing: storeReviewContent.recommendedCount))
             .font(.pretendard(size: 16, weight: .semibold))
-            .foregroundColor(reviewModel.storeModel.isLiked ? .red : .grey5)
+            .foregroundColor(true ? .red : .grey5) // FIXME: 확인 후 수정 필요
         }
         .onTapGesture {
           // FIXME: 임시 UI 처리. 추후 수정 필요
-          reviewModel.storeModel.isLiked.toggle()
-          if reviewModel.storeModel.isLiked {
-            reviewModel.storeModel.recommendedCount += 1
-          } else {
-            reviewModel.storeModel.recommendedCount -= 1
-          }
+//          storeEntity.isLiked.toggle()
+//          if storeEntity.isLiked {
+//            storeEntity.recommendedCount += 1
+//          } else {
+//            storeEntity.recommendedCount -= 1
+//          }
         }
         .padding(.vertical, 10)
         .padding(.horizontal, 21.5)
-        .background(reviewModel.storeModel.isLiked ? Color.redLight : Color.grey2)
+        .background(true ? Color.redLight : Color.grey2) // FIXME: 확인 후 수정 필요
         .clipShape(RoundedRectangle(cornerRadius: 8))
       }
         .padding(20)
@@ -74,25 +74,27 @@ struct ReviewDetailView: View {
 
 struct ReviewUserProfileView: View {
   @State var starChecked: [Bool] = Array(repeating: false, count: 5)
-  var reviewModel: ReviewDetailModel
+  var reviewModel: StoreReviewContent
   
   var body: some View {
     ZStack {
       HStack(spacing: 12) {
-        AsyncImage(url: URL(string: reviewModel.profileImageURL)!) { image in
-          image.resizable()
-            .frame(width: 40, height: 40, alignment: .center)
-        } placeholder: {
-          Image(systemName: "circle.fill")
+        if let profileURL = reviewModel.profileURL {
+          AsyncImage(url: profileURL) { image in
+            image.resizable()
+              .frame(width: 40, height: 40, alignment: .center)
+          } placeholder: {
+            Image(systemName: "circle.fill")
               .resizable()
               .scaledToFit()
               .frame(maxWidth: 40)
               .foregroundColor(.gray)
+          }
+          .clipShape(Circle())
         }
-        .clipShape(Circle())
         
         VStack(alignment: .leading, spacing: 2) {
-          Text(reviewModel.nickname)
+          Text(reviewModel.nickName)
             .font(.pretendard(size: 12, weight: .semibold))
             .foregroundColor(.grey8)
           HStack(spacing: 2) {
@@ -128,7 +130,7 @@ struct ReviewUserProfileView: View {
     .padding(.horizontal, 20)
     .onAppear {
       starChecked.enumerated().forEach { startIndex, value in
-          starChecked[startIndex] = startIndex < reviewModel.storeModel.recommendedCount
+        starChecked[startIndex] = startIndex < Int(reviewModel.grade)
       }
     }
   }
@@ -249,26 +251,20 @@ struct ReviewDetailModel: Hashable, Equatable {
 
 struct ReviewDetailView_Previews: PreviewProvider {
   static var previews: some View {
-    let dummyStore = StoreEntity(name: "동경산책 성신여대점", 
-                                 categoryDetail: "일식",
-                                 grade: 4.0,
-                                 reviewCount: 123,
-                                 recommendedCount: 3,
-                                 images: [
-                                  "https://crcf.cookatmarket.com/product/images/2019/11/tudi_1574662390_2739_720.jpg",
-                                  "https://img.khan.co.kr/news/2023/04/20/news-p.v1.20230420.527bc9f1e42f4edfa5dec034ee3b91bd_P1.jpg"
-                                 ],
-                                 isLiked: false,
-                                 description: "사장님이 친절하시고 안주가 다 너무 맛있었습니다~! 분위기가 좋아서 다음에 또 갈 것 같아요!! 동기들이랑 여럿이서 가도 자리 넉넉하고 좋았어요!! ^_^")
-    
-    let reviewModel = ReviewDetailModel(nickname: "햄식이", 
-                                        userID: "4324324",
-                                        profileImageURL: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1752&q=80",
-                                        storeModel: dummyStore,
-                                        dateBefore: 3)
-    
+    let dummyContent = StoreReviewContent(
+      reviewIdx: 0,
+      content: "fds",
+      grade: 0,
+      createdAt: "2024-02-25T10:02:40.954Z",
+      nickName: "fdsa",
+      profileImageUrl: "https://crcf.cookatmarket.com/product/images/2019/11/tudi_1574662390_2739_720.jpg",
+      recommendedCount: 0,
+      images: [
+        "https://crcf.cookatmarket.com/product/images/2019/11/tudi_1574662390_2739_720.jpg",
+        "https://img.khan.co.kr/news/2023/04/20/news-p.v1.20230420.527bc9f1e42f4edfa5dec034ee3b91bd_P1.jpg"
+      ])
     ReviewDetailView(
-      reviewModel: reviewModel,
+      storeReviewContent: dummyContent,
       backButtonDidTapped: {
         print("backButtonDidTapped")
       }

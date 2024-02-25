@@ -19,6 +19,8 @@ struct ReviewWriteImageTextViewReducer: Reducer {
     var saveImageSuccess: Bool = false
     var storeEntity: StoreEntity
     var saveReviewSuccess: Bool = false
+    var reviewedStoreContent: StoreReviewContent?
+    var getReviewIWroteSuccess: Bool?
   }
   
   enum Action {
@@ -28,6 +30,9 @@ struct ReviewWriteImageTextViewReducer: Reducer {
     case saveImageSuccess(Bool)
     case saveReview(WriteStoreReviewRequest)
     case saveReviewSuccess(Bool)
+    case getReviewIWrote
+    case setReviewIWrote(StoreReviewContent)
+    case getReviewIWroteSuccess(Bool)
   }
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
@@ -100,6 +105,31 @@ struct ReviewWriteImageTextViewReducer: Reducer {
       
     case let .saveReviewSuccess(value):
       state.saveReviewSuccess = value
+      return .none
+      
+    case .getReviewIWrote:
+      return .run { send in
+        let response = try await reviewClient.getStoreReview(.init(index: 0, offset: nil, limit: nil))
+        switch response {
+        case let .success(storeData):
+          if let storeContentIWrote = storeData.content?.first(where: { $0.reviewIdx == 0 }) {
+            await send(.setReviewIWrote(storeContentIWrote))
+          } else {
+            await send(.getReviewIWroteSuccess(false))
+          }
+          return
+        case let .failure(error):
+          print("error \(error.localizedDescription)")
+          return
+        }
+      }
+      
+    case let .setReviewIWrote(storeContent):
+      state.reviewedStoreContent = storeContent
+      return .none
+      
+    case let .getReviewIWroteSuccess(result):
+      state.getReviewIWroteSuccess = result
       return .none
     }
   }

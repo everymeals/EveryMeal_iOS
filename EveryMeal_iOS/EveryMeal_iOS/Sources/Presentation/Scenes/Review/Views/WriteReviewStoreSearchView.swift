@@ -11,7 +11,7 @@ enum ReviewStackViewType: Hashable {
   case searchView
   case starPointView(StoreEntity)
   case imageTextView(StoreEntity)
-  case reviewDetail(ReviewDetailModel)
+  case reviewDetail(StoreReviewContent)
   
   func hash(into hasher: inout Hasher) {
     switch self {
@@ -128,7 +128,7 @@ struct WriteReviewStoreSearchView: View {
             }
         case let .reviewDetail(reviewModel):
           let reviewDetailView = ReviewDetailView(
-            reviewModel: reviewModel,
+            storeReviewContent: reviewModel,
             backButtonDidTapped: {
               reviewNavigationStack.removeLast()
             })

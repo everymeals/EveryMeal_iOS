@@ -36,6 +36,10 @@
 		08BDCE022B82298B000B79EE /* ReviewWriteImageTextViewReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BDCE012B82298B000B79EE /* ReviewWriteImageTextViewReducer.swift */; };
 		08BDCE042B822998000B79EE /* ReviewWriteImageTextViewClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BDCE032B822998000B79EE /* ReviewWriteImageTextViewClient.swift */; };
 		08BDCE062B823DD8000B79EE /* WriteStoreReviewRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BDCE052B823DD8000B79EE /* WriteStoreReviewRequest.swift */; };
+		08BDCE082B8B360E000B79EE /* GetStoreReviewRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BDCE072B8B360D000B79EE /* GetStoreReviewRequest.swift */; };
+		08BDCE0A2B8B3A1E000B79EE /* GetStoreReviewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BDCE092B8B3A1E000B79EE /* GetStoreReviewResponse.swift */; };
+		08BDCE0C2B8B48EF000B79EE /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BDCE0B2B8B48EF000B79EE /* String+Extension.swift */; };
+		08BDCE0E2B8B4C42000B79EE /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BDCE0D2B8B4C42000B79EE /* Date+Extension.swift */; };
 		08C3B3962AE401720067FB53 /* CustomNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C3B3952AE401720067FB53 /* CustomNavigationView.swift */; };
 		08D6BA632AE7F6DA00C0B516 /* ReviewStarPointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D6BA5F2AE7F6DA00C0B516 /* ReviewStarPointView.swift */; };
 		08D6BA642AE7F6DA00C0B516 /* WriteReviewStoreSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D6BA602AE7F6DA00C0B516 /* WriteReviewStoreSearchView.swift */; };
@@ -163,6 +167,10 @@
 		08BDCE012B82298B000B79EE /* ReviewWriteImageTextViewReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewWriteImageTextViewReducer.swift; sourceTree = "<group>"; };
 		08BDCE032B822998000B79EE /* ReviewWriteImageTextViewClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewWriteImageTextViewClient.swift; sourceTree = "<group>"; };
 		08BDCE052B823DD8000B79EE /* WriteStoreReviewRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteStoreReviewRequest.swift; sourceTree = "<group>"; };
+		08BDCE072B8B360D000B79EE /* GetStoreReviewRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoreReviewRequest.swift; sourceTree = "<group>"; };
+		08BDCE092B8B3A1E000B79EE /* GetStoreReviewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoreReviewResponse.swift; sourceTree = "<group>"; };
+		08BDCE0B2B8B48EF000B79EE /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		08BDCE0D2B8B4C42000B79EE /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		08C3B3952AE401720067FB53 /* CustomNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationView.swift; sourceTree = "<group>"; };
 		08D6BA5F2AE7F6DA00C0B516 /* ReviewStarPointView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewStarPointView.swift; sourceTree = "<group>"; };
 		08D6BA602AE7F6DA00C0B516 /* WriteReviewStoreSearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WriteReviewStoreSearchView.swift; sourceTree = "<group>"; };
@@ -458,6 +466,8 @@
 				0FE449712B57DFBE0054DED3 /* Moya+Extensions.swift */,
 				08EC029A2B67CCCF003CD556 /* Data+Extensions.swift */,
 				6677AB962B7473C8009087C8 /* Keychain+Extensions.swift */,
+				08BDCE0B2B8B48EF000B79EE /* String+Extension.swift */,
+				08BDCE0D2B8B4C42000B79EE /* Date+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -606,6 +616,8 @@
 				0F2643B02B6BB63600EB763F /* GetCampusStoresRequest.swift */,
 				08BDCDFE2B81FDF8000B79EE /* GetCampusStoreKeywordRequest.swift */,
 				08BDCE052B823DD8000B79EE /* WriteStoreReviewRequest.swift */,
+				08BDCE072B8B360D000B79EE /* GetStoreReviewRequest.swift */,
+				08BDCE092B8B3A1E000B79EE /* GetStoreReviewResponse.swift */,
 			);
 			path = StoreDTO;
 			sourceTree = "<group>";
@@ -908,6 +920,7 @@
 				66935D882AF1F22000E80424 /* CustomAlertModifier.swift in Sources */,
 				08277B492B7A2BCC004CF1D7 /* AdminService.swift in Sources */,
 				0F8D3D052B200A440026FA5D /* CustomSheetView.swift in Sources */,
+				08BDCE0C2B8B48EF000B79EE /* String+Extension.swift in Sources */,
 				663BFBA22A81EACC00A540A2 /* ViewModifier.swift in Sources */,
 				66FF63812AD7DEB800A10986 /* Functions.swift in Sources */,
 				668FB86F2B45734C00F5F00F /* GlobalDefine.swift in Sources */,
@@ -926,11 +939,13 @@
 				0FE4495E2B57D3FE0054DED3 /* UnivsResponse.swift in Sources */,
 				0F3BBF2D2AF23244003EBAB7 /* Font+Extensions.swift in Sources */,
 				0F58F6EB2AFA1E1600010A70 /* BaseLottieView.swift in Sources */,
+				08BDCE0E2B8B4C42000B79EE /* Date+Extension.swift in Sources */,
 				663260AD2AF1F819006FC22C /* MealHGridView.swift in Sources */,
 				0836A5732B44236C0098A41A /* AuthSuccessView.swift in Sources */,
 				6681C7AA2AEA4FA700C3D2C1 /* EveryMealButton.swift in Sources */,
 				08BDCE022B82298B000B79EE /* ReviewWriteImageTextViewReducer.swift in Sources */,
 				662C68FF2B3BECCE00B47C87 /* SelectProfileImagePopupView.swift in Sources */,
+				08BDCE0A2B8B3A1E000B79EE /* GetStoreReviewResponse.swift in Sources */,
 				081196B62AE36B100022B41A /* UIApplication+Extensions.swift in Sources */,
 				08BDCDFB2B81FCEB000B79EE /* ReviewService.swift in Sources */,
 				087EB0D82B67D387001B752E /* ImageResponse.swift in Sources */,
@@ -979,6 +994,7 @@
 				66FF637F2AD7CE3D00A10986 /* Constants.swift in Sources */,
 				08BDCE062B823DD8000B79EE /* WriteStoreReviewRequest.swift in Sources */,
 				08277B4C2B7A2C20004CF1D7 /* DefaultImageResponse.swift in Sources */,
+				08BDCE082B8B360E000B79EE /* GetStoreReviewRequest.swift in Sources */,
 				665627DC2B6C7ADE00B36F1A /* LoginResponse.swift in Sources */,
 				08BDCDFD2B81FCF4000B79EE /* ReviewAPI.swift in Sources */,
 				66935D8A2AF1F22000E80424 /* CustomAlert.swift in Sources */,
