@@ -10,6 +10,7 @@ import Moya
 
 enum ReviewAPI {
   case writeStoreReview(WriteStoreReviewRequest)
+  case getStoreReview(GetStoreReviewRequest)
 }
 
 extension ReviewAPI: TargetType {
@@ -21,6 +22,8 @@ extension ReviewAPI: TargetType {
     switch self {
     case .writeStoreReview:
       return "/api/v1/reviews/store"
+    case let .getStoreReview(model):
+      return "/api/v1/stores/\(model.index)/reviews"
     }
   }
   
@@ -28,6 +31,8 @@ extension ReviewAPI: TargetType {
     switch self {
     case .writeStoreReview:
       return .post
+    case .getStoreReview:
+      return .get
     }
   }
   
@@ -40,12 +45,22 @@ extension ReviewAPI: TargetType {
       body["content"] = model.content
       body["imageList"] = model.imageList
       return .requestParameters(parameters: body, encoding: JSONEncoding.default)
+    case let .getStoreReview(model):
+      if let limit = model.limit {
+        body["limit"] = limit
+      }
+      if let offset = model.offset {
+        body["offset"] = offset
+      }
+      return .requestParameters(parameters: body, encoding: URLEncoding.default)
     }
   }
   
   var headers: [String : String]? {
-    return ["Content-type": "application/json"]
+    switch self {
+    case .writeStoreReview, .getStoreReview:
+      return ["Content-type": "application/json",
+              "Authorization": "Bearer \(String(describing: UserDefaultsManager.getString(.accessToken)))"]
+    }
   }
-  
 }
-
