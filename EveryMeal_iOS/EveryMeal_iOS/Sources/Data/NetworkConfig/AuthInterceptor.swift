@@ -39,7 +39,7 @@ final class AuthInterceptor: RequestInterceptor {
       if let data = request.data {
         let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
         if let errorCode = json?["errorCode"] as? String,
-           errorCode == ErrorCode.TKN0002.rawValue { // 정의된 토큰 만료 코드
+           errorCode == ErrorCode.TKN0002.rawValue || errorCode == ErrorCode.TKN0001.rawValue { // 정의된 토큰 만료 코드
           self.fetchDataWithCookie { [weak self] result in
             switch result {
             case let .success(data):
