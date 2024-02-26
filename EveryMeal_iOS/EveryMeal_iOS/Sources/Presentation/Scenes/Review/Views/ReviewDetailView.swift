@@ -11,7 +11,8 @@ struct ReviewDetailView: View {
   
   // MARK: - States
   
-  @State var reviewModel: ReviewDetailModel
+  var storeName: String
+  @State var storeReviewContent: StoreReviewContent
   @State var didClickedLikeButton: Bool = false
   
   // MARK: - Property
@@ -29,39 +30,47 @@ struct ReviewDetailView: View {
           backButtonDidTapped()
         }
       )
-      ReviewUserProfileView(reviewModel: reviewModel)
-      ReviewImagesView(urls: reviewModel.storeModel.images)
-        .aspectRatio(contentMode: .fit)
-        .frame(width: UIScreen.main.bounds.width)
+      ReviewUserProfileView(reviewModel: storeReviewContent)
+      if let images = storeReviewContent.images {
+        MultipleImagesView(storeName: storeName, urls: images)
+          .aspectRatio(contentMode: .fit)
+          .frame(width: UIScreen.main.bounds.width)
+      }
       
       VStack(spacing: 40) {
-        Text(reviewModel.storeModel.name ?? "no review") // FIXME: 여기 리뷰 작성한 내용으로 변경 필요
-          .font(.pretendard(size: 15, weight: .regular))
-          .foregroundColor(.grey8)
-          .frame(width: UIScreen.main.bounds.width)
+        HStack {
+          Text(storeReviewContent.content ?? "no review")
+            .font(.pretendard(size: 15, weight: .regular))
+            .foregroundColor(.grey8)
+          Spacer()
+        }
+
+        if (storeReviewContent.images ?? []).isEmpty {
+          ReviewTagView(tagName: storeName)
+        }
         HStack(spacing: 6) {
           Image("icon-thumb-up-mono")
             .renderingMode(.template)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: 22)
-            .foregroundColor(reviewModel.storeModel.isLiked ? .red : .grey5)
-          Text(String(describing: reviewModel.storeModel.recommendedCount))
+            .foregroundColor(true ? .red : .grey5) // FIXME: 확인 후 수정 필요
+          Text(String(describing: storeReviewContent.recommendedCount))
             .font(.pretendard(size: 16, weight: .semibold))
-            .foregroundColor(reviewModel.storeModel.isLiked ? .red : .grey5)
+            .foregroundColor(true ? .red : .grey5) // FIXME: 확인 후 수정 필요
         }
         .onTapGesture {
           // FIXME: 임시 UI 처리. 추후 수정 필요
-          reviewModel.storeModel.isLiked.toggle()
-          if reviewModel.storeModel.isLiked {
-            reviewModel.storeModel.recommendedCount += 1
-          } else {
-            reviewModel.storeModel.recommendedCount -= 1
-          }
+//          storeEntity.isLiked.toggle()
+//          if storeEntity.isLiked {
+//            storeEntity.recommendedCount += 1
+//          } else {
+//            storeEntity.recommendedCount -= 1
+//          }
         }
         .padding(.vertical, 10)
         .padding(.horizontal, 21.5)
-        .background(reviewModel.storeModel.isLiked ? Color.redLight : Color.grey2)
+        .background(true ? Color.redLight : Color.grey2) // FIXME: 확인 후 수정 필요
         .clipShape(RoundedRectangle(cornerRadius: 8))
       }
         .padding(20)
@@ -74,25 +83,27 @@ struct ReviewDetailView: View {
 
 struct ReviewUserProfileView: View {
   @State var starChecked: [Bool] = Array(repeating: false, count: 5)
-  var reviewModel: ReviewDetailModel
+  var reviewModel: StoreReviewContent
   
   var body: some View {
     ZStack {
       HStack(spacing: 12) {
-        AsyncImage(url: URL(string: reviewModel.storeModel.images?.first ?? "https://media.istockphoto.com/id/486456250/ko/%EC%82%AC%EC%A7%84/quokka.jpg?s=612x612&w=0&k=20&c=1phcfqG7aI3-h0KWKxNJxHv-BhJgGHqCXTaXgnE771M=" )!) { image in // FIXME: 여기 프로필사진으로 변경 필요..
-          image.resizable()
-            .frame(width: 40, height: 40, alignment: .center)
-        } placeholder: {
-          Image(systemName: "circle.fill")
+        if let profileURL = reviewModel.profileURL {
+          AsyncImage(url: profileURL) { image in
+            image.resizable()
+              .frame(width: 40, height: 40, alignment: .center)
+          } placeholder: {
+            Image(systemName: "circle.fill")
               .resizable()
               .scaledToFit()
               .frame(maxWidth: 40)
               .foregroundColor(.gray)
+          }
+          .clipShape(Circle())
         }
-        .clipShape(Circle())
         
         VStack(alignment: .leading, spacing: 2) {
-          Text("닉네임") // FIXME: 여기 닉네임으로 변경 필요
+          Text(reviewModel.nickName)
             .font(.pretendard(size: 12, weight: .semibold))
             .foregroundColor(.grey8)
           HStack(spacing: 2) {
@@ -128,23 +139,24 @@ struct ReviewUserProfileView: View {
     .padding(.horizontal, 20)
     .onAppear {
       starChecked.enumerated().forEach { startIndex, value in
-        starChecked[startIndex] = startIndex < reviewModel.storeModel.recommendedCount ?? 0
+        starChecked[startIndex] = startIndex < Int(reviewModel.grade)
       }
     }
   }
 }
 
-struct ReviewImagesView: View {
+struct MultipleImagesView: View {
   @State private var currentPage: Int = 0
+  var storeName: String?
   
-  var urls: [String]?
+  var urls: [String]
   let defaultImageURL = "https://media.tarkett-image.com/large/TH_25094221_25187221_001.jpg"
   
   var body: some View {
     ZStack {
       ScrollView(.horizontal) {
         LazyHStack(spacing: 0) {
-          ForEach(urls ?? [defaultImageURL], id: \.self) { url in
+          ForEach(urls, id: \.self) { url in
             AsyncImage(url: URL(string: url)!) { image in
               image.resizable()
                 .scaledToFit()
@@ -174,7 +186,6 @@ struct ReviewImagesView: View {
         
       }
       .coordinateSpace(name: "scroll")
-      
       .frame(width: UIScreen.main.bounds.width,
              height: UIScreen.main.bounds.width,
              alignment: .center)
@@ -182,36 +193,13 @@ struct ReviewImagesView: View {
       VStack {
         Spacer()
         HStack(spacing: 0) {
-          HStack {
-            Image("icon-pin-location-mono")
-              .renderingMode(.template)
-              .resizable()
-              .aspectRatio(contentMode: .fit)
-              .foregroundColor(.white)
-              .frame(width: 16)
-              .padding(.trailing, 4)
-            
-            Text("만약 태그 이름이 길어지면 이렇게 보이게해주세요")
-              .font(.pretendard(size: 14, weight: .medium))
-              .lineLimit(1)
-              .foregroundColor(.white)
-            
-            Spacer()
-            
-            Image("icon-arrow-right-small-mono")
-              .renderingMode(.template)
-              .resizable()
-              .aspectRatio(contentMode: .fit)
-              .foregroundColor(.white)
-              .frame(width: 14)
+          if let storeName = storeName {
+            ReviewTagView(tagName: storeName)
           }
-          .padding(6)
-          .background(.ultraThinMaterial) // TODO: 시스템 블러로 대응해도 될지 논의 필요
-          .clipShape(RoundedRectangle(cornerRadius: 6))
           
           Spacer()
           
-          Text("\(currentPage)/\(urls?.count ?? 1)")
+          Text("\(currentPage)/\(urls.count)")
             .font(.pretendard(size: 14, weight: .regular))
             .foregroundColor(.white)
             .padding(6)
@@ -227,6 +215,37 @@ struct ReviewImagesView: View {
       UIScrollView.appearance().isPagingEnabled = true
       UIScrollView.appearance().showsHorizontalScrollIndicator = false
     }
+  }
+}
+
+struct ReviewTagView: View {
+  @State var tagName: String
+  
+  var body: some View {
+    HStack {
+      Image("icon-pin-location-mono")
+        .renderingMode(.template)
+        .resizable()
+        .aspectRatio(contentMode: .fit)
+        .foregroundColor(.white)
+        .frame(width: 16)
+        .padding(.trailing, 4)
+      
+      Text(tagName)
+        .font(.pretendard(size: 14, weight: .medium))
+        .lineLimit(1)
+        .foregroundColor(.white)
+      
+      Image("icon-arrow-right-small-mono")
+        .renderingMode(.template)
+        .resizable()
+        .aspectRatio(contentMode: .fit)
+        .foregroundColor(.white)
+        .frame(width: 14)
+    }
+    .padding(6)
+    .background(.ultraThinMaterial) // TODO: 시스템 블러로 대응해도 될지 논의 필요
+    .clipShape(RoundedRectangle(cornerRadius: 6))
   }
 }
 
@@ -246,12 +265,21 @@ struct ReviewDetailModel: Hashable, Equatable {
 
 struct ReviewDetailView_Previews: PreviewProvider {
   static var previews: some View {
-    let dummyStore = CampusStoreContent(idx: 11, name: "수아당", address: nil, phoneNumber: nil, categoryDetail: "분식", distance: nil, grade: 3.0, reviewCount: 5, recommendedCount: 24, images: nil, isLiked: true)
-    
-    let reviewModel = ReviewDetailModel(storeModel: dummyStore, content: "fdsa")
-    
+    let dummyContent = StoreReviewContent(
+      reviewIdx: 0,
+      content: "사장님이 친절하시고 안주가 다 너무 맛있었습니다~! 분위기가 좋아서 다음에 또 갈 것 같아요!! 동기들이랑 여럿이서 가도 자리 넉넉하고 좋았어요!! ^_^",
+      grade: 0,
+      createdAt: "2024-02-25T10:02:40.954Z",
+      nickName: "fdsafdsfsdfds",
+      profileImageUrl: "https://crcf.cookatmarket.com/product/images/2019/11/tudi_1574662390_2739_720.jpg",
+      recommendedCount: 0,
+      images: [
+        "https://crcf.cookatmarket.com/product/images/2019/11/tudi_1574662390_2739_720.jpg",
+        "https://img.khan.co.kr/news/2023/04/20/news-p.v1.20230420.527bc9f1e42f4edfa5dec034ee3b91bd_P1.jpg"
+      ])
     ReviewDetailView(
-      reviewModel: reviewModel,
+      storeName: "fds", 
+      storeReviewContent: dummyContent,
       backButtonDidTapped: {
         print("backButtonDidTapped")
       }

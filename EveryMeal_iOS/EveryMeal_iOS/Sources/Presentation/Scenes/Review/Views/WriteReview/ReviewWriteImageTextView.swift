@@ -25,7 +25,7 @@ struct ReviewWriteImageTextView: View {
   @State private var showToast: Bool = false
   
   private let writeReviewScrollViewID = "writeReviewScrollViewID"
-  var saveReviewSuccess: ((ReviewDetailModel) -> Void)?
+  var saveButtonTapped: ((String, StoreReviewContent) -> Void)?
   var closeButtonTapped: (() -> Void)?
   var starButtonTapped: ((ReviewDetailModel) -> Void)?
   
@@ -157,12 +157,8 @@ struct ReviewWriteImageTextView: View {
         }
         .onChange(of: viewStore.saveImageSuccess) { value in
           if value {
-            let model = WriteStoreReviewRequest(
-              storeIdx: viewStore.storeContent.idx,
-              grade: viewStore.storeContent.grade,
-              content: content,
-              imageList: viewStore.imageConfiges.map { $0.imageKey })
-            viewStore.send(.saveReview(model))
+//            let model = WriteStoreReviewRequest(storeIdx: <#T##Int#>, grade: viewStore.storeEntity.grade, content: content, imageList: viewStore.imageConfiges.map { $0.imageKey })
+//            viewStore.send(.saveReview(model))
           }
         }
         .onChange(of: viewStore.saveReviewSuccess) { value in

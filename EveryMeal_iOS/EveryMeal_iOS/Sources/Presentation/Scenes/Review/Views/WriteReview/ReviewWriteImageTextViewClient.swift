@@ -10,7 +10,8 @@ import Foundation
 import ComposableArchitecture
 
 struct ReviewWriteImageTextViewClient {
-  var getImageConfig: (Int) async throws -> Result<[ImageResponse], EverMealErrorType>
+  var getImageConfig: () async throws -> Result<ImageResponse, EverMealErrorType>
+  var getStoreReview: (GetStoreReviewRequest) async throws -> Result<StoreReviewData, EverMealErrorType>
   var saveStoreReview: (WriteStoreReviewRequest) async throws -> Result<Bool, EverMealErrorType>
 }
 
@@ -22,6 +23,16 @@ extension ReviewWriteImageTextViewClient: DependencyKey {
         return .success(imageConfigResponse)
       } catch {
         return .failure(.fail)
+      }
+    },
+    getStoreReview: { model in
+      do {
+        let response = try await ReviewService().getStoreReview(model)
+        if let data = response.data {
+          return .success(data)
+        } else {
+          return .failure(.fail)
+        }
       }
     }, 
     saveStoreReview: { requestModel in

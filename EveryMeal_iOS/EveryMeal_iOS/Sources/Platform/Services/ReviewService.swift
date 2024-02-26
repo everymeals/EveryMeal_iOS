@@ -21,4 +21,13 @@ struct ReviewService {
     }
   }
   
+  func getStoreReview(_ model: GetStoreReviewRequest) async throws -> EveryMealDefaultResponse<StoreReviewData> {
+    do {
+      let response = try await provider.request(.getStoreReview(model))
+      let result = try JSONDecoder().decode(EveryMealDefaultResponse<StoreReviewData>.self, from: response.data)
+      return result
+    } catch {
+      throw error
+    }
+  }
 }
