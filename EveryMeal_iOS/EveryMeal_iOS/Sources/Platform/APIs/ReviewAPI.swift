@@ -44,8 +44,10 @@ extension ReviewAPI: TargetType {
   }
   
   var headers: [String : String]? {
-    return ["Content-type": "application/json"]
+    switch self {
+    case .writeStoreReview:
+      return ["Content-type": "application/json", "Authorization": "Bearer \(String(describing: UserDefaultsManager.getString(.accessToken)))"]
+    }
   }
-  
 }
 

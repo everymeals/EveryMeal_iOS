@@ -60,10 +60,17 @@ struct ReviewWriteImageTextViewReducer: Reducer {
       state.saveImageSuccess = value
       return .none
       
-    case .saveReview:
+    case let .saveReview(model):
       return .run { send in
-        // TODO: 리뷰 저장
-        await send(.saveReviewSuccess(true))
+        let didSaveReviewSuccess = try await reviewClient.saveStoreReview(model)
+        switch didSaveReviewSuccess {
+        case let .success(result):
+          await send(.saveReviewSuccess(result))
+          return
+        case .failure:
+          print("리뷰 저장 실패")
+          return
+        }
       }
       
     case let .saveReviewSuccess(value):
