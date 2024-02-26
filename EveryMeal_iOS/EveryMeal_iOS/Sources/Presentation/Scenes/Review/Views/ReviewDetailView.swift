@@ -79,7 +79,7 @@ struct ReviewUserProfileView: View {
   var body: some View {
     ZStack {
       HStack(spacing: 12) {
-        AsyncImage(url: URL(string: reviewModel.profileImageURL)!) { image in
+        AsyncImage(url: URL(string: reviewModel.storeModel.images?.first ?? "https://media.istockphoto.com/id/486456250/ko/%EC%82%AC%EC%A7%84/quokka.jpg?s=612x612&w=0&k=20&c=1phcfqG7aI3-h0KWKxNJxHv-BhJgGHqCXTaXgnE771M=" )!) { image in // FIXME: 여기 프로필사진으로 변경 필요..
           image.resizable()
             .frame(width: 40, height: 40, alignment: .center)
         } placeholder: {
@@ -92,7 +92,7 @@ struct ReviewUserProfileView: View {
         .clipShape(Circle())
         
         VStack(alignment: .leading, spacing: 2) {
-          Text(reviewModel.nickname)
+          Text("닉네임") // FIXME: 여기 닉네임으로 변경 필요
             .font(.pretendard(size: 12, weight: .semibold))
             .foregroundColor(.grey8)
           HStack(spacing: 2) {
@@ -106,7 +106,7 @@ struct ReviewUserProfileView: View {
             Text("·")
               .font(.pretendard(size: 12, weight: .semibold))
               .foregroundColor(.grey5)
-            Text("\(reviewModel.dateBefore)일전")
+            Text("0일전") // FIXME: 기획 방향 듣고 수정
               .font(.pretendard(size: 12, weight: .regular))
               .foregroundColor(.grey6)
           }
@@ -236,14 +236,11 @@ struct ScrollOffsetPreferenceKey: PreferenceKey {
 }
 
 struct ReviewDetailModel: Hashable, Equatable {
-  let nickname: String
-  let userID: String
-  let profileImageURL: String
   var storeModel: CampusStoreContent
-  let dateBefore: Int
+  var content: String
   
   static func == (lhs: ReviewDetailModel, rhs: ReviewDetailModel) -> Bool {
-    return lhs.userID == rhs.userID && lhs.storeModel.name == rhs.storeModel.name
+    return lhs.storeModel.idx == rhs.storeModel.idx
    }
 }
 
@@ -251,11 +248,7 @@ struct ReviewDetailView_Previews: PreviewProvider {
   static var previews: some View {
     let dummyStore = CampusStoreContent(idx: 11, name: "수아당", address: nil, phoneNumber: nil, categoryDetail: "분식", distance: nil, grade: 3.0, reviewCount: 5, recommendedCount: 24, images: nil, isLiked: true)
     
-    let reviewModel = ReviewDetailModel(nickname: "햄식이", 
-                                        userID: "4324324",
-                                        profileImageURL: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1752&q=80",
-                                        storeModel: dummyStore,
-                                        dateBefore: 3)
+    let reviewModel = ReviewDetailModel(storeModel: dummyStore, content: "fdsa")
     
     ReviewDetailView(
       reviewModel: reviewModel,

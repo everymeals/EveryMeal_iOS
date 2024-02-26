@@ -22,9 +22,10 @@ struct ReviewWriteImageTextView: View {
   @State var content: String = ""
   @State private var textHeight = CGFloat.zero
   @State private var bubbleShown: Bool = true
+  @State private var showToast: Bool = false
   
   private let writeReviewScrollViewID = "writeReviewScrollViewID"
-  var saveButtonTapped: ((ReviewDetailModel) -> Void)?
+  var saveReviewSuccess: ((ReviewDetailModel) -> Void)?
   var closeButtonTapped: (() -> Void)?
   var starButtonTapped: ((ReviewDetailModel) -> Void)?
   
@@ -54,7 +55,7 @@ struct ReviewWriteImageTextView: View {
             ScrollView {
               VStack {
                 VStack(alignment: .center, spacing: 0) {
-                  Text(viewStore.storeEntity.categoryDetail)
+                  Text(viewStore.storeContent.categoryDetail ?? "")
                     .foregroundColor(Color.grey6)
                     .font(.pretendard(size: 12, weight: .medium))
                     .padding(.horizontal, 6)
@@ -64,7 +65,7 @@ struct ReviewWriteImageTextView: View {
                     .padding(.bottom, 12)
                     .padding(.top, 30)
                   
-                  Text(viewStore.storeEntity.name)
+                  Text(viewStore.storeContent.name ?? "")
                     .foregroundColor(Color.grey9)
                     .font(Font.pretendard(size: 18, weight: .bold))
                     .lineLimit(1)
@@ -82,11 +83,8 @@ struct ReviewWriteImageTextView: View {
                   }
                   .onTapGesture {
                     let dummyReviewModel = ReviewDetailModel(
-                      nickname: "햄식이",
-                      userID: "4324324",
-                      profileImageURL: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1752&q=80",
-                      storeModel: viewStore.storeEntity,
-                      dateBefore: 3
+                      storeModel: viewStore.storeContent,
+                      content: content
                     )
                     if let starButtonTapped = starButtonTapped {
                       starButtonTapped(dummyReviewModel)
@@ -117,7 +115,7 @@ struct ReviewWriteImageTextView: View {
                   }
                   .padding(.bottom, 16)
                 }
-                ReviewSelectedImageView(images: selectedImages)
+                ReviewSelectedImageView(images: $selectedImages)
                   .padding(.leading, 20)
                 
                 Spacer()
@@ -130,23 +128,23 @@ struct ReviewWriteImageTextView: View {
           
           VStack {
             Spacer()
-            EveryMealButton(selectEnable: $saveButtonEnabled, title: "등록하기", didTapped: { })
-              .onTapGesture {
-                let dummyReviewModel = ReviewDetailModel(
-                  nickname: "햄식이",
-                  userID: "4324324",
-                  profileImageURL: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1752&q=80",
-                  storeModel: viewStore.storeEntity,
-                  dateBefore: 3
-                )
-                let imageData = selectedImages.compactMap { $0.jpegData(compressionQuality: 1) }
-                viewStore.send(.requestImageKeys(imageData))
-              }
+            EveryMealButton(selectEnable: $saveButtonEnabled, title: "등록하기", didTapped: {
+              let imageData = selectedImages.compactMap { $0.jpegData(compressionQuality: 1) }
+              viewStore.send(.requestImageKeys(imageData))
+            })
           }
+          if showToast {
+            EveryMealToast(type: .reviewSuccess) {
+              DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                showToast = false
+              }
+            }
+          }
+          
         }
         .onAppear {
-          print("score \(viewStore.storeEntity.grade)")
-          for index in 0..<Int(viewStore.storeEntity.grade) {
+          print("score \(viewStore.storeContent.grade)")
+          for index in 0..<Int(viewStore.storeContent.grade ?? 1) {
             starChecked[index] = true
           }
         }
@@ -159,15 +157,22 @@ struct ReviewWriteImageTextView: View {
         }
         .onChange(of: viewStore.saveImageSuccess) { value in
           if value {
-            let model = WriteStoreReviewRequest(storeIdx: <#T##Int#>, grade: viewStore.storeEntity.grade, content: content, imageList: viewStore.imageConfiges.map { $0.imageKey })
+            let model = WriteStoreReviewRequest(
+              storeIdx: viewStore.storeContent.idx,
+              grade: viewStore.storeContent.grade,
+              content: content,
+              imageList: viewStore.imageConfiges.map { $0.imageKey })
             viewStore.send(.saveReview(model))
           }
         }
         .onChange(of: viewStore.saveReviewSuccess) { value in
           if value,
-             let saveButtonTapped = saveButtonTapped {
-            // TODO: 수정 필요
-//            saveButtonTapped(dummyReviewModel)
+             let saveReviewSuccess = saveReviewSuccess {
+            showToast = true
+            saveReviewSuccess(ReviewDetailModel(
+              storeModel: viewStore.storeContent,
+              content: content
+            ))
           }
         }
       }
@@ -238,7 +243,7 @@ struct ReviewTextEditor: View {
 }
 
 struct ReviewSelectedImageView: View {
-  @State var images: [UIImage]
+  @Binding var images: [UIImage]
   @State var showImagePicker: Bool = false
   @State var authorizationStatus: PHAuthorizationStatus = .denied
   @State private var showingAccessAlert = false
