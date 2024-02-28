@@ -31,22 +31,29 @@ struct ReviewDetailView: View {
         }
       )
       ReviewUserProfileView(reviewModel: storeReviewContent)
-      if let images = storeReviewContent.images {
+      if let images = storeReviewContent.images,
+         !images.isEmpty {
         MultipleImagesView(storeName: storeName, urls: images)
           .aspectRatio(contentMode: .fit)
           .frame(width: UIScreen.main.bounds.width)
       }
       
-      VStack(spacing: 40) {
+      VStack(spacing: 0) {
         HStack {
           Text(storeReviewContent.content ?? "no review")
             .font(.pretendard(size: 15, weight: .regular))
             .foregroundColor(.grey8)
+            .background(Color.red)
           Spacer()
         }
+        .padding(.bottom, (storeReviewContent.images ?? []).isEmpty ? 16 : 40)
 
         if (storeReviewContent.images ?? []).isEmpty {
-          ReviewTagView(tagName: storeName)
+          HStack {
+            ReviewTagView(tagName: storeName)
+            Spacer()
+          }
+          .padding(.bottom, 40)
         }
         HStack(spacing: 6) {
           Image("icon-thumb-up-mono")
@@ -73,7 +80,9 @@ struct ReviewDetailView: View {
         .background(true ? Color.redLight : Color.grey2) // FIXME: 확인 후 수정 필요
         .clipShape(RoundedRectangle(cornerRadius: 8))
       }
-        .padding(20)
+      .padding(.horizontal, 20)
+      .padding(.top, (storeReviewContent.images?.isEmpty ?? true) ? 0 : 20)
+        .background(Color.blue)
         
       Spacer()
     }
@@ -273,10 +282,7 @@ struct ReviewDetailView_Previews: PreviewProvider {
       nickName: "fdsafdsfsdfds",
       profileImageUrl: "https://crcf.cookatmarket.com/product/images/2019/11/tudi_1574662390_2739_720.jpg",
       recommendedCount: 0,
-      images: [
-        "https://crcf.cookatmarket.com/product/images/2019/11/tudi_1574662390_2739_720.jpg",
-        "https://img.khan.co.kr/news/2023/04/20/news-p.v1.20230420.527bc9f1e42f4edfa5dec034ee3b91bd_P1.jpg"
-      ])
+      images: [])
     ReviewDetailView(
       storeName: "fds", 
       storeReviewContent: dummyContent,
