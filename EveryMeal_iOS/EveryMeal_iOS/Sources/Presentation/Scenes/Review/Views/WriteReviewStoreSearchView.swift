@@ -102,7 +102,6 @@ struct WriteReviewStoreSearchView: View {
               ReviewWriteImageTextViewReducer()
             }), selectedImages: $images,
             saveButtonTapped: { storeName, reviewModel in
-              // TODO: 토스트 노출
               reviewNavigationStack.append(.reviewDetail(storeName, reviewModel))
             },
             closeButtonTapped: {

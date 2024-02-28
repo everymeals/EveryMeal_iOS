@@ -18,7 +18,6 @@ struct ReviewWriteImageTextViewReducer: Reducer {
     var imageDatas: [Data] = []
     var saveImageSuccess: Bool = false
     var storeContent: CampusStoreContent
-    var saveReviewSuccess: Bool = false
     var reviewedStoreContent: StoreReviewContent?
     var getReviewIWroteSuccess: Bool?
   }
@@ -29,8 +28,7 @@ struct ReviewWriteImageTextViewReducer: Reducer {
     case saveImages
     case saveImageSuccess(Bool)
     case saveReview(WriteStoreReviewRequest)
-    case saveReviewSuccess(Bool)
-    case getReviewIWrote
+    case getReviewIWrote(Int)
     case setReviewIWrote(StoreReviewContent)
     case getReviewIWroteSuccess(Bool)
   }
@@ -69,8 +67,8 @@ struct ReviewWriteImageTextViewReducer: Reducer {
       return .run { send in
         let didSaveReviewSuccess = try await reviewClient.saveStoreReview(model)
         switch didSaveReviewSuccess {
-        case let .success(result):
-          await send(.saveReviewSuccess(result))
+        case let .success(reviewIndex):
+          await send(.getReviewIWrote(reviewIndex))
           return
         case .failure:
           print("리뷰 저장 실패")
@@ -78,13 +76,9 @@ struct ReviewWriteImageTextViewReducer: Reducer {
         }
       }
       
-    case let .saveReviewSuccess(value):
-      state.saveReviewSuccess = value
-      return .none
-      
-    case .getReviewIWrote:
+    case let .getReviewIWrote(reviewIndex):
       return .run { send in
-        let response = try await reviewClient.getStoreReview(.init(index: 0, offset: nil, limit: nil))
+        let response = try await reviewClient.getStoreReview(.init(index: reviewIndex, offset: nil, limit: nil))
         switch response {
         case let .success(storeData):
           if let storeContentIWrote = storeData.content?.first(where: { $0.reviewIdx == 0 }) {

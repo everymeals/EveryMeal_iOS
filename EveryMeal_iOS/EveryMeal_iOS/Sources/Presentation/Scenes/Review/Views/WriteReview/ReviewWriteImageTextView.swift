@@ -16,7 +16,7 @@ struct ReviewWriteImageTextView: View {
   
   @State var starChecked = Array(repeating: false, count: 5)
   @State var isBubbleShown: Bool = true
-  @State var saveButtonEnabled: Bool = true
+  @State var saveButtonEnabled: Bool = false
   
   @Binding var selectedImages: [UIImage]
   @State var content: String = ""
@@ -28,6 +28,7 @@ struct ReviewWriteImageTextView: View {
   var saveButtonTapped: ((String, StoreReviewContent) -> Void)?
   var closeButtonTapped: (() -> Void)?
   var starButtonTapped: ((ReviewDetailModel) -> Void)?
+  private let placeholder = "맛집에 대한 의견을 자세히 적어주시면 다른 사용자에게 도움이 돼요!"
   
   
   private let navigationHeight: CGFloat = 48
@@ -106,7 +107,7 @@ struct ReviewWriteImageTextView: View {
                       .modifier(ViewHeightModifier(key: ViewHeightKey.self))
                       .frame(width: UIScreen.main.bounds.width - 40)
                     
-                    ReviewTextEditor(content: $content)
+                    ReviewTextEditor(content: $content, placeholder: placeholder)
                       .frame(height: max(120, textHeight + 20))
                     
                   }.onPreferenceChange(ViewHeightKey.self) {
@@ -148,6 +149,9 @@ struct ReviewWriteImageTextView: View {
             starChecked[index] = true
           }
         }
+        .onChange(of: self.content) { newContent in
+          saveButtonEnabled = newContent != "" && newContent != placeholder
+        }
         .onChange(of: viewStore.imageConfiges) { configs in
           if configs.count == selectedImages.count {
             viewStore.send(.saveImages)
@@ -157,18 +161,20 @@ struct ReviewWriteImageTextView: View {
         }
         .onChange(of: viewStore.saveImageSuccess) { value in
           if value {
-//            let model = WriteStoreReviewRequest(storeIdx: <#T##Int#>, grade: viewStore.storeEntity.grade, content: content, imageList: viewStore.imageConfiges.map { $0.imageKey })
-//            viewStore.send(.saveReview(model))
+            let model = WriteStoreReviewRequest(
+              storeIdx: viewStore.storeContent.idx,
+              grade: viewStore.storeContent.grade,
+              content: self.content,
+              imageList: viewStore.imageConfiges.map { $0.url }
+            )
+            viewStore.send(.saveReview(model))
           }
         }
-        .onChange(of: viewStore.saveReviewSuccess) { value in
-          if value,
-             let saveReviewSuccess = saveReviewSuccess {
-            showToast = true
-            saveReviewSuccess(ReviewDetailModel(
-              storeModel: viewStore.storeContent,
-              content: content
-            ))
+        .onChange(of: viewStore.reviewedStoreContent) { reviewContent in
+          showToast = true
+          if let saveButtonTapped = saveButtonTapped,
+             let reviewContent = reviewContent {
+            saveButtonTapped(viewStore.storeContent.name ?? "", reviewContent)
           }
         }
       }
@@ -183,8 +189,7 @@ struct ReviewWriteImageTextView: View {
 struct ReviewTextEditor: View {
   @Binding var content: String
   @FocusState private var didTextFieldFocused: Bool
-  
-  var placeholder: String = "맛집에 대한 의견을 자세히 적어주시면 다른 사용자에게 도움이 돼요!"
+  var placeholder: String
   
   var body: some View {
     if #available(iOS 16.0, *) {
