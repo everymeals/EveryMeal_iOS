@@ -11,11 +11,15 @@ import Moya
 struct ReviewService {
   let provider = MoyaProvider<ReviewAPI>(session: Session(interceptor: AuthInterceptor.shared))
   
-  func writeReview(_ model: WriteStoreReviewRequest) async throws -> Bool {
+  func writeReview(_ model: WriteStoreReviewRequest) async throws -> Int {
     do {
       let response = try await provider.request(.writeStoreReview(model))
-      let result = try JSONDecoder().decode(EveryMealDefaultResponse<Bool>.self, from: response.data)
-      return result.data ?? true // TODO: 명세서에 아무것도 안나와있어서 일단 true로 설정
+      let result = try JSONDecoder().decode(EveryMealDefaultResponse<Int>.self, from: response.data)
+      if let reviewIndex = result.data {
+        return reviewIndex
+      } else {
+        throw EverMealErrorType.fail
+      }
     } catch {
       throw error
     }
