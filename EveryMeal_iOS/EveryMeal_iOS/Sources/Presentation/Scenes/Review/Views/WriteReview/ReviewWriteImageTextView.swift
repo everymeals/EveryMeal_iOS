@@ -130,8 +130,18 @@ struct ReviewWriteImageTextView: View {
           VStack {
             Spacer()
             EveryMealButton(selectEnable: $saveButtonEnabled, title: "등록하기", didTapped: {
-              let imageData = selectedImages.compactMap { $0.jpegData(compressionQuality: 1) }
-              viewStore.send(.requestImageKeys(imageData))
+              if selectedImages.isEmpty {
+                let model = WriteStoreReviewRequest(
+                  storeIdx: viewStore.storeContent.idx,
+                  grade: viewStore.storeContent.grade,
+                  content: self.content,
+                  imageList: []
+                )
+                viewStore.send(.saveReview(model))
+              } else {
+                let imageData = selectedImages.compactMap { $0.jpegData(compressionQuality: 1) }
+                viewStore.send(.requestImageKeys(imageData))
+              }
             })
           }
           if showToast {
