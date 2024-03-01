@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeTopThreeMealsView: View {
   @Binding var campusStores: [CampusStoreContent]?
+  var didStoreTapped: (CampusStoreContent) -> Void
   
   var body: some View {
     VStack(spacing: 8) {
@@ -20,7 +21,9 @@ struct HomeTopThreeMealsView: View {
           .padding(.top, 24)
         Spacer()
       }
-      MealGridView(campusStores: $campusStores, didMealTapped: { _ in })
+      MealGridView(campusStores: $campusStores, didMealTapped: { storeContent in
+        didStoreTapped(storeContent)
+      })
     }
   }
 }
@@ -37,7 +40,6 @@ struct MealGridView: View {
           MealVerticalItemView(storeModel: storeModel)
             .contentShape(Rectangle())
             .onTapGesture {
-              // 여기에 탭 제스처 처리 로직 추가
               didMealTapped(storeModel)
             }
             .padding(.vertical, 12)
@@ -79,6 +81,6 @@ struct HomeTopThreeMealsView_Previews: PreviewProvider {
       CampusStoreContent(idx: 11, name: "수아당", address: nil, phoneNumber: nil, categoryDetail: "분식", distance: nil, grade: 3.0, reviewCount: 5, recommendedCount: 24, images: nil, isLiked: true),
       CampusStoreContent(idx: 22, name: "동경산책 성신여대점", address: nil, phoneNumber: nil, categoryDetail: "일식", distance: nil, grade: 3.0, reviewCount: 5, recommendedCount: 32, images: nil, isLiked: false),
       CampusStoreContent(idx: 33, name: "언앨리셰프", address: nil, phoneNumber: nil, categoryDetail: "양식", distance: nil, grade: 0, reviewCount: 0, recommendedCount: 0, images: nil, isLiked: false)
-    ]))
+    ]), didStoreTapped: { _ in })
   }
 }

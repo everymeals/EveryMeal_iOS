@@ -9,10 +9,10 @@ import SwiftUI
 import ComposableArchitecture
 
 enum HomeStackViewType: Hashable {
-  case writeReview
   case reviewList
   case moreStoreView(MoreStoreViewType)
   case emailVertify(type: EmailViewType, model: SignupEntity)
+  case storeDetail(CampusStoreContent)
 }
 
 struct HomeView: View {
@@ -79,7 +79,9 @@ struct HomeView: View {
             }
           
           Separator()
-          HomeTopThreeMealsView(campusStores: $campusStores)
+          HomeTopThreeMealsView(campusStores: $campusStores, didStoreTapped: { tappedStore in
+            self.navigationPath.append(.storeDetail(tappedStore))
+          })
           MoreRestuarantButton()
             .onTapGesture {
               self.navigationPath.append(.moreStoreView(.best))
@@ -124,9 +126,15 @@ struct HomeView: View {
               }
             )
             .toolbar(.hidden, for: .tabBar)
-          default:
-            MoreReviewsView()
-              .toolbar(.hidden, for: .tabBar)
+          case let .storeDetail(model):
+            StoreDetailView(store: .init(
+              initialState: StoreDetailReducer.State(storeModel: model),
+              reducer: {
+                StoreDetailReducer()
+              }), backButtonTapped: {
+                navigationPath.removeLast()
+              })
+            .toolbar(.hidden, for: .tabBar)
           }
         }
       }
