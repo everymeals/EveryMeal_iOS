@@ -85,7 +85,7 @@ struct StoreDetailView: View {
           
           VStack(spacing: 0) {
             SegmentedView(selected: $currentSegment) { tappedSeg in
-              segmentTapped = tappedSeg
+//              segmentTapped = tappedSeg
             }
             .padding(.horizontal, 20)
             
@@ -98,13 +98,6 @@ struct StoreDetailView: View {
               ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(alignment: .top, spacing: 0) {
                   ForEach(segments, id: \.self) { segment in
-                    VStack {
-                      Text(segment.title)
-                    }
-                    .id(segment.rawValue)
-                    .background(.red)
-                    .frame(width: UIScreen.main.bounds.width)
-                    /*
                     switch segment {
                     case .정보:
                       StoreDetailInfoView(location: viewStore.storeModel.address ?? "", number: viewStore.storeModel.phoneNumber ?? "")
@@ -117,21 +110,48 @@ struct StoreDetailView: View {
                           .id(segment.rawValue)
                           .frame(width: UIScreen.main.bounds.width)
                       } else {
-                        VStack {
-                          Text("")
-                            .id(segment.rawValue)
-                            .frame(width: UIScreen.main.bounds.width)
+                        VStack(spacing: 8) {
+                          Spacer()
+                          Image(.iconPictureMono)
+                            .resizable()
+                            .renderingMode(.template)
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.grey5)
+                            .frame(width: 40)
+                          Text("사진이 없어요")
+                            .font(.pretendard(size: 15, weight: .medium))
+                            .foregroundColor(.grey8)
+                          Spacer()
                         }
+                        .id(segment.rawValue)
+                        .frame(width: UIScreen.main.bounds.width)
                       }
                       
                     case .리뷰:
-                      VStack {
-                        Text(segment.title)
+                      if let storeReviewData = viewStore.storeReviewData {
+                        VStack {
+                          Text(segment.title)
+                        }
+                        .id(segment.rawValue)
+                        .frame(width: UIScreen.main.bounds.width)
+                      } else {
+                        VStack(spacing: 8) {
+                          Spacer()
+                          Image(.iconDocumentMono)
+                            .resizable()
+                            .renderingMode(.template)
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.grey5)
+                            .frame(width: 40)
+                          Text("리뷰가 없어요")
+                            .font(.pretendard(size: 15, weight: .medium))
+                            .foregroundColor(.grey8)
+                          Spacer()
+                        }
+                        .id(segment.rawValue)
+                        .frame(width: UIScreen.main.bounds.width)
                       }
-                      .id(segment.rawValue)
-                      .frame(width: UIScreen.main.bounds.width)
                     }
-                     */
                   }
                 }
                 .background(GeometryReader { geometry in
@@ -148,14 +168,19 @@ struct StoreDetailView: View {
               .onChange(of: segmentTapped) { segment in
                 DispatchQueue.main.async {
                   withAnimation(Animation.easeInOut(duration: 1)) {
-                    value.scrollTo(segment.rawValue, anchor: .center)
+//                    proxy.scrollTo(segment.rawValue, anchor: .center)
+                    // FIXME: 나중에 수정.. ()
                   }
                 }
               }
+              
               .coordinateSpace(name: "scroll")
               .frame(width: UIScreen.main.bounds.width,
                      height: UIScreen.main.bounds.width,
                      alignment: .center)
+            }
+            .onAppear {
+              UIScrollView.appearance().isPagingEnabled = true
             }
           }
           

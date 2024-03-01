@@ -34,10 +34,10 @@ struct SegmentedView: View {
           }
           .contentShape(Rectangle())
           .onTapGesture {
-            print("seg1 \(segment) \(selected)")
-            selected = segment
-            buttomTapped(segment)
-            print("seg2 \(segment) \(selected)")
+//            print("seg1 \(segment) \(selected)")
+//            selected = segment
+//            buttomTapped(segment)
+//            print("seg2 \(segment) \(selected)")
           }
         }
       }
