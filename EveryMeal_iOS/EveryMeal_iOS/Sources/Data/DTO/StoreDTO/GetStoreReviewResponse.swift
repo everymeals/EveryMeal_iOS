@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct StoreReviewData: Codable {
+struct StoreReviewData: Codable, Equatable {
   let content: [StoreReviewContent]?
   let pageable: CampusStorePageable?
   let totalPages: Int?
@@ -19,6 +19,10 @@ struct StoreReviewData: Codable {
   let numberOfElements: Int?
   let first: Bool?
   let empty: Bool?
+  
+  static func == (lhs: StoreReviewData, rhs: StoreReviewData) -> Bool {
+    return lhs.numberOfElements == rhs.numberOfElements
+  }
 }
 
 struct StoreReviewContent: Codable, Equatable, Hashable {
@@ -33,6 +37,10 @@ struct StoreReviewContent: Codable, Equatable, Hashable {
   
   var profileURL: URL? {
     return URL(string: self.profileImageUrl)
+  }
+  
+  var imageURLs: [URL]? {
+    return images?.compactMap { URL(string: $0) }
   }
   
   var dateBefore: Int {
