@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StoreDetailLikeButton: View {
-  @State var isPressed: Bool = false
+  @State var isPressed: Bool
   
   var likesCount: Int
   var selectedColor: Color = .everyMealRed

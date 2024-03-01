@@ -1,5 +1,5 @@
 //
-//  ReviewWriteImageTextViewClient.swift
+//  StoreReviewClient.swift
 //  EveryMeal_iOS
 //
 //  Created by 김하늘 on 2/18/24.
@@ -9,13 +9,13 @@ import Foundation
 
 import ComposableArchitecture
 
-struct ReviewWriteImageTextViewClient {
+struct StoreReviewClient {
   var getImageConfig: (Int) async throws -> Result<[ImageResponse], EverMealErrorType>
   var getStoreReview: (GetStoreReviewRequest) async throws -> Result<StoreReviewData, EverMealErrorType>
   var saveStoreReview: (WriteStoreReviewRequest) async throws -> Result<Int, EverMealErrorType>
 }
 
-extension ReviewWriteImageTextViewClient: DependencyKey {
+extension StoreReviewClient: DependencyKey {
   static var liveValue = Self(
     getImageConfig: { count in
       do {
@@ -46,8 +46,8 @@ extension ReviewWriteImageTextViewClient: DependencyKey {
 }
 
 extension DependencyValues {
-  var reviewClient: ReviewWriteImageTextViewClient {
-    get { self[ReviewWriteImageTextViewClient.self] }
-    set { self[ReviewWriteImageTextViewClient.self] = newValue }
+  var reviewClient: StoreReviewClient {
+    get { self[StoreReviewClient.self] }
+    set { self[StoreReviewClient.self] = newValue }
   }
 }

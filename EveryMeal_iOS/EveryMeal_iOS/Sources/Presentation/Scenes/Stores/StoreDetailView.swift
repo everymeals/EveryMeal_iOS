@@ -7,136 +7,230 @@
 
 import SwiftUI
 
+import ComposableArchitecture
+
 struct StoreDetailView: View {
-  var storeModel: CampusStoreContent
-  @State private var currentSegment: StoreDetailSegmentType = .정보
+  let store: StoreOf<StoreDetailReducer>
+  
+  @State private var currentSegment: StoreDetailSegmentType = .사진
   @State private var segments = StoreDetailSegmentType.allCases
-  @State private var segmentTapped: StoreDetailSegmentType = .정보
+  @State private var segmentTapped: StoreDetailSegmentType = .사진
+  var backButtonTapped: () -> Void
   
   var body: some View {
-    VStack {
-      MultipleImagesView(urls: storeModel.images ?? [])
-        .aspectRatio(contentMode: .fit)
-        .frame(width: UIScreen.main.bounds.width)
-      
-      HStack {
-        VStack(alignment: .leading) {
-          if let categoryDetail = storeModel.categoryDetail {
-            Text(categoryDetail)
-              .foregroundColor(Color.grey6)
-              .font(.pretendard(size: 12, weight: .medium))
-              .padding(.horizontal, 6)
-              .padding(.vertical, 3)
-              .background(Color.grey2)
-              .cornerRadius(4)
-              .padding(.bottom, 3)
-          }
+    WithViewStore(self.store, observe: { $0 }) { viewStore in
+      NavigationView {
+        VStack {
+          CustomNavigationView(
+            title: "",
+            leftItem: Image("icon-arrow-left-small-mono"),
+            leftItemTapped: backButtonTapped
+          )
           
-          Text(storeModel.name ?? "")
-            .foregroundColor(Color.grey9)
-            .font(.pretendard(size: 22, weight: .bold))
-            .padding(.bottom, 4)
-          
-          HStack(spacing: 0) {
-            Image("icon-star-mono")
-              .resizable()
+          if let images = viewStore.storeModel.images,
+             !images.isEmpty {
+            MultipleImagesView(urls: viewStore.storeModel.images ?? [])
               .aspectRatio(contentMode: .fit)
-              .frame(width: 14)
-              .padding(.trailing, 2)
-            Text(String(storeModel.grade ?? 5.0))
-              .foregroundColor(Color.grey7)
-              .font(.pretendard(size: 12, weight: .medium))
-            Text("(5)")
-              .foregroundColor(Color.grey7)
-              .font(.pretendard(size: 12, weight: .medium))
+              .frame(width: UIScreen.main.bounds.width)
           }
-          .padding(.bottom, 24)
           
-          HStack(spacing: 8) {
-            StoreDetailLikeButton(likesCount: 3)
-              .onTapGesture {
-                print("didTapped")
+          HStack {
+            VStack(alignment: .leading) {
+              if let categoryDetail = viewStore.storeModel.categoryDetail {
+                Text(categoryDetail)
+                  .foregroundColor(Color.grey6)
+                  .font(.pretendard(size: 12, weight: .medium))
+                  .padding(.horizontal, 6)
+                  .padding(.vertical, 3)
+                  .background(Color.grey2)
+                  .cornerRadius(4)
+                  .padding(.bottom, 3)
               }
-            StoreDetailShareButton()
+              
+              Text(viewStore.storeModel.name ?? "")
+                .foregroundColor(Color.grey9)
+                .font(.pretendard(size: 22, weight: .bold))
+                .padding(.bottom, 4)
+              
+              HStack(spacing: 0) {
+                Image("icon-star-mono")
+                  .resizable()
+                  .aspectRatio(contentMode: .fit)
+                  .frame(width: 14)
+                  .padding(.trailing, 2)
+                Text(String(viewStore.storeModel.grade ?? 5.0))
+                  .foregroundColor(Color.grey7)
+                  .font(.pretendard(size: 12, weight: .medium))
+                Text("(5)")
+                  .foregroundColor(Color.grey7)
+                  .font(.pretendard(size: 12, weight: .medium))
+              }
+              .padding(.bottom, 24)
+              
+              HStack(spacing: 8) {
+                StoreDetailLikeButton(isPressed: viewStore.storeModel.isLiked, likesCount: viewStore.storeModel.recommendedCount)
+                  .onTapGesture {
+                    print("didTapped")
+                    // TODO: 여기 좋아요 기능 추가
+                    
+                  }
+                StoreDetailShareButton()
+              }
+            }
+            .padding(.horizontal, 20)
+            
+            Spacer()
           }
+          .padding(.bottom, 20)
+          
+          VStack(spacing: 0) {
+            SegmentedView(selected: $currentSegment) { tappedSeg in
+              segmentTapped = tappedSeg
+            }
+            .padding(.horizontal, 20)
+            
+            Rectangle()
+              .frame(height: 1)
+              .foregroundColor(Color.clear)
+              .background(Color.grey3)
+            
+            ScrollViewReader { value in
+              ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack(alignment: .top, spacing: 0) {
+                  ForEach(segments, id: \.self) { segment in
+                    VStack {
+                      Text(segment.title)
+                    }
+                    .id(segment.rawValue)
+                    .background(.red)
+                    .frame(width: UIScreen.main.bounds.width)
+                    /*
+                    switch segment {
+                    case .정보:
+                      StoreDetailInfoView(location: viewStore.storeModel.address ?? "", number: viewStore.storeModel.phoneNumber ?? "")
+                        .id(segment.rawValue)
+                        .frame(width: UIScreen.main.bounds.width)
+                      
+                    case .사진:
+                      if let storeReviewData = viewStore.storeReviewData {
+                        StoreDetailImageView(storeReviewModel: storeReviewData)
+                          .id(segment.rawValue)
+                          .frame(width: UIScreen.main.bounds.width)
+                      } else {
+                        VStack {
+                          Text("")
+                            .id(segment.rawValue)
+                            .frame(width: UIScreen.main.bounds.width)
+                        }
+                      }
+                      
+                    case .리뷰:
+                      VStack {
+                        Text(segment.title)
+                      }
+                      .id(segment.rawValue)
+                      .frame(width: UIScreen.main.bounds.width)
+                    }
+                     */
+                  }
+                }
+                .background(GeometryReader { geometry in
+                  Color.clear
+                    .preference(key: ScrollOffsetPreferenceKey.self, value: geometry.frame(in: .named("scroll")).origin)
+                })
+                .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
+                  let offset = value.x == 0 ? 0 : -value.x
+                  let screenWidth = UIScreen.main.bounds.width
+                  let centerX = offset + (screenWidth / 2)
+                  currentSegment = segments[Int(floor(centerX/screenWidth))]
+                }
+              }
+              .onChange(of: segmentTapped) { segment in
+                DispatchQueue.main.async {
+                  withAnimation(Animation.easeInOut(duration: 1)) {
+                    value.scrollTo(segment.rawValue, anchor: .center)
+                  }
+                }
+              }
+              .coordinateSpace(name: "scroll")
+              .frame(width: UIScreen.main.bounds.width,
+                     height: UIScreen.main.bounds.width,
+                     alignment: .center)
+            }
+          }
+          
+//          Spacer()
         }
-        .padding(.horizontal, 20)
+      }
+      .navigationBarHidden(true)
+      .onAppear {
+        viewStore.send(.getStoreReviewData(page: 0))
+      }
+    }
+  }
+}
+
+struct StoreDetailInfoView: View {
+  var location: String
+  var number: String
+  
+  var body: some View {
+    VStack(alignment: .leading, spacing: 11) {
+      HStack(spacing: 6) {
+        Image(.iconPinLocationMono)
+          .resizable()
+          .renderingMode(.template)
+          .aspectRatio(contentMode: .fit)
+          .foregroundColor(.grey4)
+          .frame(width: 20)
         
+        Text(location)
+          .font(.pretendard(size: 14, weight: .regular))
+          .foregroundColor(Color.grey8)
         Spacer()
       }
-      .padding(.bottom, 20)
-      
-      VStack(spacing: 0) {
-        SegmentedView(selected: $currentSegment) { tappedSeg in
-          segmentTapped = tappedSeg
-        }
-        .padding(.horizontal, 20)
-        
-        Rectangle()
-          .frame(height: 1)
-          .foregroundColor(Color.clear)
-          .background(Color.grey3)
-        
-        ScrollViewReader { value in
-          ScrollView(.horizontal) {
-            LazyHStack(alignment: .top, spacing: 0) {
-              ForEach(segments, id: \.self) { segment in
-                VStack {
-                  Text(segment.title)
-                }
-                .id(segment.rawValue)
-                .background(.red)
-                .frame(width: UIScreen.main.bounds.width)
-                /*
-                switch segment {
-                case .정보:
-                  VStack {
-                    Text(segment.title)
-                  }
-                  .background(.red)
-                  .frame(width: UIScreen.main.bounds.width,
-                         height: UIScreen.main.bounds.width,
-                         alignment: .center)
-                case .사진:
-                  VStack {
-                    Text(segment.title)
-                  }
-                  .frame(width: UIScreen.main.bounds.width,
-                         height: UIScreen.main.bounds.width,
-                         alignment: .center)
-                case .리뷰:
-                  VStack {
-                    Text(segment.title)
-                  }
-                  .frame(width: UIScreen.main.bounds.width,
-                         height: UIScreen.main.bounds.width,
-                         alignment: .center)
-                }
-                 */
-              }
-            }
-            .background(GeometryReader { geometry in
-              Color.clear
-                .preference(key: ScrollOffsetPreferenceKey.self, value: geometry.frame(in: .named("scroll")).origin)
-            })
-            .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
-              let offset = value.x == 0 ? 0 : -value.x
-              let screenWidth = UIScreen.main.bounds.width
-              let centerX = offset + (screenWidth / 2)
-              currentSegment = segments[Int(floor(centerX/screenWidth))]
+      HStack(spacing: 6) {
+        Image(.iconCallMono)
+          .resizable()
+          .aspectRatio(contentMode: .fit)
+          .frame(width: 20)
+        Text(number)
+          .font(.pretendard(size: 14, weight: .regular))
+          .foregroundColor(Color.grey8)
+        Spacer()
+      }
+    }
+    .padding(20)
+  }
+}
+
+struct StoreDetailImageView: View {
+  var storeReviewModel: StoreReviewData
+  let columns = Array(repeating: GridItem(.fixed(50), spacing: 20), count: 4)
+  static let margin: CGFloat = 3
+  private var imageSize = UIScreen.main.bounds.width - (margin * 2) / 3
+  
+  public init(storeReviewModel: StoreReviewData) {
+    self.storeReviewModel = storeReviewModel
+  }
+  
+  var body: some View {
+    ScrollView {
+      LazyVGrid(columns: columns, spacing: 20) {
+        if let content = storeReviewModel.content {
+          ForEach(content.compactMap { $0.imageURLs }.flatMap { $0 }, id: \.self) { imageURL in
+            AsyncImage(url: imageURL) { image in
+              image
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: imageSize)
+            } placeholder: {
+              Image("dummyImage")
+                  .resizable()
+                  .aspectRatio(contentMode: .fill)
+                  .frame(width: 140, height: 140)
             }
           }
-          .onChange(of: segmentTapped) { segment in
-            DispatchQueue.main.async {   // <--- workaround
-              withAnimation(Animation.easeInOut(duration: 1)) {
-                value.scrollTo(segment.rawValue, anchor: .center)
-              }
-            }
-          }
-          .coordinateSpace(name: "scroll")
-          .frame(width: UIScreen.main.bounds.width,
-                 height: UIScreen.main.bounds.width,
-                 alignment: .center)
         }
       }
     }
@@ -157,7 +251,11 @@ enum StoreDetailSegmentType: Int, CaseIterable {
 
 struct StoreDetailView_Previews: PreviewProvider {
   static var previews: some View {
-    let dummy = CampusStoreContent(idx: 0, name: "수아당", address: nil, phoneNumber: nil, categoryDetail: "분식", distance: nil, grade: 3.0, reviewCount: 5, recommendedCount: 24, images: ["https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1752&q=80", "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1752&q=80"], isLiked: true)
-    StoreDetailView(storeModel: dummy)
+    let dummy = CampusStoreContent(idx: 0, name: "수아당", address: "서울 관악구 남부순환로 1817 (우)08758", phoneNumber: "1522-3232", categoryDetail: "분식", distance: nil, grade: 3.0, reviewCount: 5, recommendedCount: 24, images: [], isLiked: true)
+    StoreDetailView(store: .init(
+      initialState: StoreDetailReducer.State(storeModel: dummy),
+      reducer: {
+        StoreDetailReducer()
+      }), backButtonTapped: { })
   }
 }
