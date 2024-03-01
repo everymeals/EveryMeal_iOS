@@ -58,6 +58,7 @@
 		08F847042B918E2100E9D275 /* StoreDetailSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F847032B918E2100E9D275 /* StoreDetailSegmentView.swift */; };
 		08F847062B918E4F00E9D275 /* StoreDetailLikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F847052B918E4F00E9D275 /* StoreDetailLikeButton.swift */; };
 		08F847082B918E6E00E9D275 /* StoreDetailShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F847072B918E6E00E9D275 /* StoreDetailShareButton.swift */; };
+		08F8470A2B919A2F00E9D275 /* StoreDetailReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F847092B919A2F00E9D275 /* StoreDetailReducer.swift */; };
 		0F1424242ADD3F3E00A79AA2 /* MoreReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1424232ADD3F3E00A79AA2 /* MoreReviewsView.swift */; };
 		0F19FBAE2AF2252900197815 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA52AF2252900197815 /* Pretendard-Bold.otf */; };
 		0F19FBAF2AF2252900197815 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA62AF2252900197815 /* Pretendard-Regular.otf */; };
@@ -193,6 +194,7 @@
 		08F847032B918E2100E9D275 /* StoreDetailSegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailSegmentView.swift; sourceTree = "<group>"; };
 		08F847052B918E4F00E9D275 /* StoreDetailLikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailLikeButton.swift; sourceTree = "<group>"; };
 		08F847072B918E6E00E9D275 /* StoreDetailShareButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailShareButton.swift; sourceTree = "<group>"; };
+		08F847092B919A2F00E9D275 /* StoreDetailReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailReducer.swift; sourceTree = "<group>"; };
 		0F1424232ADD3F3E00A79AA2 /* MoreReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreReviewsView.swift; sourceTree = "<group>"; };
 		0F19FB9D2AF21E7E00197815 /* OSLog.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OSLog.framework; path = System/Library/Frameworks/OSLog.framework; sourceTree = SDKROOT; };
 		0F19FBA52AF2252900197815 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
@@ -743,6 +745,7 @@
 				08F847032B918E2100E9D275 /* StoreDetailSegmentView.swift */,
 				08F847052B918E4F00E9D275 /* StoreDetailLikeButton.swift */,
 				08F847072B918E6E00E9D275 /* StoreDetailShareButton.swift */,
+				08F847092B919A2F00E9D275 /* StoreDetailReducer.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -989,6 +992,7 @@
 				08EC02992B67CC8C003CD556 /* EveryMealDefaultResponse.swift in Sources */,
 				664CC42C2AEA6274000EEBC5 /* MealHorizontalItemView.swift in Sources */,
 				6681C7A82AEA4E3400C3D2C1 /* MealEntity.swift in Sources */,
+				08F8470A2B919A2F00E9D275 /* StoreDetailReducer.swift in Sources */,
 				66A3FFA62B47F878002DC665 /* MapReducer.swift in Sources */,
 				0FCBABDD2B69199A007EB51C /* GetCampusStoreResponse.swift in Sources */,
 				081774B02B7FADF100C5C45E /* ProfileImageEntity.swift in Sources */,
