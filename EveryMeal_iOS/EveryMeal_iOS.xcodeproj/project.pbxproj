@@ -55,6 +55,9 @@
 		08EC02972B67C30F003CD556 /* EmailVertifyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC02962B67C30F003CD556 /* EmailVertifyAPI.swift */; };
 		08EC02992B67CC8C003CD556 /* EveryMealDefaultResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC02982B67CC8C003CD556 /* EveryMealDefaultResponse.swift */; };
 		08EC029B2B67CCCF003CD556 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EC029A2B67CCCF003CD556 /* Data+Extensions.swift */; };
+		08F847042B918E2100E9D275 /* StoreDetailSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F847032B918E2100E9D275 /* StoreDetailSegmentView.swift */; };
+		08F847062B918E4F00E9D275 /* StoreDetailLikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F847052B918E4F00E9D275 /* StoreDetailLikeButton.swift */; };
+		08F847082B918E6E00E9D275 /* StoreDetailShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F847072B918E6E00E9D275 /* StoreDetailShareButton.swift */; };
 		0F1424242ADD3F3E00A79AA2 /* MoreReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1424232ADD3F3E00A79AA2 /* MoreReviewsView.swift */; };
 		0F19FBAE2AF2252900197815 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA52AF2252900197815 /* Pretendard-Bold.otf */; };
 		0F19FBAF2AF2252900197815 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F19FBA62AF2252900197815 /* Pretendard-Regular.otf */; };
@@ -187,6 +190,9 @@
 		08EC02962B67C30F003CD556 /* EmailVertifyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVertifyAPI.swift; sourceTree = "<group>"; };
 		08EC02982B67CC8C003CD556 /* EveryMealDefaultResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveryMealDefaultResponse.swift; sourceTree = "<group>"; };
 		08EC029A2B67CCCF003CD556 /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
+		08F847032B918E2100E9D275 /* StoreDetailSegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailSegmentView.swift; sourceTree = "<group>"; };
+		08F847052B918E4F00E9D275 /* StoreDetailLikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailLikeButton.swift; sourceTree = "<group>"; };
+		08F847072B918E6E00E9D275 /* StoreDetailShareButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailShareButton.swift; sourceTree = "<group>"; };
 		0F1424232ADD3F3E00A79AA2 /* MoreReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreReviewsView.swift; sourceTree = "<group>"; };
 		0F19FB9D2AF21E7E00197815 /* OSLog.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OSLog.framework; path = System/Library/Frameworks/OSLog.framework; sourceTree = SDKROOT; };
 		0F19FBA52AF2252900197815 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
@@ -734,6 +740,9 @@
 			children = (
 				6681C79B2AEA44D400C3D2C1 /* MoreStoreView.swift */,
 				08BDCE0F2B8B74AD000B79EE /* StoreDetailView.swift */,
+				08F847032B918E2100E9D275 /* StoreDetailSegmentView.swift */,
+				08F847052B918E4F00E9D275 /* StoreDetailLikeButton.swift */,
+				08F847072B918E6E00E9D275 /* StoreDetailShareButton.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -910,6 +919,7 @@
 				087EB0CD2B67CF7C001B752E /* UserAPI.swift in Sources */,
 				0F1424242ADD3F3E00A79AA2 /* MoreReviewsView.swift in Sources */,
 				0F43F6832A6EA8AC00239AA4 /* HomeView.swift in Sources */,
+				08F847042B918E2100E9D275 /* StoreDetailSegmentView.swift in Sources */,
 				087EB0DA2B67D5E8001B752E /* UserService.swift in Sources */,
 				08EC028C2B67BF9C003CD556 /* EmailSendResponse.swift in Sources */,
 				665627D82B6BA37600B36F1A /* LoadingView.swift in Sources */,
@@ -918,6 +928,7 @@
 				0FE449602B57D4320054DED3 /* UnivsEntity.swift in Sources */,
 				08D6BA692AE7F97800C0B516 /* ReviewWriteImageTextView.swift in Sources */,
 				087A093C2A8153BD00F4D34F /* HomeTopThreeMealsView.swift in Sources */,
+				08F847082B918E6E00E9D275 /* StoreDetailShareButton.swift in Sources */,
 				087EB0CF2B67CFFD001B752E /* SignupRequest.swift in Sources */,
 				0F660A912A84551C000074BD /* DeviceManager.swift in Sources */,
 				66935D882AF1F22000E80424 /* CustomAlertModifier.swift in Sources */,
@@ -925,6 +936,7 @@
 				0F8D3D052B200A440026FA5D /* CustomSheetView.swift in Sources */,
 				08BDCE0C2B8B48EF000B79EE /* String+Extension.swift in Sources */,
 				663BFBA22A81EACC00A540A2 /* ViewModifier.swift in Sources */,
+				08F847062B918E4F00E9D275 /* StoreDetailLikeButton.swift in Sources */,
 				66FF63812AD7DEB800A10986 /* Functions.swift in Sources */,
 				668FB86F2B45734C00F5F00F /* GlobalDefine.swift in Sources */,
 				0FCBABD82B6917D1007EB51C /* StoreAPI.swift in Sources */,

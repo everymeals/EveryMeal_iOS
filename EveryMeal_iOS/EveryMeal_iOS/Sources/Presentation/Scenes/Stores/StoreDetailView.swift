@@ -11,6 +11,7 @@ struct StoreDetailView: View {
   var storeModel: CampusStoreContent
   @State private var currentSegment: StoreDetailSegmentType = .정보
   @State private var segments = StoreDetailSegmentType.allCases
+  @State private var segmentTapped: StoreDetailSegmentType = .정보
   
   var body: some View {
     VStack {
@@ -64,12 +65,13 @@ struct StoreDetailView: View {
         Spacer()
       }
       .padding(.bottom, 20)
-
+      
       VStack(spacing: 0) {
-        SegmentedView(selected: $currentSegment)
-//          .frame(height: 48)
-          .padding(.horizontal, 20)
-
+        SegmentedView(selected: $currentSegment) { tappedSeg in
+          segmentTapped = tappedSeg
+        }
+        .padding(.horizontal, 20)
+        
         Rectangle()
           .frame(height: 1)
           .foregroundColor(Color.clear)
@@ -82,6 +84,7 @@ struct StoreDetailView: View {
                 VStack {
                   Text(segment.title)
                 }
+                .id(segment.rawValue)
                 .background(.red)
                 .frame(width: UIScreen.main.bounds.width)
                 /*
@@ -123,72 +126,24 @@ struct StoreDetailView: View {
               currentSegment = segments[Int(floor(centerX/screenWidth))]
             }
           }
+          .onChange(of: segmentTapped) { segment in
+            DispatchQueue.main.async {   // <--- workaround
+              withAnimation(Animation.easeInOut(duration: 1)) {
+                value.scrollTo(segment.rawValue, anchor: .center)
+              }
+            }
+          }
           .coordinateSpace(name: "scroll")
           .frame(width: UIScreen.main.bounds.width,
                  height: UIScreen.main.bounds.width,
                  alignment: .center)
         }
       }
-
-//      Spacer()
     }
   }
 }
 
-struct StoreDetailLikeButton: View {
-  @State var isPressed: Bool = false
-  
-  var likesCount: Int
-  var selectedColor: Color = .everyMealRed
-  
-  var body: some View {
-    HStack(spacing: 4) {
-      Spacer()
-      Image("icon-heart-mono")
-        .renderingMode(.template)
-        .foregroundColor(isPressed ? selectedColor : .grey4)
-        .frame(width: 24)
-      
-      Text(String(likesCount))
-        .font(.pretendard(size: 15, weight: .semibold))
-        .foregroundColor(isPressed ? selectedColor : .grey5)
-      Spacer()
-    }
-    .padding(.vertical, 12)
-    .background(.white)
-    .frame(height: 48)
-    .overlay(
-      RoundedRectangle(cornerRadius: 12)
-        .inset(by: 0.5)
-        .stroke(isPressed ? selectedColor : .grey3, lineWidth: 1)
-    )
-    .contentShape(Rectangle())
-  }
-}
-
-struct StoreDetailShareButton: View {
-  var body: some View {
-    HStack(spacing: 4) {
-      Spacer()
-      Image(.iconShareMono)
-        .renderingMode(.template)
-        .foregroundColor(.grey6)
-        .frame(width: 24)
-      
-      Text("공유하기")
-        .font(.pretendard(size: 15, weight: .semibold))
-        .foregroundColor(.grey6)
-      Spacer()
-    }
-    .padding(.vertical, 12)
-    .background(Color.grey1)
-    .frame(width: 111, height: 48)
-    .cornerRadius(12)
-    .contentShape(Rectangle())
-  }
-}
-
-enum StoreDetailSegmentType: CaseIterable {
+enum StoreDetailSegmentType: Int, CaseIterable {
   case 정보, 사진, 리뷰
   
   var title: String {
@@ -199,74 +154,6 @@ enum StoreDetailSegmentType: CaseIterable {
     }
   }
 }
-struct SegmentedView: View {
-  let segments: [StoreDetailSegmentType] = StoreDetailSegmentType.allCases
-  @Binding var selected: StoreDetailSegmentType
-  @Namespace var name
-  
-  var body: some View {
-    VStack {
-      HStack(spacing: 0) {
-        ForEach(segments, id: \.self) { segment in
-          VStack(spacing: 11) {
-            Text(segment.title)
-              .font(.pretendard(size: 16, weight: .medium))
-              .foregroundColor(selected == segment ? .grey9 : .grey5)
-              .padding(.top, 14)
-            ZStack {
-              Capsule()
-                .fill(Color.clear)
-                .frame(height: 2)
-              if selected == segment {
-                Capsule()
-                  .fill(Color.grey9)
-                  .frame(height: 2)
-                  .matchedGeometryEffect(id: "Tab", in: name)
-              }
-            }
-          }
-          .contentShape(Rectangle())
-          .onTapGesture {
-            print("seg1 \(segment) \(selected)")
-            selected = segment
-            print("seg2 \(segment) \(selected)")
-          }
-        }
-      }
-      
-      /*
-      LazyHStack(spacing: 0) {
-        ForEach(segments, id: \.self) { segment in
-          switch segment {
-          case .정보:
-            VStack {
-              Text(segment.rawValue)
-            }
-            .frame(width: UIScreen.main.bounds.width,
-                   height: UIScreen.main.bounds.width,
-                   alignment: .center)
-          case .사진:
-            VStack {
-              Text(segment.rawValue)
-            }
-            .frame(width: UIScreen.main.bounds.width,
-                   height: UIScreen.main.bounds.width,
-                   alignment: .center)
-          case .리뷰:
-            VStack {
-              Text(segment.rawValue)
-            }
-            .frame(width: UIScreen.main.bounds.width,
-                   height: UIScreen.main.bounds.width,
-                   alignment: .center)
-          }
-        }
-      }
-       */
-    }
-  }
-}
-
 
 struct StoreDetailView_Previews: PreviewProvider {
   static var previews: some View {
