@@ -157,6 +157,7 @@ struct ReviewUserProfileView: View {
 struct MultipleImagesView: View {
   @State private var currentPage: Int = 0
   var storeName: String?
+  var imageSize: CGSize?
   
   var urls: [String]
   let defaultImageURL = "https://media.tarkett-image.com/large/TH_25094221_25187221_001.jpg"
@@ -168,15 +169,15 @@ struct MultipleImagesView: View {
           ForEach(urls, id: \.self) { url in
             AsyncImage(url: URL(string: url)!) { image in
               image.resizable()
-                .scaledToFit()
-                .frame(width: UIScreen.main.bounds.width,
-                       height: UIScreen.main.bounds.width,
+                .aspectRatio(contentMode: .fill)
+                .frame(width: imageSize?.width ?? UIScreen.main.bounds.width,
+                       height: imageSize?.height ?? UIScreen.main.bounds.width,
                        alignment: .center)
             } placeholder: {
               Rectangle()
                 .foregroundColor(.gray)
-                .frame(width: UIScreen.main.bounds.width,
-                       height: UIScreen.main.bounds.width,
+                .frame(width: imageSize?.width ?? UIScreen.main.bounds.width,
+                       height: imageSize?.height ?? UIScreen.main.bounds.width,
                        alignment: .center)
             }
             
@@ -188,15 +189,15 @@ struct MultipleImagesView: View {
         })
         .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
           let offset = value.x == 0 ? 0 : -value.x
-          let screenWidth = UIScreen.main.bounds.width
+          let screenWidth = imageSize?.width ?? UIScreen.main.bounds.width
           let centerX = offset + (screenWidth / 2)
           currentPage = Int(floor(centerX/screenWidth) + 1)
         }
         
       }
       .coordinateSpace(name: "scroll")
-      .frame(width: UIScreen.main.bounds.width,
-             height: UIScreen.main.bounds.width,
+      .frame(width: imageSize?.width ?? UIScreen.main.bounds.width,
+             height: imageSize?.height ?? UIScreen.main.bounds.width,
              alignment: .center)
       
       VStack {
