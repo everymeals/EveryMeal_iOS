@@ -79,6 +79,7 @@ struct MealVerticalItemView: View {
         }
       }
     }
+    .background(Color.black.opacity(0.001))
   }
 }
 

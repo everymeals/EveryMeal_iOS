@@ -23,13 +23,15 @@ struct MoreReviewsView: View {
   @State private var selectedSortOption: SortOption? = .registDate
   
   /// 전체, 밥집, 카페, 술집 - 초기값: '전체'
-  @State var selectedFilterCategoryOption: FilterCategoryOption = .all
+  @State var selectedFilterCategoryOption: FilterCategoryOption? = .all
   
   /// 별점 (grade) - 초기값: 미선택
   @State var selectedFilterGradeOption: CampusStoreGradeType? = nil
   
-  /// '적용하기' 버튼 눌렀을때 상태 변경하기 위해 기억하고 있을 상태
-  @State private var tempSelectedFilterCategoryOption: FilterCategoryOption = .all
+  // '적용하기' 버튼 눌렀을때 상태 변경하기 위해 기억하고 있을 상태
+  @State private var tempSelectedFilterCategoryOption: FilterCategoryOption? = .all
+  /// 카테고리 '밥집'을 선택한 경우 보여지는 밥집 상세 옵션
+  @State private var tempSelectedFilterRestaurantDetailOption: RestaurantDetailType? = .restaurant
   @State private var tempSelectedFilterGradeOption: CampusStoreGradeType? = nil
   
   let columns = [ GridItem(.flexible()) ]
@@ -58,8 +60,20 @@ struct MoreReviewsView: View {
     FilterBarView(
       viewType: .reviews,
       selectedSortOption: $selectedSortOption,
+      selectedFilterCategoryOption: $selectedFilterCategoryOption,
+      selectedFilterGradeOption: $selectedFilterGradeOption,
       sortCompletionHandler: { isSortOpened.toggle() },
-      filterCompletionHandler: { isFilterOpened.toggle() }
+      filterCompletionHandler: { isFilterOpened.toggle() },
+      categoryCompletionHandler: { isFilterOpened.toggle() },
+      gradeCompletionHandler: { isFilterOpened.toggle() },
+      categoryCloaseButtonCompletionHandler: {
+        selectedFilterCategoryOption = .all
+        tempSelectedFilterCategoryOption = .all
+      },
+      gradeCloaseButtonCompletionHandler: {
+        selectedFilterGradeOption = nil
+        tempSelectedFilterGradeOption = nil
+      }
     )
     .sheet(isPresented: $isSortOpened) {
       VStack {
@@ -84,7 +98,10 @@ struct MoreReviewsView: View {
           .cornerRadius(30)
           .padding(.bottom, 20)
         
-        FilterCategoryOptionView(selectedCategory: $tempSelectedFilterCategoryOption)
+        FilterCategoryOptionView(
+          selectedCategory: $tempSelectedFilterCategoryOption,
+          selectedRestaurantDetail: $tempSelectedFilterRestaurantDetailOption
+        )
         
         FilterGradeOptionView(selectedGrade: $tempSelectedFilterGradeOption)
           .padding(.bottom, 20)
@@ -200,7 +217,7 @@ struct MoreReviewsView: View {
       offset: "\(nextPage)",
       limit: "7",
       order: selectedSortOption?.toOrderTypeForReviews ?? .registDate,
-      group: selectedFilterCategoryOption.toCategoryType,
+      group: selectedFilterCategoryOption?.toCategoryType,
       grade: selectedFilterGradeOption,
       campusIdx: UserDefaultsManager.getInt(.univIdx) == 0 ? "1" : "\(UserDefaultsManager.getInt(.univIdx))"
     )
@@ -227,7 +244,7 @@ struct MoreReviewsView: View {
       offset: "\(currentPage)",
       limit: "7",
       order: selectedSortOption?.toOrderTypeForReviews ?? .registDate,
-      group: selectedFilterCategoryOption.toCategoryType,
+      group: selectedFilterCategoryOption?.toCategoryType,
       grade: selectedFilterGradeOption,
       campusIdx: UserDefaultsManager.getInt(.univIdx) == 0 ? "1" : "\(UserDefaultsManager.getInt(.univIdx))"
     )

@@ -49,6 +49,7 @@ struct MealGridView: View {
           .onTapGesture {
             // TODO: 여기에 탭 제스처 처리 로직 추가
             didMealTapped(storeModel)
+            print("\(storeModels[index].name) 선택됨")
           }
           .padding(.vertical, 12)
         

@@ -27,6 +27,7 @@ struct MealHGridView: View {
             }
         }
       }
+      .frame(height: 209)
     }
   }
 }
