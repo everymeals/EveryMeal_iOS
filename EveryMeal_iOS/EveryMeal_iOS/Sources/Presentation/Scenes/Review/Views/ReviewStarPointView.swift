@@ -119,14 +119,14 @@ struct SpeachBubbleView: View {
   }
 }
 
-struct ReviewStarPointView_Previews: PreviewProvider {
-  static var previews: some View {
-    ReviewStarPointView(
-      storeModel: Constants.dummyStore,
-      nextButtonTapped: { _ in
-        print("go next")
-      }, backButtonTapped: {
-        print("go back")
-      })
-  }
-}
+//struct ReviewStarPointView_Previews: PreviewProvider {
+//  static var previews: some View {
+//    ReviewStarPointView(
+//      storeModel: Constants.dummyStore,
+//      nextButtonTapped: { _ in
+//        print("go next")
+//      }, backButtonTapped: {
+//        print("go back")
+//      })
+//  }
+//}

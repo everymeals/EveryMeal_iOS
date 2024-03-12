@@ -30,8 +30,6 @@
 		08900BFC2AF27D7E00392BAE /* EmailAuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08900BFB2AF27D7E00392BAE /* EmailAuthenticationView.swift */; };
 		089359812B78AC2A00C1FDAC /* DevModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089359802B78AC2A00C1FDAC /* DevModeView.swift */; };
 		08A877D22ACD97EE007AEDA1 /* EverymealAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A877D12ACD97ED007AEDA1 /* EverymealAlertView.swift */; };
-		08BDCDFB2B81FCEB000B79EE /* ReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BDCDFA2B81FCEB000B79EE /* ReviewService.swift */; };
-		08BDCDFD2B81FCF4000B79EE /* ReviewAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BDCDFC2B81FCF4000B79EE /* ReviewAPI.swift */; };
 		08BDCDFF2B81FDF8000B79EE /* GetCampusStoreKeywordRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BDCDFE2B81FDF8000B79EE /* GetCampusStoreKeywordRequest.swift */; };
 		08BDCE022B82298B000B79EE /* ReviewWriteImageTextViewReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BDCE012B82298B000B79EE /* ReviewWriteImageTextViewReducer.swift */; };
 		08BDCE042B822998000B79EE /* ReviewWriteImageTextViewClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BDCE032B822998000B79EE /* ReviewWriteImageTextViewClient.swift */; };
@@ -209,12 +207,12 @@
 		08EC02962B67C30F003CD556 /* EmailVertifyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVertifyAPI.swift; sourceTree = "<group>"; };
 		08EC02982B67CC8C003CD556 /* EveryMealDefaultResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveryMealDefaultResponse.swift; sourceTree = "<group>"; };
 		08EC029A2B67CCCF003CD556 /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
-		0F0D42EF2B7A337100B4BFF3 /* UnivMealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivMealView.swift; sourceTree = "<group>"; };
-		0F0D42F32B7A582700B4BFF3 /* DietCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietCell.swift; sourceTree = "<group>"; };
 		08F847032B918E2100E9D275 /* StoreDetailSegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailSegmentView.swift; sourceTree = "<group>"; };
 		08F847052B918E4F00E9D275 /* StoreDetailLikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailLikeButton.swift; sourceTree = "<group>"; };
 		08F847072B918E6E00E9D275 /* StoreDetailShareButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailShareButton.swift; sourceTree = "<group>"; };
 		08F847092B919A2F00E9D275 /* StoreDetailReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailReducer.swift; sourceTree = "<group>"; };
+		0F0D42EF2B7A337100B4BFF3 /* UnivMealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivMealView.swift; sourceTree = "<group>"; };
+		0F0D42F32B7A582700B4BFF3 /* DietCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietCell.swift; sourceTree = "<group>"; };
 		0F1424232ADD3F3E00A79AA2 /* MoreReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreReviewsView.swift; sourceTree = "<group>"; };
 		0F19FB9D2AF21E7E00197815 /* OSLog.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OSLog.framework; path = System/Library/Frameworks/OSLog.framework; sourceTree = SDKROOT; };
 		0F19FBA52AF2252900197815 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
@@ -409,6 +407,8 @@
 			isa = PBXGroup;
 			children = (
 				085C7F072B4AA2BA0020DC51 /* URLConstant.swift */,
+				08BDCDFA2B81FCEB000B79EE /* ReviewService.swift */,
+				08BDCDFC2B81FCF4000B79EE /* ReviewAPI.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1059,12 +1059,10 @@
 				662C68FF2B3BECCE00B47C87 /* SelectProfileImagePopupView.swift in Sources */,
 				08BDCE0A2B8B3A1E000B79EE /* GetStoreReviewResponse.swift in Sources */,
 				081196B62AE36B100022B41A /* UIApplication+Extensions.swift in Sources */,
-				08BDCDFB2B81FCEB000B79EE /* ReviewService.swift in Sources */,
 				087EB0D82B67D387001B752E /* ImageResponse.swift in Sources */,
 				66BEA02D2B0C8BFD00F3125B /* EveryMealToast.swift in Sources */,
 				0F6EC7A02B7C5D8500D5AE5B /* MealAPI.swift in Sources */,
 				089359812B78AC2A00C1FDAC /* DevModeView.swift in Sources */,
-				0F0D42F22B7A367100B4BFF3 /* Date+Extensions.swift in Sources */,
 				08EC028D2B67BF9C003CD556 /* EmailSendRequest.swift in Sources */,
 				0F589A2C2B76391A00C52F7B /* SortOptionView.swift in Sources */,
 				0F95A0932B0F1CF2000317D8 /* SignOutDetailView.swift in Sources */,
@@ -1119,7 +1117,6 @@
 				08277B4C2B7A2C20004CF1D7 /* DefaultImageResponse.swift in Sources */,
 				08BDCE082B8B360E000B79EE /* GetStoreReviewRequest.swift in Sources */,
 				665627DC2B6C7ADE00B36F1A /* LoginResponse.swift in Sources */,
-				08BDCDFD2B81FCF4000B79EE /* ReviewAPI.swift in Sources */,
 				66935D8A2AF1F22000E80424 /* CustomAlert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
