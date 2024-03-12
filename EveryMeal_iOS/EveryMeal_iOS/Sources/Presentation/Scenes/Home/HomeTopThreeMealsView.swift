@@ -34,20 +34,24 @@ struct MealGridView: View {
   @State var didMealTapped: (CampusStoreContent) -> Void
   
   var body: some View {
-    if let campusStores = campusStores {
-      LazyVGrid(columns: [GridItem(.flexible())], spacing: 0) {
-        ForEach(Array(campusStores.enumerated()), id: \.element) { index, storeModel in
-          MealVerticalItemView(storeModel: storeModel)
-            .contentShape(Rectangle())
-            .onTapGesture {
-              didMealTapped(storeModel)
-            }
-            .padding(.vertical, 12)
-          
-          if index < campusStores.count - 1 {
-            Rectangle()
-              .frame(height: 1)
-              .foregroundColor(.grey2)
+    let storeModels = campusStores?.map { storeContent -> StoreEntity in
+      StoreEntity(
+        name: storeContent.name ?? "",
+        categoryDetail: storeContent.categoryDetail ?? "",
+        grade: storeContent.grade ?? 0.0,
+        reviewCount: storeContent.reviewCount ?? 0,
+        recommendedCount: storeContent.recommendedCount ?? 0,
+        images: storeContent.images,
+        isLiked: storeContent.isLiked ?? false
+      )
+    } ?? []
+    
+    LazyVGrid(columns: [GridItem(.flexible())], spacing: 0) {
+      ForEach(Array(storeModels.enumerated()), id: \.element) { index, storeModel in
+        MealVerticalItemView(storeModel: storeModel)
+          .onTapGesture {
+            // TODO: 여기에 탭 제스처 처리 로직 추가
+            didMealTapped(storeModel)
           }
         }
       }.padding(.horizontal, 20)

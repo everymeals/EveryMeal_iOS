@@ -86,13 +86,13 @@ struct MyPageView: View {
       }
       .navigationDestination(for: MyPageNavigationViewType.self) { view in
         switch view {
-        case .certify: SignOutView(path: $navigationPath)
-        case .favorites: SignOutView(path: $navigationPath)
-        case .reviews: SignOutView(path: $navigationPath)
-        case .photos: SignOutView(path: $navigationPath)
-        case .inquiry: SignOutView(path: $navigationPath)
-        case .terms: SignOutView(path: $navigationPath)
-        case .license: SignOutView(path: $navigationPath)
+        case .certify: FavoritesListView()
+        case .favorites: FavoritesListView()
+        case .reviews: FavoritesListView()
+        case .photos: FavoritesListView()
+        case .inquiry: FavoritesListView()
+        case .terms: FavoritesListView()
+        case .license: FavoritesListView()
         case .withdrawal: SignOutView(path: $navigationPath)
         case .withdrawalReason: SignOutDetailView(path: $navigationPath)
         case .devMode:

@@ -23,16 +23,14 @@ struct MainTabBarView: View {
           Text("맛집")
         }
         .tag(0)
-      MapView(store: .init(initialState: MapViewReducer.State(), reducer: {
-        MapViewReducer()
-      }))
+      UnivMealView()
         .tabItem {
           Image("icon-folk-knife-mono")
             .renderingMode(.template)
           Text("학식")
         }
         .tag(1)
-      Text("뭐먹지")
+      FoodMapView()
         .tabItem {
           Image("icon-chat-bubble-question-mono")
             .renderingMode(.template)
@@ -115,7 +113,6 @@ extension UITabBarController {
       tabBar.shadowImage = UIImage()
       Constants.tabBarHeight = tabBar.frame.height
       
-      let tabBarCornerRadius = tabBar.layer.cornerRadius
       var tabBarFrame = tabBar.frame
       tabBarFrame.origin.y += 1
 
