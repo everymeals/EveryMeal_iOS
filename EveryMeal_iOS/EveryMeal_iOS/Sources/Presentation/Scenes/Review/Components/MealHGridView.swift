@@ -27,19 +27,31 @@ struct MealHGridView: View {
             }
         }
       }
+      .frame(height: 209)
     }
   }
 }
 
 struct MealHGridView_Previews: PreviewProvider {
   static var previews: some View {
-    let dummy = StoreEntity(name: "동경산책 성신여대점", categoryDetail: "일식", grade: 4.0, reviewCount: 123, recommendedCount: 3, images: ["fdsfads", "fdsafdas"], isLiked: false, description: "dummy")
-    
     MealHGridView(
       didMealTapped: { model in
         print("tapped \(model.name)")
       },
-      storeModels: [dummy, dummy, dummy, dummy, dummy])
+      storeModels: [
+        Constants.dummyStore,
+        Constants.dummyStore,
+        StoreEntity(
+          name: "동경산책 성신여대점",
+          categoryDetail: "일식",
+          grade: 4.0,
+          reviewCount: 23,
+          recommendedCount: 3,
+          images: nil,
+          isLiked: false,
+          description: "dummy"
+        )
+      ])
     Spacer()
   }
 }

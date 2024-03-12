@@ -36,13 +36,19 @@ struct MealGridView: View {
   var body: some View {
     let storeModels = campusStores
     LazyVGrid(columns: [GridItem(.flexible())], spacing: 0) {
-      if let storeModels = storeModels {
-        ForEach(Array(storeModels.enumerated()), id: \.element) { index, storeModel in
-          MealVerticalItemView(storeModel: storeModel)
-            .onTapGesture {
-              // TODO: 여기에 탭 제스처 처리 로직 추가
-              didMealTapped(storeModel)
-            }
+      ForEach(Array(storeModels.enumerated()), id: \.element) { index, storeModel in
+        MealVerticalItemView(storeModel: storeModel)
+          .onTapGesture {
+            // TODO: 여기에 탭 제스처 처리 로직 추가
+            didMealTapped(storeModel)
+            print("\(storeModels[index].name) 선택됨")
+          }
+          .padding(.vertical, 12)
+        
+        if index < storeModels.count - 1 {
+          Rectangle()
+            .frame(height: 1)
+            .foregroundColor(.grey2)
         }
       }
     }.padding(.horizontal, 20)
@@ -65,7 +71,7 @@ struct MoreRestuarantButton: View {
         )
         .contentShape(Rectangle())
     }
-    .padding(.bottom, 30)
+    .padding(.bottom, 22)
     .padding(.horizontal, 20)
   }
 }

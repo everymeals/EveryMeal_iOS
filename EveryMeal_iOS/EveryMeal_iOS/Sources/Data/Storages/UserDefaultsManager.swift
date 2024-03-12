@@ -15,6 +15,7 @@ struct UserDefaultsManager {
     case refreshToken
     case univIdx
     case recentSearchStores // 맛집 리뷰 작성 > 가게 검색에 사용한 키워드
+    case restaurantIdx
   }
   
   /// UserDefault에서 키값으로 저장하기

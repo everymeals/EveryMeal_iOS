@@ -27,10 +27,11 @@ struct HomeView: View {
   private let moreReviewBtnBottomMargin: CGFloat = 13
   
   @State var campusStores: [CampusStoreContent]?
+  @State var reviews: [GetStoreReviewsContent]?
   
   var body: some View {
     NavigationStack(path: $navigationPath) {
-      VStack {
+      VStack(spacing: 0) {
         HomeHeaderView()
         ScrollView(showsIndicators: true) {
           GoToReviewBannerView()
@@ -87,7 +88,7 @@ struct HomeView: View {
               self.navigationPath.append(.moreStoreView(.best))
             }
           Separator()
-          HomeReviewsView()
+          HomeReviewsView(reviews: $reviews)
           MoreReviewButton()
             .padding(.horizontal, 20)
             .padding(.bottom, Constants.tabBarHeight + viewBottomargin - moreReviewBtnBottomMargin)
@@ -101,9 +102,10 @@ struct HomeView: View {
             MoreReviewsView()
               .toolbar(.hidden, for: .tabBar)
           case let .moreStoreView(viewType):
-            MoreStoreView(backButtonTapped: {
-              navigationPath.removeLast()
-            }, moreViewType: viewType)
+            MoreStoreView(
+              backButtonTapped: { navigationPath.removeLast() },
+              moreViewType: viewType
+            )
             .toolbar(.hidden, for: .tabBar)
           case let .emailVertify(type, model):
             EmailAuthenticationView(
@@ -139,13 +141,8 @@ struct HomeView: View {
         }
       }
       .onAppear {
-        let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? 1 : UserDefaultsManager.getInt(.univIdx)
-        let model = GetCampusStoresRequest(offset: "0", limit: "3", order: .registDate, group: .all, grade: nil)
-        Task {
-          if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
-            campusStores = result.content
-          }
-        }
+        fetchCampusStores()
+        fetchReviews()
       }
       .onChange(of: navigationPath) { value in
         otherViewShowing = value.count != 0
@@ -155,6 +152,27 @@ struct HomeView: View {
       .navigationBarHidden(true)
     }
   }
+  
+  private func fetchCampusStores() {
+    let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? 1 : UserDefaultsManager.getInt(.univIdx)
+    let model = GetCampusStoresRequest(offset: "0", limit: "3", order: .registDate, group: .all, grade: nil)
+    Task {
+      if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
+        self.campusStores = result.content
+      }
+    }
+  }
+  
+  private func fetchReviews() {
+    let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? "1" : "\(UserDefaultsManager.getInt(.univIdx))"
+    let model = GetStoreReviewsRequest(offset: "0", limit: "3", order: .name, group: .all, campusIdx: univIdx)
+    Task {
+      if let result = try await StoreService().getStoresReviews(requestModel: model) {
+        self.reviews = result.content
+      }
+    }
+  }
+  
 }
 
 struct HomeView_Previews: PreviewProvider {
@@ -165,12 +183,12 @@ struct HomeView_Previews: PreviewProvider {
 }
 
 extension UINavigationController: UIGestureRecognizerDelegate {
-    open override func viewDidLoad() {
-        super.viewDidLoad()
-        interactivePopGestureRecognizer?.delegate = self
-    }
-    
-    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        return viewControllers.count > 1
-    }
+  open override func viewDidLoad() {
+    super.viewDidLoad()
+    interactivePopGestureRecognizer?.delegate = self
+  }
+  
+  public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    return viewControllers.count > 1
+  }
 }

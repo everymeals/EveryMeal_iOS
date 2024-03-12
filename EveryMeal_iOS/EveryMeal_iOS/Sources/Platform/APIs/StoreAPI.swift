@@ -9,7 +9,8 @@ import Foundation
 import Moya
 
 enum StoreAPI {
-  case getCampusStores(Int, GetCampusStoresRequest)  // 학교 주변 식당 조회
+  case getCampusStores(Int, GetCampusStoresRequest)  // 학교 주변 식당 리스트 조회
+  case getCampusStoresReviews(GetStoreReviewsRequest)  // 캠퍼스 주변 맛집 리뷰 조회
   case getCampusStoresWithKeyword(GetCampusStoreKeywordRequest) // 학교 주변 식당 키워드로 조회
 }
 
@@ -19,6 +20,9 @@ extension StoreAPI: TargetType {
     switch self {
     case let .getCampusStores(univIndex, _):
       return "/api/v1/stores/campus/\(univIndex)"
+      
+    case .getCampusStoresReviews:
+      return "/api/v1/stores/reviews"
     case let .getCampusStoresWithKeyword(request):
       return "/api/v1/stores/\(request.campusIdx)/\(request.keyword)"
     }
@@ -26,15 +30,15 @@ extension StoreAPI: TargetType {
   
   var method: Moya.Method {
     switch self {
-    case .getCampusStores, .getCampusStoresWithKeyword:
+    case .getCampusStores, .getCampusStoresReviews, .getCampusStoresWithKeyword:
       return .get
     }
   }
   
   var task: Moya.Task {
+    var body = self.defaultBody
     switch self {
     case let .getCampusStores(_, model):
-      var body = self.defaultBody
       body["offset"] = model.offset ?? ""
       body["limit"] = model.limit ?? ""
       body["order"] = model.order.rawValue
@@ -42,6 +46,17 @@ extension StoreAPI: TargetType {
       body["grade"] = model.grade?.rawValue ?? ""
       
       return .requestParameters(parameters: body, encoding: URLEncoding.queryString)
+      
+    case let .getCampusStoresReviews(model):
+      body["offset"] = model.offset ?? "0"
+      body["limit"] = model.limit ?? "3"
+      body["order"] = model.order.rawValue
+      body["group"] = model.group?.rawValue ?? CampusStoreGroupType.all
+      body["grade"] = model.grade?.rawValue ?? ""
+      body["campusIdx"] = model.campusIdx ?? "1"
+      
+      return .requestParameters(parameters: body, encoding: URLEncoding.queryString)
+
       
     case let .getCampusStoresWithKeyword(model):
       var body = self.defaultBody

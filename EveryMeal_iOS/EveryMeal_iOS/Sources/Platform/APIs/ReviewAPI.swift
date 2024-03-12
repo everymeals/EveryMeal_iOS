@@ -2,65 +2,59 @@
 //  ReviewAPI.swift
 //  EveryMeal_iOS
 //
-//  Created by 김하늘 on 2/18/24.
+//  Created by 김광록 on 2/14/24.
 //
 
 import Foundation
 import Moya
 
+/// `ReviewAPI` 열거형은 리뷰 관련 API 엔드포인트를 정의합니다.
+///
+/// - `getUnivStoreReviews`: 학식 가게 리뷰를 페이지별로 조회하는 엔드포인트입니다.
 enum ReviewAPI {
-  case writeStoreReview(WriteStoreReviewRequest)
-  case getStoreReview(GetStoreReviewRequest)
+  /// 학식 리뷰 페이징 조회
+  case getUnivStoreReviews(GetUnivStoreReviewsRequest)
 }
 
 extension ReviewAPI: TargetType {
-  var baseURL: URL {
-    return URL(string: "http://dev.everymeal.shop:8085")!
-  }
-  
   var path: String {
     switch self {
-    case .writeStoreReview:
-      return "/api/v1/reviews/store"
-    case let .getStoreReview(model):
-      return "/api/v1/stores/\(model.index)/reviews"
+    case .getUnivStoreReviews:
+      return "/api/v1/reviews"
     }
   }
   
   var method: Moya.Method {
     switch self {
-    case .writeStoreReview:
-      return .post
-    case .getStoreReview:
+    case .getUnivStoreReviews:
       return .get
     }
   }
   
   var task: Moya.Task {
-    var body: [String: Any] = [:]
     switch self {
-    case let .writeStoreReview(model):
-      body["storeIdx"] = model.storeIdx
-      body["grade"] = model.grade
-      body["content"] = model.content
-      body["imageList"] = model.imageList
-      return .requestParameters(parameters: body, encoding: JSONEncoding.default)
-    case let .getStoreReview(model):
-      if let limit = model.limit {
-        body["limit"] = limit
+    case let .getUnivStoreReviews(model):
+      var body = defaultBody
+      body["cursorIdx"] = model.cursorIdx
+      body["restaurantIdx"] = model.restaurantIdx
+      body["pageSize"] = model.pageSize
+      if let order = model.order, let filter = model.filter {
+        body["order"] = order
+        body["filter"] = filter
       }
-      if let offset = model.offset {
-        body["offset"] = offset
-      }
-      return .requestParameters(parameters: body, encoding: URLEncoding.default)
+      return .requestParameters(parameters: body, encoding: URLEncoding.queryString)
     }
   }
   
-  var headers: [String : String]? {
-    switch self {
-    case .writeStoreReview, .getStoreReview:
-      return ["Content-type": "application/json",
-              "Authorization": "Bearer \(String(describing: UserDefaultsManager.getString(.accessToken)))"]
+  var headers: [String: String]? {
+    if UserDefaultsManager.getString(.accessToken) == "" {
+      return ["Content-type": "application/json"]
+    } else {
+      return [
+        "Content-type": "application/json",
+        "Authorization": "Bearer \(String(describing: UserDefaultsManager.getString(.accessToken)))"
+      ]
     }
   }
+  
 }

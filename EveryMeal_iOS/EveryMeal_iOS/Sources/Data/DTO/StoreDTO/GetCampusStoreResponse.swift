@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// 대학 주변 맛집 리스트 조회 API 응답 모델
 struct GetCampusStoreResponse: Decodable {
   let localDateTime: String?
   let message: String?

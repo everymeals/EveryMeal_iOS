@@ -23,6 +23,14 @@ enum SortOption: String, CaseIterable {
     case .registDate: return .registDate
     }
   }
+  
+  var toOrderTypeForReviews: GetStoreReviewsOrderType {
+    switch self {
+    case .popularity: return .recommendedCount
+    case .distance: return .distance
+    case .registDate: return .registDate
+    }
+  }
 
 }
 

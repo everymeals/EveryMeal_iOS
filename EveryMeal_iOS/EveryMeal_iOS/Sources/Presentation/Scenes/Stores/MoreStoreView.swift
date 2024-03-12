@@ -19,21 +19,27 @@ struct MoreStoreView: View {
   var backButtonTapped: () -> Void
   var moreViewType: MoreStoreViewType
   @State var campusStores: [CampusStoreContent]? = []
+  
   @State private var currentPage = 0
   @State private var isLoading = false
   @State private var isLastPage = false
   
   /// 최신순, 인기순, 거리순
-  @State private var selectedSortOption: SortOption? = .registDate
+  @State var selectedSortOption: SortOption? = .registDate
   
   /// 전체, 밥집, 카페, 술집 - 초기값: '전체'
-  @State var selectedFilterCategoryOption: FilterCategoryOption = .all
+  @State var selectedFilterCategoryOption: FilterCategoryOption? = .all
+  
+  /// 밥집 선택한 경우 보여지는 밥집 상세 옵션
+  @State var selectedFilterRestaurantDetailOption: RestaurantDetailType? = .restaurant
   
   /// 별점 (grade) - 초기값: 미선택
   @State var selectedFilterGradeOption: CampusStoreGradeType? = nil
   
-  /// '적용하기' 버튼 눌렀을때 상태 변경하기 위해 기억하고 있을 상태
-  @State private var tempSelectedFilterCategoryOption: FilterCategoryOption = .all
+  // '적용하기' 버튼 눌렀을때 상태 변경하기 위해 기억하고 있을 상태
+  @State private var tempSelectedFilterCategoryOption: FilterCategoryOption? = .all
+  /// 카테고리 '밥집'을 선택한 경우 보여지는 밥집 상세 옵션
+  @State private var tempSelectedFilterRestaurantDetailOption: RestaurantDetailType? = .restaurant
   @State private var tempSelectedFilterGradeOption: CampusStoreGradeType? = nil
   
   @State var isSortOpened = false
@@ -43,20 +49,50 @@ struct MoreStoreView: View {
     NavigationView {
       VStack {
         navigationBar
-        filterBar
+        if moreViewType == .best {
+          filterBar
+        }
         
         if (campusStores ?? []).isEmpty {
-          noDataView
+          VStack(spacing: 0) {
+            if moreViewType != .best {
+              filterBar
+            }
+            noDataView
+          }
         } else {
-          storesList
+          VStack(spacing: 0) {
+            if moreViewType != .best {
+              // recommendList  // 1차 개발에서 제외
+              filterBar
+            }
+            storesList
+          }
         }
       }
     }
     .navigationBarHidden(true)
-    .onAppear(perform: loadInitialContent)
-    .onChange(of: selectedSortOption) { _ in loadNewContent() }
-    .onChange(of: selectedFilterCategoryOption) { _ in loadNewContent() }
-    .onChange(of: selectedFilterGradeOption) { _ in loadNewContent() }
+    .onAppear {
+      initialSettings()
+      loadInitialContent()
+      print("aa loadInitialContent")   // FIXME: API 여러번 요청되는거 고칠 것
+    }
+    .onChange(of: selectedSortOption) { _ in
+      print("aa 정렬 변경 - \(selectedSortOption?.title)")
+      loadNewContent()
+    }
+    .onChange(of: selectedFilterCategoryOption) { _ in
+      print("aa 필터의 카테고리 변경 - \(selectedFilterCategoryOption?.title)")
+      loadNewContent()
+    }
+    .onChange(of: selectedFilterRestaurantDetailOption) { _ in
+      print("aa 밥집 선택한 경우 디테일 옵션 변경 - \(selectedFilterRestaurantDetailOption?.title)")
+      loadNewContent()
+    }
+    .onChange(of: selectedFilterGradeOption) { _ in
+      print("aa 별점 변경 - \(selectedFilterGradeOption?.rawValue)")
+      loadNewContent()
+    }
   }
   
   private var navigationBar: some View {
@@ -69,10 +105,23 @@ struct MoreStoreView: View {
   
   private var filterBar: some View {
     FilterBarView(
+      moreViewType: moreViewType,
       viewType: .stores,
       selectedSortOption: $selectedSortOption,
+      selectedFilterCategoryOption: $selectedFilterCategoryOption,
+      selectedFilterGradeOption: $selectedFilterGradeOption,
       sortCompletionHandler: { isSortOpened.toggle() },
-      filterCompletionHandler: { isFilterOpened.toggle() }
+      filterCompletionHandler: { isFilterOpened.toggle() },
+      categoryCompletionHandler: { isFilterOpened.toggle() },
+      gradeCompletionHandler: { isFilterOpened.toggle() },
+      categoryCloaseButtonCompletionHandler: {
+        selectedFilterCategoryOption = .all
+        tempSelectedFilterCategoryOption = .all
+      },
+      gradeCloaseButtonCompletionHandler: {
+        selectedFilterGradeOption = nil
+        tempSelectedFilterGradeOption = nil
+      }
     )
     .sheet(isPresented: $isSortOpened) {
       VStack {
@@ -91,15 +140,36 @@ struct MoreStoreView: View {
       .presentationDetents([.height(210)])
     }
     .sheet(isPresented: $isFilterOpened, onDismiss: resetTempFilters) {
+      var height: CGFloat {
+        if moreViewType == .meal {
+          return 307
+        } else if moreViewType == .cafe || moreViewType == .alcohol {
+          return 190
+        } else {
+          if tempSelectedFilterCategoryOption == .restaurant {
+            return 401
+          } else {
+            return 349
+          }
+        }
+      }
+      
       VStack(spacing: 0) {
         Color.gray.opacity(0.3)
           .frame(width: 73, height: 6)
           .cornerRadius(30)
           .padding(.bottom, 20)
         
-        FilterCategoryOptionView(selectedCategory: $tempSelectedFilterCategoryOption)
+        FilterCategoryOptionView(
+          moreViewType: moreViewType,
+          selectedCategory: $tempSelectedFilterCategoryOption,
+          selectedRestaurantDetail: $tempSelectedFilterRestaurantDetailOption
+        )
         
-        FilterGradeOptionView(selectedGrade: $tempSelectedFilterGradeOption)
+        FilterGradeOptionView(
+          moreViewType: moreViewType,
+          selectedGrade: $tempSelectedFilterGradeOption
+        )
           .padding(.bottom, 20)
         
         HStack {
@@ -112,13 +182,12 @@ struct MoreStoreView: View {
             .cornerRadius(12)
         }
         .onTapGesture {
-          print("적용하기 버튼 클릭 - 선택한 카테고리: \(tempSelectedFilterCategoryOption.title), 선택한 별점: \(tempSelectedFilterGradeOption?.rawValue ?? "777")")
           applyFilters()
           isFilterOpened = false
         }
       }
       .padding(.horizontal, 20)
-      .presentationDetents([.height(350)])
+      .presentationDetents([.height(height)])
     }
   }
   
@@ -139,30 +208,31 @@ struct MoreStoreView: View {
     }
   }
   
+  private var recommendList: some View {
+    VStack(spacing: 0) {
+      HStack {
+        Text(moreViewType == .recommend ? "추천 맛집" : "추천 " + moreViewType.rawValue)
+          .font(.pretendard(size: 18, weight: .bold))
+          .foregroundColor(.black)
+        Spacer()
+      }
+      .padding(.leading, 20)
+      .padding(.top, 16)
+      .padding(.bottom, 15)
+      
+      MealHGridView(didMealTapped: { mealModel in
+        print("가게 상세로 이동")
+      })
+      .padding(.horizontal, 18)
+      
+      Separator()
+        .padding(.bottom, 10)
+    }
+  }
+  
   private var storesList: some View {
     ScrollView {
       VStack(spacing: 0) {
-        if moreViewType != .best {
-          VStack(spacing: 0) {
-            HStack {
-              Text(moreViewType == .recommend ? "추천 맛집" : "추천 " + moreViewType.rawValue)
-                .font(.system(size: 18, weight: .bold))
-                .foregroundColor(.black)
-              Spacer()
-            }
-            .padding(.leading, 20)
-            .padding(.top, 16)
-            .padding(.bottom, 15)
-            
-            MealHGridView(didMealTapped: { mealModel in
-              print("가게 상세로 이동")
-            })
-            .padding(.horizontal, 20)
-            
-            Separator()
-          }
-        }
-        
         MealGridView(campusStores: $campusStores, didMealTapped: { _ in })
         
         if let campusStores = campusStores, !campusStores.isEmpty {
@@ -182,11 +252,32 @@ struct MoreStoreView: View {
     }
   }
   
-  private func loadInitialContent() {
+  private func initialSettings() {
     UITabBar.appearance().isHidden = true
-    
+    selectedSortOption = moreViewType == .best ? .registDate : .popularity
+    var group: FilterCategoryOption {
+      switch moreViewType {
+      case .recommend: return .all
+      case .meal: return .restaurant
+      case .alcohol: return .bar
+      case .cafe: return .cafe
+      case .best: return .all
+      }
+    }
+    selectedFilterCategoryOption = group
+    tempSelectedFilterCategoryOption = group
+  }
+  
+  private func loadInitialContent() {
     let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? 1 : UserDefaultsManager.getInt(.univIdx)
-    let model = GetCampusStoresRequest(offset: "0", limit: "15", order: .registDate, group: .all, grade: nil)
+    
+    let model = GetCampusStoresRequest(
+      offset: "0",
+      limit: "15",
+      order: selectedSortOption?.toOrderType ?? .registDate,
+      group: selectedFilterCategoryOption?.toCategoryType,
+      grade: nil
+    )
     
     Task {
       if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
@@ -204,11 +295,15 @@ struct MoreStoreView: View {
     guard !isLoading, !isLastPage else { return }
     isLoading = true
     let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? 1 : UserDefaultsManager.getInt(.univIdx)
-    let orderType = selectedSortOption?.toOrderType ?? .registDate
-    let category = selectedFilterCategoryOption.toCategoryType
-    let grade = selectedFilterGradeOption
     let nextPage = currentPage + 1
-    let model = GetCampusStoresRequest(offset: "\(nextPage)", limit: "15", order: orderType, group: category, grade: grade)
+    
+    let model = GetCampusStoresRequest(
+      offset: "\(nextPage)",
+      limit: "15",
+      order: selectedSortOption?.toOrderType ?? .registDate,
+      group: selectedFilterCategoryOption?.toCategoryType,
+      grade: selectedFilterGradeOption
+    )
     
     Task {
       if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
@@ -229,14 +324,17 @@ struct MoreStoreView: View {
     campusStores = nil // 기존 목록을 초기화
     currentPage = 0 // 페이지 번호 초기화
     let univIdx = UserDefaultsManager.getInt(.univIdx) == 0 ? 1 : UserDefaultsManager.getInt(.univIdx)
-    let orderType = selectedSortOption?.toOrderType ?? .registDate
-    let category = selectedFilterCategoryOption.toCategoryType
-    let grade = selectedFilterGradeOption
-    let model = GetCampusStoresRequest(offset: "\(currentPage)", limit: "15", order: orderType, group: category, grade: grade)
-    
+    let model = GetCampusStoresRequest(
+      offset: "\(currentPage)",
+      limit: "15",
+      order: selectedSortOption?.toOrderType ?? .registDate,
+      group: selectedFilterCategoryOption?.toCategoryType,
+      grade: selectedFilterGradeOption
+    )
     Task {
       if let result = try await StoreService().getCampusStores(univIndex: univIdx, requestModel: model) {
         campusStores = result.content
+        
         if let totalPages = result.totalPages {
           isLastPage = currentPage >= totalPages
         }
@@ -247,17 +345,21 @@ struct MoreStoreView: View {
   
   private func applyFilters() {
     selectedFilterCategoryOption = tempSelectedFilterCategoryOption
+    selectedFilterRestaurantDetailOption = tempSelectedFilterRestaurantDetailOption
     selectedFilterGradeOption = tempSelectedFilterGradeOption
   }
   
   /// 바텀 시트가 표시될 때 임시 필터 상태를 초기화하는 메서드
   private func resetTempFilters() {
     tempSelectedFilterCategoryOption = selectedFilterCategoryOption
+    tempSelectedFilterRestaurantDetailOption = selectedFilterRestaurantDetailOption
     tempSelectedFilterGradeOption = selectedFilterGradeOption
   }
 }
 
 #Preview {
-  MoreStoreView(backButtonTapped: { print("back") },
-                moreViewType: .best)
+  MoreStoreView(
+    backButtonTapped: { print("back") },
+    moreViewType: .alcohol
+  )
 }
