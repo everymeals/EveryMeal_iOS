@@ -18,4 +18,20 @@ extension Date {
     }
     return 0
   }
+  
+  func toString(format: String = "yyyy-MM-dd") -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale(identifier: "ko_KR")
+    dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+    dateFormatter.dateFormat = format
+    return dateFormatter.string(from: self)
+  }
+  
+  func toKoreanDateString() -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale(identifier: "ko_KR")
+    dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+    dateFormatter.setLocalizedDateFormatFromTemplate("MMMMdEEEE")
+    return dateFormatter.string(from: self)
+  }
 }
