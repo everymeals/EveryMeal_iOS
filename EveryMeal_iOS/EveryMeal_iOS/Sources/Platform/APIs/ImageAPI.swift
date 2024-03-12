@@ -10,7 +10,7 @@ import Foundation
 import Moya
 
 enum ImageAPI {
-  case getImageURL(ImageType)
+  case getImageURL(type: ImageType, count: Int)
   case saveImageToAWS(URL, Data)
 }
 
@@ -45,8 +45,9 @@ extension ImageAPI: TargetType {
   var task: Moya.Task {
     var body: [String: Any] = [:]
     switch self {
-    case let .getImageURL(type):
+    case let .getImageURL(type, count):
       body["fileDomain"] = type.rawValue
+      body["count"] = count
       return .requestParameters(parameters: body,
                                 encoding: URLEncoding.default)
     case let .saveImageToAWS(_, image):

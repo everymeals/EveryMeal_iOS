@@ -18,6 +18,17 @@ final class AuthInterceptor: RequestInterceptor {
   
   private init() {}
   
+  func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+    var urlRequest = urlRequest
+    
+    if urlRequest.allHTTPHeaderFields?["Authorization"] != nil,
+       let keychainToken = self.keychain.get(.accessToken) {
+      urlRequest.setValue("Bearer \(keychainToken)",
+                          forHTTPHeaderField: "Authorization")
+    }
+    completion(.success(urlRequest))
+  }
+  
   func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
     guard let request = request as? DataRequest else {
       completion(.doNotRetryWithError(error))
@@ -28,7 +39,7 @@ final class AuthInterceptor: RequestInterceptor {
       if let data = request.data {
         let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
         if let errorCode = json?["errorCode"] as? String,
-           errorCode == ErrorCode.TKN0002.rawValue { // 정의된 토큰 만료 코드
+           errorCode == ErrorCode.TKN0002.rawValue || errorCode == ErrorCode.TKN0001.rawValue { // 정의된 토큰 만료 코드
           self.fetchDataWithCookie { [weak self] result in
             switch result {
             case let .success(data):

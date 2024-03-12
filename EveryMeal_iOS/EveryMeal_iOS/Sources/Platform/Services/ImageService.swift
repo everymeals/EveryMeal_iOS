@@ -12,10 +12,10 @@ import Moya
 struct ImageService {
   let provider = MoyaProvider<ImageAPI>(session: Session(interceptor: AuthInterceptor.shared))
   
-  func getImageURL(fileDomain: ImageType) async throws -> ImageResponse {
+  func getImageURL(fileDomain: ImageType, count: Int) async throws -> [ImageResponse] {
     do {
-      let response = try await provider.request(.getImageURL(fileDomain))
-      let result = try JSONDecoder().decode(EveryMealDefaultResponse<ImageResponse>.self, from: response.data)
+      let response = try await provider.request(.getImageURL(type: fileDomain, count: count))
+      let result = try JSONDecoder().decode(EveryMealDefaultResponse<[ImageResponse]>.self, from: response.data)
       if let data = result.data {
         return data
       } else {

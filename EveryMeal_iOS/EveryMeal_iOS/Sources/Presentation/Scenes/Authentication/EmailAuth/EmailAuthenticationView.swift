@@ -18,7 +18,7 @@ struct EmailAuthenticationView: View {
   var backButtonTapped: () -> Void
   var authSuccess: () -> Void
   
-  @State var selectedImage = UIImage(named: "apple_90")!
+  @State var selectedImage: SelectedProfileImageModel = .init(image: UIImage(named: "apple_90")!)
   @State var enteredText: String = ""
   @State var isEmailTextNotEmpty: Bool = false
   @State var isValidValue: Bool = true
@@ -68,11 +68,24 @@ struct EmailAuthenticationView: View {
                     Spacer()
                     ZStack {
                       HStack {
-                        Image(uiImage: selectedImage)
-                          .resizable()
-                          .clipShape(Circle())
-                          .aspectRatio(contentMode: .fill)
-                          .frame(width: 90, height: 90)
+                        if let imageURL = selectedImage.imageURL {
+                          AsyncImage(url: imageURL) { image in
+                            image.resizable()
+                              .frame(width: 90, height: 90, alignment: .center)
+                          } placeholder: {
+                            Image(ProfileImageType.apple.imageSource)
+                              .resizable()
+                              .clipShape(Circle())
+                              .aspectRatio(contentMode: .fill)
+                              .frame(width: 90, height: 90)
+                          }
+                        } else if let image = selectedImage.image {
+                          Image(uiImage: image)
+                            .resizable()
+                            .clipShape(Circle())
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 90, height: 90)
+                        }
                         Spacer()
                       }
                       HStack {
@@ -184,11 +197,7 @@ struct EmailAuthenticationView: View {
                       viewStore.send(.sendVertifyCode(enteredText))
                     }
                   case .makeProfile:
-                    guard let imageData = selectedImage.jpegData(compressionQuality: 0.8) else {
-                      print("이미지 데이터 형식으로 변환 실패")
-                      return
-                    }
-                    viewStore.send(.signupButtonDidTappaed(imageData, enteredText) )
+                    viewStore.send(.signupButtonDidTappaed(selectedImage, enteredText) )
                   }
                 })
                   .onChange(of: viewStore.signinAlready) { value in
@@ -228,6 +237,12 @@ struct EmailAuthenticationView: View {
                   .onChange(of: viewStore.saveImageToAWSSuccess) { value in
                     if let result = value, result == true {
                       viewStore.send(.signup)
+                    }
+                  }
+                  .onChange(of: viewStore.imageKeyAlreadyExist) { value in
+                    if let result = value, result == true {
+                      viewStore.send(.signup)
+                      viewStore.send(.imageKeyAlreadyExist(false))
                     }
                   }
                   .onChange(of: viewStore.loginSuccess) { value in

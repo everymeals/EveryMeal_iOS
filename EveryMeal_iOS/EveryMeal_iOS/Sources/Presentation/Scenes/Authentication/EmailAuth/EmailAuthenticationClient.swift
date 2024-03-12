@@ -13,11 +13,12 @@ struct SignupClient {
   var checkAlreadySignin: (String) async throws -> Result<Bool, EverMealErrorType>
   var postEmail: (String) async throws -> Result<EmailSendResponse, EverMealErrorType>
   var postVertifyNumber: (PostVertifyNumberClient) async throws -> Result<Bool, EverMealErrorType>
-  var getImageConfig: () async throws -> Result<ImageResponse, EverMealErrorType>
+  var getImageConfig: (Int) async throws -> Result<ImageResponse, EverMealErrorType>
   var saveImageToAWS: (String, Data) async throws -> Result<Bool, EverMealErrorType>
   var signup: (SignupRequest) async throws -> Result<SignupResponse, EverMealErrorType>
   var login: (LoginRequest) async throws -> Result<EveryMealDefaultResponse<LoginResponse>, EverMealErrorType>
-//  var getAccessToken(String)
+  var verifyAccessToken: (String) async throws -> Result<Bool, EverMealErrorType>
+  var getNewAccessToken: () async throws -> Result<String, EverMealErrorType>
 }
 
 struct PostVertifyNumberClient {
@@ -61,10 +62,14 @@ extension SignupClient: DependencyKey {
         return .failure(.fail)
       }
     }, 
-    getImageConfig: {
+    getImageConfig: { count in
       do {
-        let imageConfigResponse = try await ImageService().getImageURL(fileDomain: .user)
-        return .success(imageConfigResponse)
+        let imageConfigResponse = try await ImageService().getImageURL(fileDomain: .user, count: count)
+        if let imageConfig = imageConfigResponse.first {
+          return .success(imageConfig)
+        } else {
+          return .failure(.fail)
+        }
       } catch {
         return .failure(.fail)
       }
@@ -100,6 +105,27 @@ extension SignupClient: DependencyKey {
         let loginResponse = try await UserService().postLogin(client: client)
         if loginResponse.errorCode == nil {
           return .success(loginResponse)
+        } else {
+          return .failure(.fail)
+        }
+      }
+    },
+    verifyAccessToken: { token in
+      do {
+        let response = try await UserService().verifyAccessToken(token)
+        if let data = response.data,
+           data == true {
+          return .success(data)
+        } else {
+          return .failure(.fail)
+        }
+      }
+    },
+    getNewAccessToken: {
+      do {
+        let response = try await UserService().getAccessToken()
+        if let data = response.data {
+          return .success(data)
         } else {
           return .failure(.fail)
         }

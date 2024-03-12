@@ -18,7 +18,7 @@ struct ReviewStoreSearchListRecentCell: View {
       Image(systemName: "xmark")
         .foregroundColor(Color.grey5)
         .onTapGesture {
-          
+          deleteButtonTapped()
         }
     }
     .frame(height: 52)

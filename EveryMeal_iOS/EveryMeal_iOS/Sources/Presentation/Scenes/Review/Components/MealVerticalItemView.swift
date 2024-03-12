@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct MealVerticalItemView: View {
-  var storeModel: StoreEntity
+  var storeModel: CampusStoreContent
   
   var body: some View {
     VStack(alignment: .leading, spacing: 0) {
       HStack(alignment: .center, spacing: 0) {
         VStack(alignment: .leading, spacing: 0) {
           HStack(alignment: .center, spacing: 4) {
-            Text(storeModel.name)
+            Text(storeModel.name ?? "")
               .foregroundColor(Color.grey9)
               .font(.pretendard(size: 17, weight: .semibold))
-            Text(storeModel.categoryDetail)
+            Text(storeModel.categoryDetail ?? "")
               .foregroundColor(Color.grey6)
               .font(.pretendard(size: 12, weight: .medium))
               .padding(.horizontal, 6)
@@ -34,7 +34,7 @@ struct MealVerticalItemView: View {
               .aspectRatio(contentMode: .fit)
               .frame(width: 14)
               .padding(.trailing, 2)
-            Text(String(storeModel.grade))
+            Text(String(storeModel.grade ?? 0))
               .foregroundColor(Color.grey7)
               .font(.pretendard(size: 12, weight: .medium))
             Text("(5)")
@@ -44,7 +44,7 @@ struct MealVerticalItemView: View {
           }
         }
         Spacer()
-        MealItemLikeButton(isPressed: storeModel.isLiked, likesCount: storeModel.recommendedCount)
+        MealItemLikeButton(isPressed: storeModel.isLiked ?? false, likesCount: storeModel.recommendedCount ?? 0)
       }
       .padding(.bottom, 14)
       
@@ -84,14 +84,7 @@ struct MealVerticalItemView: View {
 
 struct MealVerticalItemView_Previews: PreviewProvider {
   static var previews: some View {
-    let dummy = StoreEntity(name: "동경산책 성신여대점",
-                            categoryDetail: "일식",
-                            grade: 4.0,
-                            reviewCount: 34,
-                            recommendedCount: 29,
-                            images: ["fdsfads", "fdsafdas", "fdsafdas", "fdsafdas", "fdsafdas"],
-                            isLiked: false)
-    
+    let dummy = CampusStoreContent(idx: 11, name: "수아당", address: nil, phoneNumber: nil, categoryDetail: "분식", distance: nil, grade: 3.0, reviewCount: 5, recommendedCount: 24, images: nil, isLiked: true)
     MealVerticalItemView(storeModel: dummy)
     Spacer()
   }
