@@ -13,8 +13,8 @@ struct ReviewStarPointView: View {
   @State var text: String = ""
   @State var starChecked = Array(repeating: false, count: 5)
   @State var isBubbleShown: Bool = true
-  @State var storeModel: StoreEntity
-  var nextButtonTapped: (StoreEntity) -> Void
+  @State var storeModel: CampusStoreContent
+  var nextButtonTapped: (CampusStoreContent) -> Void
   var backButtonTapped: () -> Void
   
   
@@ -43,7 +43,7 @@ struct ReviewStarPointView: View {
         }
         VStack(alignment: .center, spacing: 0) {
           Spacer()
-          Text(storeModel.categoryDetail)
+          Text(storeModel.categoryDetail ?? "")
             .foregroundColor(Color.grey6)
             .font(.pretendard(size: 12, weight: .medium))
             .padding(.horizontal, 6)
@@ -52,7 +52,7 @@ struct ReviewStarPointView: View {
             .cornerRadius(4)
             .padding(.bottom, 12)
           
-          Text(storeModel.name)
+          Text(storeModel.name ?? "")
             .foregroundColor(Color.grey9)
             .font(Font.pretendard(size: 18, weight: .bold))
             .lineLimit(1)
@@ -119,14 +119,14 @@ struct SpeachBubbleView: View {
   }
 }
 
-struct ReviewStarPointView_Previews: PreviewProvider {
-  static var previews: some View {
-    ReviewStarPointView(
-      storeModel: Constants.dummyStore,
-      nextButtonTapped: { _ in
-        print("go next")
-      }, backButtonTapped: {
-        print("go back")
-      })
-  }
-}
+//struct ReviewStarPointView_Previews: PreviewProvider {
+//  static var previews: some View {
+//    ReviewStarPointView(
+//      storeModel: Constants.dummyStore,
+//      nextButtonTapped: { _ in
+//        print("go next")
+//      }, backButtonTapped: {
+//        print("go back")
+//      })
+//  }
+//}

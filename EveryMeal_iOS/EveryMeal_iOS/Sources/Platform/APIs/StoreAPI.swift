@@ -11,6 +11,7 @@ import Moya
 enum StoreAPI {
   case getCampusStores(Int, GetCampusStoresRequest)  // 학교 주변 식당 리스트 조회
   case getCampusStoresReviews(GetStoreReviewsRequest)  // 캠퍼스 주변 맛집 리뷰 조회
+  case getCampusStoresWithKeyword(GetCampusStoreKeywordRequest) // 학교 주변 식당 키워드로 조회
 }
 
 extension StoreAPI: TargetType {
@@ -22,12 +23,14 @@ extension StoreAPI: TargetType {
       
     case .getCampusStoresReviews:
       return "/api/v1/stores/reviews"
+    case let .getCampusStoresWithKeyword(request):
+      return "/api/v1/stores/\(request.campusIdx)/\(request.keyword)"
     }
   }
   
   var method: Moya.Method {
     switch self {
-    case .getCampusStores, .getCampusStoresReviews:
+    case .getCampusStores, .getCampusStoresReviews, .getCampusStoresWithKeyword:
       return .get
     }
   }
@@ -54,6 +57,12 @@ extension StoreAPI: TargetType {
       
       return .requestParameters(parameters: body, encoding: URLEncoding.queryString)
 
+      
+    case let .getCampusStoresWithKeyword(model):
+      var body = self.defaultBody
+      body["offset"] = model.offset
+      body["limit"] = model.limit
+      return .requestParameters(parameters: body, encoding: URLEncoding.queryString)
     }
   }
   

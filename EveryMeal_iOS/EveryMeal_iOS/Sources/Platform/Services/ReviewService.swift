@@ -21,5 +21,29 @@ struct ReviewService {
       throw error
     }
   }
+  
+  func writeReview(_ model: WriteStoreReviewRequest) async throws -> Int {
+    do {
+      let response = try await provider.request(.writeStoreReview(model))
+      let result = try JSONDecoder().decode(EveryMealDefaultResponse<Int>.self, from: response.data)
+      if let reviewIndex = result.data {
+        return reviewIndex
+      } else {
+        throw EverMealErrorType.fail
+      }
+    } catch {
+      throw error
+    }
+  }
+  
+  func getStoreReview(_ model: GetStoreReviewRequest) async throws -> EveryMealDefaultResponse<StoreReviewData> {
+    do {
+      let response = try await provider.request(.getStoreReview(model))
+      let result = try JSONDecoder().decode(EveryMealDefaultResponse<StoreReviewData>.self, from: response.data)
+      return result
+    } catch {
+      throw error
+    }
+  }
 
 }

@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct ImageResponse: Codable {
+struct ImageResponse: Codable, Equatable {
   var imageKey: String
   var url: String
+  
+  static func == (lhs: ImageResponse, rhs: ImageResponse) -> Bool {
+    return lhs.imageKey == rhs.imageKey
+   }
 }

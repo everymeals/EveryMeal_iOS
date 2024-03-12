@@ -73,6 +73,7 @@ enum ToastType {
   case alreadySigninEmail
   case copyComplete
   case deleteComplete
+  case reviewSuccess
 
   var message: String {
     switch self {
@@ -80,6 +81,7 @@ enum ToastType {
     case .alreadySigninEmail: "이미 가입된 이메일입니다"
     case .copyComplete: "✅ 복사되었습니다"
     case .deleteComplete: "🗑️ 삭제되었습니다"
+    case .reviewSuccess: "✅ 리뷰가 등록되었어요"
     }
   }
 }

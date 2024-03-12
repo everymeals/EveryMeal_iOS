@@ -14,6 +14,7 @@ enum UserAPI {
   case signup(SignupRequest)
   case login(LoginRequest)
   case getAccessToken
+  case vertifyAccessToken(String)
 }
 
 extension UserAPI: TargetType {
@@ -29,6 +30,8 @@ extension UserAPI: TargetType {
       return URLConstant.login.path
     case .getAccessToken:
       return URLConstant.access.path
+    case .vertifyAccessToken:
+      return URLConstant.accessTokenVerify.path
     }
   }
   
@@ -37,6 +40,8 @@ extension UserAPI: TargetType {
     case .signup, .login:
       return .post
     case .getAccessToken:
+      return .get
+    case .vertifyAccessToken:
       return .get
     }
   }
@@ -48,7 +53,7 @@ extension UserAPI: TargetType {
       body["nickname"] = client.nickname
       body["emailAuthToken"] = client.emailAuthToken
       body["emailAuthValue"] = client.emailAuthValue
-      body["universityIdx"] = client.universityIdx
+      body["campusIdx"] = client.campusIdx
       body["profileImgKey"] = client.profileImgKey
       return .requestParameters(parameters: body,
                                 encoding: JSONEncoding.default)
@@ -60,6 +65,10 @@ extension UserAPI: TargetType {
                                 encoding: JSONEncoding.default)
     case .getAccessToken:
       return .requestPlain
+      
+    case let .vertifyAccessToken(token):
+      body["accessToken"] = token
+      return .requestParameters(parameters: body, encoding: URLEncoding.default)
     }
     
   
@@ -69,11 +78,11 @@ extension UserAPI: TargetType {
   var headers: [String : String]? {
     var values: [String: String] = ["Content-type": "application/json"]
     switch self {
-    case .login, .signup:
+    case .login, .signup, .vertifyAccessToken:
       return values
     case .getAccessToken:
       let keychain = KeychainSwift()
-      values["Cookie"] = keychain.get(.refreshToken)
+      values["Cookie"] = "refresh-token=\(keychain.get(.refreshToken) ?? "")"
       return values
     }
 //    switch self {

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct BestStoreSearchView: View {
   
@@ -13,11 +14,13 @@ struct BestStoreSearchView: View {
   
   @FocusState var isSearchBarFocused: Bool
   @State private var searchText: String = ""
-  @State private var searchResults: [String] = []
+  @State private var searchResults: [CampusStoreContent]? = []
   @State private var scrollToTop: Bool = false
   @State private var goToWriteReview: Bool = false // 삭제 필요
+  @State private var recentSearchStores = UserDefaultsManager.getArrayString(.recentSearchStores) ?? []
+  private let searchPublisher = PassthroughSubject<String, Never>()
   
-  var nextButtonTapped: (StoreEntity) -> Void
+  var nextButtonTapped: (CampusStoreContent) -> Void
   
   // MARK: - Property
   
@@ -26,6 +29,8 @@ struct BestStoreSearchView: View {
   private let searchViewID = "searchViewID"
   
   var body: some View {
+    let searchDebounce = searchPublisher.debounce(for: .seconds(0.5), scheduler: RunLoop.main)
+    
     ScrollViewReader { reader in
       ScrollView {
         VStack {
@@ -36,7 +41,12 @@ struct BestStoreSearchView: View {
                 backButtonDidTapped()
               }
             BestStoreSearchBar(text: $searchText, placeholder: placeholder,
-                               onSearchButtonClicked: performSearch)
+                               onSearchButtonClicked: {
+              if !recentSearchStores.contains(searchText) {
+                recentSearchStores.append(searchText)
+              }
+              UIApplication.shared.hideKeyboard()
+            })
             .focused($isSearchBarFocused)
             .onSubmit {
               print("commit")
@@ -48,16 +58,18 @@ struct BestStoreSearchView: View {
           .id(searchViewID)
           
           Spacer()
-          // FIXME: focus 문제 해결 필요
           
-          if isSearchBarFocused { // TODO: scrollToTop toggle
+          if searchText != "" {
             let resultMealView = MealGridView(
-              campusStores: .constant(nil),
+              campusStores: $searchResults,
               didMealTapped: { storeModel in
+                if !recentSearchStores.contains(searchText) {
+                  recentSearchStores.append(searchText)
+                }
                 nextButtonTapped(storeModel)
             })
             resultMealView
-          } else {
+          } else if !recentSearchStores.isEmpty {
             HStack {
               Text("최근 검색어")
                 .font(.pretendard(size: 14, weight: .medium))
@@ -69,17 +81,46 @@ struct BestStoreSearchView: View {
 
             ScrollView {
               LazyVGrid(columns: [GridItem(.flexible())], spacing: 0) {
-                ForEach(searchResults.indices, id: \.self) { index in
+                ForEach(recentSearchStores.indices, id: \.self) { index in
                   ReviewStoreSearchListRecentCell(
-                    text: searchResults[index],
+                    text: recentSearchStores[index],
                     deleteButtonTapped: {
-                      searchResults.remove(at: index)
+                      recentSearchStores.remove(at: index)
                     })
+                  .contentShape(Rectangle())
+                  .onTapGesture {
+                    searchText = recentSearchStores[index]
+                  }
                 }
               }
             }
             .padding(.horizontal, 20)
           }
+        }
+        .onChange(of: searchText) { text in
+          if text != "" {
+            searchPublisher.send(text)
+          }
+        }
+        .onReceive(searchDebounce) { value in
+          Task {
+            do {
+              let model = GetCampusStoreKeywordRequest(
+                campusIdx: UserDefaultsManager.getInt(.univIdx),
+                keyword: value,
+                offset: 0,
+                limit: 10
+              )
+              let response = try await StoreService().getCampusStoresWithKeyword(model)
+              if let result = response?.content {
+                searchResults = result
+              }
+            }
+          }
+        }
+        .onChange(of: recentSearchStores) { stores in
+          UserDefaultsManager.setValue(.recentSearchStores, value: stores)
+          
         }
 //        .onChange(of: scrollToTop) { _ in
 //          withAnimation {
@@ -91,8 +132,8 @@ struct BestStoreSearchView: View {
     .navigationBarHidden(true)
   }
   
-  func performSearch() {
-    searchResults = ["Apple", "Apple Pie", "Apple Juice"].filter { $0.lowercased().contains(searchText.lowercased()) }
+  func search() {
+    
   }
 }
 
@@ -107,6 +148,9 @@ struct BestStoreSearchBar: View {
       Image("icon-search-mono")
         .frame(width: 24, height: 24)
       TextField(placeholder, text: $text, onCommit: onSearchButtonClicked)
+        .onAppear {
+          UITextField.appearance().clearButtonMode = .whileEditing
+        }
     }
     .padding(.horizontal, 16)
     .frame(height: 48)
@@ -119,11 +163,11 @@ struct BestStoreSearchBar: View {
 struct BestStoreSearchView_Previews: PreviewProvider {
   static var previews: some View {
     @State var otherViewShowing = false
-    HomeView(otherViewShowing: $otherViewShowing)
-//    BestStoreSearchView(nextButtonTapped: {
-//      print("nextButtonTapped")
-//    }, placeholder: "검색", backButtonDidTapped: {
-//      print("backButton did tapped")
-//    })
+//    HomeView(otherViewShowing: $otherViewShowing)
+    BestStoreSearchView(nextButtonTapped: { _ in
+      print("nextButtonTapped")
+    }, placeholder: "검색", backButtonDidTapped: {
+      print("backButton did tapped")
+    })
   }
 }

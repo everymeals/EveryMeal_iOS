@@ -13,6 +13,7 @@ struct ImagePicker: UIViewControllerRepresentable {
   let configuration: PHPickerConfiguration
   @Binding var isPresented: Bool
   @Binding var selectedImages: [UIImage]
+  var selectedCompletion: (([UIImage]) -> Void)?
   
   func makeUIViewController(context: Context) -> PHPickerViewController {
     let controller = PHPickerViewController(configuration: configuration)
@@ -25,15 +26,17 @@ struct ImagePicker: UIViewControllerRepresentable {
   }
   
   func makeCoordinator() -> Coordinator {
-    Coordinator(self)
+    Coordinator(self, completion: selectedCompletion)
   }
 }
 
 class Coordinator: PHPickerViewControllerDelegate {
   private let parent: ImagePicker
+  var selectedCompletion: (([UIImage]) -> Void)?
   
-  init(_ parent: ImagePicker) {
+  init(_ parent: ImagePicker, completion: (([UIImage]) -> Void)?) {
     self.parent = parent
+    selectedCompletion = completion
   }
   
   func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
@@ -48,6 +51,7 @@ class Coordinator: PHPickerViewControllerDelegate {
             fetchedImages.append(image)
             if result.offset == results.count - 1 {
               self?.parent.selectedImages = fetchedImages
+              self?.selectedCompletion?(fetchedImages)
               self?.parent.isPresented = false
             }
           }

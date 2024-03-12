@@ -33,4 +33,13 @@ struct StoreService {
     }
   }
   
+  func getCampusStoresWithKeyword(_ requestModel: GetCampusStoreKeywordRequest) async throws -> CampusStoreData? {
+    do {
+      let response = try await provider.request(.getCampusStoresWithKeyword(requestModel))
+      let result = try JSONDecoder().decode(GetCampusStoreResponse.self, from: response.data)
+      return result.data
+    } catch {
+      throw error
+    }
+  }
 }

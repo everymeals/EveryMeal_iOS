@@ -9,9 +9,9 @@ import SwiftUI
 
 enum ReviewStackViewType: Hashable {
   case searchView
-  case starPointView(StoreEntity)
-  case imageTextView(StoreEntity)
-  case reviewDetail(ReviewDetailModel)
+  case starPointView(CampusStoreContent)
+  case imageTextView(CampusStoreContent)
+  case reviewDetail(String, StoreReviewContent)
   
   func hash(into hasher: inout Hasher) {
     switch self {
@@ -23,9 +23,9 @@ enum ReviewStackViewType: Hashable {
     case .imageTextView(let mealModel):
       hasher.combine(2)
       hasher.combine(mealModel)
-    case .reviewDetail(let reviewDetailModel):
+    case let .reviewDetail(storeName, _):
       hasher.combine(3)
-      hasher.combine(reviewDetailModel)
+      hasher.combine(storeName)
     }
   }
 }
@@ -36,6 +36,7 @@ struct WriteReviewStoreSearchView: View {
   @State private var text: String = ""
   @State private var reviewNavigationStack: [ReviewStackViewType] = []
   @State var exitAlertPresent = false
+  @State var images: [UIImage] = []
   
   var closeButtonTapped: () -> Void
   
@@ -97,10 +98,11 @@ struct WriteReviewStoreSearchView: View {
           startPointView
         case let .imageTextView(storeModel):
           let reviewWriteImageTextView = ReviewWriteImageTextView(
-            storeModel: storeModel,
-            saveButtonTapped: { reviewModel in
-              // TODO: 토스트 노출
-              reviewNavigationStack.append(.reviewDetail(reviewModel))
+            store: .init(initialState: ReviewWriteImageTextViewReducer.State(storeContent: storeModel), reducer: {
+              ReviewWriteImageTextViewReducer()
+            }), selectedImages: $images,
+            saveButtonTapped: { storeName, reviewModel in
+              reviewNavigationStack.append(.reviewDetail(storeName, reviewModel))
             },
             closeButtonTapped: {
               exitAlertPresent.toggle()
@@ -123,9 +125,10 @@ struct WriteReviewStoreSearchView: View {
                 })
               alert
             }
-        case let .reviewDetail(reviewModel):
+        case let .reviewDetail(storeName, reviewModel):
           let reviewDetailView = ReviewDetailView(
-            reviewModel: reviewModel,
+            storeName: storeName,
+            storeReviewContent: reviewModel,
             backButtonDidTapped: {
               reviewNavigationStack.removeLast()
             })
@@ -135,14 +138,6 @@ struct WriteReviewStoreSearchView: View {
 //      .padding(.bottom)
 //      .navigationBarTitleDisplayMode(.inline)
 //      .navigationBarHidden(true)
-    }
-  }
-}
-
-struct WriteReviewStoreSearchView_Previews: PreviewProvider {
-  static var previews: some View {
-    WriteReviewStoreSearchView {
-      print("close")
     }
   }
 }

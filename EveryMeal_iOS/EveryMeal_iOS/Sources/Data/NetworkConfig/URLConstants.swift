@@ -19,6 +19,7 @@ enum URLConstant {
   case signup
   case login
   case access
+  case accessTokenVerify
   
   static var mode: Mode {
     #if DEBUG
@@ -45,6 +46,7 @@ enum URLConstant {
     case .signup: "/api/v1/users/signup"
     case .login: "/api/v1/users/login"
     case .access: "/api/v1/users/token/access"
+    case .accessTokenVerify: "/api/v1/users/token/access/verify"
     }
   }
   
